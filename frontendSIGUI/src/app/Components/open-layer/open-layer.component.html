@@ -4,4 +4,11 @@
         <p>open-layer works!</p>
     </div>
 </div>
-<div id="ol-map" class="map-container"></div>
+<div class="map-container">     
+    <app-map [map]="map"></app-map>
+</div>
+<footer>
+    <app-scaleline [map]="map"></app-scaleline>
+</footer>
+
+<!-- <div id="ol-map" class="map-container"></div> -->
