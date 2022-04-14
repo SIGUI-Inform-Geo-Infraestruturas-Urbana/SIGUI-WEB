@@ -3,6 +3,7 @@ import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
+import XYZ from 'ol/source/XYZ';
 
 
 @Component({
@@ -22,6 +23,9 @@ export class OpenLayerComponent implements OnInit {
       }),
       layers: [
         new TileLayer({
+          // source: new XYZ({
+          //   url: 'https://{}'
+          // }),
           source: new OSM(),
         }),
       ],
