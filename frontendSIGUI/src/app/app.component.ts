@@ -7,6 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'SIGUI';
-  imgLogo = '/assets/images/logotipo_SIGUI_header.png';
   imgCorLogo = '/assets/images/logotipo SIGUI.png';
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Renderer2 ,ElementRef } from '@angular/core';
 import Map from 'ol/Map';
 
 @Component({
@@ -11,10 +11,10 @@ import Map from 'ol/Map';
 export class MapComponent implements OnInit {
 
   @Input() map!: Map;
-  constructor(private elementRef: ElementRef) {
+  constructor(private elementRef: ElementRef, private renderer : Renderer2) {
   }
   ngOnInit() {
-    this.map.setTarget(this.elementRef.nativeElement);
+    this.map.setTarget(this.renderer.selectRootElement(this.elementRef.nativeElement));
   }
 
 }

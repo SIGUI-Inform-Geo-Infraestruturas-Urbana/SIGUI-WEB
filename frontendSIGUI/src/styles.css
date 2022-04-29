@@ -1,13 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 *{
     margin: 0;
     padding: 0;
     list-style: none;
     text-decoration: none;
-    color: aliceblue;
+    color: black;
     font-family: 'Roboto';
 }
 body{
@@ -130,3 +129,6 @@ body{
 
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

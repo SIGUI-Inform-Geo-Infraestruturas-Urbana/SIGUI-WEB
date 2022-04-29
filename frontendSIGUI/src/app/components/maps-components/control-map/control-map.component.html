@@ -1,0 +1,26 @@
+<form [formGroup]="controlMapForm" (ngSubmit)="onSubmit()">
+<div>
+    <p>
+        <label for="firstName">Imput teste</label>
+        <input type="text" id="firstName" name="firstName" formControlName="firstName">
+
+        <label for="zoomMap">Zoom Map</label>
+        <button id="zoomMap" (click)="ZoomMap()">Zoom</button>
+
+        <label for="btn_submit">Submiter</label>
+        <button id="btn_submit" type="submit">submit</button>
+
+        <label for="zoomMap">Select Draw</label>
+        <select id="selectDraw" name="selectDraw" formControlName="selectDraw">
+            <option [ngValue]="null" disabled> Select Draw</option>
+            <option *ngFor="let selectDraw of optionsDraws" [ngValue]="selectDraw.id">{{selectDraw.name}}</option>
+        </select>
+
+        <label for="btn_undo">Desfazer Nó</label>
+        <button id="btn_undo" (click)="onUndo()">Apagar</button>
+    </p>
+</div>
+</form>
+
+
+

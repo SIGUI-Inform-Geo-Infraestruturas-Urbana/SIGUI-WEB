@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Renderer2, ElementRef } from '@angular/core';
 import Map from 'ol/Map';
 import ControlScaleLine from 'ol/control/ScaleLine';
 
@@ -12,11 +12,12 @@ export class ScalelineComponent implements OnInit {
   @Input() map!: Map;
   control!: ControlScaleLine;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef, private renderer : Renderer2) {}
 
   ngOnInit() {
+    //const re = this.renderer.selectRootElement(this.elementRef.nativeElement)
     this.control = new ControlScaleLine({
-      target: this.elementRef.nativeElement,
+      target: this.renderer.selectRootElement(this.elementRef.nativeElement)//this.elementRef.nativeElement,
     });
     this.map.addControl(this.control);
   }
