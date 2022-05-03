@@ -1,0 +1,7 @@
+
+.componets-horizontal{
+    float: left;
+}
+.componets-horizontal label,input,button,select {
+    display: block;
+}

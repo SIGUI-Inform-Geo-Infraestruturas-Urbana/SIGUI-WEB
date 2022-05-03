@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSliderModule} from '@angular/material/slider'
+import { MatButtonModule} from '@angular/material/button'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {DecimalPipe} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,9 @@ import { ControlMapComponent } from './components/maps-components/control-map/co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserZoneComponent } from './components/angular-components/user-zone/user-zone.component';
 import { PageNotFoundComponent } from './components/angular-components/page-not-found/page-not-found.component';
+import { FormsMapComponent } from './components/maps-components/forms-map/forms-map.component';
+import { MousePositionComponentComponent } from './components/maps-components/mouse-position-component/mouse-position-component.component';
+import { MousePositionComponent } from './components/maps-components/mouse-position/mouse-position.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +29,13 @@ import { PageNotFoundComponent } from './components/angular-components/page-not-
     TopHeaderComponent,
     ControlMapComponent,
     PageNotFoundComponent,
+    FormsMapComponent,
+    MousePositionComponentComponent,
+    MousePositionComponent,
   ],
   imports: [
     MatSliderModule,
+    MatButtonModule,
     BrowserModule,
     RouterModule.forRoot([
       {path: 'user-zone', component: UserZoneComponent},
@@ -39,7 +48,7 @@ import { PageNotFoundComponent } from './components/angular-components/page-not-
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

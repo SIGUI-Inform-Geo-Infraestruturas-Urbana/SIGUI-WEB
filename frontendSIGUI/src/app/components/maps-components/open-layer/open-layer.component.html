@@ -4,14 +4,16 @@
         <p>open-layer works!</p>
         <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
         (UndoMap)="removeMapPoint()" ></app-control-map>
-        <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+    </div>
+    <div class="map-container-area">
+        <div class="map-container">     
+            <app-map [map]="map"></app-map>
+        </div>
+        <app-scaleline [map]="map"></app-scaleline>
+    </div>
+    <div class="inner_elements_body"> 
+        <app-mouse-position [map]="map"></app-mouse-position>
+        <app-forms-map (marcatorMap)="pointMapRegister()"></app-forms-map>
     </div>
 </div>
-<div class="map-container">     
-    <app-map [map]="map"></app-map>
-</div>
-<footer>
-    <app-scaleline [map]="map"></app-scaleline>
-</footer>
 
-<!-- <div id="ol-map" class="map-container"></div> -->

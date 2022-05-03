@@ -5,10 +5,17 @@
 }
 .map-container {
 
-    /*width: 100%;
+    width: 1000px;
     height: 400px;
-    display: block;*/
+    display: block;
+    margin: 0 auto;
     flex-grow: 1; 
+}
+.map-container-area{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: #010a22;
 }
 footer{
     display: flex;

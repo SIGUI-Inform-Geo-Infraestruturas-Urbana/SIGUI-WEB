@@ -13,6 +13,37 @@ body{
     background-color:aliceblue;
 }
 
+input{
+    background-color: rgb(206, 209, 212);
+    color: black;
+    border: 2px solid #000000; /* Azure */
+    padding: 5px 10px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button {
+    background-color: #008CBA;
+    color: white;
+    border: 2px solid #008CBA; /* Azure */
+    border-radius: 8px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+button:hover {
+    background-color: #013141; /* Azure */
+    color: white;
+}
+button:active {
+    background-color: #013141; /* Azure */
+    border: 2px solid #013141; /* Azure */
+    color: black;
+}
+
+
 .content{
     width: 100%;
     display: block;
@@ -35,6 +66,7 @@ body{
     margin: 0 auto;
     margin-top: 50px;
     width: 100%;
+    height: auto;
     position: relative;
 }
 .inner_elements{
@@ -46,6 +78,7 @@ body{
 }
 .inner_elements_body{
     width: 1000px;
+    height: auto;
     display: block;
     margin: 0 auto;
         /* background-color: red; */
