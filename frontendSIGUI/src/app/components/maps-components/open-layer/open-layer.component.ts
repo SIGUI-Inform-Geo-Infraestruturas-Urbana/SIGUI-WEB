@@ -5,6 +5,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import TileDebug  from 'ol/source/TileDebug';
 import XYZ from 'ol/source/XYZ';
+import TileWMS from 'ol/source/TileWMS';
 import Source from 'ol/source/Source';
 import Vectore from 'ol/source/Vector';
 import VectorSource from 'ol/source/Vector';
@@ -44,8 +45,16 @@ export class OpenLayerComponent implements OnInit {
         attributions: attributions,
         url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token=pk.eyJ1IjoibmF0YXNpZ3VpIiwiYSI6ImNsMTB1bG1iYjJja3EzbG11NG94dHA4MDkifQ.h6yseMwoU1s1NBiqQ5RPIQ'
       }),
-      //source: new OSM(),
     });
+
+    const geoserver:TileLayer<TileWMS> = new TileLayer({
+      source: new TileWMS({
+        url: 'http://192.168.56.103:8080/geoserver/wms',
+        params: {LAYERS: 'sigui.server:Curitiba', TILED: true},
+        serverType: 'geoserver',
+      })
+    })
+
     const debug:TileLayer<TileDebug> = new TileLayer({
       source: new TileDebug(),
     })
@@ -58,32 +67,20 @@ export class OpenLayerComponent implements OnInit {
 
     this.map = new Map({
       view: new View({
-        center: [19.413793,-99.128145],
-        zoom: 15,
+        // projection: 'EPSG:38',
+        center: [ -5480159.755742349, -2930312.646903647 ], // 
+        // center: [19.413793,-99.128145],
+        zoom: 12,
       }),
-      layers:[raster,debug,vector],
       // layers: [
-      //   new TileLayer({
-      //     // source: new XYZ({
-      //     //   url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token=pk.eyJ1IjoibmF0YXNpZ3VpIiwiYSI6ImNsMTB1bG1iYjJja3EzbG11NG94dHA4MDkifQ.h6yseMwoU1s1NBiqQ5RPIQ'
-      //     // }),
-      //     source: new OSM(),
-      //   }),
+      //   // new TileLayer({
+      //   //   source: new OSM()
+      //   // }),
       // ],
-      target: 'ol-map'
+      layers:[geoserver,debug,vector],
+       target: 'ol-map'
     }); 
-    this.map.on('singleclick', (evt) => this.onClickMap(evt)) 
-
-    // this.map.on('click', (evt) => this.onClickMap(evt)) 
-   /* this.map.on('singleclick', function (evt:MapBrowserEvent<any>) {
-      console.log('aaaaaaaa')
-      /*const coordinate = evt.coordinate;
-      const hdms = toStringHDMS(toLonLat(coordinate));
-    
-      content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
-      overlay.setPosition(coordinate);
-    }); */
-    
+    this.map.on('singleclick', (evt) => this.onClickMap(evt))     
   }
   addInteraction(value:string): void{    
   console.log('aa'+value)
@@ -107,6 +104,7 @@ export class OpenLayerComponent implements OnInit {
   }
   onClickMap(evt:MapBrowserEvent<any>): void{
     var clickedCoordinate = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
+    console.log(evt.coordinate)
     console.log('onClick')
     console.log(clickedCoordinate)
     this.pointMarcatorMapRegister(clickedCoordinate);
