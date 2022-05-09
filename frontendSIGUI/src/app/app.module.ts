@@ -5,6 +5,7 @@ import { MatButtonModule} from '@angular/material/button'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +38,7 @@ import { MousePositionComponent } from './components/maps-components/mouse-posit
     MatSliderModule,
     MatButtonModule,
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {path: 'user-zone', component: UserZoneComponent},
       {path: 'map-view', component: OpenLayerComponent},

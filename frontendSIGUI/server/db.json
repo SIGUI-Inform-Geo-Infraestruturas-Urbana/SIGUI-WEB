@@ -1,0 +1,12 @@
+{
+    "poits": [{
+      "id": 1,
+      "name": "Marcador1",
+      "coordenada": "123"
+    }, 
+    {
+        "id": 2,
+        "name": "Marcador2",
+        "coordenada": "456"
+    }]
+}

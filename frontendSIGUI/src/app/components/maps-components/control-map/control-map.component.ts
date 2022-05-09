@@ -28,7 +28,7 @@ export class ControlMapComponent implements OnInit {
   ngOnInit(): void {
     this.controlMapForm = new FormGroup({
       firstName: new FormControl(this.optionsDraws[1].name),
-      selectDraw: new FormControl(this.optionsDraws[1].id),
+      selectDraw: new FormControl(),//this.optionsDraws[0].id
     });
     this.controlMapForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onDrawChanged(f)})
   }
@@ -50,7 +50,7 @@ export class ControlMapComponent implements OnInit {
     let itemSelected:string = this.optionsDraws[value].name
     console.log(itemSelected)
     this.DrawMap.emit(itemSelected);
-  }
+  }  
 
   onSubmit():void{
     console.log(this.controlMapForm.value)
