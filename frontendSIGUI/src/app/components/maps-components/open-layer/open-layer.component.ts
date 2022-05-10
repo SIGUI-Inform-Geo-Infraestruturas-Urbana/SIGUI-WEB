@@ -20,7 +20,7 @@ import { Modify , Select, defaults as defaultInteraction} from 'ol/interaction'
 import Layer from 'ol/layer/Layer';
 import { style } from '@angular/animations';
 import CircleStyle from 'ol/style/Circle';
-//import GeoJSON from 'ol/format/GeoJSON';
+import GeoJSON from 'ol/format/GeoJSON';
 
 
 @Component({
@@ -114,7 +114,8 @@ export class OpenLayerComponent implements OnInit {
 
         return function(feature:any){
           // let a = feature.getGeometry.getType()
-          switch (feature.getGeometry.getType()) {
+           console.log(feature.getGeometry().getType());
+          switch (feature.getGeometry()?.getType()) {
             case 'Point':
               return new Style({image: pointCircule});;
             case 'Polygon':
@@ -214,7 +215,7 @@ export class OpenLayerComponent implements OnInit {
       let MultiPoint = point;
       let GeometryCollection = poligon.concat(point);
       return function (feature:any) {
-        switch (feature.getGeometry.getType()) {
+        switch (feature.getGeometry()?.getType()) {
           case 'Point':
             return point;
           case 'Polygon':
@@ -243,11 +244,12 @@ export class OpenLayerComponent implements OnInit {
       })
 
       const source = new VectorSource({
-        //features: new GeoJSON().readFeatures(geojsonObject),
+        features: new GeoJSON().readFeatures(geojsonObject),
       });
 
       const layer = new VectorLayer({
-        source: source,  
+        source: this.pointSource(),  
+      //  source: source,
         style: styleFunction,      
       })
 
@@ -269,6 +271,7 @@ export class OpenLayerComponent implements OnInit {
       geometry: new Point(
           fromLonLat([ -49.214693124336485, -25.416153150651212 ])
       ),
+     type: 'Point',
     });
     this.marcatores.push(marcador);
     let sou = new VectorSource({
