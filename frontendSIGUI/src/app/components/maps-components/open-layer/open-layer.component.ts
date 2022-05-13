@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -12,11 +14,13 @@ import VectorLayer from 'ol/layer/Vector';
 import { Geometry } from 'ol/geom';
 import Point  from 'ol/geom/Point';
 import Draw from 'ol/interaction/Draw'
-import { fromLonLat , transform} from 'ol/proj';
+import {DrawEvent} from 'ol/interaction/Draw'
+import { fromLonLat , toLonLat, transform} from 'ol/proj';
 import {Style, Stroke, Icon, Fill} from 'ol/style';
-import { MapBrowserEvent, Feature } from 'ol';
-import { Coordinate } from 'ol/coordinate';
+import { MapBrowserEvent, Feature, Overlay } from 'ol';
+import { Coordinate, toStringHDMS } from 'ol/coordinate';
 import { Modify , Select, defaults as defaultInteraction} from 'ol/interaction'
+//import {SelectFeature} from 'ol/control/Control/SelectFeature'
 import Layer from 'ol/layer/Layer';
 import { style } from '@angular/animations';
 import CircleStyle from 'ol/style/Circle';
@@ -28,119 +32,172 @@ import GeoJSON from 'ol/format/GeoJSON';
   templateUrl: './open-layer.component.html',
   styleUrls: ['./open-layer.component.css']
 })
-export class OpenLayerComponent implements OnInit {
+export class OpenLayerComponent implements OnInit, AfterViewInit {
 
+  @ViewChild('popup',{static:false}) divPopup!: ElementRef<HTMLElement>;
+  @ViewChild('popupContent',{static:false}) popupContent!: ElementRef<HTMLElement>;
+  @ViewChild('popupCloser',{static:false}) popupCloser!: ElementRef;
+  edited:boolean = true;
+
+
+  coordenadaPoint!:string
+  overlay!: Overlay
   map!: Map
+  insert_Infra!: boolean
+  layerSource!: VectorLayer<VectorSource<Geometry>>
+  layerIteration!: VectorLayer<VectorSource<Geometry>>
   source!: VectorSource<Geometry>
+  featureState!: Feature<Geometry>[];
+  styleFunction!: any;
+  overlayStyle!: any;
   draw!: Draw;  
   marcatores:Feature<Point>[] = [];
   pointMarcator = '/assets/images/logoSIGUi.png';  
 
-  ngOnInit(): void { 
-    this.mapConstruct();
+  constructor(private renderer:Renderer2){
+
   }
 
-  mapConstructing():void{
+  ngOnInit(): void { 
+    this.mapConstruct();   
+    this.insert_Infra = false;
 
-    const attributions =
-    '<a href="" target="_blank">&copy; SIGUI</a> ' +
-    '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
-
-    const raster:TileLayer<OSM> = new TileLayer({
-        source: new XYZ({
-        attributions: attributions,
-        url: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.jpg90?access_token=pk.eyJ1IjoibmF0YXNpZ3VpIiwiYSI6ImNsMTB1bG1iYjJja3EzbG11NG94dHA4MDkifQ.h6yseMwoU1s1NBiqQ5RPIQ'
-      }),
-    });
-
-    const geoserver:TileLayer<TileWMS> = new TileLayer({
-      source: new TileWMS({
-        url: 'http://192.168.56.103:8080/geoserver/wms',
-        params: {LAYERS: 'sigui.server:Curitiba', TILED: true},
-        serverType: 'geoserver',
-      })
+  }
+  ngAfterViewInit(){
+   // this.renderer.setProperty(this.divPopup.nativeElement,'innerHTML','Hello Angular');
+    const container:HTMLElement = this.divPopup.nativeElement;
+    console.log(container)
+    this.overlay = new Overlay({
+      element : container,
+      position: undefined,
+        autoPan: {
+          animation: {
+            duration: 250,
+          }
+        }
     })
+    this.map.addOverlay(this.overlay)
+    
+  }  
 
-    const debug:TileLayer<TileDebug> = new TileLayer({
-      source: new TileDebug(),
-    })
+  closerPopupClick(){
+    this.overlay.setPosition(undefined);
+   // this.popupCloser.nativeElement.blur();
+   return false;
+  }
 
-    this.source= new VectorSource({wrapX: false});
+  addStyleMap():void{
 
-    const styleFunction = function (feature:any){
-      console.log(feature);
-      const geometry = feature.getGeometry();
-      const styles = [
-        // linestring
+    this.styleFunction = (function () {
+
+      const pointCircule = new CircleStyle({
+        radius: 5,
+        fill: undefined,
+        stroke: new Stroke({color:'orange',width: 2}),
+      });
+     //const styles = {} 
+      //const point:Style = new Style({image: pointCircule});
+
+      return function(feature:any){
+        // let a = feature.getGeometry.getType()
+         console.log(feature.getGeometry().getType());
+        switch (feature.getGeometry()?.getType()) {
+          case 'Point':
+            return new Style({image: pointCircule});;
+          case 'Polygon':
+            return new Style({
+              stroke: new Stroke({
+                color:'blue',
+                width: 3,
+              }),
+              fill: new Fill({
+                color: 'rgba(0,0,255,0.1)'
+              })
+          });                       
+          default:
+            return new Style({
+              stroke: new Stroke({
+                color:'red',
+                width: 3,
+              }),
+              fill: new Fill({
+                color: 'rgba(255,0,0,0.1)'
+              })
+          });  
+        }
+      }
+    })();  
+  }
+ 
+  mapOverlayStyle():void{
+    this.overlayStyle = (function (){ 
+      let poligon = [
+        new Style({
+          fill: new Fill({
+            color: 'rgba(255,255,255,0.5)'
+          }),
+        }),
         new Style({
           stroke: new Stroke({
-            color: '#ffcc33',
-            width: 20,
+            color: 'rgba(255,255,255,1)',
+            width: 5,
+          }),
+        }),
+        new Style({
+          stroke: new Stroke({
+            color: 'rgba(255,255,255,1)',
+            width: 3,
           }),
         }),
       ];
-      return styles
-    }
-
-    const vector:VectorLayer<VectorSource<Geometry>> = new VectorLayer({
-      source: this.source,
-      style: styleFunction,
-    });
-
-    this.map = new Map({
-      view: new View({
-        // projection: 'EPSG:38',
-        center: [ -5480159.755742349, -2930312.646903647 ], // 
-        // center: [19.413793,-99.128145],
-        zoom: 12,
+      let MultiPolygon = poligon;
+      let LineString = [
+      new Style({
+        stroke: new Stroke({
+          color: 'rgba(255,255,255,1)',
+          width: 5,
+        }),
       }),
-      layers:[raster,debug,vector],
-      target: 'ol-map'
-    }); 
-    this.map.on('singleclick', (evt) => this.onClickMap(evt))    
+      new Style({
+        stroke: new Stroke({
+          color: 'rgba(0,153,255,1)',
+          width: 3,
+        }),
+      }),
+    ];
+    let MultiLineString = LineString;
+    let point = [
+      new Style({
+        image: new CircleStyle({
+          radius: 7,
+          fill: new Fill({
+            color: [0,153,255,1],
+          }),
+          stroke: new Stroke({
+            color: 'rgba(0,153,255,1)',
+            width: 3,
+          }),
+        }),
+        zIndex: 100000,
+      }),
+    ];
+    let MultiPoint = point;
+    let GeometryCollection = poligon.concat(point);
+    return function (feature:any) {
+      switch (feature.getGeometry()?.getType()) {
+        case 'Point':
+          return point;
+        case 'Polygon':
+          return poligon;               
+        default:
+          return GeometryCollection;
+      };  
+    }
+    })();
+
   }
 
-  mapConstruct():void{
-
-      const styleFunction = (function () {
-
-        const pointCircule = new CircleStyle({
-          radius: 5,
-          fill: undefined,
-          stroke: new Stroke({color:'orange',width: 2}),
-        });
-       //const styles = {} 
-        //const point:Style = new Style({image: pointCircule});
-
-        return function(feature:any){
-          // let a = feature.getGeometry.getType()
-           console.log(feature.getGeometry().getType());
-          switch (feature.getGeometry()?.getType()) {
-            case 'Point':
-              return new Style({image: pointCircule});;
-            case 'Polygon':
-              return new Style({
-                stroke: new Stroke({
-                  color:'blue',
-                  width: 3,
-                }),
-                fill: new Fill({
-                  color: 'rgba(0,0,255,0.1)'
-                })
-            });                       
-            default:
-              return new Style({
-                stroke: new Stroke({
-                  color:'red',
-                  width: 3,
-                }),
-                fill: new Fill({
-                  color: 'rgba(255,0,0,0.1)'
-                })
-            });  
-          }
-        }
-      })();  
+  mapConstruct():void{      
 
       const geojsonObject = {
         'type': 'FeatureCollection',
@@ -161,78 +218,17 @@ export class OpenLayerComponent implements OnInit {
         ],
       }
 
-      const overlayStyle = (function (){ 
-        let poligon = [
-          new Style({
-            fill: new Fill({
-              color: 'rgba(255,255,255,0.5)'
-            }),
-          }),
-          new Style({
-            stroke: new Stroke({
-              color: 'rgba(255,255,255,1)',
-              width: 5,
-            }),
-          }),
-          new Style({
-            stroke: new Stroke({
-              color: 'rgba(255,255,255,1)',
-              width: 3,
-            }),
-          }),
-        ];
-        let MultiPolygon = poligon;
-        let LineString = [
-        new Style({
-          stroke: new Stroke({
-            color: 'rgba(255,255,255,1)',
-            width: 5,
-          }),
-        }),
-        new Style({
-          stroke: new Stroke({
-            color: 'rgba(0,153,255,1)',
-            width: 3,
-          }),
-        }),
-      ];
-      let MultiLineString = LineString;
-      let point = [
-        new Style({
-          image: new CircleStyle({
-            radius: 7,
-            fill: new Fill({
-              color: [0,153,255,1],
-            }),
-            stroke: new Stroke({
-              color: 'rgba(0,153,255,1)',
-              width: 3,
-            }),
-          }),
-          zIndex: 100000,
-        }),
-      ];
-      let MultiPoint = point;
-      let GeometryCollection = poligon.concat(point);
-      return function (feature:any) {
-        switch (feature.getGeometry()?.getType()) {
-          case 'Point':
-            return point;
-          case 'Polygon':
-            return poligon;               
-          default:
-            return GeometryCollection;
-        };  
-      }
-      })();
+      this.addStyleMap()
+
+
 
       const select = new Select({
-        style : overlayStyle, 
+        style : this.overlayStyle, 
       })
 
       const modify = new Modify({
         features: select.getFeatures(),
-        style: overlayStyle,
+        style: this.overlayStyle,
         insertVertexCondition: function(){
           return !select
             .getFeatures()
@@ -247,15 +243,17 @@ export class OpenLayerComponent implements OnInit {
         features: new GeoJSON().readFeatures(geojsonObject),
       });
 
-      const layer = new VectorLayer({
+      this.layerSource = new VectorLayer({
         source: this.pointSource(),  
       //  source: source,
-        style: styleFunction,      
+        style: this.styleFunction,      
       })
 
+//////
+
       this.map = new Map({
-        interactions: defaultInteraction().extend([select,modify]),
-        layers: [layer],
+       interactions: defaultInteraction().extend([select,modify]),
+       // layers: [layer],
         target: 'ol-map',
         view: new View({
           center: [ -5480159.755742349, -2930312.646903647 ],
@@ -263,8 +261,91 @@ export class OpenLayerComponent implements OnInit {
           multiWorld: true,
         }),
       })
+
+      this.map.on('singleclick', (evt) => this.onClickMap(evt))    
+
+      // const select: SelectFeature = new selectFea 
+
+     // this.addTileLayerOSM();
+      this.addTileLayerGeoserver();
+      this.map.addLayer( this.layerSource );
+      this.addVetorIterationTile();
+
+      // this.map.on('singleclick', function (evt) {
+      //   var a = evt.get
+        
+      // })
   }
 
+  getAttributions():string{
+    const attributions:string =
+    '<a href="" target="_blank">&copy; SIGUI</a> ' +
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>';
+
+    return attributions
+  }
+
+  addTileLayerOSM():void{
+
+   
+    const raster:TileLayer<OSM> = new TileLayer({
+        source: new XYZ({
+        attributions: this.getAttributions(),
+        url: environment.serverTiledMapServer,
+      }),
+    });
+      this.map.addLayer(raster);
+    //  raster.setVisible(false);
+  } 
+  addTileLayerGeoserver():void{
+
+    const geoserver:TileLayer<TileWMS> = new TileLayer({
+      source: new TileWMS({
+        attributions:this.getAttributions(),
+        url: environment.serverTiledGeoserver,
+        params: {LAYERS: environment.tileLayer, TILED: true},
+        serverType: 'geoserver',
+      })
+    })
+      this.map.addLayer(geoserver);    
+  } 
+  addTileLayerDebug():void{
+    const debug:TileLayer<TileDebug> = new TileLayer({
+      source: new TileDebug(),
+    })
+  }
+
+  addVetorIterationTile():void{
+    this.source= new VectorSource({wrapX: false});
+
+    const styleFunction = function (feature:any){
+      console.log('aaa' + feature);
+      const geometry = feature.getGeometry();
+      const style = new Style({
+        fill: new Fill({
+          color: 'rgba(255, 255, 255, 0.2)',
+        }),
+        stroke: new Stroke({
+          color: '#ffcc33',
+          width: 2,
+        }),
+        image: new CircleStyle({
+          radius: 7,
+          fill: new Fill({
+            color: '#ffcc33',
+          }),
+        }),
+      })
+      return style
+    }
+
+    this.layerIteration = new VectorLayer({
+      source: this.source,
+      style: styleFunction,
+    });
+
+    this.map.addLayer(this.layerIteration);  
+  }
 
   pointSource(): VectorSource{
     let marcador = new Feature({
@@ -285,10 +366,32 @@ export class OpenLayerComponent implements OnInit {
     if(value !== 'None')
     {
       this.draw = new Draw({
-        source:this.pointSource(),
+        source:this.layerIteration.getSource()!,
         type:value        
       });
       this.map.addInteraction(this.draw)
+
+      this.draw.on('drawend', (event:DrawEvent) => {//drawevent
+        var feature = event.feature;
+        var features = this.layerIteration.getSource()!.getFeatures();
+        features = features.concat(feature);
+        this.featureState = features;
+        console.log('deu certo');
+        console.log( this.featureState );
+        /*console.log('deu certo');
+        console.log(features);
+        var geo = features[0].getGeometry();
+        console.log(geo);
+        var geojson_parser = new GeoJSON();
+        var VectorLayerJson = geojson_parser.writeFeatures(features);
+        console.log('VectorLayerJson');
+        console.log(VectorLayerJson);
+        var geometryJson = geojson_parser.writeGeometry(features[0].getGeometry()!);
+        console.log('geometryJson');
+        console.log(geometryJson);
+        console.log(features[0].getId);*/
+
+      } )
     }
   }
   interactionMapChange(value:string): void{
@@ -299,13 +402,6 @@ export class OpenLayerComponent implements OnInit {
     console.log('onUndo')
     this.draw.removeLastPoint(); 
     //console.log(this.map.getInteractions())
-  }
-  onClickMap(evt:MapBrowserEvent<any>): void{
-    var clickedCoordinate = transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
-    console.log(evt.coordinate)
-    console.log('onClick')
-    console.log(clickedCoordinate)
-    this.pointMarcatorMapRegister(clickedCoordinate);
   }
   pointMapRegister(): void{
     console.log('Register');
@@ -327,6 +423,28 @@ export class OpenLayerComponent implements OnInit {
       }),
     });
     this.map.addLayer(capa);
+  }
+  onClickMap(evt:MapBrowserEvent<any>): void{      
+   
+    console.log('onClick')
+    let marcator = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {
+      let vertice:Point= <Point>feature.getGeometry();
+      let coordinatePoint:Coordinate= vertice.getCoordinates();
+      console.log('Coord')
+      console.log(coordinatePoint)     
+      this.overlay.setPosition(coordinatePoint); 
+      this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+      return feature;
+    });
+   
+    if (marcator === undefined)
+    {
+      let coordinate:Coordinate = evt.coordinate;
+      this.overlay.setPosition(coordinate); 
+      var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
+      this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+    }
+   // console.log(marcator)
   }
   pointMarcatorMapRegister(coordinate:Coordinate): void{
     console.log('Register');
@@ -351,6 +469,10 @@ export class OpenLayerComponent implements OnInit {
       }),
     });
     this.map.addLayer(capa);
+  }
+  enableDivInfra():void{
+    console.log('click infra')
+    this.edited = !this.edited;
   }
   
 }

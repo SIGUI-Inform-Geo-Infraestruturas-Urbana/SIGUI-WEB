@@ -47,7 +47,7 @@ export class ControlMapComponent implements OnInit {
     this.DrawMap.emit();
   }
   onDrawChanged(value:number):void{
-    let itemSelected:string = this.optionsDraws[value].name
+    let itemSelected:string = this.optionsDraws[value - 1].name
     console.log(itemSelected)
     this.DrawMap.emit(itemSelected);
   }  

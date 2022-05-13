@@ -11,7 +11,7 @@ import { FormatterCoordinatesService } from '../../../services/formatter-coordin
 @Component({
   selector: 'app-mouse-position',
   template: ``,
-  styles: [],
+  styleUrls: ['./mouse-position.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MousePositionComponent implements OnInit {
