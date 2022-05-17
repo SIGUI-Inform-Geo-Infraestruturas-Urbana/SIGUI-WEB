@@ -17,12 +17,14 @@ from posixpath import basename
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers 
-from app_maps.api import viewsets as layersViewSet
+# from app_maps.api import viewsets as layersViewSet
 
-route = routers.DefaultRouter()
-route.register(r'layer',layersViewSet.LayersViewSet,basename="Layers")
+
+# route = routers.DefaultRouter()
+# route.register(r'layer',layersViewSet.LayersViewSet,basename="Layers")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(route.urls))
+    path('api/', include('app_maps.urls')),
+    #path('',include(route.urls))
 ]

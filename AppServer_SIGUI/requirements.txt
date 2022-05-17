@@ -8,6 +8,7 @@ gsconfig-py3==1.0.8
 idna==3.3
 psycopg2-binary==2.9.3
 pytz==2022.1
+PyYAML==6.0
 requests==2.27.1
 sqlparse==0.4.2
 urllib3==1.26.9
