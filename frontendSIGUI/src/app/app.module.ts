@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { MatSliderModule} from '@angular/material/slider'
-import { MatButtonModule} from '@angular/material/button'
+import { MatSliderModule} from '@angular/material/slider';
+import { MatButtonModule} from '@angular/material/button';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input';
+import { MatSelectModule} from '@angular/material/select';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
@@ -20,6 +23,13 @@ import { PageNotFoundComponent } from './components/angular-components/page-not-
 import { FormsMapComponent } from './components/maps-components/forms-map/forms-map.component';
 import { MousePositionComponentComponent } from './components/maps-components/mouse-position-component/mouse-position-component.component';
 import { MousePositionComponent } from './components/maps-components/mouse-position/mouse-position.component';
+import { NavigationmenuComponent } from './components/angular-components/navigationmenu/navigationmenu.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MapIterationsComponent } from './components/maps-components/map-iterations/map-iterations.component';
 
 @NgModule({
   declarations: [
@@ -33,10 +43,15 @@ import { MousePositionComponent } from './components/maps-components/mouse-posit
     FormsMapComponent,
     MousePositionComponentComponent,
     MousePositionComponent,
+    NavigationmenuComponent,
+    MapIterationsComponent,
   ],
   imports: [
     MatSliderModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([
@@ -48,7 +63,12 @@ import { MousePositionComponent } from './components/maps-components/mouse-posit
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [DecimalPipe],
   bootstrap: [AppComponent]

@@ -5,7 +5,7 @@ import ControlScaleLine from 'ol/control/ScaleLine';
 @Component({
   selector: 'app-scaleline',
   template: ``,
-  styleUrls: ['./scaleline.component.css'],
+  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ScalelineComponent implements OnInit {

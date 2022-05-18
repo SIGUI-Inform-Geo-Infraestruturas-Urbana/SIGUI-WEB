@@ -17,7 +17,7 @@ import Draw from 'ol/interaction/Draw'
 import {DrawEvent} from 'ol/interaction/Draw'
 import { fromLonLat , toLonLat, transform} from 'ol/proj';
 import {Style, Stroke, Icon, Fill} from 'ol/style';
-import { MapBrowserEvent, Feature, Overlay } from 'ol';
+import { MapBrowserEvent, Feature } from 'ol';
 import { Coordinate, toStringHDMS } from 'ol/coordinate';
 import { Modify , Select, defaults as defaultInteraction} from 'ol/interaction'
 //import {SelectFeature} from 'ol/control/Control/SelectFeature'
@@ -27,27 +27,24 @@ import CircleStyle from 'ol/style/Circle';
 import GeoJSON from 'ol/format/GeoJSON';
 
 
+
 @Component({
   selector: 'app-open-layer',
   templateUrl: './open-layer.component.html',
   styleUrls: ['./open-layer.component.css']
 })
-export class OpenLayerComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('popup',{static:false}) divPopup!: ElementRef<HTMLElement>;
-  @ViewChild('popupContent',{static:false}) popupContent!: ElementRef<HTMLElement>;
-  @ViewChild('popupCloser',{static:false}) popupCloser!: ElementRef;
-  edited:boolean = true;
-
+export class OpenLayerComponent implements OnInit {
 
   coordenadaPoint!:string
-  overlay!: Overlay
+
   map!: Map
+  edited:boolean = true;
   insert_Infra!: boolean
   layerSource!: VectorLayer<VectorSource<Geometry>>
   layerIteration!: VectorLayer<VectorSource<Geometry>>
   source!: VectorSource<Geometry>
   featureState!: Feature<Geometry>[];
+  featureSelect!:Feature;
   styleFunction!: any;
   overlayStyle!: any;
   draw!: Draw;  
@@ -62,28 +59,84 @@ export class OpenLayerComponent implements OnInit, AfterViewInit {
     this.mapConstruct();   
     this.insert_Infra = false;
 
-  }
-  ngAfterViewInit(){
-   // this.renderer.setProperty(this.divPopup.nativeElement,'innerHTML','Hello Angular');
-    const container:HTMLElement = this.divPopup.nativeElement;
-    console.log(container)
-    this.overlay = new Overlay({
-      element : container,
-      position: undefined,
-        autoPan: {
-          animation: {
-            duration: 250,
-          }
-        }
-    })
-    this.map.addOverlay(this.overlay)
-    
-  }  
+  }   
 
-  closerPopupClick(){
-    this.overlay.setPosition(undefined);
-   // this.popupCloser.nativeElement.blur();
-   return false;
+  mapConstruct():void{      
+
+      const geojsonObject = {
+        'type': 'FeatureCollection',
+        'crs': {
+          'type': 'name',
+          'properties': {
+            'name': 'EPSG:3857',
+          },
+        },
+        'features': [
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [4e6, -5e6],
+            },
+          },
+        ],
+      }
+
+      this.addStyleMap();
+
+      const select = new Select({
+        style : this.overlayStyle, 
+      })
+
+      const modify = new Modify({
+        features: select.getFeatures(),
+        style: this.overlayStyle,
+        insertVertexCondition: function(){
+          return !select
+            .getFeatures()
+            .getArray()
+            .every(function (feature) {
+              return feature.getGeometry()?.getType().match('/Polygon/');
+            })
+        }
+      })
+
+      const source = new VectorSource({
+        features: new GeoJSON().readFeatures(geojsonObject),
+      });
+
+      this.layerSource = new VectorLayer({
+        source: this.pointSource(),  
+      //  source: source,
+        style: this.styleFunction,      
+      })
+
+//////
+
+      this.map = new Map({
+       interactions: defaultInteraction().extend([select,modify]),
+       // layers: [layer],
+        target: 'ol-map',
+        view: new View({
+          center: [ -5480159.755742349, -2930312.646903647 ],
+          zoom: 12,
+          multiWorld: true,
+        }),
+      })
+
+      // this.map.on('singleclick', (evt) => this.onClickMap(evt))    
+
+      // const select: SelectFeature = new selectFea 
+
+     // this.addTileLayerOSM();
+      this.addTileLayerGeoserver();
+      this.map.addLayer( this.layerSource );
+      this.addVetorIterationTile();
+
+      // this.map.on('singleclick', function (evt) {
+      //   var a = evt.get
+        
+      // })
   }
 
   addStyleMap():void{
@@ -197,85 +250,6 @@ export class OpenLayerComponent implements OnInit, AfterViewInit {
 
   }
 
-  mapConstruct():void{      
-
-      const geojsonObject = {
-        'type': 'FeatureCollection',
-        'crs': {
-          'type': 'name',
-          'properties': {
-            'name': 'EPSG:3857',
-          },
-        },
-        'features': [
-          {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'Point',
-              'coordinates': [4e6, -5e6],
-            },
-          },
-        ],
-      }
-
-      this.addStyleMap()
-
-
-
-      const select = new Select({
-        style : this.overlayStyle, 
-      })
-
-      const modify = new Modify({
-        features: select.getFeatures(),
-        style: this.overlayStyle,
-        insertVertexCondition: function(){
-          return !select
-            .getFeatures()
-            .getArray()
-            .every(function (feature) {
-              return feature.getGeometry()?.getType().match('/Polygon/');
-            })
-        }
-      })
-
-      const source = new VectorSource({
-        features: new GeoJSON().readFeatures(geojsonObject),
-      });
-
-      this.layerSource = new VectorLayer({
-        source: this.pointSource(),  
-      //  source: source,
-        style: this.styleFunction,      
-      })
-
-//////
-
-      this.map = new Map({
-       interactions: defaultInteraction().extend([select,modify]),
-       // layers: [layer],
-        target: 'ol-map',
-        view: new View({
-          center: [ -5480159.755742349, -2930312.646903647 ],
-          zoom: 12,
-          multiWorld: true,
-        }),
-      })
-
-      this.map.on('singleclick', (evt) => this.onClickMap(evt))    
-
-      // const select: SelectFeature = new selectFea 
-
-     // this.addTileLayerOSM();
-      this.addTileLayerGeoserver();
-      this.map.addLayer( this.layerSource );
-      this.addVetorIterationTile();
-
-      // this.map.on('singleclick', function (evt) {
-      //   var a = evt.get
-        
-      // })
-  }
 
   getAttributions():string{
     const attributions:string =
@@ -378,6 +352,7 @@ export class OpenLayerComponent implements OnInit, AfterViewInit {
         this.featureState = features;
         console.log('deu certo');
         console.log( this.featureState );
+
         /*console.log('deu certo');
         console.log(features);
         var geo = features[0].getGeometry();
@@ -424,28 +399,7 @@ export class OpenLayerComponent implements OnInit, AfterViewInit {
     });
     this.map.addLayer(capa);
   }
-  onClickMap(evt:MapBrowserEvent<any>): void{      
-   
-    console.log('onClick')
-    let marcator = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {
-      let vertice:Point= <Point>feature.getGeometry();
-      let coordinatePoint:Coordinate= vertice.getCoordinates();
-      console.log('Coord')
-      console.log(coordinatePoint)     
-      this.overlay.setPosition(coordinatePoint); 
-      this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
-      return feature;
-    });
-   
-    if (marcator === undefined)
-    {
-      let coordinate:Coordinate = evt.coordinate;
-      this.overlay.setPosition(coordinate); 
-      var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
-      this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
-    }
-   // console.log(marcator)
-  }
+ 
   pointMarcatorMapRegister(coordinate:Coordinate): void{
     console.log('Register');
     const a =  fromLonLat(coordinate)
@@ -470,9 +424,16 @@ export class OpenLayerComponent implements OnInit, AfterViewInit {
     });
     this.map.addLayer(capa);
   }
-  enableDivInfra():void{
-    console.log('click infra')
-    this.edited = !this.edited;
+
+  enableDivAssociationInfra (feature:Feature):void{
+    console.log('eventoRecebido')
+    console.log(feature)
+    if (feature != undefined)
+    {
+      this.featureSelect = feature;
+      this.edited = this.edited;
+    }
   }
+
   
 }

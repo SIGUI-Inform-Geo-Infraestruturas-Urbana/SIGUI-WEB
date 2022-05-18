@@ -1,12 +1,19 @@
 {
-    "poits": [{
-      "id": 1,
-      "name": "Marcador1",
-      "coordenada": "123"
-    }, 
+  "equipaments": [
     {
-        "id": 2,
-        "name": "Marcador2",
-        "coordenada": "456"
-    }]
+      "id": 1,
+      "value": "string",
+      "viewValue": "string"
+    },
+    {
+      "id": 2,
+      "value": "string",
+      "viewValue": "string"
+    },
+    {
+      "id": 3,
+      "value": "aaaa",
+      "viewValue": "bbbbb"
+    }
+  ]
 }

@@ -7,33 +7,14 @@
     </div>
     <div class="map-container-area">
         <div class="map-container">     
-            <app-map [map]="map"></app-map>
-            <div #popup class="ol-popup">    
-                <a #popupCloser href="#" class="ol-popup-closer"></a>
-                <div #popupContent class="ol-popup-content">
-                    <h3>
-                        Opções para o Vertice:
-                    </h3>
-                    <div>
-                        <label for="btn_AdicionarInfra">Adicionar/Associar</label>
-                        <button id="btn_AdicionarInfra" type="=button" (click)="enableDivInfra()"> Infraestrutura </button>
-                    </div>
-                    <div>
-                        <label for="btn_AdicionarRede">Associar</label>
-                        <button id="btn_AdicionarRede" type="=button" (click)="enableDivInfra()"> Rede </button>
-                    </div>
-                    <div>
-                        <label for="btn_AdicionarCoorde">Coordenada</label>
-                        <label id="btn_AdicionarCoorde">{{coordenadaPoint}}</label>
-                    </div>          
-                </div>   
-            </div>     
+            <app-map [map]="map"></app-map>  
+            <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)"></app-map-iterations>         
         </div>
         <app-scaleline [map]="map"></app-scaleline>
         <app-mouse-position [map]="map"></app-mouse-position>
     </div>
     <div *ngIf="edited" class="inner_elements_body">        
-        <app-forms-map (marcatorMap)="pointMapRegister()"></app-forms-map>
+        <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
     </div>
 </div>
 

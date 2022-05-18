@@ -9,8 +9,13 @@
 #         return "aaaaaa"#Response(usernames)
 
 from rest_framework import viewsets 
-from app_maps.api import serializers
+from .serializers import InfraestruturaSerializer
 from app_maps import models
-class LayersViewSet(viewsets.ModelViewSet):
-    serializer_class = serializers.LayersSerializer
-    queryset = models.Layers.objects.all()
+
+# class LayersViewSet(viewsets.ModelViewSet):
+#     serializer_class = serializers.LayersSerializer
+#     queryset = models.Layers.objects.all()
+
+class InfraestruturaViewSet(viewsets.ModelViewSet):
+    serializer_class = InfraestruturaSerializer
+    queryset = models.Infrastructure.objects.all()

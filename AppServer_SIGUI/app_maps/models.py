@@ -1,4 +1,4 @@
-from django.db import models
+from django.contrib.gis.db import models
 from uuid import uuid4
 
 # Create your models here.
@@ -15,4 +15,15 @@ class Equipament(models.Model):
 
     # def __str__(self):
     #     return self.value
+class Infrastructure(models.Model):
+     id = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+     nomeInfraestructure = models.CharField(max_length=80)
+     idDetentor = models.IntegerField()
+     position = models.PointField()
+     
+
+     class Meta:
+         managed = False
+         db_table = 'app_maps_infrastructure'
+
     
