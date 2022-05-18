@@ -1,11 +1,25 @@
-<div>
-  <app-top-header></app-top-header>
-</div>
-<div class="content">
-  <nav>
-  <a class="button" routerLink="/map-view">MapView</a>
-  </nav>
-  <router-outlet></router-outlet>
-</div>
+<header>
+  <app-navheadersigui (ActiveSideNav)="activeSideNav()"></app-navheadersigui>
+</header>
+<mat-drawer-container>
+  <mat-drawer #drawer class="nav-container" mode="side" [opened]="isShowing">
+    <button [routerLink]="['/user-zone']" mat-button class="button-nav">
+      Home
+    </button> 
+    <button [routerLink]="['/map-view']" mat-button class="button-nav">
+      Dados Espaciais
+    </button> 
+    <p *ngIf="showFiller">teste</p>
+    <button (click)="showFiller = !showFiller" mat-button class="button-nav">
+      Button teste
+    </button> 
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
+
 
 

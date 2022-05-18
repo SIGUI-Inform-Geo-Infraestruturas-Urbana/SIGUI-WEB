@@ -1,19 +1,19 @@
 <form [formGroup]="controlMapForm" (ngSubmit)="onSubmit()">
 <div>
     <div class="componets-horizontal">
-        <label for="firstName">Imput teste</label>
+        <label>Pesquisar Local</label>
         <input type="text" id="firstName" name="firstName" formControlName="firstName">
     </div>
     <div class="componets-horizontal">
         <label for="zoomMap">Zoom Map</label>
-        <button id="zoomMap" (click)="ZoomMap()">Zoom</button>
+        <button mat-raised-button color="primary" id="zoomMap" (click)="ZoomMap()">Search</button>
     </div>
     <div class="componets-horizontal">
-        <label for="btn_submit">Submiter</label>
-        <button id="btn_submit" type="submit">submit</button>
+        <label for="zoomMap">Zoom Map</label>
+        <button mat-raised-button color="primary" id="zoomMap" (click)="ZoomMap()">Zoom</button>
     </div>
     <div class="componets-horizontal">
-        <label for="zoomMap">Select Draw</label>
+        <label for="selectDraw">Select Draw</label>
         <select id="selectDraw" name="selectDraw" formControlName="selectDraw">
             <option [ngValue]="null" disabled> Select Draw</option>
             <option *ngFor="let selectDraw of optionsDraws" [ngValue]="selectDraw.id">{{selectDraw.name}}</option>
@@ -21,7 +21,7 @@
     </div>
     <div class="componets-horizontal">
         <label for="btn_undo">Desfazer Nó</label>
-        <button id="btn_undo" (click)="onUndo()">Apagar</button>
+        <button mat-raised-button color="primary" id="btn_undo" (click)="onUndo()">Apagar</button>
     </div>
 </div>
 </form>

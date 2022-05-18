@@ -1,11 +1,15 @@
 <div class="content_body">
-    <div class="inner_elements_body"> 
-        <h2>MAPEAMENTO</h2>
-        <p>open-layer works!</p>
-        <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
-        (UndoMap)="removeMapPoint()" ></app-control-map>
+    <div class="inner-elements-header">
+        <div class="inner_elements_body"> 
+            <h2>Gerenciar Dados Espaciais</h2>
+            <p>Adicionar, Editar e Vizualizar dados Espaciais</p>
+        </div>
     </div>
     <div class="map-container-area">
+        <div class="inner_elements_body"> 
+            <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
+            (UndoMap)="removeMapPoint()" ></app-control-map>
+        </div>
         <div class="map-container">     
             <app-map [map]="map"></app-map>  
             <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)"></app-map-iterations>         
@@ -13,8 +17,11 @@
         <app-scaleline [map]="map"></app-scaleline>
         <app-mouse-position [map]="map"></app-mouse-position>
     </div>
-    <div *ngIf="edited" class="inner_elements_body">        
-        <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
+    <div>
+        <div *ngIf="edited">        
+            <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
+        </div>
     </div>
+
 </div>
 

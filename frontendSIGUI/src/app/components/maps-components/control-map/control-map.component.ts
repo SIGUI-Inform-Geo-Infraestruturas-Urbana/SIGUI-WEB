@@ -1,7 +1,13 @@
 import { Component, OnInit, Input, Renderer2 ,ElementRef, Output , EventEmitter} from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import { View } from 'ol';
 import Map from 'ol/Map';
+
+export interface User {
+  name: string;
+}
 
 @Component({
   selector: 'app-control-map',
@@ -15,6 +21,11 @@ export class ControlMapComponent implements OnInit {
   @Output() UndoMap: EventEmitter<string> = new EventEmitter();
   controlMapForm!: FormGroup;
 
+
+  options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
+  filteredOptions!: Observable<User[]>;
+
+
   optionsDraws = [
     {id: 1, name:'Point'},
     {id: 2, name:'LineString'},
@@ -27,10 +38,11 @@ export class ControlMapComponent implements OnInit {
 
   ngOnInit(): void {
     this.controlMapForm = new FormGroup({
-      firstName: new FormControl(this.optionsDraws[1].name),
-      selectDraw: new FormControl(),//this.optionsDraws[0].id
+        selectDraw: new FormControl(),//this.optionsDraws[0].id
     });
     this.controlMapForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onDrawChanged(f)})
+    
+    
   }
 
   ZoomMap():void{

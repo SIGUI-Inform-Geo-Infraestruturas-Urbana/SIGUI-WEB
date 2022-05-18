@@ -5,6 +5,7 @@ import { MatButtonModule} from '@angular/material/button';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
 import { MatSelectModule} from '@angular/material/select';
+import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
@@ -30,6 +31,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MapIterationsComponent } from './components/maps-components/map-iterations/map-iterations.component';
+import { NavheadersiguiComponent } from './components/angular-components/navheadersigui/navheadersigui.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { MapIterationsComponent } from './components/maps-components/map-iterati
     MousePositionComponent,
     NavigationmenuComponent,
     MapIterationsComponent,
+    NavheadersiguiComponent,
   ],
   imports: [
     MatSliderModule,
@@ -52,6 +55,7 @@ import { MapIterationsComponent } from './components/maps-components/map-iterati
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatAutocompleteModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([

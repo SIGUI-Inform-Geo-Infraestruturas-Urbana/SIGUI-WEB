@@ -1,12 +1,15 @@
 <!-- <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">  -->
-    <div>
-        <h3> ADICIONAR INFRAESTRUTURA </h3>
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Adicionar/Associar Infraestrutura</h2>
+        </div>
     </div>
-        <!-- <label for="input_nameInfra">Identificador da Infraestrutura </label>
-        <input type="text" id="input_nameInfra" name="input_nameInfra" formControlName="firstName"> -->
+    <div class="inner_elements_body">        
+            <!-- <label for="input_nameInfra">Identificador da Infraestrutura </label>
+            <input type="text" id="input_nameInfra" name="input_nameInfra" formControlName="firstName"> -->
         <mat-form-field appearance="fill" style="width: 35%;">
-              <mat-label>Nome da Infraestrtura</mat-label>
-              <input matInput value="Nome">
+            <mat-label>Nome da Infraestrtura</mat-label>
+            <input matInput value="Nome">
         </mat-form-field>
         <mat-form-field appearance="fill" style="width: 35%;">
             <mat-label>Detentor</mat-label>
@@ -16,48 +19,49 @@
                 </mat-option>
             </mat-select>            
         </mat-form-field> 
-    <div>        
-        <mat-form-field appearance="fill" style="width: 50%;">
-            <mat-label>Descrição</mat-label>
-            <textarea id="input_descricao" matInput value="Descreva a Infraestrutura"></textarea>
-        </mat-form-field>      
-    </div>
-    <div>  
-        <mat-form-field appearance="fill" style="width: 35%;">
-            <mat-label>Coordenada</mat-label>
-            <input id="input_coordenadaPoint"  matInput value="{{coordinates}}">
-        </mat-form-field>    
-    </div>  
-    <div>      
-        <mat-form-field appearance="fill" style="width: 35%;">
-            <mat-label>Equipamento</mat-label>
-            <mat-select>
-                <mat-option *ngFor='let equipamento of equipaments'[value]="equipamento.value">
-                    {{equipamento.viewValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>      
-    </div>    
-    <div>      
-        <mat-form-field appearance="fill" style="width: 35%;">
-            <mat-label>Ocupante</mat-label>
-            <mat-select>
-                <mat-option *ngFor='let equipamento of equipaments'[value]="equipamento.value">
-                    {{equipamento.viewValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>     
-    </div>  
-    <div>
-        <label for="btn_searchPointMap">Buscar Arquivo</label>
-        <button id="btn_searchPointMap" type="submit" mat-flat-button color="primary" (click)="searchPointMap()">Search</button>
-    </div>
-    <div>
-        <label for="btn_submit">Submiter</label>
-        <button id='btn_submit' (click)="onSubmit()" mat-flat-button color="primary" > submit </button>
-    </div>
-    <div>
-        <label for="btn_submit">Submiter Infraestrtura</label>
-        <button id='btn_submit' (click)="onSubmitInfra()" mat-flat-button color="primary" > submit </button>
+        <div>        
+            <mat-form-field appearance="fill" style="width: 50%;">
+                <mat-label>Descrição</mat-label>
+                <textarea id="input_descricao" matInput value="Descreva a Infraestrutura"></textarea>
+            </mat-form-field>      
+        </div>
+        <div>  
+            <mat-form-field appearance="fill" style="width: 35%;">
+                <mat-label>Coordenada</mat-label>
+                <input id="input_coordenadaPoint"  matInput value="{{coordinates}}">
+            </mat-form-field>    
+        </div>  
+        <div>      
+            <mat-form-field appearance="fill" style="width: 35%;">
+                <mat-label>Equipamento</mat-label>
+                <mat-select>
+                    <mat-option *ngFor='let equipamento of equipaments'[value]="equipamento.value">
+                        {{equipamento.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>      
+        </div>    
+        <div>      
+            <mat-form-field appearance="fill" style="width: 35%;">
+                <mat-label>Ocupante</mat-label>
+                <mat-select>
+                    <mat-option *ngFor='let equipamento of equipaments'[value]="equipamento.value">
+                        {{equipamento.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>     
+        </div>  
+        <div>
+            <label for="btn_searchPointMap">Buscar Arquivo</label>
+            <button id="btn_searchPointMap" type="submit" mat-flat-button color="primary" (click)="searchPointMap()">Search</button>
+        </div>
+        <div>
+            <label for="btn_submit">Submiter</label>
+            <button id='btn_submit' (click)="onSubmit()" mat-flat-button color="primary" > submit </button>
+        </div>
+        <div>
+            <label for="btn_submit">Submiter Infraestrtura</label>
+            <button id='btn_submit' (click)="onSubmitInfra()" mat-flat-button color="primary" > submit </button>
+        </div>
     </div>
 <!-- </form>  -->
