@@ -30,7 +30,7 @@ export class FormsMapComponent implements OnInit , OnChanges{
   newInfraestructure!:Infraestructura
   coordinates!:string;
   pointLayer:PointLayer |undefined
- // controlForm!: FormGroup;
+  controlForm!: FormGroup;
   equipaments: Equipament[] = [
     {id : 5,value: 'test', viewValue :'teste'},
   ];
@@ -121,6 +121,14 @@ export class FormsMapComponent implements OnInit , OnChanges{
       console.log('populate')
       console.log(data)
     })
+  }
+  getGeoJsonMunicipios():void{
+    let a = {};
+    this.restApi.getMunicipios().subscribe((data : {}) => {
+      console.log('populate')
+      a = data  
+    })
+    console.log(a)
   }
 
 }

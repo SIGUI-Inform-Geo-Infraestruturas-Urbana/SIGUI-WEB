@@ -1,4 +1,4 @@
-<!-- <form [formGroup]="controlForm" (ngSubmit)="onSubmit()">  -->
+<form [formGroup]="controlForm" (ngSubmit)="onSubmit()"> 
     <div class="inner-elements-header">
         <div class="inner_elements_body">    
             <h2>Adicionar/Associar Infraestrutura</h2>
@@ -63,5 +63,9 @@
             <label for="btn_submit">Submiter Infraestrtura</label>
             <button id='btn_submit' (click)="onSubmitInfra()" mat-flat-button color="primary" > submit </button>
         </div>
+        <div>
+            <label for="btn_submit">get Municipios</label>
+            <button id='btn_submit' (click)="getGeoJsonMunicipios()" mat-flat-button color="primary" > Municipios </button>
+        </div>
     </div>
-<!-- </form>  -->
+</form> 

@@ -46,7 +46,7 @@ class InfrastructureView(APIView):
         serializado = json.loads(data)
         print(serializado)
         data = json.dumps(serializado)
-        return HttpResponse(data,content_type='application/json')#mimetypes
+        return HttpResponse(data,content_type='application/jsone')#mimetypes
     
     def post(self, request):
         equipament = request.data.get('equipament')

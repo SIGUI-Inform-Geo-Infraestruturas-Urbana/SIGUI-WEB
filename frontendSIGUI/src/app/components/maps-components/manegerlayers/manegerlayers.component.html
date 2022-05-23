@@ -1,0 +1,26 @@
+<div class="inner-elements-header">
+    <div class="inner_elements_body">    
+        <h2>Gerenciar Dados Espaciais</h2>
+    </div>
+</div>
+<div class="inner_elements_body">  
+
+    <mat-card>
+        <mat-card-title>Inserir um Arquivo</mat-card-title>
+        <mat-card-subtitle>Selecione um Shapfile</mat-card-subtitle>
+        <mat-card-content>
+            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
+            <div class="file-upload">
+                {{fileName || "No file uploaded"}}
+            </div>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+                <mat-icon class="white-icon">folder_open</mat-icon>
+            </button>
+            <button mat-fab color="primary">
+                <mat-icon class="white-icon">attachment</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>  
+</div>

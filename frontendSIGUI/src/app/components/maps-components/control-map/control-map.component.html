@@ -1,8 +1,15 @@
 <form [formGroup]="controlMapForm" (ngSubmit)="onSubmit()">
 <div>
     <div class="componets-horizontal">
-        <label>Pesquisar Local</label>
-        <input type="text" id="firstName" name="firstName" formControlName="firstName">
+        <mat-form-field class="search-form-field" appearance="fill">
+            <mat-label>Procure Por um Elemento</mat-label>
+            <input matInput type="text">
+            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+        <!-- <label>Pesquisar Local</label>
+        <input type="text" id="firstName" name="firstName" formControlName="firstName"> -->
     </div>
     <div class="componets-horizontal">
         <label for="zoomMap">Zoom Map</label>
@@ -13,11 +20,19 @@
         <button mat-raised-button color="primary" id="zoomMap" (click)="ZoomMap()">Zoom</button>
     </div>
     <div class="componets-horizontal">
-        <label for="selectDraw">Select Draw</label>
+        <mat-form-field class="search-form-field" appearance="fill">
+            <mat-label>Desenhar Elemento</mat-label>
+            <mat-select formControlName="selectDraw">
+                <mat-option *ngFor="let selectDraw of optionsDraws" [value]="selectDraw.id">
+                    {{selectDraw.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <!-- <label for="selectDraw">Select Draw</label>
         <select id="selectDraw" name="selectDraw" formControlName="selectDraw">
             <option [ngValue]="null" disabled> Select Draw</option>
             <option *ngFor="let selectDraw of optionsDraws" [ngValue]="selectDraw.id">{{selectDraw.name}}</option>
-        </select>
+        </select> -->
     </div>
     <div class="componets-horizontal">
         <label for="btn_undo">Desfazer Nó</label>

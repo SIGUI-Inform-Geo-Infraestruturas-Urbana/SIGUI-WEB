@@ -6,6 +6,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
 import { MatSelectModule} from '@angular/material/select';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatCardModule} from '@angular/material/card'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
@@ -32,6 +33,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MapIterationsComponent } from './components/maps-components/map-iterations/map-iterations.component';
 import { NavheadersiguiComponent } from './components/angular-components/navheadersigui/navheadersigui.component';
+import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
+import { LayerSwitcherComponent } from './components/maps-components/layer-switcher/layer-switcher.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,8 @@ import { NavheadersiguiComponent } from './components/angular-components/navhead
     NavigationmenuComponent,
     MapIterationsComponent,
     NavheadersiguiComponent,
+    ManegerlayersComponent,
+    LayerSwitcherComponent,
   ],
   imports: [
     MatSliderModule,
@@ -56,6 +61,7 @@ import { NavheadersiguiComponent } from './components/angular-components/navhead
     MatInputModule,
     MatSelectModule,
     MatAutocompleteModule,
+    MatCardModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([

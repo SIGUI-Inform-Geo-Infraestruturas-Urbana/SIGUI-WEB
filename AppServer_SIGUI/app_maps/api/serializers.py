@@ -35,3 +35,17 @@ class InfraestruturaSerializer(GeoFeatureModelSerializer):
         model = models.Infrastructure
         fields = '__all__'
         geo_field = 'position'
+
+class MunicipioSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = models.Municipio
+        fields = '__all__'
+        geo_field = 'geometry'
+
+class FileSerealizer (serializers.Serializer):
+    file = serializers.FileField(max_length=None, allow_empty_file=False)
+
+class GeoDadosEspaciaisSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = models.GeoDadosEspaciais
+        fields = '__all__'

@@ -26,6 +26,7 @@ import { style } from '@angular/animations';
 import CircleStyle from 'ol/style/Circle';
 import GeoJSON from 'ol/format/GeoJSON';
 
+import {RestApiService} from '../../../services/rest-api.service'
 
 
 @Component({
@@ -38,7 +39,7 @@ export class OpenLayerComponent implements OnInit {
   coordenadaPoint!:string
 
   map!: Map
-  edited:boolean = true;
+  edited:boolean = false;
   insert_Infra!: boolean
   layerSource!: VectorLayer<VectorSource<Geometry>>
   layerIteration!: VectorLayer<VectorSource<Geometry>>
@@ -49,9 +50,9 @@ export class OpenLayerComponent implements OnInit {
   overlayStyle!: any;
   draw!: Draw;  
   marcatores:Feature<Point>[] = [];
-  pointMarcator = '/assets/images/logoSIGUi.png';  
+  pointMarcator = '/assets/images/logoSIGUi.png'; 
 
-  constructor(private renderer:Renderer2){
+  constructor(private renderer:Renderer2, public restApi: RestApiService){
 
   }
 
@@ -101,18 +102,6 @@ export class OpenLayerComponent implements OnInit {
         }
       })
 
-      const source = new VectorSource({
-        features: new GeoJSON().readFeatures(geojsonObject),
-      });
-
-      this.layerSource = new VectorLayer({
-        source: this.pointSource(),  
-      //  source: source,
-        style: this.styleFunction,      
-      })
-
-//////
-
       this.map = new Map({
        interactions: defaultInteraction().extend([select,modify]),
        // layers: [layer],
@@ -128,9 +117,9 @@ export class OpenLayerComponent implements OnInit {
 
       // const select: SelectFeature = new selectFea 
 
-     // this.addTileLayerOSM();
+    //  this.addTileLayerOSM();
       this.addTileLayerGeoserver();
-      this.map.addLayer( this.layerSource );
+      this.addLayerVetorMunicipios();
       this.addVetorIterationTile();
 
       // this.map.on('singleclick', function (evt) {
@@ -153,7 +142,7 @@ export class OpenLayerComponent implements OnInit {
 
       return function(feature:any){
         // let a = feature.getGeometry.getType()
-         console.log(feature.getGeometry().getType());
+        // console.log(feature.getGeometry().getType());
         switch (feature.getGeometry()?.getType()) {
           case 'Point':
             return new Style({image: pointCircule});;
@@ -166,7 +155,27 @@ export class OpenLayerComponent implements OnInit {
               fill: new Fill({
                 color: 'rgba(0,0,255,0.1)'
               })
-          });                       
+          });  
+          case 'MultiPolygon':
+            return [
+              new Style({
+                fill: new Fill({
+                  color: 'rgba(255,255,255,0.5)'
+                }),
+              }),
+              new Style({
+                stroke: new Stroke({
+                  color: 'rgba(255,255,255,1)',
+                  width: 5,
+                }),
+              }),
+              new Style({
+                stroke: new Stroke({
+                  color: 'rgba(255,255,255,1)',
+                  width: 3,
+                }),
+              }),
+            ]                  
           default:
             return new Style({
               stroke: new Stroke({
@@ -260,7 +269,6 @@ export class OpenLayerComponent implements OnInit {
   }
 
   addTileLayerOSM():void{
-
    
     const raster:TileLayer<OSM> = new TileLayer({
         source: new XYZ({
@@ -268,20 +276,22 @@ export class OpenLayerComponent implements OnInit {
         url: environment.serverTiledMapServer,
       }),
     });
-      this.map.addLayer(raster);
-    //  raster.setVisible(false);
+    raster.set('name','layer_rasterTerrain')
+    this.map.addLayer(raster);
   } 
   addTileLayerGeoserver():void{
 
-    const geoserver:TileLayer<TileWMS> = new TileLayer({
+    const geoserver:TileLayer<TileWMS> = new TileLayer({      
       source: new TileWMS({
         attributions:this.getAttributions(),
         url: environment.serverTiledGeoserver,
         params: {LAYERS: environment.tileLayer, TILED: true},
         serverType: 'geoserver',
       })
+      
     })
-      this.map.addLayer(geoserver);    
+    geoserver.set('name','layer_vectorTerrain')
+    this.map.addLayer(geoserver);    
   } 
   addTileLayerDebug():void{
     const debug:TileLayer<TileDebug> = new TileLayer({
@@ -317,8 +327,29 @@ export class OpenLayerComponent implements OnInit {
       source: this.source,
       style: styleFunction,
     });
-
+    this.layerIteration.set('name','layer_vectorIteration')
     this.map.addLayer(this.layerIteration);  
+  }
+
+  addLayerVetorMunicipios(){
+    let a = {};
+    console.log("entrou")
+    this.restApi.getMunicipios().subscribe((geojsonObject : {}) => {
+      console.log('populate')  
+      
+      console.log(geojsonObject)      
+      const source = new VectorSource({
+        features: new GeoJSON({featureProjection: 'EPSG:3857' }).readFeatures(JSON.stringify(geojsonObject))        
+      });
+      let layerSource = new VectorLayer({
+        source: source,  
+
+        style: this.styleFunction,
+      })      
+      layerSource.set('name','layer_vectorIteration')
+      this.map.addLayer( layerSource );
+    })  
+
   }
 
   pointSource(): VectorSource{
@@ -431,9 +462,11 @@ export class OpenLayerComponent implements OnInit {
     if (feature != undefined)
     {
       this.featureSelect = feature;
-      this.edited = this.edited;
+      this.edited = !this.edited;
     }
   }
+
+
 
   
 }

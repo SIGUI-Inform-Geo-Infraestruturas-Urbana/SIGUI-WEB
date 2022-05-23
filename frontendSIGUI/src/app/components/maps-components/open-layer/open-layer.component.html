@@ -6,20 +6,31 @@
         </div>
     </div>
     <div class="map-container-area">
-        <div class="inner_elements_body"> 
-            <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
-            (UndoMap)="removeMapPoint()" ></app-control-map>
+        <div style="width: 80%; display: inline-block;">
+            <div class="inner-elements-map-container"> 
+                <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
+                (UndoMap)="removeMapPoint()" ></app-control-map>
+            </div>
+            <div class="map-container">   
+                <app-map [map]="map"></app-map>  
+                <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)"></app-map-iterations>         
+                <app-layer-switcher [map]="map"> </app-layer-switcher>
+            </div>
+            <div class="inner-elements-map-container">
+                <app-scaleline class="scaline" [map]="map"></app-scaleline>
+                <app-mouse-position [map]="map"></app-mouse-position>
+            </div>
         </div>
-        <div class="map-container">     
-            <app-map [map]="map"></app-map>  
-            <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)"></app-map-iterations>         
+        <div style=" position: relative; float: right; width: 20%; height: 500px; background-color: #04143f;  ">
+            <label>aaaa</label>
         </div>
-        <app-scaleline [map]="map"></app-scaleline>
-        <app-mouse-position [map]="map"></app-mouse-position>
     </div>
     <div>
         <div *ngIf="edited">        
             <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
+        </div>
+        <div>
+            <app-manegerlayers></app-manegerlayers>
         </div>
     </div>
 

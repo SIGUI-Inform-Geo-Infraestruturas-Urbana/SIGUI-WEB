@@ -28,6 +28,11 @@ export class RestApiService {
       .get<PointLayer>(this.apiURL + '/equipaments/' + id)
       .pipe(retry(1), catchError(this.handleError));
   }
+  getMunicipios(){
+    return this.http
+      .get<PointLayer>(this.apiURL + '/api/data/municipio/' )
+      .pipe(retry(1), catchError(this.handleError));
+  } 
   setEquipament(equipament:Equipament):Observable<Equipament>{
     console.log(equipament)
     let httpOptions = { 
@@ -59,13 +64,17 @@ export class RestApiService {
     console.log(jsonContent)
     return this.http
       .post<Infraestructura>(
-        this.apiURL + '/api/infra/',
+        this.apiURL + '/api/data/infraestrutura/',
         jsonContent,
         httpOptions
       )
       .pipe(retry(1), catchError(this.handleError));
   }
   
+  setUploadFile(formdata: FormData){
+    return this.http.post( this.apiURL + '/api/data/uploads/',formdata);
+  }
+
   handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

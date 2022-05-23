@@ -20,6 +20,7 @@ export class ControlMapComponent implements OnInit {
   @Output() DrawMap: EventEmitter<string> = new EventEmitter();
   @Output() UndoMap: EventEmitter<string> = new EventEmitter();
   controlMapForm!: FormGroup;
+  public value:string= "Clear me";
 
 
   options: User[] = [{name: 'Mary'}, {name: 'Shelley'}, {name: 'Igor'}];
@@ -59,6 +60,7 @@ export class ControlMapComponent implements OnInit {
     this.DrawMap.emit();
   }
   onDrawChanged(value:number):void{
+    console.log('dsadsad')
     let itemSelected:string = this.optionsDraws[value - 1].name
     console.log(itemSelected)
     this.DrawMap.emit(itemSelected);

@@ -1,7 +1,18 @@
+::ng-deep .mat-form-field{
+    background-color: #1A237E;
+}
+
 
 .componets-horizontal{
     float: left;
 }
 .componets-horizontal label,input,button,select {
     display: block;
+}
+
+.search-form-field{
+    /* background-color: #04143f; */
+    height: 54px;
+    margin: 10px 10px 10px 10px;
+    /* color: aliceblue; */
 }
