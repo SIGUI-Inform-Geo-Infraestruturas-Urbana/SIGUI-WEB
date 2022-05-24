@@ -1,0 +1,116 @@
+<form [formGroup]="cityForm" (ngSubmit)="onSubmit()"> 
+
+<div class="inner-elements-header">
+    <div class="inner_elements_body">    
+        <h2>Gerenciar Dados Municipio</h2>
+    </div>
+</div>
+<div class="inner_elements_body">
+    <div class="div-content-form">
+        <div class="div-item-content-form">
+            <div class="content-form-principal">
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome Municipio</mat-label>
+                    <input matInput placeholder="Input" formControlName="nameCity">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação</mat-label>
+                    <input matInput placeholder="Input" formControlName="identity">
+                </mat-form-field>
+            </div>
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Sigla UF </mat-label>
+                    <input matInput placeholder="Input" formControlName="siglaUF">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Codigo IBGE</mat-label>
+                    <input matInput placeholder="Input" formControlName="codigoIBGE">
+                </mat-form-field>
+            </div>   
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Codigo Ambiental</mat-label>
+                    <input matInput placeholder="Input" formControlName="codigoAmbiental">
+                </mat-form-field>
+            </div>        
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form-principal">
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome UGRHI</mat-label>
+                    <input matInput placeholder="Input" formControlName="nomeUGRHI">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Numero UGRHI </mat-label>
+                    <input matInput placeholder="Input" formControlName="numeroUGRHI">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Coordenadas</mat-label>
+                    <input matInput placeholder="Input" formControlName="coordenada">
+                </mat-form-field>
+            </div>
+            <div class="content-form">
+                <button  mat-raised-button color="primary" (click)="onDrawChanged()">Draw Limites</button>
+                <button mat-stroked-button (click)="onDrawReset()">Draw Remove</button>
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Area Municipio</mat-label>
+                    <input matInput placeholder="Input" formControlName="areaLimite">
+                </mat-form-field>
+            </div>
+            <div class="content-form">
+                <button type="submit" mat-raised-button color="primary">Save Data</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <mat-grid-list cols="2">
+        <mat-grid-tile >
+            <mat-form-field appearance="fill">
+                <mat-label>Nome Municipio</mat-label>
+                <input matInput placeholder="Input">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field  appearance="fill">
+                <mat-label>Identificação</mat-label>
+                <input matInput placeholder="Input">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Nome Municipio</mat-label>
+                <input matInput placeholder="Input">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Nome Municipio</mat-label>
+                <input matInput placeholder="Input">
+            </mat-form-field>
+        </mat-grid-tile>
+
+    </mat-grid-list> -->
+
+</div>
+</form>

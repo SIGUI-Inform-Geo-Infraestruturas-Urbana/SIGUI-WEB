@@ -1,6 +1,6 @@
-::ng-deep .mat-form-field{
+/* ::ng-deep .mat-form-field{
     background-color: #1A237E;
-}
+} */
 
 
 .componets-horizontal{
@@ -11,7 +11,7 @@
 }
 
 .search-form-field{
-    /* background-color: #04143f; */
+    background-color: #1A237E;
     height: 54px;
     margin: 10px 10px 10px 10px;
     /* color: aliceblue; */

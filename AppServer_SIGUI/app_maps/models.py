@@ -95,6 +95,7 @@ class Municipio(models.Model):
     area_municipio = models.FloatField(blank=True, null=True) 
     geometry = models.MultiPolygonField(srid=4326)   
 
+
     def __str__(self):
         return 'Name: %s' % self.nome_municipio
     

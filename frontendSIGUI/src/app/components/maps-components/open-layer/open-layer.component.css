@@ -38,6 +38,17 @@ footer{
     padding: 1em;
     justify-content: space-between;
 }
-  .mouseposition-control{
-    color: white;
-  }
+.mouseposition-control{
+color: white;
+}
+
+.mat-accordion-manager{
+    background-color: #04143f;
+}
+
+
+.search-form-field{
+    background-color: #04143f;
+    height: 54px;
+    /* color: aliceblue; */
+}

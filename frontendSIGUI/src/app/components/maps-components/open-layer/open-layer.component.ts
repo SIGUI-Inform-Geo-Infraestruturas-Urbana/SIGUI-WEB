@@ -50,7 +50,13 @@ export class OpenLayerComponent implements OnInit {
   overlayStyle!: any;
   draw!: Draw;  
   marcatores:Feature<Point>[] = [];
-  pointMarcator = '/assets/images/logoSIGUi.png'; 
+  pointMarcator = '/assets/images/logoSIGUi.png';
+  
+  //
+  panelOpenState!:boolean
+  panelOpenAdFileMunicios!:boolean
+  panelOpenAdMunicios!:boolean
+  //
 
   constructor(private renderer:Renderer2, public restApi: RestApiService){
 
@@ -119,7 +125,7 @@ export class OpenLayerComponent implements OnInit {
 
     //  this.addTileLayerOSM();
       this.addTileLayerGeoserver();
-      this.addLayerVetorMunicipios();
+     // this.addLayerVetorMunicipios();
       this.addVetorIterationTile();
 
       // this.map.on('singleclick', function (evt) {

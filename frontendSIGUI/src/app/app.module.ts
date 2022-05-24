@@ -6,7 +6,9 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
 import { MatSelectModule} from '@angular/material/select';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatCardModule} from '@angular/material/card'
+import { MatExpansionModule} from '@angular/material/expansion'
+import { MatGridListModule } from '@angular/material/grid-list'
+import { MatCardModule} from '@angular/material/card'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
@@ -35,6 +37,7 @@ import { MapIterationsComponent } from './components/maps-components/map-iterati
 import { NavheadersiguiComponent } from './components/angular-components/navheadersigui/navheadersigui.component';
 import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
 import { LayerSwitcherComponent } from './components/maps-components/layer-switcher/layer-switcher.component';
+import { ManageCityComponent } from './components/maps-components/manage-city/manage-city.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,7 @@ import { LayerSwitcherComponent } from './components/maps-components/layer-switc
     NavheadersiguiComponent,
     ManegerlayersComponent,
     LayerSwitcherComponent,
+    ManageCityComponent,
   ],
   imports: [
     MatSliderModule,
@@ -62,6 +66,8 @@ import { LayerSwitcherComponent } from './components/maps-components/layer-switc
     MatSelectModule,
     MatAutocompleteModule,
     MatCardModule,
+    MatGridListModule,
+    MatExpansionModule,
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([
