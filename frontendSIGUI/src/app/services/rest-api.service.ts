@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { PointLayer } from './pointLayer';
 import { Equipament } from './equipament';
-import { City } from '../models/city'
+import { City } from '../models/city.model'
 import { Infraestructura } from './infraestructure';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
