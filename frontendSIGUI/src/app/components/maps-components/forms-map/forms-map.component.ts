@@ -4,9 +4,9 @@ import {RestApiService} from '../../../services/rest-api.service'
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import { PointLayer } from '../../../services/pointLayer';
-import { Geometry, Point } from 'ol/geom';
 import { Feature } from 'ol';
 import { Coordinate } from 'ol/coordinate';
+import { Geometry, Point } from 'ol/geom';
 import GeoJSON from 'ol/format/GeoJSON';
 import { Equipament } from '../../../services/equipament';
 import { Infraestructura } from '../../../services/infraestructure';

@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'server_sigui.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'dbteste',
+        'NAME': 'db_sigui_desenvolvimento',
         'USER': 'postgres',
         'PASSWORD': '2018100857',
         'HOST': '192.168.56.103',

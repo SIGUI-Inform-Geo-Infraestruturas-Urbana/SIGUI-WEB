@@ -13,7 +13,8 @@
             </div>
             <div class="map-container">   
                 <app-map [map]="map"></app-map>  
-                <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)"></app-map-iterations>         
+                <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)" 
+                (associarCity)="enableDivAssociationCity($event)"></app-map-iterations>         
                 <app-layer-switcher [map]="map"> </app-layer-switcher>
             </div>
             <div class="inner-elements-map-container">
@@ -116,10 +117,10 @@
             <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
         </div>
         <div *ngIf="panelOpenAdFileMunicios">
-            <app-manage-city></app-manage-city>
+            <app-manegerlayers></app-manegerlayers>
         </div>
         <div *ngIf="panelOpenAdMunicios">
-            <app-manage-city></app-manage-city>
+            <app-manage-city [featureSelect]='featureSelect' ></app-manage-city>
         </div>
     </div>
 

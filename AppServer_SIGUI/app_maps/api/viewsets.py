@@ -32,7 +32,23 @@ class InfraestruturaViewSet(viewsets.ModelViewSet):
 
 class MunicipioViewSet(viewsets.ModelViewSet):
     serializer_class = MunicipioSerializer
-    queryset = models.Municipio.objects.all()
+
+    def get_queryset(self):
+        queryset = models.Municipio.objects.all()
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        espatial_request = request.data
+        print(espatial_request)
+        new_geoEspatial = models.Municipio.objects.create(nome_municipio=espatial_request["nome_municipio"],
+        sigla_uf=espatial_request["sigla_uf"],cod_ibge=espatial_request["cod_ibge"],
+        cod_ambiental=espatial_request["cod_ambiental"],nome_ugrhi=espatial_request["nome_ugrhi"],
+        geometry=espatial_request["geometry"])
+
+        serializer = MunicipioSerializer(new_geoEspatial)
+
+        return Response(serializer.data)
+
 
 class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
     serializer_class = GeoDadosEspaciaisSerializer

@@ -17,6 +17,7 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
   @ViewChild('popupContent',{static:false}) popupContent!: ElementRef<HTMLElement>;
   @ViewChild('popupCloser',{static:false}) popupCloser!: ElementRef;
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
+  @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Input() map!: Map;
   private featureSelect!: Feature; 
   public overlay!: Overlay
@@ -26,7 +27,7 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
   constructor() { }
 
   ngOnInit(): void {
-    this.map.on('singleclick', (evt) => this.onClickMap(evt))    
+    this.map.on('dblclick', (evt) => this.onClickMap(evt))    
   }
 
   ngAfterViewInit(){
@@ -61,13 +62,26 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
       this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
     }
     else{
-      this.featureSelect = <Feature>marcator;
-      let vertice:Point= <Point>marcator.getGeometry();
-      let coordinatePoint:Coordinate= vertice.getCoordinates();
-      console.log('Coord')
-      console.log(coordinatePoint)     
-      this.overlay.setPosition(coordinatePoint); 
-      this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      this.featureSelect = <Feature>marcator;    
+      if (marcator.getGeometry()?.getType() == 'Point')
+      {
+        let vertice:Point= <Point>marcator.getGeometry();
+        let coordinatePoint:Coordinate= vertice.getCoordinates();
+        console.log('Coord')
+        console.log(coordinatePoint)     
+        this.overlay.setPosition(coordinatePoint); 
+        this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+      }
+      else{
+        console.log(marcator.getGeometry()?.getType())
+        let coordinate:Coordinate = evt.coordinate;
+        this.overlay.setPosition(coordinate); 
+        var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
+        this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+      }
+
+     
     }
    // console.log(marcator)
   }
@@ -83,7 +97,17 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
       console.log('click infra vazio')
     }
   }
-   
+  enableDivMunicipio():void{    
+    if (this.featureSelect != undefined)
+    {
+      console.log('click infra');
+      this.associarCity.emit(this.featureSelect);
+    }
+    else
+    {
+      console.log('click infra vazio')
+    }
+  }
   closerPopupClick(){
     this.overlay.setPosition(undefined);
    // this.popupCloser.nativeElement.blur();

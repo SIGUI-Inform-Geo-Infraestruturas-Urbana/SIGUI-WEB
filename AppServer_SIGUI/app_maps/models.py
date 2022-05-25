@@ -1,5 +1,6 @@
 from email.policy import strict
 import os
+from statistics import mode
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.utils import LayerMapping
 from distutils.command.upload import upload
@@ -84,6 +85,17 @@ class TestGeo(models.Model):
     def __str__(self):
         return 'Name: %s' % self.name
 
+class Estado(models.Model):
+    id_estado = models.AutoField(primary_key=True)
+    nome_estado = models.CharField(max_length=254,blank=True, null=True)#nome_uf
+    codigo_uf = models.CharField(max_length=250,blank=True, null=True)
+    sigla_uf = models.CharField(max_length=250,blank=True, null=True)
+    nome_regiao = models.CharField(max_length=250,blank=True, null=True)
+    area_municipio = models.FloatField(blank=True, null=True)    
+    # geometry = models.MultiPolygonField(srid=4326,blank=True, null=True)
+    def __str__(self):
+        return 'Name: %s' % self.nome_estado
+
 class Municipio(models.Model):
     id_espatial = models.UUIDField(primary_key=True,default=uuid4,editable=False)
     cod_ibge = models.IntegerField(blank=True, null=True)
@@ -92,9 +104,9 @@ class Municipio(models.Model):
     nome_ugrhi = models.CharField(max_length=254,blank=True, null=True)
     numero_ugrhi = models.IntegerField(blank=True, null=True)
     cod_ambiental = models.IntegerField(blank=True, null=True)  
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE, blank=True, null=True)
     area_municipio = models.FloatField(blank=True, null=True) 
-    geometry = models.MultiPolygonField(srid=4326)   
-
+    geometry = models.MultiPolygonField(srid=4326,blank=True, null=True)
 
     def __str__(self):
         return 'Name: %s' % self.nome_municipio
@@ -103,4 +115,11 @@ class Municipio(models.Model):
     #     managed = True
     #     db_table = 'app_maps_municipio'
 
-    
+class Bairro(models.Model):
+    id_bairro = models.AutoField(primary_key=True)
+    nome_bairro = models.CharField(max_length=254,blank=True, null=True)   
+    area_municipio = models.FloatField(blank=True, null=True)   
+    cidade = models.ForeignKey(Municipio, on_delete=models.CASCADE, blank=True, null=True)
+    # geometry = models.MultiPolygonField(srid=4326,blank=True, null=True)
+    def __str__(self):
+        return 'Name: %s' % self.nome_bairro  

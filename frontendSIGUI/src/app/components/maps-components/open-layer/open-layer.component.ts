@@ -471,6 +471,15 @@ export class OpenLayerComponent implements OnInit {
       this.edited = !this.edited;
     }
   }
+  enableDivAssociationCity (feature:Feature):void{
+    console.log('eventoRecebido')
+    console.log(feature)
+    if (feature != undefined)
+    {
+      this.featureSelect = feature;
+      this.panelOpenAdMunicios = !this.panelOpenAdMunicios;
+    }
+  }
 
 
 

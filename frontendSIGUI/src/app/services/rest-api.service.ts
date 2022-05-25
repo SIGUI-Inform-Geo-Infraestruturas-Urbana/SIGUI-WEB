@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { PointLayer } from './pointLayer';
 import { Equipament } from './equipament';
+import { City } from '../models/city'
 import { Infraestructura } from './infraestructure';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
@@ -32,7 +33,25 @@ export class RestApiService {
     return this.http
       .get<PointLayer>(this.apiURL + '/api/data/municipio/' )
       .pipe(retry(1), catchError(this.handleError));
-  } 
+  }
+  setMunicipios (city:City):Observable<City>{
+    console.log(city)
+    let httpOptions = { 
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json',
+      }),
+    }
+    let jsonContent = JSON.stringify(city)
+    console.log(jsonContent)
+    return this.http
+      .post<City>(
+        this.apiURL + '/api/data/municipio/',
+        jsonContent,
+        httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+  
   setEquipament(equipament:Equipament):Observable<Equipament>{
     console.log(equipament)
     let httpOptions = { 

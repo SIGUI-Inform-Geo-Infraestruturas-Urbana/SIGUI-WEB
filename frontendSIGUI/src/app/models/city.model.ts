@@ -1,13 +1,13 @@
 export class City {
-    nameCity : string = '';
-    identity : number = 0;
-    siglaUF : string = '';
-    codigoIBGE : number = 0;
-    codigoAmbiental : number = 0;
-    nameUGRHI: string = '';
-    numberUGRHI : number = 0;
-    coordinate : string = '';
-    areaLimite: number = 0;
+    id_espatial : number = 0;
+    nome_municipio : string = '';
+    sigla_uf : string = '';
+    cod_ibge : number = 0;
+    cod_ambiental : number = 0;
+    nome_ugrhi: string = '';
+    numero_ugrhi : number = 0;
+    geometry : string = '';
+    area_municipio: number = 0;
 }
 
 /*      nameCity : new FormControl(),
