@@ -16,14 +16,13 @@ import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { OpenLayerComponent } from './components/maps-components/open-layer/open-layer.component';
+
 import { MapComponent } from './components/maps-components/map/map.component';
 import { ScalelineComponent } from './components/maps-components/scaleline/scaleline.component';
 import { TopHeaderComponent } from './components/angular-components/top-header/top-header.component';
 import { ControlMapComponent } from './components/maps-components/control-map/control-map.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserZoneComponent } from './components/angular-components/user-zone/user-zone.component';
-import { PageNotFoundComponent } from './components/angular-components/page-not-found/page-not-found.component';
+
 import { FormsMapComponent } from './components/maps-components/forms-map/forms-map.component';
 import { MousePositionComponentComponent } from './components/maps-components/mouse-position-component/mouse-position-component.component';
 import { MousePositionComponent } from './components/maps-components/mouse-position/mouse-position.component';
@@ -38,6 +37,18 @@ import { NavheadersiguiComponent } from './components/angular-components/navhead
 import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
 import { LayerSwitcherComponent } from './components/maps-components/layer-switcher/layer-switcher.component';
 import { ManageCityComponent } from './components/maps-components/manage-city/manage-city.component';
+import { LoginComponent } from './account/login/login.component';
+import { CreateAccountComponent } from './account/create-account/create-account.component';
+import { HomeComponent } from './layout/home/home.component';
+import { AuthenticationComponent } from './layout/authentication/authentication.component';
+
+import { UserZoneComponent } from './components/angular-components/user-zone/user-zone.component';
+import { OpenLayerComponent } from './components/maps-components/open-layer/open-layer.component';
+import { PageNotFoundComponent } from './components/angular-components/page-not-found/page-not-found.component';
+import { MasterComponent } from './layout/master/master.component';
+
+import { AuthGuard } from './account/shared/auth.guard';
+import { GeoEspatialComponent } from './layout/geo-espatial/geo-espatial.component'
 
 @NgModule({
   declarations: [
@@ -57,6 +68,12 @@ import { ManageCityComponent } from './components/maps-components/manage-city/ma
     ManegerlayersComponent,
     LayerSwitcherComponent,
     ManageCityComponent,
+    LoginComponent,
+    CreateAccountComponent,
+    HomeComponent,
+    AuthenticationComponent,
+    MasterComponent,
+    GeoEspatialComponent,
   ],
   imports: [
     MatSliderModule,
@@ -70,12 +87,6 @@ import { ManageCityComponent } from './components/maps-components/manage-city/ma
     MatExpansionModule,
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {path: 'user-zone', component: UserZoneComponent},
-      {path: 'map-view', component: OpenLayerComponent},
-      {path: '',redirectTo: '/user-zone',pathMatch:'full'},
-      {path: '**', component: PageNotFoundComponent},
-    ]),    
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -86,7 +97,10 @@ import { ManageCityComponent } from './components/maps-components/manage-city/ma
     MatIconModule,
     MatListModule
   ],
-  providers: [DecimalPipe],
+  providers: [
+    DecimalPipe,
+    AuthGuard, 
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,27 @@
+::ng-deep .mat-form-field {
+   width: 100%; 
+}
+.grid-tile{
+    padding-top: 10px;
+}
+.div-content-form{
+    width: 100%;
+}
+.div-item-content-form{
+    float: right;
+    width: 100%;
+}
+.content-form{
+    width: 40%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-form-principal{
+    width: 82%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-button{    
+    position: absolute;
+    right: 150px;  
+}
