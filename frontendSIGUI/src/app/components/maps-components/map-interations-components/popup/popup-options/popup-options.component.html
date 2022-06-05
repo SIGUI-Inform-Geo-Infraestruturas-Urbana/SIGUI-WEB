@@ -1,0 +1,19 @@
+<div #popup class="ol-popup">    
+    <a #popupCloser href="#" class="ol-popup-closer"></a>
+    <div #popupContent class="ol-popup-content">
+
+        <table>
+            <tr>
+                <th colspan="2">Sobre o Vertice:</th>
+            </tr>
+            <tr>
+                <td>COORDENADA:</td>
+                <td>{{coordenadaPoint}}</td>
+            </tr>
+        </table>   
+        <div appShowUserAdmLogged>
+            <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager>
+        </div>
+      
+    </div>   
+</div>   

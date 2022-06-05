@@ -32,6 +32,21 @@
         <div class="div-item-content-form">
             <div class="content-form">
                 <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Estado</mat-label>
+                    <mat-select formControlName="selectDraw">
+                        <mat-option *ngFor="let stateL of states" [value]="stateL.id_state">
+                            {{stateL.name_state}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="content-form">
+
+            </div>
+        </div>
+        <div class="div-item-content-form">
+            <div class="content-form">
+                <mat-form-field appearance="fill">
                     <mat-label>Codigo IBGE</mat-label>
                     <input matInput placeholder="Input" formControlName="codigoIBGE">
                 </mat-form-field>
@@ -68,7 +83,7 @@
             </div>
             <div class="content-form">
                 <button  mat-raised-button color="primary" (click)="onDrawChanged()">Draw Limites</button>
-                <button mat-stroked-button (click)="onDrawReset()">Draw Remove</button>
+                <button mat-stroked-button (click)="getState()">Draw Remove</button>
             </div>
         </div>
         <div class="div-item-content-form">

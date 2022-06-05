@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { PointLayer } from './pointLayer';
 import { Equipament } from './equipament';
-import { City } from '../models/city.model'
+import { City } from '../models/city.model';
+import { StateEntity } from '../models/state.model'
 import { Infraestructura } from './infraestructure';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { Feature } from 'ol';
+import { District } from '../models/district.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +19,14 @@ export class RestApiService {
   httpOptions!: any;
 
   constructor(private http: HttpClient) { 
-
+    
   }  
+
+  getDataState(stringSearch : string):Observable<string>{
+    return this.http
+    .get<string>(this.apiURL + stringSearch)//'/api/data/state/' 
+    .pipe(retry(1), catchError(this.handleError));
+  }
 
   getPoits(): Observable<PointLayer> {
     return this.http
@@ -29,11 +38,42 @@ export class RestApiService {
       .get<PointLayer>(this.apiURL + '/equipaments/' + id)
       .pipe(retry(1), catchError(this.handleError));
   }
-  getMunicipios(){
+
+  getState():Observable<string>{
     return this.http
-      .get<PointLayer>(this.apiURL + '/api/data/municipio/' )
+      .get<string>(this.apiURL + '/api/data/state/' );
+      //.pipe(retry(1), catchError(this.handleError));
+  }  
+
+  setState (stateEntity:StateEntity):Observable<StateEntity>{
+    console.log(stateEntity)
+    let httpOptions = { 
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json',
+      }),
+    }
+    let jsonContent = JSON.stringify(stateEntity)
+    console.log(jsonContent)
+    return this.http
+      .post<StateEntity>(
+        this.apiURL + '/api/data/state/',
+        jsonContent,
+        httpOptions
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
+
+  getMunicipios(stringConection : string = ''):Observable<string>{
+    let httpOptions = { 
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json',
+      }),
+    }
+    return this.http
+      .get<string>(this.apiURL + stringConection ,httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   setMunicipios (city:City):Observable<City>{
     console.log(city)
     let httpOptions = { 
@@ -46,6 +86,30 @@ export class RestApiService {
     return this.http
       .post<City>(
         this.apiURL + '/api/data/municipio/',
+        jsonContent,
+        httpOptions
+      )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getDistrict():Observable<string>{
+    return this.http
+      .get<string>(this.apiURL + '/api/data/bairro/' )
+      .pipe(retry(1), catchError(this.handleError));
+  }  
+
+  setDistrict (district:District):Observable<District>{
+    console.log(district)
+    let httpOptions = { 
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json',
+      }),
+    }
+    let jsonContent = JSON.stringify(district)
+    console.log(jsonContent)
+    return this.http
+      .post<District>(
+        this.apiURL + '/api/data/bairro/',
         jsonContent,
         httpOptions
       )

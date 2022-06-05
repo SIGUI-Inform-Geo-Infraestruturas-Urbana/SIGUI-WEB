@@ -1,42 +1,33 @@
 
 <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()"> 
-
-    <div class="inner-elements-header">
-        <div class="inner_elements_body">    
-            <h2>Criar Conta Usuário</h2>
+    <div class="wrapper">
+        <div class="box-header-left">
+            <img [src]="imgLogo" class="logo" width="128" height="40">
         </div>
-    </div>
-    <div class="inner_elements_body">
-        <div class="div-content-form">
-            <div class="div-item-content-form">
-                <div class="content-form">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Name</mat-label>
-                        <input matInput type="email" placeholder="Input" formControlName="name">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="div-item-content-form">
-                <div class="content-form">
-                    <mat-form-field appearance="fill">
-                        <mat-label>e-mail</mat-label>
-                        <input matInput type="email" placeholder="Input" formControlName="emailLogin">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="div-item-content-form">
-                <div class="content-form">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Senha</mat-label>
-                        <input matInput type="input" placeholder="Input" formControlName="password">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="div-item-content-form">
-                <div class="content-form">
-                    <button type="submit" mat-raised-button color="primary">Save Data</button>
-                </div>
-            </div>
-        </div>    
-    </div>
+        <div class="box-header">
+            <h3>Criar Conta Usuário</h3>
+        </div>
+        <div class="box">
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput type="email" placeholder="Input" formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="box">
+            <mat-form-field appearance="fill">
+                <mat-label>e-mail</mat-label>
+                <input matInput type="email" placeholder="Input" formControlName="emailLogin">
+            </mat-form-field>
+        </div>
+        <div class="box">
+            <mat-form-field appearance="fill">
+                <mat-label>Senha</mat-label>
+                <input matInput type="input" placeholder="Input" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div class="box-button">
+            <button type="submit" mat-raised-button color="primary">Create User</button>
+            <button type="button" mat-raised-button color="primary" class="button-box" [routerLink]="['/login']">Login</button>
+        </div>
+    </div>    
 </form>

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapIterationsComponent } from './map-iterations.component';
+import { ManegerDistrictComponent } from './maneger-district.component';
 
-describe('MapIterationsComponent', () => {
-  let component: MapIterationsComponent;
-  let fixture: ComponentFixture<MapIterationsComponent>;
+describe('ManegerDistrictComponent', () => {
+  let component: ManegerDistrictComponent;
+  let fixture: ComponentFixture<ManegerDistrictComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MapIterationsComponent ]
+      declarations: [ ManegerDistrictComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MapIterationsComponent);
+    fixture = TestBed.createComponent(ManegerDistrictComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

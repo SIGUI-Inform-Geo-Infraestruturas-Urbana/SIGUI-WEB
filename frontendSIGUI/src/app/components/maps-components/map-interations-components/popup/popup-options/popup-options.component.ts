@@ -4,14 +4,16 @@ import { Coordinate, toStringHDMS } from 'ol/coordinate';
 import { fromLonLat , toLonLat, transform} from 'ol/proj';
 import Map from 'ol/Map';
 import Point  from 'ol/geom/Point';
-
+import { CountyService } from 'src/app/services/count/county.service';
+import { City } from 'src/app/models/city.model';
+import { MultiPolygon } from 'ol/geom';
 
 @Component({
-  selector: 'app-map-iterations',
-  templateUrl: './map-iterations.component.html',
-  styleUrls: ['./map-iterations.component.css']
+  selector: 'app-popup-options',
+  templateUrl: './popup-options.component.html',
+  styleUrls: ['./popup-options.component.css']
 })
-export class MapIterationsComponent implements OnInit , AfterViewInit{
+export class PopupOptionsComponent implements OnInit , AfterViewInit{
 
   @ViewChild('popup',{static:false}) divPopup!: ElementRef<HTMLElement>;
   @ViewChild('popupContent',{static:false}) popupContent!: ElementRef<HTMLElement>;
@@ -19,12 +21,14 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Input() map!: Map;
-  private featureSelect!: Feature; 
+  featureSelect!: Feature; 
   public overlay!: Overlay
   public coordenadaPoint!:string
   public edited:boolean = true;
 
-  constructor() { }
+  constructor(public countyService : CountyService ) {         
+
+  }
 
   ngOnInit(): void {
     this.map.on('dblclick', (evt) => this.onClickMap(evt))    
@@ -43,9 +47,25 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
            }
          }
      })
-     this.map.addOverlay(this.overlay)
+     this.map.addOverlay(this.overlay);
+     this.setSelect();
      
   }  
+
+  setSelect(){
+    this.countyService.getCounties().subscribe((cities: City[]) => {
+      let feature = this.countyService.converterFromFeatures(cities);
+      if (feature.length > 0){
+        console.log('88888888888888888888888888')
+        let a = <MultiPolygon>feature[0].getGeometry();
+        let b = a.getCoordinates();
+        //console.log(b)
+        ///
+      }
+
+    
+    });
+  }
 
   onClickMap(evt:MapBrowserEvent<any>): void{      
    
@@ -58,12 +78,12 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
     {
       let coordinate:Coordinate = evt.coordinate;
       this.overlay.setPosition(coordinate); 
-      var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
+     // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
       this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
     }
     else{
       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      this.featureSelect = <Feature>marcator;    
+      // this.featureSelect = <Feature>marcator;    
       if (marcator.getGeometry()?.getType() == 'Point')
       {
         let vertice:Point= <Point>marcator.getGeometry();
@@ -72,42 +92,21 @@ export class MapIterationsComponent implements OnInit , AfterViewInit{
         console.log(coordinatePoint)     
         this.overlay.setPosition(coordinatePoint); 
         this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+        this.featureSelect = <Feature>marcator; 
       }
       else{
         console.log(marcator.getGeometry()?.getType())
         let coordinate:Coordinate = evt.coordinate;
         this.overlay.setPosition(coordinate); 
-        var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
         this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+        this.featureSelect = <Feature>marcator; 
       }
 
      
     }
    // console.log(marcator)
   }
-
-  enableDivInfra():void{    
-    if (this.featureSelect != undefined)
-    {
-      console.log('click infra');
-      this.associarInfra.emit(this.featureSelect);
-    }
-    else
-    {
-      console.log('click infra vazio')
-    }
-  }
-  enableDivMunicipio():void{    
-    if (this.featureSelect != undefined)
-    {
-      console.log('click infra');
-      this.associarCity.emit(this.featureSelect);
-    }
-    else
-    {
-      console.log('click infra vazio')
-    }
-  }
+ 
   closerPopupClick(){
     this.overlay.setPosition(undefined);
    // this.popupCloser.nativeElement.blur();

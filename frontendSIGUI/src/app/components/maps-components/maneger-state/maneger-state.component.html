@@ -1,0 +1,69 @@
+<form [formGroup]="stateFormu" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados Estado</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body">
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome do Estado</mat-label>
+                        <input matInput placeholder="Input" formControlName="nameState">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Id Estado</mat-label>
+                        <input matInput placeholder="Input" formControlName="idState">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">                
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Sigla UF </mat-label>
+                        <input matInput placeholder="Input" formControlName="initialsUf">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Código UF </mat-label>
+                        <input matInput placeholder="Input" formControlName="codUf">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form-principal">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coordenada</mat-label>
+                        <input matInput placeholder="Input" formControlName="geometry">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome Regiao</mat-label>
+                        <input matInput placeholder="Input" formControlName="nomeRegion">
+                    </mat-form-field>
+                </div>   
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Area do Estado</mat-label>
+                        <input matInput placeholder="Input" formControlName="areaState">
+                    </mat-form-field>
+                </div>        
+            </div>          
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+</form>

@@ -1,0 +1,61 @@
+<form [formGroup]="districtForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados Bairro</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body">
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome do Bairro</mat-label>
+                        <input matInput placeholder="Input" formControlName="nomeDistrict">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação</mat-label>
+                        <input matInput placeholder="Input" formControlName="idDistrict">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Cidade</mat-label>
+                        <mat-select formControlName="selectDraw">
+                            <mat-option *ngFor="let city of citys" [value]="city.id_County">
+                                {{city.name_county}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">    
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coordenada</mat-label>
+                        <input matInput placeholder="Input" formControlName="geometry">
+                    </mat-form-field>
+                </div>   
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Area do Bairro</mat-label>
+                        <input matInput placeholder="Input" formControlName="areaDistrict">
+                    </mat-form-field>
+                </div>        
+            </div>           
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+    </form>

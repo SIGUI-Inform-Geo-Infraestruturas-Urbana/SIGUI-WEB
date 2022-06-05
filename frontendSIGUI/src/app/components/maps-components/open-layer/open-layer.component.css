@@ -1,26 +1,10 @@
+/*  */
+
 :host {
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
-.map-container {
-
-    width: 100%;
-    height: 400px;
-    display: block;
-    margin: 0 auto;
-    flex-grow: 1; 
-}
-.map-container-area{
-    width: 100%;
-    margin-top: 10px;
-    height: 500px;
-    overflow: hidden;
-    background-color: #010a22;    
-}
-.map-container-area label{
-    color: azure;
-}   
 
 .inner-elements-map-container{
     width: 100%;
@@ -29,26 +13,29 @@
     margin-left: 20px;
 }
 
+.map-container {
+
+    width: 100%;
+    height: 400px;
+    display: block;
+    margin: 0 auto;
+    flex-grow: 1; 
+}
+
 .scaline{
     position: relative
 }
-footer{
-    display: flex;
-    background-color: wheat;
-    padding: 1em;
-    justify-content: space-between;
-}
+
 .mouseposition-control{
-color: white;
+    color: white;
 }
 
-.mat-accordion-manager{
-    background-color: #04143f;
+.teste{
+    display: none;
 }
 
 
-.search-form-field{
-    background-color: #04143f;
-    height: 54px;
-    /* color: aliceblue; */
-}
+/*  */
+
+
+

@@ -1,1 +1,30 @@
-<p>geo-espatial works!</p>
+<div class="content_body">
+    <div class="inner-elements-header">
+        <div class="inner_elements_body"> 
+            <h2>Gerenciar Dados Espaciais</h2>
+            <p>Adicionar, Editar e Vizualizar dados Espaciais</p>
+        </div>
+    </div>
+    <div class="map-container-area">
+        <div style="width: 80%; display: inline-block;">
+            <app-open-layer></app-open-layer>
+        </div>
+        <div appShowUserAdmLogged class="map-container-menu">
+            <app-menu-maneger-geodata (getDistrict)="getByIdDistrict($event)"(getState)="getByIdState($event)"(getCounty)="getByIdCounty($event)"></app-menu-maneger-geodata>              
+        </div>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+        <!-- <div *ngIf="edited">        
+            <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
+        </div>
+        <div *ngIf="panelOpenAdFileMunicios">
+            <app-manegerlayers></app-manegerlayers>
+        </div>
+        <div *ngIf="panelOpenAdMunicios">
+            <app-manage-city [featureSelect]='featureSelect' ></app-manage-city>
+        </div> -->
+    </div>
+
+</div>
+

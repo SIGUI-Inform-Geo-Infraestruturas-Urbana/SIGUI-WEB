@@ -10,12 +10,15 @@ export interface Vertice {
   providedIn: 'root'
 })
 export class MapStateService {
+
+  constructor() { }
+
   private _vertice = new BehaviorSubject<Vertice[]>([]);
   readonly vertices$ = this._vertice.asObservable();
 
   private vertices:Vertice[] = [];
   private nextId = 0;
-  constructor() { }
+
 
   create(item: Vertice){
     item.id = ++this.nextId;

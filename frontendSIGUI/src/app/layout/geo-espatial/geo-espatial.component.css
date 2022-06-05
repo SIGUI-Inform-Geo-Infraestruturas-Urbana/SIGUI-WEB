@@ -1,0 +1,43 @@
+
+.map-container-area{
+    width: 100%;
+    margin-top: 10px;
+    height: 500px;
+    overflow: hidden;
+    background-color: #010a22;    
+}
+.map-container-area label{
+    color: azure;
+}
+
+.map-container-menu{
+    position: relative; 
+    float: right;
+     width: 20%; 
+     height: 500px; 
+     background-color: #04143f; 
+}
+
+footer{
+    display: flex;
+    background-color: wheat;
+    padding: 1em;
+    justify-content: space-between;
+}
+
+.mat-accordion-manager{
+    background-color: #04143f;
+}
+
+.search-form-field{
+    background-color: #04143f;
+    height: 54px;
+}
+
+/*
+
+*/
+
+
+
+

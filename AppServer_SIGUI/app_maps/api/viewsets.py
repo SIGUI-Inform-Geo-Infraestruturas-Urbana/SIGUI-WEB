@@ -19,7 +19,7 @@ from django.contrib.gis.utils import LayerMapping
 from rest_framework.decorators import action
 #from django.contrib.gis.gdal import DataSource
 from yaml import serialize 
-from .serializers import InfraestruturaSerializer, FileSerealizer, GeoDadosEspaciaisSerializer,MunicipioSerializer
+from .serializers import InfraestruturaSerializer, FileSerealizer, GeoDadosEspaciaisSerializer,StateSerializer, CountySerializer, DistrictSerializer
 from app_maps import models
 
 # class LayersViewSet(viewsets.ModelViewSet):
@@ -30,22 +30,101 @@ class InfraestruturaViewSet(viewsets.ModelViewSet):
     serializer_class = InfraestruturaSerializer
     queryset = models.Infrastructure.objects.all()
 
-class MunicipioViewSet(viewsets.ModelViewSet):
-    serializer_class = MunicipioSerializer
+class StateViewSet(viewsets.ModelViewSet):
+    serializer_class = StateSerializer
+
+    def retrieve(self, request, pk=None):
+        instance = self.get_object()
+        return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
 
     def get_queryset(self):
-        queryset = models.Municipio.objects.all()
+        queryset = models.State.objects.all()
         return queryset
 
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
-        print(espatial_request)
-        new_geoEspatial = models.Municipio.objects.create(nome_municipio=espatial_request["nome_municipio"],
-        sigla_uf=espatial_request["sigla_uf"],cod_ibge=espatial_request["cod_ibge"],
-        cod_ambiental=espatial_request["cod_ambiental"],nome_ugrhi=espatial_request["nome_ugrhi"],
-        geometry=espatial_request["geometry"])
 
-        serializer = MunicipioSerializer(new_geoEspatial)
+        ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.State.objects.create(name_state=espatial_request["name_state"],
+        cod_uf=espatial_request["cod_uf"],initials_uf=espatial_request["initials_uf"],nome_region=espatial_request["nome_region"],
+        area_state=espatial_request["area_state"],geometry=espatial_request["geometry"])
+      
+        new_geoEspatial.save()
+
+        serializer = StateSerializer(new_geoEspatial)
+
+        return Response(serializer.data)
+
+class CountyViewSet(viewsets.ModelViewSet):
+    serializer_class = CountySerializer
+
+    # def retrieve(self, request, pk=None):
+    #     instance = self.get_object()
+    #     return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
+
+    def get_queryset(self):
+
+        # a = self.request.query_params.get('county_id',None)
+        queryset = ''
+        ##countyId = self.kwargs.get('county_id')
+        # if countyId != None:
+        #     county = models.County.objects.filter(id_County=countyId)
+        #     print(county)
+        # else:
+        queryset = models.County.objects.all()
+        # if 'pk' in self.kwargs:
+        #     return models.County.objects.filter(id_County=self.kwargs['pk'])     
+
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        espatial_request = request.data
+        id_state=espatial_request["id_state"]
+        test=id_state["id_state"]
+        stateEntity = models.State.objects.get(id_state=test)
+
+        ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.County.objects.create(name_county=espatial_request["name_county"],
+        cod_ibge=espatial_request["cod_ibge"],initials_uf=espatial_request["initials_uf"],
+        name_ugrhi=espatial_request["name_ugrhi"],number_ugrhi=espatial_request["number_ugrhi"],
+        cod_environmental=espatial_request["cod_environmental"],id_state=stateEntity,
+        area_county=espatial_request["area_county"],geometry=espatial_request["geometry"])
+      
+        new_geoEspatial.save()
+        # if new_geoEspatial.is_valid():
+        #     new_geoEspatial.save()
+        #     print('Passou!')
+        # else: 
+        #     print('Não deu certo!')
+
+        serializer = CountySerializer(new_geoEspatial)
+
+        return Response(serializer.data)
+
+class DistrictViewSet(viewsets.ModelViewSet):
+    serializer_class = DistrictSerializer
+
+    def get_queryset(self):
+        queryset = models.District.objects.all()
+        return queryset
+
+    def create(self, request, *args, **kwargs):
+        espatial_request = request.data
+        id_county=espatial_request["id_County"]
+        countyObjectId=id_county["id_County"]
+        stateEntity = models.County.objects.get(id_County=countyObjectId)
+
+        ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.District.objects.create(nome_district=espatial_request["nome_district"],
+        area_district=espatial_request["area_district"],id_County=stateEntity,
+        geometry=espatial_request["geometry"])
+      
+        new_geoEspatial.save()
+
+        serializer = DistrictSerializer(new_geoEspatial)
 
         return Response(serializer.data)
 

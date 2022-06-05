@@ -32,7 +32,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { MapIterationsComponent } from './components/maps-components/map-iterations/map-iterations.component';
+
 import { NavheadersiguiComponent } from './components/angular-components/navheadersigui/navheadersigui.component';
 import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
 import { LayerSwitcherComponent } from './components/maps-components/layer-switcher/layer-switcher.component';
@@ -48,7 +48,14 @@ import { PageNotFoundComponent } from './components/angular-components/page-not-
 import { MasterComponent } from './layout/master/master.component';
 
 import { AuthGuard } from './account/shared/auth.guard';
-import { GeoEspatialComponent } from './layout/geo-espatial/geo-espatial.component'
+import { GeoEspatialComponent } from './layout/geo-espatial/geo-espatial.component';
+import { MenuManegerGeodataComponent } from './components/manager-geodata/menu-maneger-geodata/menu-maneger-geodata.component';
+import { PopupOptionsComponent } from './components/maps-components/map-interations-components/popup/popup-options/popup-options.component';
+import { PopupOptionsManagerComponent } from './components/maps-components/map-interations-components/popup/popup-options-manager/popup-options-manager.component';
+import { ShowUserAdmLoggedDirective } from './account/shared/show-user-adm-logged.directive';
+import { ManegerStateComponent } from './components/maps-components/maneger-state/maneger-state.component';
+import { ManegerDistrictComponent } from './components/maps-components/maneger-district/maneger-district.component';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +70,7 @@ import { GeoEspatialComponent } from './layout/geo-espatial/geo-espatial.compone
     MousePositionComponentComponent,
     MousePositionComponent,
     NavigationmenuComponent,
-    MapIterationsComponent,
+    ShowUserAdmLoggedDirective,
     NavheadersiguiComponent,
     ManegerlayersComponent,
     LayerSwitcherComponent,
@@ -74,6 +81,13 @@ import { GeoEspatialComponent } from './layout/geo-espatial/geo-espatial.compone
     AuthenticationComponent,
     MasterComponent,
     GeoEspatialComponent,
+    MenuManegerGeodataComponent,
+    PopupOptionsComponent,
+    PopupOptionsManagerComponent,
+    ShowUserAdmLoggedDirective,
+    ManegerStateComponent,
+    ManegerDistrictComponent,
+
   ],
   imports: [
     MatSliderModule,

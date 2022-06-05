@@ -11,7 +11,7 @@ import TileWMS from 'ol/source/TileWMS';
 import Source from 'ol/source/Source';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
-import { Geometry } from 'ol/geom';
+import { Geometry, MultiPolygon } from 'ol/geom';
 import Point  from 'ol/geom/Point';
 import Draw from 'ol/interaction/Draw'
 import {DrawEvent} from 'ol/interaction/Draw'
@@ -27,7 +27,10 @@ import CircleStyle from 'ol/style/Circle';
 import GeoJSON from 'ol/format/GeoJSON';
 
 import {RestApiService} from '../../../services/rest-api.service'
+import { CountyService} from '../../../services/count/county.service'
+import { Observable } from 'rxjs';
 
+import {City} from '../../../models/city.model'
 
 @Component({
   selector: 'app-open-layer',
@@ -51,22 +54,22 @@ export class OpenLayerComponent implements OnInit {
   draw!: Draw;  
   marcatores:Feature<Point>[] = [];
   pointMarcator = '/assets/images/logoSIGUi.png';
+  sourceData!:VectorSource;
   
-  //
-  panelOpenState!:boolean
-  panelOpenAdFileMunicios!:boolean
-  panelOpenAdMunicios!:boolean
-  //
-
-  constructor(private renderer:Renderer2, public restApi: RestApiService){
+  constructor(private renderer:Renderer2, public restApi: RestApiService, public countyService : CountyService ){
 
   }
 
   ngOnInit(): void { 
     this.mapConstruct();   
     this.insert_Infra = false;
+    this.countyService.getCounties().subscribe((cities: City[]) => {
+      console.log('///////////');
+      console.log(cities)           
+      this.sourceData.addFeatures(this.countyService.converterFromFeatures(cities));
+    });
+  }; 
 
-  }   
 
   mapConstruct():void{      
 
@@ -123,15 +126,11 @@ export class OpenLayerComponent implements OnInit {
 
       // const select: SelectFeature = new selectFea 
 
-    //  this.addTileLayerOSM();
-      this.addTileLayerGeoserver();
-     // this.addLayerVetorMunicipios();
+     this.addTileLayerOSM();
+    //  this.addTileLayerGeoserver();
       this.addVetorIterationTile();
 
-      // this.map.on('singleclick', function (evt) {
-      //   var a = evt.get
-        
-      // })
+      this.addLoadData();
   }
 
   addStyleMap():void{
@@ -143,12 +142,8 @@ export class OpenLayerComponent implements OnInit {
         fill: undefined,
         stroke: new Stroke({color:'orange',width: 2}),
       });
-     //const styles = {} 
-      //const point:Style = new Style({image: pointCircule});
 
       return function(feature:any){
-        // let a = feature.getGeometry.getType()
-        // console.log(feature.getGeometry().getType());
         switch (feature.getGeometry()?.getType()) {
           case 'Point':
             return new Style({image: pointCircule});;
@@ -304,6 +299,18 @@ export class OpenLayerComponent implements OnInit {
       source: new TileDebug(),
     })
   }
+  addLoadData():void{
+    this.sourceData = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourceData,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_load')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
 
   addVetorIterationTile():void{
     this.source= new VectorSource({wrapX: false});
@@ -337,26 +344,7 @@ export class OpenLayerComponent implements OnInit {
     this.map.addLayer(this.layerIteration);  
   }
 
-  addLayerVetorMunicipios(){
-    let a = {};
-    console.log("entrou")
-    this.restApi.getMunicipios().subscribe((geojsonObject : {}) => {
-      console.log('populate')  
-      
-      console.log(geojsonObject)      
-      const source = new VectorSource({
-        features: new GeoJSON({featureProjection: 'EPSG:3857' }).readFeatures(JSON.stringify(geojsonObject))        
-      });
-      let layerSource = new VectorLayer({
-        source: source,  
 
-        style: this.styleFunction,
-      })      
-      layerSource.set('name','layer_vectorIteration')
-      this.map.addLayer( layerSource );
-    })  
-
-  }
 
   pointSource(): VectorSource{
     let marcador = new Feature({
@@ -477,11 +465,33 @@ export class OpenLayerComponent implements OnInit {
     if (feature != undefined)
     {
       this.featureSelect = feature;
-      this.panelOpenAdMunicios = !this.panelOpenAdMunicios;
+      //this.panelOpenAdMunicios = !this.panelOpenAdMunicios;
     }
   }
 
+  addLayerVetorMunicipios(){
+      console.log("entrou")
+      this.countyService.findFetchCounty();    
+      // this.restApi.getMunicipios().subscribe((geojsonObject : {}) => {
+      //   console.log('populate')  
+        
+      //   console.log(geojsonObject)      
+      //   const source = new VectorSource({
+      //     features: new GeoJSON({featureProjection: 'EPSG:3857' }).readFeatures(JSON.stringify(geojsonObject))        
+      //   });
+      //   let layerSource = new VectorLayer({
+      //     source: source,  
+  
+      //     style: this.styleFunction,
+      //   })      
+      //   layerSource.set('name','layer_vectorIteration')
+      //   this.map.addLayer( layerSource );
+      // })  
+    }
 
-
+  addGetByIdCounty(id : number){
+    console.log('CHEGOY******************');
+    this.countyService.findFetchCounty(id);    
+  }
   
 }

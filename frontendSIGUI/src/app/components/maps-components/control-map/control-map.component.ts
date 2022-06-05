@@ -43,7 +43,7 @@ export class ControlMapComponent implements OnInit {
     });
     this.controlMapForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onDrawChanged(f)})
     
-    
+     
   }
 
   ZoomMap():void{

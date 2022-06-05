@@ -9,6 +9,7 @@ import { FormGroup, FormControl, FormArray } from '@angular/forms';
   styleUrls: ['./create-account.component.css']
 })
 export class CreateAccountComponent implements OnInit {
+  imgLogo = '/assets/images/logotipo SIGUI.png';
   createAccountForm!: FormGroup;
   account = {
     name: '',

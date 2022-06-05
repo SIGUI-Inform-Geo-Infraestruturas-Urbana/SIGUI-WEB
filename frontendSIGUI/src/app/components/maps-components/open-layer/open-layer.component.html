@@ -1,128 +1,17 @@
-<div class="content_body">
-    <div class="inner-elements-header">
-        <div class="inner_elements_body"> 
-            <h2>Gerenciar Dados Espaciais</h2>
-            <p>Adicionar, Editar e Vizualizar dados Espaciais</p>
-        </div>
-    </div>
-    <div class="map-container-area">
-        <div style="width: 80%; display: inline-block;">
-            <div class="inner-elements-map-container"> 
-                <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
-                (UndoMap)="removeMapPoint()" ></app-control-map>
-            </div>
-            <div class="map-container">   
-                <app-map [map]="map"></app-map>  
-                <app-map-iterations [map]="map" (associarInfra)="enableDivAssociationInfra($event)" 
-                (associarCity)="enableDivAssociationCity($event)"></app-map-iterations>         
-                <app-layer-switcher [map]="map"> </app-layer-switcher>
-            </div>
-            <div class="inner-elements-map-container">
-                <app-scaleline class="scaline" [map]="map"></app-scaleline>
-                <app-mouse-position [map]="map"></app-mouse-position>
-            </div>
-        </div>
-        <div style=" position: relative; float: right; width: 20%; height: 500px; background-color: #04143f;  ">
-            <div class="inner-elements-map-container"> 
-            </div>
-            <div>
-                <mat-accordion>
-                    <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
-                        <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Estado
-                                </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <p>teste</p>
-                    </mat-expansion-panel>  
-                    <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
-                        <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Municipios
-                                </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div>
-                            <mat-form-field class="search-form-field" appearance="fill">
-                                <mat-label>Buscar por ID</mat-label>
-                                <input matInput placeholder="Consulte ID">
-                            </mat-form-field>
-                            <button mat-mini-fab color="primary">
-                                <mat-icon>search</mat-icon>
-                            </button>
-                        </div>       
-                        <button mat-stroked-button color="primary" (click)="panelOpenAdMunicios=!panelOpenAdMunicios"> Adicionar Municipio</button>                
-                        <button mat-stroked-button color="primary" (click)="addLayerVetorMunicipios()"> Visualizar Municipios</button>
-                        <button mat-stroked-button color="primary" (click)="panelOpenAdFileMunicios=!panelOpenAdFileMunicios"> Adicionar Arquivo</button>
-                    </mat-expansion-panel>         
-                    <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
-                        <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Bairros
-                                </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div>
-                            <mat-form-field class="search-form-field" appearance="fill">
-                                <mat-label>Buscar por ID</mat-label>
-                                <input matInput placeholder="Consulte ID">
-                            </mat-form-field>
-                            <button mat-mini-fab color="primary">
-                                <mat-icon>search</mat-icon>
-                            </button>
-                        </div>                       
-                        <button mat-stroked-button color="primary"> Visualizar Bairros</button>
-                        <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
-                    </mat-expansion-panel> 
-                    <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
-                        <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Logradouros
-                                </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div>
-                            <mat-form-field class="search-form-field" appearance="fill">
-                                <mat-label>Buscar por ID</mat-label>
-                                <input matInput placeholder="Consulte ID">
-                            </mat-form-field>
-                            <button mat-mini-fab color="primary">
-                                <mat-icon>search</mat-icon>
-                            </button>
-                        </div>                       
-                        <button mat-stroked-button color="primary"> Visualizar Logradouro</button>
-                        <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
-                    </mat-expansion-panel>  
-                    <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
-                        <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    Components
-                                </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div>
-                            <mat-form-field class="search-form-field" appearance="fill">
-                                <mat-label>Buscar por ID</mat-label>
-                                <input matInput placeholder="Consulte ID">
-                            </mat-form-field>
-                            <button mat-mini-fab color="primary">
-                                <mat-icon>search</mat-icon>
-                            </button>
-                        </div>                       
-                        <button mat-stroked-button color="primary"> Visualizar Components</button>
-                        <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
-                    </mat-expansion-panel>                   
-            </mat-accordion>     
-           </div>                      
-        </div>
-    </div>
-    <div>
-        <div *ngIf="edited">        
-            <app-forms-map [featureSelect]='featureSelect' (marcatorMap)="pointMapRegister()"></app-forms-map>
-        </div>
-        <div *ngIf="panelOpenAdFileMunicios">
-            <app-manegerlayers></app-manegerlayers>
-        </div>
-        <div *ngIf="panelOpenAdMunicios">
-            <app-manage-city [featureSelect]='featureSelect' ></app-manage-city>
-        </div>
-    </div>
-
+<div class="inner-elements-map-container"> 
+    <app-control-map [map]="map" (DrawMap)="interactionMapChange($event)"
+    (UndoMap)="removeMapPoint()" ></app-control-map>
 </div>
-
+<div class="map-container">   
+    <app-map [map]="map"></app-map>  
+    <p appShowUserAdmLogged>teste</p>
+    <div class="teste" >
+        <app-popup-options  [map]="map" (associarInfra)="enableDivAssociationInfra($event)" 
+        (associarCity)="enableDivAssociationCity($event)"></app-popup-options>         
+    </div>
+    <app-layer-switcher [map]="map"> </app-layer-switcher>
+</div>
+<div class="inner-elements-map-container">
+    <app-scaleline class="scaline" [map]="map"></app-scaleline>
+    <app-mouse-position [map]="map"></app-mouse-position>
+</div>
