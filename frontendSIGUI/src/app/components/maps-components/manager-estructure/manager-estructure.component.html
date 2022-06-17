@@ -1,0 +1,107 @@
+
+
+<form [formGroup]="equipamentForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados de Equipamento Urbano</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body"> 
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Equipamento</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_cod">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primeiro Nome do Equipamento</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_first_name">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome no Mapa</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_name_map">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome </mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_name">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome Completo</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_name_map">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome type</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_type">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Departamento</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_departament_admin">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Numero da construção</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_number_building">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Distrito</mat-label>
+                        <mat-select formControlName="eq_co_district">
+                            <mat-option *ngFor="let distri of districts" [value]="distri.id">
+                                {{distri.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Rua</mat-label>
+                        <mat-select formControlName="eq_co_street">
+                            <mat-option *ngFor="let street of streets" [value]="street.id">
+                                {{street.name_street}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>              
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Observações</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_observation">
+                    </mat-form-field>
+                </div>                     
+            </div>           
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+</form> 

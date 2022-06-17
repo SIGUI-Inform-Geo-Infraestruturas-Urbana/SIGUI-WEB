@@ -1,0 +1,62 @@
+<form [formGroup]="networkForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Redes</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body"> 
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Rede</mat-label>
+                        <input matInput placeholder="Input" formControlName="idNetwork">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                   
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome da Rede</mat-label>
+                        <input matInput placeholder="Input" formControlName="name">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome Categoria</mat-label>
+                        <input matInput placeholder="Input" formControlName="selectCategory">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome status</mat-label>
+                        <input matInput placeholder="Input" formControlName="selectstatus">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Subsistema</mat-label>
+                        <mat-select formControlName="selectSubsystem">
+                            <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+                                {{subsystem.ss_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>              
+            </div>        
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+</form> 

@@ -1,59 +1,76 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { toStringHDMS } from 'ol/coordinate';
-import { Observable, throwError } from 'rxjs';
-import { City } from '../models/city.model';
+import { BehaviorSubject, firstValueFrom, Observable, throwError } from 'rxjs';
+import { County } from '../models/county.model';
 import { retry, catchError } from 'rxjs/operators'
 import { Feature } from 'ol';
-import { Geometry } from 'ol/geom';
+import { Geometry, MultiPolygon } from 'ol/geom';
+// import { Repository } from '../services/shared/repository/repository';
+import { IRepository } from './repository';
+import { RestApiBackendService } from './rest-api-backend.service';
+import { CountyService } from '../services/count/county.service';
+import { DataSpatialService } from '../services/count/data-spatials.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountyRepositoryService {
-  private stringConection = 'http://localhost:8000/api/data/municipio/';
-  constructor(private httpClient: HttpClient) { }
+export class CountyRepositoryService implements IRepository<County,County> {
 
-  findFetchCounty(idParam : string = ''):Observable<string>{//Feature<Geometry>
-    return this.httpClient.get<string>(this.stringConection + idParam);
+  private readonly _counties = new BehaviorSubject<County[]>([]);
+  readonly counties$: Observable<County[]> = this._counties.asObservable();
+  private stringConection = 'api/data/municipio/';
+
+  constructor(private restApiBackend: RestApiBackendService<County,string>,private countyService : CountyService,
+    private dataSpatialService : DataSpatialService ) { }
+
+  findFetchData(idParam : number = 0):boolean{//Feature<Geometry>
+    let urlSearch = '';
+
+    if (idParam != 0){
+      urlSearch = this.stringConection + idParam.toString();
+    }
+
+    this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
+      let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>data.body);
+      let cities = this.countyService.convertFeature(featureObject);
+      this.dataSpatialService.setDataSpatial(cities);
+    })
+    return true;
   }
 
-  fetchCountys(){
-    return this.httpClient.get<any>(this.stringConection);
+  findFetch():Observable<County[]>{//Observable<string>
+    this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
+      console.log('DEV')
+      console.log(data)
+      let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>data.body);
+      console.log('DAP')
+      console.log(data)
+       console.log('DUP')
+      let cities = this.countyService.convertFeature(featureObject);
+      this._counties.next(cities);
+    })
+    return this.counties$;
   }
 
-  createCounty (city:City):Observable<City>{
+  async createData (city:County):Promise<County>{
+
+    console.log("Create")
     console.log(city)
-    let httpOptions = { 
-      headers : new HttpHeaders({
-        'Content-Type' : 'application/json',
-      }),
-    }
-    let jsonContent = JSON.stringify(city)
-    console.log(jsonContent)
-    return this.httpClient
-      .post<City>(
-        this.stringConection + '/api/data/municipio/',
-        jsonContent,
-        httpOptions
-      )
-      .pipe(retry(1), catchError(this.handleError));
+    city.co_geometry = this.countyService.preparObject(<MultiPolygon>city.co_geometry);
+    let postSpatial = this.restApiBackend.postData(this.stringConection,city);
+    let a = await firstValueFrom(postSpatial);  
+  
+   return new County;
+  }
+  changeData (dataSpatial : County): boolean{
+    return false;
+  }
+  deleteData (idParam : number ): boolean {
+    return false;
   }
 
-  handleError(error: any) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    window.alert(errorMessage);
-    return throwError(() => {
-      return errorMessage;
-    });
-  }
+
 
 
 }

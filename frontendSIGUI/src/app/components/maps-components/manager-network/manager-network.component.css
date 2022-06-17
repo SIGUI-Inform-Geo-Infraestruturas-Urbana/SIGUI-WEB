@@ -1,0 +1,40 @@
+::ng-deep .mat-grid-tile-content{
+    justify-content : left !important;
+    align-items: flex-start !important;
+}
+
+::ng-deep .mat-form-field {
+     /* margin: 20px 0px 0px 0px; */
+    width: 100%; 
+     /* background-color: bisque;      */
+}
+
+::ng-deep .mat-grid-tile {
+    padding-top: 30px !important;
+    background-color: bisque;     
+}
+.grid-tile{
+    padding-top: 10px;
+}
+.div-content-form{
+    width: 100%;
+}
+.div-item-content-form{
+    float: right;
+    width: 100%;
+}
+.content-form{
+    width: 40%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-form-principal{
+    width: 82%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-button{    
+    position: absolute;
+    right: 150px;  
+}
+

@@ -34,8 +34,8 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Selecionar Estado</mat-label>
                     <mat-select formControlName="selectDraw">
-                        <mat-option *ngFor="let stateL of states" [value]="stateL.id_state">
-                            {{stateL.name_state}}
+                        <mat-option *ngFor="let stateL of states" [value]="stateL.id">
+                            {{stateL.name}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>

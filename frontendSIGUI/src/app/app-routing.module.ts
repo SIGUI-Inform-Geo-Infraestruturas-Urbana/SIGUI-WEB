@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './layout/authentication/authentication.component';
 import { UserZoneComponent } from './components/angular-components/user-zone/user-zone.component';
 import { ManageCityComponent} from './components/maps-components/manage-city/manage-city.component'
 import { ManegerStateComponent} from './components/maps-components/maneger-state/maneger-state.component'
 import { ManegerDistrictComponent} from './components/maps-components/maneger-district/maneger-district.component'
+import { FormsMapComponent} from './components/maps-components/forms-map/forms-map.component'
 
+import { ManegerlayersComponent} from './components/maps-components/manegerlayers/manegerlayers.component'
 import { OpenLayerComponent } from './components/maps-components/open-layer/open-layer.component';
 import { PageNotFoundComponent } from './components/angular-components/page-not-found/page-not-found.component';
 import { MasterComponent } from './layout/master/master.component';
@@ -16,6 +18,9 @@ import { AuthGuard } from './account/shared/auth.guard'
 import { LoginComponent } from './account/login/login.component';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 
+import { ManagerInfrastructureComponent } from './components/maps-components/manager-infrastructure/manager-infrastructure.component';
+import { ManagerNetworkComponent} from './components/maps-components/manager-network/manager-network.component'
+import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component'
 const routes: Routes = [
   {
     path: '', 
@@ -28,8 +33,13 @@ const routes: Routes = [
         {path :'manager-city', component: ManageCityComponent},//app-maneger-state
         {path :'manager-state', component: ManegerStateComponent},//app-maneger-state
         {path :'manager-district', component: ManegerDistrictComponent},//app-maneger-state
-        {path :'manager-street', component: ManegerStateComponent}//app-maneger-state
+        {path :'infrastructure', component: ManagerInfrastructureComponent},//app-maneger-state
+        {path :'manager-street', component: ManegerStateComponent},//app-maneger-state
+        {path :'manager-file', component: ManegerlayersComponent},
+        {path :'manager-equipament', component: ManagerEstructureComponent}
+
       ]},
+      {path: 'network', component: ManagerNetworkComponent},
       // {path: '**', component: PageNotFoundComponent}, 
     ],
     canActivate:[AuthGuard]

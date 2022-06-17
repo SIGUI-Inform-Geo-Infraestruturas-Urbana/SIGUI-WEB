@@ -1,0 +1,76 @@
+
+
+<form [formGroup]="infrastrutureForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados de Infraestrutura</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body"> 
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Rua</mat-label>
+                        <input matInput placeholder="Input" formControlName="idInfrastructure">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                   
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome da Infraestrutura</mat-label>
+                        <input matInput placeholder="Input" formControlName="infraName">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome Categoria</mat-label>
+                        <input matInput placeholder="Input" formControlName="infraCategory">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Ocupante</mat-label>
+                        <mat-select formControlName="selectOcupante">
+                            <mat-option *ngFor="let infra of infrastructures" [value]="infra.id">
+                                {{infra.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Subsistema</mat-label>
+                        <mat-select formControlName="selectSubsystem">
+                            <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+                                {{subsystem.ss_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>              
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coordenada</mat-label>
+                        <input matInput placeholder="Input" formControlName="geometry">
+                    </mat-form-field>
+                </div>                     
+            </div>           
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+</form> 

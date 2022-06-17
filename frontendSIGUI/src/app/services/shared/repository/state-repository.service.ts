@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { RestApiService} from '../../rest-api.service'
-import { StateEntity} from '../../../models/state.model'
+import { UnitFederal} from '../../../models/unit-federal.model'
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { PointLayer } from './pointLayer';
 import { Equipament } from './equipament';
-import { City } from '../models/city.model';
-import { StateEntity } from '../models/state.model'
+import { County } from '../models/county.model';
+import { UnitFederal } from '../models/unit-federal.model'
 import { Infraestructura } from './infraestructure';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
@@ -45,7 +45,7 @@ export class RestApiService {
       //.pipe(retry(1), catchError(this.handleError));
   }  
 
-  setState (stateEntity:StateEntity):Observable<StateEntity>{
+  setState (stateEntity:UnitFederal):Observable<UnitFederal>{
     console.log(stateEntity)
     let httpOptions = { 
       headers : new HttpHeaders({
@@ -55,7 +55,7 @@ export class RestApiService {
     let jsonContent = JSON.stringify(stateEntity)
     console.log(jsonContent)
     return this.http
-      .post<StateEntity>(
+      .post<UnitFederal>(
         this.apiURL + '/api/data/state/',
         jsonContent,
         httpOptions
@@ -74,7 +74,7 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  setMunicipios (city:City):Observable<City>{
+  setMunicipios (city:County):Observable<County>{
     console.log(city)
     let httpOptions = { 
       headers : new HttpHeaders({
@@ -84,7 +84,7 @@ export class RestApiService {
     let jsonContent = JSON.stringify(city)
     console.log(jsonContent)
     return this.http
-      .post<City>(
+      .post<County>(
         this.apiURL + '/api/data/municipio/',
         jsonContent,
         httpOptions

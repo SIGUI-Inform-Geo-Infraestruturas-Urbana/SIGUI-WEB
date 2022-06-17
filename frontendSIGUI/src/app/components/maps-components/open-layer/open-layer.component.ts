@@ -30,7 +30,10 @@ import {RestApiService} from '../../../services/rest-api.service'
 import { CountyService} from '../../../services/count/county.service'
 import { Observable } from 'rxjs';
 
-import {City} from '../../../models/city.model'
+import {County} from '../../../models/county.model'
+import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
+import { DataSpatial } from 'src/app/models/data-spatial';
+import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
 
 @Component({
   selector: 'app-open-layer',
@@ -42,13 +45,13 @@ export class OpenLayerComponent implements OnInit {
   coordenadaPoint!:string
 
   map!: Map
-  edited:boolean = false;
-  insert_Infra!: boolean
-  layerSource!: VectorLayer<VectorSource<Geometry>>
+  // edited:boolean = false;
+  // insert_Infra!: boolean
+  // layerSource!: VectorLayer<VectorSource<Geometry>>
   layerIteration!: VectorLayer<VectorSource<Geometry>>
   source!: VectorSource<Geometry>
-  featureState!: Feature<Geometry>[];
-  featureSelect!:Feature;
+  // featureState!: Feature<Geometry>[];
+  // featureSelect!:Feature;
   styleFunction!: any;
   overlayStyle!: any;
   draw!: Draw;  
@@ -56,18 +59,25 @@ export class OpenLayerComponent implements OnInit {
   pointMarcator = '/assets/images/logoSIGUi.png';
   sourceData!:VectorSource;
   
-  constructor(private renderer:Renderer2, public restApi: RestApiService, public countyService : CountyService ){
+  constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
+    public countyRepository : CountyRepositoryService){// public countyService : CountyService
 
   }
 
   ngOnInit(): void { 
     this.mapConstruct();   
-    this.insert_Infra = false;
-    this.countyService.getCounties().subscribe((cities: City[]) => {
+    // this.insert_Infra = false;
+    this.dataSpatialService.getDataSpatial().subscribe((data: DataSpatial[]) => {
       console.log('///////////');
-      console.log(cities)           
-      this.sourceData.addFeatures(this.countyService.converterFromFeatures(cities));
+      console.log(data)           
+      this.sourceData.addFeatures(this.dataSpatialService.converterFromFeatures(data));
     });
+
+    // this.countyService.getCounties().subscribe((cities: City[]) => {
+    //   console.log('///////////');
+    //   console.log(cities)           
+    //   this.sourceData.addFeatures(this.countyService.converterFromFeatures(cities));
+    // });
   }; 
 
 
@@ -126,8 +136,8 @@ export class OpenLayerComponent implements OnInit {
 
       // const select: SelectFeature = new selectFea 
 
-     this.addTileLayerOSM();
-    //  this.addTileLayerGeoserver();
+     //this.addTileLayerOSM();
+      this.addTileLayerGeoserver();
       this.addVetorIterationTile();
 
       this.addLoadData();
@@ -374,9 +384,9 @@ export class OpenLayerComponent implements OnInit {
         var feature = event.feature;
         var features = this.layerIteration.getSource()!.getFeatures();
         features = features.concat(feature);
-        this.featureState = features;
+        // this.featureState = features;
         console.log('deu certo');
-        console.log( this.featureState );
+        // console.log( this.featureState );
 
         /*console.log('deu certo');
         console.log(features);
@@ -450,28 +460,28 @@ export class OpenLayerComponent implements OnInit {
     this.map.addLayer(capa);
   }
 
-  enableDivAssociationInfra (feature:Feature):void{
-    console.log('eventoRecebido')
-    console.log(feature)
-    if (feature != undefined)
-    {
-      this.featureSelect = feature;
-      this.edited = !this.edited;
-    }
-  }
-  enableDivAssociationCity (feature:Feature):void{
-    console.log('eventoRecebido')
-    console.log(feature)
-    if (feature != undefined)
-    {
-      this.featureSelect = feature;
-      //this.panelOpenAdMunicios = !this.panelOpenAdMunicios;
-    }
-  }
+  // enableDivAssociationInfra (feature:Feature):void{
+  //   console.log('eventoRecebido')
+  //   console.log(feature)
+  //   if (feature != undefined)
+  //   {
+  //     this.featureSelect = feature;
+  //     this.edited = !this.edited;
+  //   }
+  // }
+  // enableDivAssociationCity (feature:Feature):void{
+  //   console.log('eventoRecebido')
+  //   console.log(feature)
+  //   if (feature != undefined)
+  //   {
+  //     this.featureSelect = feature;
+  //     //this.panelOpenAdMunicios = !this.panelOpenAdMunicios;
+  //   }
+  // }
 
   addLayerVetorMunicipios(){
       console.log("entrou")
-      this.countyService.findFetchCounty();    
+      //this.countyService.findFetchCounty();    
       // this.restApi.getMunicipios().subscribe((geojsonObject : {}) => {
       //   console.log('populate')  
         
@@ -491,7 +501,7 @@ export class OpenLayerComponent implements OnInit {
 
   addGetByIdCounty(id : number){
     console.log('CHEGOY******************');
-    this.countyService.findFetchCounty(id);    
+    this.countyRepository.findFetchData(id);    
   }
   
 }

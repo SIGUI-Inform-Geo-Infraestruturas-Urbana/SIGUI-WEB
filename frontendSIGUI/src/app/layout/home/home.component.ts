@@ -9,9 +9,9 @@ export class HomeComponent {
 
   @ViewChild('drawer',{static:false}) drawer!: ElementRef<HTMLElement>;
   isShowing: boolean = false;
-  showFiller = false;
-  title = 'SIGUI';
-  imgCorLogo = '/assets/images/logotipo SIGUI.png';
+  showFiller : boolean= false;
+  title : string = 'SIGUI';
+  imgCorLogo : string = '/assets/images/logotipo SIGUI.png';
 
   activeSideNav():void{
     console.log('dsadsad')

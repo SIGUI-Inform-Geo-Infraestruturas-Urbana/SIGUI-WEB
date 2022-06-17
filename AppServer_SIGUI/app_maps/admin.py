@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Equipament, Infrastructure, Layers
+from .models import Equipament
 
 admin.site.register(Equipament)
-admin.site.register(Layers)
-admin.site.register(Infrastructure)
+# admin.site.register(Layers)
+# admin.site.register(Infrastructure)
 
 
 

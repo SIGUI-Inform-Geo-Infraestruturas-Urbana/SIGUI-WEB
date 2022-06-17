@@ -3,10 +3,14 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { District } from '../../../models/district.model';
 import { Feature } from 'ol';
 import {RestApiService} from '../../../services/rest-api.service';
-import {Polygon, MultiPolygon} from 'ol/geom';
 import GeoJSON from 'ol/format/GeoJSON';
 import {StateMapService} from '../../../services/shared/state-map.service'
-import { City } from 'src/app/models/city.model';
+import { County } from 'src/app/models/county.model';
+import { UnitFederal } from 'src/app/models/unit-federal.model';
+import { DataSpatial } from 'src/app/models/data-spatial';
+import { Geometry, MultiPolygon } from 'ol/geom';
+import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
+import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
 
 @Component({
   selector: 'app-maneger-district',
@@ -15,97 +19,94 @@ import { City } from 'src/app/models/city.model';
 })
 export class ManegerDistrictComponent implements OnInit {
 
-  public citys : City[] = [];
-  public districtEntity! : District;
+  public cities : County[] = [];
+  public district! : District;
   public districtForm!: FormGroup;
 
-  constructor(public restApi: RestApiService, private stateMap :StateMapService){ 
-    this.districtEntity = new District(0);
+  constructor(public districtRepositoryService : DistrictRepositoryService, public countyRepository: CountyRepositoryService, 
+    private stateMap :StateMapService){ 
+    this.district = new District(0);
     stateMap.getFeatureSelect().subscribe(feature => {
+      console.log("+++6+iniciou")    
       console.log(feature)    
       this.populateGeometry(feature);      
-    })  
+    })
   }
 
   ngOnInit(): void {
     this.createForm(new District(0));
-    this.getState();
+    this.getCounty();
     this.districtForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onSelectDistrict(f)})
   }
 
   createForm(district : District):void{
     this.districtForm = new FormGroup({
-      nomeDistrict : new FormControl(district.nome_district),
-      idDistrict : new FormControl(district.id_district),
-      areaDistrict : new FormControl(district.area_district),
+      nomeDistrict : new FormControl(district.name),
+      idDistrict : new FormControl(district.id),
+      areaDistrict : new FormControl(district.area),
       geometry: new FormControl(district.geometry),
-      selectDraw: new FormControl(district.id_County),//geometry//geometry
+      selectDraw: new FormControl(district.id_district),//geometry//geometry
     });
+    
   }
-
-  populateGeometry(feature:Feature){
-    let MultiPolygonList = [];
-    let geometria:Polygon = <Polygon>feature.getGeometry();
-    if(geometria != undefined){
-      MultiPolygonList.push(geometria)
-      let geometryMultPoly: MultiPolygon = new MultiPolygon(MultiPolygonList);
-
-      var geojson_parser = new GeoJSON();
-      var geometryJson = geojson_parser.writeGeometry(geometryMultPoly);
-
-      this.districtEntity.geometry = geometryJson;
-      console.log(this.districtEntity);
+ 
+  populateGeometry(feature:DataSpatial){ 
+    console.log('+++++++++++++++++');
+    console.log(feature);     
+    console.log('Teste register');
+    let distric:District = <District>feature;   
+   
+    if(distric.dc_geometry != '0'){
+      console.log('Teste register');      
+      this.district.geometry = distric.dc_geometry;
+      console.log(this.district);
     }
   }
 
-  getState():void{
+  getCounty():void{
     let a = {};
-    this.restApi.getMunicipios().subscribe((data:string) => {
-      console.log('populateState+++++++')
-      console.log(data)
-      let statesList = new GeoJSON({featureProjection: 'EPSG:3857' })
-            .readFeatures(JSON.stringify(data))
-      //console.log('populateState')
-      //console.log(this.states[0].getProperties())
-      for (let stateObject of statesList) {
-        //let stateNew = new City(stateObject.getId()).deserialize(stateObject.getProperties())
-        let stateNew = new City(stateObject.getId()).deserialize(stateObject)
-        this.citys.push(stateNew);
-      }
-      //console.log(stateNew)
+    this.countyRepository.findFetch().subscribe((data : County[])=>{
+      console.log('45645456454564654654654')
+      console.log(data[0])
+      this.cities = data;
     })
-   
-  }
+  }   
+  
 
   onSubmit(){
    
-    const citySubmit: District = new District(this.districtForm.get('idDistrict')?.value,).deserialize({
-      nome_district : this.districtForm.get('nomeDistrict')?.value,   
-      area_district : this.districtForm.get('areaDistrict')?.value,
-      geometry : this.districtEntity.geometry,
-      id_County : this.districtEntity.id_County,
-    })
+    const citySubmit: District = new District(this.district.id_district);
+    citySubmit.name = this.districtForm.get('nomeDistrict')?.value;
+    citySubmit.area = this.districtForm.get('areaDistrict')?.value;
+    citySubmit.dc_geometry = <Geometry>this.district.geometry;
+    citySubmit.county = this.district.county;
+    
     console.log(citySubmit);
-    this.createState(citySubmit);
+    this.createDistrict(citySubmit);
   }
 
-  createState(district:District):void{
+  createDistrict(district:District):void{
     console.log('popu')
     console.log(district)
-    this.restApi.setDistrict(district).subscribe((data : {}) => {
-      console.log('populate')
-      console.log(data)
-    })
+    this.districtRepositoryService.createData(district)
   }
-
+ 
   onSelectDistrict(value:number):void{
+    console.log('select')
     console.log(value)
-    for (let city of this.citys) {
-      if(city.id_County == value){
-        this.districtEntity.id_County = city;
-        console.log(this.districtEntity.id_County);
-        break;
-      }
-    }
+    this.district.county =<County> this.cities.find( a => a.id == value)
+    //this.district.county =this.cities[value-1];
+    console.log(this.district.county)
   }  
+
+  // onSelectDistrict(value:number):void{
+  //   console.log(value)
+  //   for (let city of this.cities) {
+  //     if(city.id_county == value){
+  //       this.district.id_County = city;
+  //       console.log(this.district.id_County);
+  //       break;
+  //     }
+  //   }
+  // }  
 }

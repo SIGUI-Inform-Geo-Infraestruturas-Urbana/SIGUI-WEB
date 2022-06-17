@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from yaml import serialize 
 from app_maps.models import Equipament
-from app_maps.models import Infrastructure
+# from app_maps.models import Infrastructure
 from .serializers import EquipamentSerializer
 from django.core.serializers import serialize
 
@@ -37,17 +37,17 @@ class EquipamentView(APIView):
     #         'nome' : serializer.data
     #     }
     #     return response
-class InfrastructureView(APIView):
+    # # class InfrastructureView(APIView):
 
-    def get(self, request):
-        data = serialize('geojson', Infrastructure.objects.all(),
-                geometry_field='position',fields=('nomeInfraestructure',))
-        #reponse.data = serializer.
-        serializado = json.loads(data)
-        print(serializado)
-        data = json.dumps(serializado)
-        return HttpResponse(data,content_type='application/jsone')#mimetypes
+# #     def get(self, request):
+# #         data = serialize('geojson', Infrastructure.objects.all(),
+# #                 geometry_field='position',fields=('nomeInfraestructure',))
+# #         #reponse.data = serializer.
+# #         serializado = json.loads(data)
+# #         print(serializado)
+# #         data = json.dumps(serializado)
+# #         return HttpResponse(data,content_type='application/jsone')#mimetypes
     
-    def post(self, request):
-        equipament = request.data.get('equipament')
-        print(equipament)
+# #     def post(self, request):
+# #         equipament = request.data.get('equipament')
+# #         print(equipament)

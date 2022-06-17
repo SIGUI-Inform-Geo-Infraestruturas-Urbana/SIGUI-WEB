@@ -1,0 +1,125 @@
+<form [formGroup]="streetForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados Street</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body"> 
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Rua</mat-label>
+                        <input matInput placeholder="Input" formControlName="idStreet">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Chave da Rua</mat-label>
+                        <input matInput placeholder="Input" formControlName="codKey">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome da Rua</mat-label>
+                        <input matInput placeholder="Input" formControlName="nameStreet">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome rua Anterior</mat-label>
+                        <input matInput placeholder="Input" formControlName="nameStreetPre">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tipo da Rua </mat-label>
+                        <input matInput placeholder="Input" formControlName="typeStreet">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>legislação da rua </mat-label>
+                        <input matInput placeholder="Input" formControlName="typeLegislation">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Distrito Entrada</mat-label>
+                        <mat-select formControlName="selectDistrictE">
+                            <mat-option *ngFor="let district of districts" [value]="district.id">
+                                {{district.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Distrito Destino</mat-label>
+                        <mat-select formControlName="selectDistrictD">
+                            <mat-option *ngFor="let district of districts" [value]="district.id">
+                                {{district.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>               
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>CEP </mat-label>
+                        <input matInput placeholder="Input" formControlName="zipCodeE">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>CEP</mat-label>
+                        <input matInput placeholder="Input" formControlName="zipCodeF">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Distrito</mat-label>
+                        <mat-select formControlName="selectDistrict">
+                            <mat-option *ngFor="let district of districts" [value]="district.id">
+                                {{district.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">    
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coordenada</mat-label>
+                        <input matInput placeholder="Input" formControlName="geometry">
+                    </mat-form-field>
+                </div>   
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Area do Bairro</mat-label>
+                        <input matInput placeholder="Input" formControlName="areaDistrict">
+                    </mat-form-field>
+                </div>        
+            </div>           
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+    </form>

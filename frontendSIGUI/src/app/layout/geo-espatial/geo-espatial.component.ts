@@ -7,27 +7,16 @@ import { Feature } from 'ol';
   templateUrl: './geo-espatial.component.html',
   styleUrls: ['./geo-espatial.component.css']
 })
-export class GeoEspatialComponent implements OnInit, AfterViewInit {
+export class GeoEspatialComponent implements OnInit {
 
   @ViewChild(OpenLayerComponent, {static:false})
   mapOpenLayer !: OpenLayerComponent;
 
-  featureSelect!:Feature;
-    //
-    panelOpenState!:boolean
-    panelOpenAdFileMunicios!:boolean
-    panelOpenAdMunicios!:boolean
-    //
-
-
+  // featureSelect!:Feature;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-    
   }
 
   getByIdState(id:number){

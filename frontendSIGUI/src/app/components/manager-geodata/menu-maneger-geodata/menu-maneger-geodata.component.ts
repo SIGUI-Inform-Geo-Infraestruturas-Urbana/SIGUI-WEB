@@ -3,6 +3,9 @@ import { ManagerVisualizationService } from '../../../services/shared/visualizat
 import { ManagerSession} from '../../../models/managerSession.model'
 import { ActivatedRoute ,Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
+import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
+import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
 
 @Component({
   selector: 'app-menu-maneger-geodata',
@@ -25,7 +28,11 @@ export class MenuManegerGeodataComponent implements OnInit {
   panelOpenAdMunicios!:boolean //(click)="panelOpenAdMunicios=!panelOpenAdMunicios"
   //
 
-  constructor(public managerVisualization : ManagerVisualizationService,public route: ActivatedRoute , public router: Router) {
+  constructor(public managerVisualization : ManagerVisualizationService, 
+    public countyRepositoryService : CountyRepositoryService,
+    public unitFederativeRepositoryService : UnitFederativeRepositoryService,
+    public districtRepositoryService : DistrictRepositoryService,
+    public route: ActivatedRoute , public router: Router) {
     this.managerSession = new ManagerSession();
    }
 
@@ -40,26 +47,37 @@ export class MenuManegerGeodataComponent implements OnInit {
       idDistrict: new FormControl(),
     });
   }
-  
+
   addLayerVetorMunicipios(){
 
   }
-
+  
   addLayerVetorState(){
+
+  }
+
+  addLayerVetorCounties(){
+
+  }
+
+  addLayerVetorFerativeUnit(){
     
   }
 
   getFeatureState(){
     let idSearch = this.searchStateForm.get('idState')?.value;
-    this.getState.emit(idSearch);
+    //this.getState.emit(idSearch);
+    this.unitFederativeRepositoryService.findFetchData(idSearch); 
   }
   getFeatureCounty(){
     let idSearch = this.searchCountyForm.get('idMunicipio')?.value;
-    this.getCounty.emit(idSearch);
+    // this.getCounty.emit(idSearch);
+    this.countyRepositoryService.findFetchData(idSearch); 
   }
   getFeatureDistrict(){
     let idSearch = this.searchDistrictForm.get('idDistrict')?.value;
     this.getDistrict.emit(idSearch);
+    this.districtRepositoryService.findFetchData(idSearch); 
   }
 
   onClickSelectCounty(){
@@ -110,6 +128,34 @@ export class MenuManegerGeodataComponent implements OnInit {
     this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-district'],{relativeTo:this.route});
   }
-  
 
+  onClickSelectInfrastructure(){
+
+    this.managerSession = {
+      session_visualization : false,
+      session_county: false,
+      session_country: false,
+      session_ditrict : false,
+      session_streat: false,
+      session_state: false,
+      session_component: true
+     
+    }
+    console.log('odfdsfdsfdsfdsfdsf')
+    this.managerVisualization.setSessionVisualization(this.managerSession);
+    //this.router.navigateByUrl('/geo-view/manager-city');
+    this.router.navigate(['infrastructure'],{relativeTo:this.route});
+  }
+  
+  onClickEquipamentFile(){   
+    //this.router.navigateByUrl('/geo-view/manager-city');
+    this.router.navigate(['manager-equipament'],{relativeTo:this.route});
+  }
+
+  //manager-file
+
+  onClickCountyFile(){   
+    //this.router.navigateByUrl('/geo-view/manager-city');
+    this.router.navigate(['manager-file'],{relativeTo:this.route});
+  }
 }

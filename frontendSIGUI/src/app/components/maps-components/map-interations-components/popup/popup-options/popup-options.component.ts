@@ -4,9 +4,11 @@ import { Coordinate, toStringHDMS } from 'ol/coordinate';
 import { fromLonLat , toLonLat, transform} from 'ol/proj';
 import Map from 'ol/Map';
 import Point  from 'ol/geom/Point';
-import { CountyService } from 'src/app/services/count/county.service';
-import { City } from 'src/app/models/city.model';
-import { MultiPolygon } from 'ol/geom';
+//import { CountyService } from 'src/app/services/count/county.service';
+import { County } from 'src/app/models/county.model';
+import { Geometry, MultiPolygon } from 'ol/geom';
+import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
+import { DataSpatial } from 'src/app/models/data-spatial';
 
 @Component({
   selector: 'app-popup-options',
@@ -26,7 +28,7 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   public coordenadaPoint!:string
   public edited:boolean = true;
 
-  constructor(public countyService : CountyService ) {         
+  constructor(public dataSpatialService : DataSpatialService) {         
 
   }
 
@@ -53,14 +55,23 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   }  
 
   setSelect(){
-    this.countyService.getCounties().subscribe((cities: City[]) => {
-      let feature = this.countyService.converterFromFeatures(cities);
+    this.dataSpatialService.getDataSpatial().subscribe((cities: DataSpatial[]) => {
+      let feature = this.dataSpatialService.converterFromFeatures(cities);
       if (feature.length > 0){
         console.log('88888888888888888888888888')
-        let a = <MultiPolygon>feature[0].getGeometry();
-        let b = a.getCoordinates();
-        //console.log(b)
-        ///
+        let geometry = <Geometry>feature[0].getGeometry();
+        if (geometry.getType() == 'MultiPolygon'){
+          console.log(geometry.getType())
+          this.featureSelect = <Feature>feature[0]; 
+        }
+        else{
+          let vertice = <Point>geometry;
+          let coordinatePoint:Coordinate= vertice.getCoordinates();
+          this.overlay.setPosition(coordinatePoint); 
+          this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+          this.featureSelect = <Feature>feature[0]; 
+        }
+
       }
 
     
@@ -73,9 +84,11 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     let marcator = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {     
       return feature;
     });
-   
+    
+
     if (marcator === undefined)
     {
+      console.log('55555555555555555')
       let coordinate:Coordinate = evt.coordinate;
       this.overlay.setPosition(coordinate); 
      // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
@@ -83,6 +96,7 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     }
     else{
       console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      console.log(marcator.getGeometry()?.getType())
       // this.featureSelect = <Feature>marcator;    
       if (marcator.getGeometry()?.getType() == 'Point')
       {

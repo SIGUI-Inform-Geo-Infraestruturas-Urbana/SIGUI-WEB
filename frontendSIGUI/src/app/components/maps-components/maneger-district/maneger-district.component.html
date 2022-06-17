@@ -26,8 +26,8 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Selecionar Cidade</mat-label>
                         <mat-select formControlName="selectDraw">
-                            <mat-option *ngFor="let city of citys" [value]="city.id_County">
-                                {{city.name_county}}
+                            <mat-option *ngFor="let city of cities" [value]="city.id">
+                                {{city.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

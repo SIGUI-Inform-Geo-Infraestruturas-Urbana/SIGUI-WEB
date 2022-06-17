@@ -42,7 +42,7 @@
             </div>       
             <button mat-stroked-button color="primary" (click)="onClickSelectCounty()"> Adicionar Municipio</button>                
             <button mat-stroked-button color="primary" (click)="addLayerVetorMunicipios()"> Visualizar Municipios</button>
-            <button mat-stroked-button color="primary" (click)="panelOpenAdFileMunicios=!panelOpenAdFileMunicios"> Adicionar Arquivo</button>
+            <button mat-stroked-button color="primary" (click)="onClickCountyFile()"> Adicionar Arquivo</button>
         </mat-expansion-panel>         
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
@@ -68,7 +68,7 @@
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Logradouros
+                        Ruas
                     </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -80,13 +80,13 @@
                     <mat-icon>search</mat-icon>
                 </button>
             </div>                       
-            <button [routerLink]="['manager-city']" mat-stroked-button color="primary"> Visualizar Logradouro</button>
+            <button [routerLink]="['manager-city']" mat-stroked-button color="primary"> Visualizar Rua</button>
             <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
         </mat-expansion-panel>  
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
                     <mat-panel-title>
-                        Components
+                        Infraestruturas
                     </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -98,8 +98,25 @@
                     <mat-icon>search</mat-icon>
                 </button>
             </div>                       
-            <button mat-stroked-button color="primary"> Visualizar Components</button>
+            <button mat-stroked-button color="primary" (click)="onClickSelectInfrastructure()">  Visualizar Infraestruturas</button>
+            </mat-expansion-panel>     
+        <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
+            <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Estruturas
+                    </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <mat-form-field class="search-form-field" appearance="fill">
+                    <mat-label>Buscar por ID</mat-label>
+                    <input matInput placeholder="Consulte ID">
+                </mat-form-field>
+                <button mat-mini-fab color="primary">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>                       
+            <button mat-stroked-button color="primary" (click)="onClickEquipamentFile()"> Visualizar Estruturas</button>
             <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
-        </mat-expansion-panel>                   
+        </mat-expansion-panel>               
 </mat-accordion>     
 </div> 
