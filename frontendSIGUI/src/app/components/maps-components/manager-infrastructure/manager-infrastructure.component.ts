@@ -22,6 +22,7 @@ export class ManagerInfrastructureComponent implements OnInit {
   public subsystems : Subsystem[] = [];
   public infrastructure : Infrastructure;
   public infrastrutureForm!: FormGroup;
+  public enableAssociation: boolean = false;
 
   constructor( public infrastructureRepository : InfrastructureRepositoryService,
     public subsystemRepositoryService : SubsystemRepositoryService, public streetRepository: StreetRepositoryService , 
@@ -37,9 +38,9 @@ export class ManagerInfrastructureComponent implements OnInit {
   ngOnInit(): void {
     this.createForm(new Infrastructure(0));
     this.getSubsystem();
-    this.infrastrutureForm.get("selectDistrictE")?.valueChanges.subscribe(f => {this.onSelectOcupante(f)})
-    this.infrastrutureForm.get("selectDistrictD")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})
-     
+    this.infrastrutureForm.get("selectOcupante")?.valueChanges.subscribe(f => {this.onSelectOcupante(f)})
+    this.infrastrutureForm.get("selectSubsystem")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})
+    
   }
 
   createForm(infrastructure : Infrastructure):void{
@@ -70,7 +71,7 @@ export class ManagerInfrastructureComponent implements OnInit {
   getSubsystem(){
     this.subsystemRepositoryService.findFetch().subscribe((data : Subsystem[])=>{
       console.log('45645456454564654654654')
-      console.log(data[0])
+      console.log(data[0])     
       this.subsystems = data;
     })
   }
@@ -103,10 +104,11 @@ export class ManagerInfrastructureComponent implements OnInit {
     const infraSubmit: Infrastructure = new Infrastructure(this.infrastructure.id_infra);
     infraSubmit.name = this.infrastrutureForm.get('infraName')?.value;
     infraSubmit.category = this.infrastrutureForm.get('infraCategory')?.value;
-    infraSubmit.dependent = infraSubmit.dependent;
-    infraSubmit.subsystems = infraSubmit.subsystems;
+    infraSubmit.dependent = this.infrastructure.dependent;
+    infraSubmit.subsystems = this.infrastructure.subsystems;
     infraSubmit.infra_geometry = <Geometry>this.infrastructure.geometry;       
-    console.log(infraSubmit);
+    console.log('sdaa');
+    console.log(infraSubmit.subsystems);
     this.createDistrict(infraSubmit);
   }
 
@@ -114,6 +116,11 @@ export class ManagerInfrastructureComponent implements OnInit {
     console.log('popu')
     console.log(infrastructure)
     this.infrastructureRepository.createData(infrastructure)
+      .then((value:Infrastructure) => {
+        console.log(value)
+        this.createForm(value);
+        this.enableAssociation = true;
+      })
   }
 
 }

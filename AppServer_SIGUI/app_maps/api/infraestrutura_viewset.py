@@ -15,12 +15,14 @@ class InfraestruturaViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
         id_infra=espatial_request["infra_dependent"]
-        infraObjectId=id_infra["id"]
-        infraD = models.Infrastructure.objects.get(id=infraObjectId)
+        infraD = None
+        if id_infra != None:
+            infraObjectId=id_infra["id"]
+            infraD = models.Infrastructure.objects.get(id=infraObjectId)
 
         id_subsystem=espatial_request["infra_subsystems"]
         subsObjectId=id_subsystem["id"]
-        subsystem = models.Infrastructure.objects.get(id=subsObjectId)
+        subsystem = models.Subsystems.objects.get(id=subsObjectId)
 
         ####new_geoEspatial = CountySerializer(data = espatial_request)
 

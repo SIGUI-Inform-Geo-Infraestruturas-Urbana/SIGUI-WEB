@@ -58,8 +58,9 @@ import { ManagerStreetComponent } from './components/maps-components/manager-str
 import { ManegerDistrictComponent } from './components/maps-components/maneger-district/maneger-district.component';
 import { ManagerNetworkComponent } from './components/maps-components/manager-network/manager-network.component';
 import { ManagerInfrastructureComponent} from './components/maps-components/manager-infrastructure/manager-infrastructure.component';
-import { ManageInfrastructureComponent } from './components/maps-components/manage-infrastructure/manage-infrastructure.component'
-import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component'
+import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component';
+import { AssociationInfrastructuresComponent } from './components/maps-components/association-infrastructures/association-infrastructures.component';
+import { InfrastructureNetworkComponent } from './components/maps-components/infrastructure-network/infrastructure-network.component'
 
 @NgModule({
   declarations: [
@@ -95,8 +96,9 @@ import { ManagerEstructureComponent } from './components/maps-components/manager
     ManagerStreetComponent,    
     ManagerNetworkComponent,
     ManagerInfrastructureComponent,
-    ManageInfrastructureComponent,
-  
+    AssociationInfrastructuresComponent,
+    InfrastructureNetworkComponent,
+ 
 
   ],
   imports: [

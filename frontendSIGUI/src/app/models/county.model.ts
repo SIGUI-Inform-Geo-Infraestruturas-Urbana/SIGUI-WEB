@@ -20,7 +20,7 @@ export class County extends DataSpatial{
     constructor(id : any = 0,name_county: any = '',initials_uf: any = '',cod_ibge: any = 0
         ,cod_environmental: any = 0,name_ugrhi: any = 0,number_ugrhi: any = 0,geometry: any = 0
         ,id_state: any = 0,area_county: any = 0){
-        super(id,<Geometry>geometry);
+        super(id,'county',<Geometry>geometry);
         //this.id = id;
         this.co_name = name_county;
         this.co_initials_uf = initials_uf;      

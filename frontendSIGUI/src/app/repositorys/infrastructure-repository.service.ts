@@ -16,7 +16,7 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
 
   private readonly _infrastructure= new BehaviorSubject<Infrastructure[]>([]);
   readonly infrastructure$: Observable<Infrastructure[]> = this._infrastructure.asObservable();
-  private stringConection = 'api/data/infrastructure/';
+  private stringConection = 'api/data/infraestrutura/';
 
   constructor(private restApiBackend: RestApiBackendService<Infrastructure,string>,private infrastructureService : InfrastructureService,
     private dataSpatialService : DataSpatialService ) { }
@@ -56,7 +56,12 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
       console.log(infra)
       infra.infra_geometry = this.infrastructureService.preparObject(<Point>infra.infra_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,infra);
-      let a = await firstValueFrom(postSpatial);  
+      let a = await firstValueFrom(postSpatial); 
+      let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
+      let infras = new Infrastructure().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
     }    
   
    return new Infrastructure;

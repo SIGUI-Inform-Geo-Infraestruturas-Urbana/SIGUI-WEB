@@ -58,6 +58,7 @@ export class OpenLayerComponent implements OnInit {
   marcatores:Feature<Point>[] = [];
   pointMarcator = '/assets/images/logoSIGUi.png';
   sourceData!:VectorSource;
+  sourceStreet!:VectorSource;
   
   constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
     public countyRepository : CountyRepositoryService){// public countyService : CountyService
@@ -69,7 +70,35 @@ export class OpenLayerComponent implements OnInit {
     // this.insert_Infra = false;
     this.dataSpatialService.getDataSpatial().subscribe((data: DataSpatial[]) => {
       console.log('///////////');
-      console.log(data)           
+      console.log(data)  
+      
+      let features: Feature[] = [] 
+      for (let index = 0; index < data.length; index++) {
+        const element = data[index];
+        switch (element.typeRepresentation) {
+          case 'street':
+            let featureStreet = new Feature({
+              id: element.id,
+              properties : element,
+              geometry : <Geometry>element.geometry
+            })
+            this.sourceStreet.addFeature(featureStreet);
+            break;
+          case 'infrastructure':
+            let featureInfrastructura = new Feature({
+              id: element.id,
+              properties : element,
+              geometry : <Geometry>element.geometry
+            })
+            this.sourceStreet.addFeature(featureInfrastructura);
+            break;         
+          default:
+            break;
+        }        
+       
+      };
+         
+
       this.sourceData.addFeatures(this.dataSpatialService.converterFromFeatures(data));
     });
 
@@ -318,6 +347,18 @@ export class OpenLayerComponent implements OnInit {
         })     
 
       layerSource.set('name','layer_vector_load')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataStreet():void{
+    this.sourceStreet = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourceStreet,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_street')
       //   this.map.addLayer( layerSource )
       this.map.addLayer( layerSource );
   }

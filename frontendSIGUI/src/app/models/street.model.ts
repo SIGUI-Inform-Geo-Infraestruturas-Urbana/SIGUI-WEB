@@ -18,7 +18,7 @@ export class Street extends DataSpatial{
     private st_district : District=  new District(); 
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id, geometry)
+        super(id, 'street' ,geometry)
     }
 
     public get id_street() : number {

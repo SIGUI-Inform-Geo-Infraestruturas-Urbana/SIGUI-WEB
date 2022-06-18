@@ -39,12 +39,15 @@
         </td>
     </tr>
     <tr *ngIf="hiddenComponent">
-        <td> Componente:</td>
+        <td> Infraestrutura:</td>
         <td>                     
             <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
         </td>
         <td>                     
-            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Associar </button>
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="connectFeatureFromInfrastructure()"> Associar </button>
+        </td>
+        <td>                     
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="associateFeatureFromInfrastructure()"> Associar Rede </button>
         </td>
     </tr>
 </table>  

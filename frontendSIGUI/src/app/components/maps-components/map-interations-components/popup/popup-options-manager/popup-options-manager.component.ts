@@ -7,9 +7,14 @@ import { ManagerVisualizationService } from '../../../../../services/shared/visu
 import {  Observable } from "rxjs";
 //import { CountyService } from 'src/app/services/count/county.service';
 import { County } from 'src/app/models/county.model';
-import { Geometry, MultiPolygon, Polygon } from 'ol/geom';
+import { Geometry, LineString, MultiPolygon, Point, Polygon } from 'ol/geom';
 import { UnitFederal } from 'src/app/models/unit-federal.model';
 import { District } from 'src/app/models/district.model';
+import { Infrastructure } from 'src/app/models/infrastructure.model';
+import { AssociationInfrastructuresComponent } from '../../../association-infrastructures/association-infrastructures.component';
+import { InfrastructureNetwork } from 'src/app/models/Infrastructure-network.model';
+import { DataAssociationService } from 'src/app/services/count/data-association.service';
+import { Coordinate } from 'ol/coordinate';
 @Component({
   selector: 'app-popup-options-manager',
   templateUrl: './popup-options-manager.component.html',
@@ -26,8 +31,8 @@ export class PopupOptionsManagerComponent implements OnInit {
   public hiddenStreet : boolean = true;
   public hiddenComponent : boolean = true;
 
-  constructor(private stateMap :StateMapService, public managerService : ManagerVisualizationService) {
-
+  constructor(private stateMap :StateMapService, private dataAssociationService : DataAssociationService,
+    public managerService : ManagerVisualizationService) {
 
     managerService.getSessionVisualization().subscribe(sessionVizu => {
       console.log('----------------');
@@ -114,6 +119,56 @@ export class PopupOptionsManagerComponent implements OnInit {
     else
     {
       console.log('click infra vazio')
+    }
+  }
+  connectFeatureFromInfrastructure():void{    
+    if (this.featureSelect != undefined)
+    {
+      console.log('click infra');
+      //this.associarCity.emit(this.featureSelect);
+      //console.log(this.featureSelect);
+      let geom :Geometry = this.populatePoint(this.featureSelect);
+      let spatial = new Infrastructure().serialize(this.featureSelect,geom)
+      this.stateMap.setFeatureSelect(spatial);
+     // this.stateMap.create(this.featureSelect);
+    }
+    else
+    {
+      console.log('click infra vazio')
+    }
+  }
+
+  associateFeatureFromInfrastructure():void{ 
+
+    if (this.featureSelect != undefined)
+    {
+      console.log('click infra');
+      let geom :Point = <Point>this.populatePoint(this.featureSelect);
+      let geome : Point = <Point> this.dataAssociationService.getGeom();
+      var points:Coordinate[] = [geome.getCoordinates(),geom.getCoordinates()]
+
+      let nerFeature = new Feature({
+        geometry : new LineString(points)
+      })
+
+      this.dataAssociationService.setDataOut( new Infrastructure().serialize(this.featureSelect,geom));
+     // this.stateMap.create(this.featureSelect);
+    }
+    else
+    {
+      console.log('click infra vazio')
+    }
+  }
+  populatePoint(feature:Feature):Geometry{  
+    console.log('+++++++++++++++++');
+    console.log(feature);     
+    console.log('Teste register');
+    let geometria:Point = <Point>feature.getGeometry();
+    if(geometria != undefined){     
+      return geometria;
+    }
+    else{
+      return geometria;
     }
   }
 

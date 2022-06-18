@@ -7,6 +7,7 @@ import { abstract } from "ol/util";
 
 export abstract class DataSpatial {      
     public id : number;
+    public typeRepresentation : string; 
     public geometry : string | Geometry;
 
     // public get id_spatial() : number {
@@ -16,8 +17,9 @@ export abstract class DataSpatial {
     //     this.id = value;
     // }
 
-    constructor (id : number,geometry : string | Geometry){
+    constructor (id : number,type : string, geometry : string | Geometry){
         this.id = id;
+        this.typeRepresentation = type; 
         this.geometry = geometry;
     }
 

@@ -3,7 +3,7 @@ import { Geometry, LineString, MultiPolygon, Point } from "ol/geom";
 import { DataSpatial } from "./data-spatial";
 import { District } from "./district.model";
 import { Equipament } from "./equipament.model";
-import { InfrastructureNetwork } from "./Infrastructure-network.model";
+// import { InfrastructureNetwork } from "./Infrastructure-network.model";
 import { Network } from "./network.model";
 import { Subsystem } from "./subsystem.model";
 
@@ -13,11 +13,11 @@ export class Infrastructure extends DataSpatial{
     private infra_category : string = '';
     private infra_dependent : Infrastructure | null = null;
     private infra_subsystems : Subsystem = new Subsystem();
-    private infra_equipaments : Equipament = new Equipament();
-    private infra_network : InfrastructureNetwork = new InfrastructureNetwork();   
+   // private infra_equipaments : Equipament = new Equipament();
+    // private infra_network : InfrastructureNetwork = new InfrastructureNetwork();   
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id, geometry)
+        super(id,'infrastructure', geometry)
     }
 
     public get id_infra() : number {
@@ -54,18 +54,18 @@ export class Infrastructure extends DataSpatial{
         this.infra_subsystems = value;
     }
 
-    public get equipaments() : Equipament {
-        return this.infra_equipaments;
-    }
-    public set equipaments(value : Equipament){
-        this.infra_equipaments = value;
-    }
-    public get network() : InfrastructureNetwork {
-        return this.infra_network;
-    }
-    public set network(value : InfrastructureNetwork){
-        this.infra_network = value;
-    }
+    // public get equipaments() : Equipament {
+    //     return this.infra_equipaments;
+    // }
+    // public set equipaments(value : Equipament){
+    //     this.infra_equipaments = value;
+    // }
+    // public get network() : InfrastructureNetwork {
+    //     return this.infra_network;
+    // }
+    // public set network(value : InfrastructureNetwork){
+    //     this.infra_network = value;
+    // }
    
     public get infra_geometry() : string | Geometry {
         return this.geometry;

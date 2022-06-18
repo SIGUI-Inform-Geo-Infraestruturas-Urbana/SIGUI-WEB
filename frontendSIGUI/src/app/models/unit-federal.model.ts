@@ -11,7 +11,7 @@ export class UnitFederal extends DataSpatial{
    // private uf_geometry : string | Geometry  = '';
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,geometry)
+        super(id,'unit',geometry)
     }
 
     public get id_unit_federal() : number {
