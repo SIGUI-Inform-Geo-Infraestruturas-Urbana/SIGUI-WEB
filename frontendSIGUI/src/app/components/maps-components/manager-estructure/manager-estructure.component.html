@@ -41,7 +41,7 @@
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Nome Completo</mat-label>
-                        <input matInput placeholder="Input" formControlName="eq_co_name_map">
+                        <input matInput placeholder="Input" formControlName="eq_co_name_complete">
                     </mat-form-field>
                 </div>
                 <div class="content-form">
@@ -93,8 +93,28 @@
                         <mat-label>Observações</mat-label>
                         <input matInput placeholder="Input" formControlName="eq_co_observation">
                     </mat-form-field>
-                </div>                     
-            </div>           
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Logradouro</mat-label>
+                        <mat-select formControlName="eq_co_public_place">
+                            <mat-option *ngFor="let publicPlace of publicPlaces" [value]="publicPlace.id">
+                                {{publicPlace.id}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>                       
+            </div>   
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Equipamento</mat-label>
+                        <input matInput placeholder="Input" formControlName="eq_co_equipament">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">                    
+                </div>
+            </div>        
             <div class="div-item-content-form">
                 <div class="content-form">
                 </div>

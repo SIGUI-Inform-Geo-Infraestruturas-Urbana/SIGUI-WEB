@@ -5,7 +5,9 @@ export class ManagerSession {
     session_county : boolean = false; 
     session_ditrict : boolean = false; 
     session_streat : boolean = false; 
-    session_component : boolean = false; 
+    session_public_place : boolean = false; 
+    session_infrastructure : boolean = false; 
+    session_estructure : boolean = false; 
 
     constructor(){
         this.session_visualization = true;
@@ -14,6 +16,9 @@ export class ManagerSession {
         this.session_county = false;
         this.session_ditrict = false;
         this.session_state = false;
-        this.session_component = false;
+        this.session_streat = false;
+        this.session_public_place = false;
+        this.session_infrastructure = false;
+        this.session_estructure = false;
     }
 }

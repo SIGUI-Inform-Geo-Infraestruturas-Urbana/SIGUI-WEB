@@ -35,10 +35,19 @@
             <button [routerLink]="['manager-city']" id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
         </td>
         <td>                     
-            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Associar </button>
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="connectFeatureFromStreet()"> Associar </button>
         </td>
     </tr>
-    <tr *ngIf="hiddenComponent">
+    <tr *ngIf="hiddenPublicPlace">
+        <td> Logradouro:</td>
+        <td>                     
+            <button [routerLink]="['manager-city']" id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
+        </td>
+        <td>                     
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="connectFeatureFromPublicPlace()"> Associar </button>
+        </td>
+    </tr>
+    <tr *ngIf="hiddenInfrastructure">
         <td> Infraestrutura:</td>
         <td>                     
             <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
@@ -48,6 +57,15 @@
         </td>
         <td>                     
             <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="associateFeatureFromInfrastructure()"> Associar Rede </button>
+        </td>
+    </tr>
+    <tr *ngIf="hiddenEstructure">
+        <td> Equipament Urbano:</td>
+        <td>                     
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
+        </td>
+        <td>                     
+            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="connectFeatureFromEstruture()"> Associar </button>
         </td>
     </tr>
 </table>  

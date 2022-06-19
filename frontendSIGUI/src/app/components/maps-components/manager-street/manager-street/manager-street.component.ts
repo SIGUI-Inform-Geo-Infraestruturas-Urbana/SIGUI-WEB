@@ -49,7 +49,8 @@ export class ManagerStreetComponent implements OnInit {
       selectDistrictD: new FormControl(1),//street.district_d
       zipCodeE: new FormControl(street.zip_code_e),
       zipCodeD: new FormControl(street.zip_code_d),
-      selectDistrict: new FormControl(street.district),//geometry//geometry
+      selectDistrict: new FormControl(street.district),//geometry//geometry      
+      geometry: new FormControl(street.st_geometry),//geometry//geometry
     });
   }
 

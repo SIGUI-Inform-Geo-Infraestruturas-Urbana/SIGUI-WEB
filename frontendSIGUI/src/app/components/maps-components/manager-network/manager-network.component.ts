@@ -25,7 +25,7 @@ export class ManagerNetworkComponent implements OnInit {
   ngOnInit(): void {
     this.createForm(new Network(0));
     this.getSubsystem();
-    this.networkForm.get("selectDistrictD")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})
+    this.networkForm.get("selectSubsystem")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})
   
   }
 
@@ -62,7 +62,7 @@ export class ManagerNetworkComponent implements OnInit {
     network.name = this.networkForm.get('name')?.value;
     network.category = this.networkForm.get('selectCategory')?.value;
     network.status = this.networkForm.get('selectstatus')?.value;
-    network.subsystems = network.subsystems;
+    network.subsystems = this.network.subsystems;
     
     console.log(network);
     this.createDistrict(network);

@@ -173,7 +173,7 @@ class PublicPlace(models.Model):
     pp_total_general =models.IntegerField(blank=True, null=True)     
     pp_district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
     pp_streat = models.ForeignKey(Street, on_delete=models.CASCADE, blank=True, null=True)
-    geometry = models.MultiPolygonField(srid=4326,blank=True, null=True)
+    geometry = models.LineStringField(srid=4326,blank=True, null=True)
     
     def __str__(self):
        return 'id: %s' % self.id  
@@ -267,6 +267,7 @@ class EquipamentCounty(models.Model):
     eq_co_name= models.CharField(max_length=150,blank=True, null=True) 
     eq_co_name_map= models.CharField(max_length=111,blank=True, null=True) 
     eq_co_street= models.ForeignKey(Street, on_delete=models.CASCADE, blank=True, null=True)
+    eq_co_public_place= models.ForeignKey(PublicPlace, on_delete=models.CASCADE, blank=True, null=True)
     eq_co_number_building= models.CharField(max_length=15,blank=True, null=True) 
     eq_co_district= models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
     eq_co_observation= models.CharField(max_length=254,blank=True, null=True) 

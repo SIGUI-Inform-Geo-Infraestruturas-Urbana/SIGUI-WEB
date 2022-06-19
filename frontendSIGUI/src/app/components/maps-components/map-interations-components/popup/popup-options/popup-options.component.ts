@@ -6,9 +6,11 @@ import Map from 'ol/Map';
 import Point  from 'ol/geom/Point';
 //import { CountyService } from 'src/app/services/count/county.service';
 import { County } from 'src/app/models/county.model';
-import { Geometry, MultiPolygon } from 'ol/geom';
+import { Geometry, LineString, MultiPolygon } from 'ol/geom';
 import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
 import { DataSpatial } from 'src/app/models/data-spatial';
+import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
+import { ManagerSession } from 'src/app/models/managerSession.model';
 
 @Component({
   selector: 'app-popup-options',
@@ -24,12 +26,17 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Input() map!: Map;
   featureSelect!: Feature; 
+  managerSession!: ManagerSession;
   public overlay!: Overlay
   public coordenadaPoint!:string
   public edited:boolean = true;
 
-  constructor(public dataSpatialService : DataSpatialService) {         
-
+  constructor(public dataSpatialService : DataSpatialService, public managerService : ManagerVisualizationService) {         
+    managerService.getSessionVisualization().subscribe(sessionVizu => {
+      console.log('----------------');
+      console.log(sessionVizu);
+      this.managerSession = sessionVizu;
+    })
   }
 
   ngOnInit(): void {
@@ -81,12 +88,27 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   onClickMap(evt:MapBrowserEvent<any>): void{      
    
     console.log('onClick')
-    let marcator = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {     
-      return feature;
-    });
-    
+    let marcator = null;
+    let a = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {  
+      if ((this.managerSession.session_streat == true)||((this.managerSession.session_public_place)))
+      {
+        if (feature.getGeometry()?.getType() == 'LineString')
+        {
+          console.log('Line')
+          marcator = feature;  
+          return;        
+        }    
+        console.log('nãoLine')   
+      }
+      else
+      {
+        console.log('Point')
+        marcator = feature;
+        return; 
+      }       
+    });   
 
-    if (marcator === undefined)
+    if (marcator == null)
     {
       console.log('55555555555555555')
       let coordinate:Coordinate = evt.coordinate;
@@ -95,12 +117,21 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
     }
     else{
-      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      console.log(marcator.getGeometry()?.getType())
-      // this.featureSelect = <Feature>marcator;    
-      if (marcator.getGeometry()?.getType() == 'Point')
+
+      if ((this.managerSession.session_streat == true)||((this.managerSession.session_public_place)))
       {
-        let vertice:Point= <Point>marcator.getGeometry();
+        console.log('*******')
+        let featuretSelect = <Feature>marcator;
+        console.log(featuretSelect.getGeometry()?.getType())
+        let coordinate:Coordinate = evt.coordinate;
+        this.overlay.setPosition(coordinate); 
+        this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+        this.featureSelect = <Feature>marcator; 
+      }
+      else if ((this.managerSession.session_infrastructure == true)||((this.managerSession.session_infrastructure))){
+        console.log('-----')
+        let featuretSelect = <Feature>marcator;
+        let vertice:Point= <Point>featuretSelect.getGeometry();
         let coordinatePoint:Coordinate= vertice.getCoordinates();
         console.log('Coord')
         console.log(coordinatePoint)     
@@ -109,16 +140,17 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
         this.featureSelect = <Feature>marcator; 
       }
       else{
-        console.log(marcator.getGeometry()?.getType())
+        console.log('+++++')
+        let featuretSelect = <Feature>marcator;
+        console.log(featuretSelect.getGeometry()?.getType())
         let coordinate:Coordinate = evt.coordinate;
         this.overlay.setPosition(coordinate); 
         this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
         this.featureSelect = <Feature>marcator; 
-      }
-
-     
+      }      
+    
+   console.log(marcator)
     }
-   // console.log(marcator)
   }
  
   closerPopupClick(){

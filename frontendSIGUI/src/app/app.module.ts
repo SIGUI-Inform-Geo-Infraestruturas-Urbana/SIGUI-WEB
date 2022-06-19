@@ -60,7 +60,8 @@ import { ManagerNetworkComponent } from './components/maps-components/manager-ne
 import { ManagerInfrastructureComponent} from './components/maps-components/manager-infrastructure/manager-infrastructure.component';
 import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component';
 import { AssociationInfrastructuresComponent } from './components/maps-components/association-infrastructures/association-infrastructures.component';
-import { InfrastructureNetworkComponent } from './components/maps-components/infrastructure-network/infrastructure-network.component'
+import { InfrastructureNetworkComponent } from './components/maps-components/infrastructure-network/infrastructure-network.component';
+import { PublicPlaceComponent } from './components/maps-components/manager-public-place/public-place.component'
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { InfrastructureNetworkComponent } from './components/maps-components/inf
     ManagerInfrastructureComponent,
     AssociationInfrastructuresComponent,
     InfrastructureNetworkComponent,
+    PublicPlaceComponent,
  
 
   ],

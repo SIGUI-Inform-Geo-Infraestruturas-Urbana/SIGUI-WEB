@@ -11,17 +11,19 @@ import { DataSpatialService } from '../services/count/data-spatials.service';
 import { IRepository } from './repository';
 import { Street } from '../models/street.model';
 import { StreetService } from '../services/street/street.service';
+import { PublicPlace } from '../models/public-place.model';
+import { PublicPlaceService } from '../services/public-place/publicplace.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StreetRepositoryService implements IRepository<Street,Street>{
+export class PublicPlaceRepositoryService implements IRepository<PublicPlace,PublicPlace>{
 
-  private readonly _sreets= new BehaviorSubject<Street[]>([]);
-  readonly street$: Observable<Street[]> = this._sreets.asObservable();
-  private stringConection = 'api/data/street/';
+  private readonly _publicplace= new BehaviorSubject<PublicPlace[]>([]);
+  readonly publicplace$: Observable<PublicPlace[]> = this._publicplace.asObservable();
+  private stringConection = 'api/data/logradouro/';
 
-  constructor(private restApiBackend: RestApiBackendService<Street,string>,private streetService : StreetService,
+  constructor(private restApiBackend: RestApiBackendService<PublicPlace,string>,private publicPlaceService : PublicPlaceService,
     private dataSpatialService : DataSpatialService ) { }
 
   findFetchData(idParam : number = 0):boolean{//Feature<Geometry>
@@ -32,39 +34,39 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
     }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
-      let featureObject : Feature<Geometry>[] = this.streetService.conversionJson(<string>data.body);
-      let cities = this.streetService.convertFeature(featureObject);
+      let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>data.body);
+      let cities = this.publicPlaceService.convertFeature(featureObject);
       this.dataSpatialService.setDataSpatial(cities);
     })
     return true;
   }
 
-  findFetch():Observable<Street[]>{//Observable<string>
+  findFetch():Observable<PublicPlace[]>{//Observable<string>
     this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
       console.log(data)
-      let featureObject : Feature<Geometry>[] = this.streetService.conversionJson(<string>data.body);
+      let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>data.body);
       console.log(featureObject)
-      let streets = this.streetService.convertFeature(featureObject);
+      let streets = this.publicPlaceService.convertFeature(featureObject);
       console.log(streets)
-      this._sreets.next(streets);
+      this._publicplace.next(streets);
     })
-    return this.street$;
+    return this.publicplace$;
   }  
 
-  async createData (street:Street):Promise<Street>{
+  async createData (publicPlace:PublicPlace):Promise<PublicPlace>{
 
     console.log("Create")
-    console.log(street)
-    if(street.st_geometry != '0'){
-      console.log(street)
-      street.st_geometry = this.streetService.preparObject(<LineString>street.st_geometry);
-      let postSpatial = this.restApiBackend.postData(this.stringConection,street);
+    console.log(publicPlace)
+    if(publicPlace.pp_geometry != '0'){
+      console.log(publicPlace)
+      publicPlace.pp_geometry = this.publicPlaceService.preparObject(<LineString>publicPlace.pp_geometry);
+      let postSpatial = this.restApiBackend.postData(this.stringConection,publicPlace);
       let a = await firstValueFrom(postSpatial);  
     }    
   
-   return new Street;
+   return new PublicPlace;
   }
-  changeData (dataSpatial : Street): boolean{
+  changeData (dataSpatial : PublicPlace): boolean{
     return false;
   }
   deleteData (idParam : number ): boolean {

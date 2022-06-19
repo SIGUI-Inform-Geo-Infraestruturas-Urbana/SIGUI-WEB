@@ -1,0 +1,93 @@
+<form [formGroup]="ppForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="inner-elements-header">
+        <div class="inner_elements_body">    
+            <h2>Gerenciar Dados Logradouros</h2>
+        </div>
+    </div>
+    <div class="inner_elements_body"> 
+        <div class="div-content-form">
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Logradouro</mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_public_place">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Cod Setor</mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_cod_sector">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Codigo da quadra</mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_cod_block">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Codigo da face</mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_cod_face">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Total de Residencias </mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_total_residences">
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Total Geral </mat-label>
+                        <input matInput placeholder="Input" formControlName="pp_total_general">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Rua</mat-label>
+                        <mat-select formControlName="pp_streat">
+                            <mat-option *ngFor="let street of streets" [value]="street.id">
+                                {{street.name_street}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Distrito</mat-label>
+                        <mat-select formControlName="pp_district">
+                            <mat-option *ngFor="let district of districts" [value]="district.id">
+                                {{district.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>               
+            </div>
+            <div class="div-item-content-form">
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Coordenada</mat-label>
+                        <input matInput placeholder="Input" formControlName="geometry">
+                    </mat-form-field>
+                </div>   
+                <div class="content-form">                    
+                </div>        
+            </div>           
+            <div class="div-item-content-form">
+                <div class="content-form">
+                </div>
+                <div class="content-form">
+                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+    </form>

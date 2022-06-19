@@ -21,6 +21,8 @@ import { CreateAccountComponent } from './account/create-account/create-account.
 import { ManagerInfrastructureComponent } from './components/maps-components/manager-infrastructure/manager-infrastructure.component';
 import { ManagerNetworkComponent} from './components/maps-components/manager-network/manager-network.component'
 import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component'
+import { PublicPlaceComponent} from './components/maps-components/manager-public-place/public-place.component'
+import { ManagerStreetComponent } from './components/maps-components/manager-street/manager-street/manager-street.component';
 const routes: Routes = [
   {
     path: '', 
@@ -34,9 +36,10 @@ const routes: Routes = [
         {path :'manager-state', component: ManegerStateComponent},//app-maneger-state
         {path :'manager-district', component: ManegerDistrictComponent},//app-maneger-state
         {path :'infrastructure', component: ManagerInfrastructureComponent},//app-maneger-state
-        {path :'manager-street', component: ManegerStateComponent},//app-maneger-state
+        {path :'manager-street', component: ManagerStreetComponent},//app-maneger-state
         {path :'manager-file', component: ManegerlayersComponent},
-        {path :'manager-equipament', component: ManagerEstructureComponent}
+        {path :'manager-equipament', component: ManagerEstructureComponent},
+        {path :'manager-public-place', component: PublicPlaceComponent}
 
       ]},
       {path: 'network', component: ManagerNetworkComponent},

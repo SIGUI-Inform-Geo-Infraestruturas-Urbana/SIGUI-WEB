@@ -88,9 +88,10 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_country: false,
       session_ditrict : false,
       session_streat: false,
+      session_public_place : false,
       session_state: false,
-      session_component: false
-     
+      session_infrastructure: false,
+      session_estructure : false,     
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
     //this.router.navigateByUrl('/geo-view/manager-city');
@@ -105,9 +106,10 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_country: false,
       session_ditrict : false,
       session_streat: false,
+      session_public_place : false,
       session_state: true,
-      session_component: false
-     
+      session_infrastructure: false,
+      session_estructure : false,   
     }
     this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-state'],{relativeTo:this.route});
@@ -121,12 +123,46 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_country: false,
       session_ditrict : true,
       session_streat: false,
+      session_public_place : false,
       session_state: false,
-      session_component: false
+      session_infrastructure: false,
+      session_estructure : false,  
      
     }
     this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-district'],{relativeTo:this.route});
+  }
+
+  onClickSelectStreet(){
+    this.managerSession = {
+      session_visualization : false,
+      session_county: false,
+      session_country: false,
+      session_ditrict : false,
+      session_streat: true,
+      session_public_place : false,
+      session_state: false,
+      session_infrastructure: false,
+      session_estructure : false,  
+    }
+    this.managerVisualization.setSessionVisualization(this.managerSession); 
+    this.router.navigate(['manager-street'],{relativeTo:this.route});
+  }
+
+  onClickSelectPublicPlace(){
+    this.managerSession = {
+      session_visualization : false,
+      session_county: false,
+      session_country: false,
+      session_ditrict : false,
+      session_streat: false,
+      session_public_place : true,
+      session_state: false,
+      session_infrastructure: false,
+      session_estructure : false,  
+    }
+    this.managerVisualization.setSessionVisualization(this.managerSession); 
+    this.router.navigate(['manager-public-place'],{relativeTo:this.route});
   }
 
   onClickSelectInfrastructure(){
@@ -137,8 +173,10 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_country: false,
       session_ditrict : false,
       session_streat: false,
+      session_public_place : false,
       session_state: false,
-      session_component: true
+      session_infrastructure: true,
+      session_estructure : false,  
      
     }
     console.log('odfdsfdsfdsfdsfdsf')
@@ -147,10 +185,27 @@ export class MenuManegerGeodataComponent implements OnInit {
     this.router.navigate(['infrastructure'],{relativeTo:this.route});
   }
   
-  onClickEquipamentFile(){   
+  onClickEquipamentFile(){  
+    
+    this,this.managerSession = {
+      session_visualization : false,
+      session_county: false,
+      session_country: false,
+      session_ditrict : false,
+      session_streat: false,
+      session_public_place : false,
+      session_state: false,
+      session_infrastructure: false,
+      session_estructure : true,  
+    }
     //this.router.navigateByUrl('/geo-view/manager-city');
+    this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-equipament'],{relativeTo:this.route});
   }
+
+
+
+
 
   //manager-file
 

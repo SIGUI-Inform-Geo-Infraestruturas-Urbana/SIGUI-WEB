@@ -42,6 +42,7 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
   findFetch():Observable<Network[]>{//Observable<string>
     this.restApiBackend.getDatas(this.stringConection).subscribe((data : HttpResponse<Array<Network>>) => {
       let bodys : Network[]= <Network[]>data.body;
+      console.log('testerede')
       console.log(bodys)
       this._networks.next(bodys);
     })
@@ -50,14 +51,11 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
 
   async createData (street:Network):Promise<Network>{
 
-    // console.log("Create")
-    // console.log(street)
-    // if(street.st_geometry != '0'){
-    //   console.log(street)
-    //   street.st_geometry = this.subsystemService.preparObject(<LineString>street.st_geometry);
-    //   let postSpatial = this.restApiBackend.postData(this.stringConection,street);
-    //   let a = await firstValueFrom(postSpatial);  
-    // }    
+    console.log("Create")
+    console.log(street)      
+      let postSpatial = this.restApiBackend.postData(this.stringConection,street);
+      let a = await firstValueFrom(postSpatial);  
+       
   
    return new Network;
   }

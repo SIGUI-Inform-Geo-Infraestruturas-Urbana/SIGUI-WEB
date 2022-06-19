@@ -159,11 +159,12 @@ class EquipamentInfrastructureSerializer(GeoFeatureModelSerializer):
         'eq_infra_infraestructure','eq_infra_equipament','eq_infra_subsystem']
       
 
-class NetworkSerializer(GeoFeatureModelSerializer):
+class NetworkSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Network
-        fields = ['id','net_name','net_category','net_status',
-        'net_subsysytems']
+        fields = '__all__'
+        # ['id','net_name','net_category','net_status',
+        # 'net_subsysytems']
         
 
 class InfrastructureNetworkSerializer(GeoFeatureModelSerializer):
