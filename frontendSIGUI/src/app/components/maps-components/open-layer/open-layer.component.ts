@@ -59,6 +59,7 @@ export class OpenLayerComponent implements OnInit {
   pointMarcator = '/assets/images/logoSIGUi.png';
   sourceData!:VectorSource;
   sourceStreet!:VectorSource;
+  sourceInfrastructure!:VectorSource;
   
   constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
     public countyRepository : CountyRepositoryService){// public countyService : CountyService
@@ -90,7 +91,7 @@ export class OpenLayerComponent implements OnInit {
               properties : element,
               geometry : <Geometry>element.geometry
             })
-            this.sourceStreet.addFeature(featureInfrastructura);
+            this.sourceInfrastructure.addFeature(featureInfrastructura);
             break;         
           default:
             break;
@@ -170,6 +171,8 @@ export class OpenLayerComponent implements OnInit {
       this.addVetorIterationTile();
 
       this.addLoadData();
+      this.addLoadDataStreet();
+      this.addLoadDataInfrastructure();
   }
 
   addStyleMap():void{
@@ -359,6 +362,18 @@ export class OpenLayerComponent implements OnInit {
         })     
 
       layerSource.set('name','layer_vector_street')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataInfrastructure():void{
+    this.sourceInfrastructure = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourceStreet,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_infrastructure')
       //   this.map.addLayer( layerSource )
       this.map.addLayer( layerSource );
   }

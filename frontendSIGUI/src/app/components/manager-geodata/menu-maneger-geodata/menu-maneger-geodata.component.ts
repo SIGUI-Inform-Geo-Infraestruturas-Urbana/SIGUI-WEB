@@ -6,6 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
+import { InfrastructureRepositoryService } from 'src/app/repositorys/infrastructure-repository.service';
 
 @Component({
   selector: 'app-menu-maneger-geodata',
@@ -32,6 +33,7 @@ export class MenuManegerGeodataComponent implements OnInit {
     public countyRepositoryService : CountyRepositoryService,
     public unitFederativeRepositoryService : UnitFederativeRepositoryService,
     public districtRepositoryService : DistrictRepositoryService,
+    public InfrastructureRepository : InfrastructureRepositoryService,
     public route: ActivatedRoute , public router: Router) {
     this.managerSession = new ManagerSession();
    }
@@ -78,6 +80,9 @@ export class MenuManegerGeodataComponent implements OnInit {
     let idSearch = this.searchDistrictForm.get('idDistrict')?.value;
     this.getDistrict.emit(idSearch);
     this.districtRepositoryService.findFetchData(idSearch); 
+  }
+  getFeatureInfrastructure(){
+    this.InfrastructureRepository.findFetchData(); 
   }
 
   onClickSelectCounty(){

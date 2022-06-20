@@ -44,6 +44,10 @@ export class DataAssociationService {
   setnfraNet(value : InfrastructureNetwork){//DataSpatial[]
     this.infraNet = value;
   }
+  setnfraNetNext(value : InfrastructureNetwork){//DataSpatial[]
+    this.infraNet = value;
+    this._spatials.next(this.infraNet);
+  }
 
   getInfraNet():InfrastructureNetwork{//City[]//Feature<Geometry>
     return this.infraNet;//this._counties.getValue();

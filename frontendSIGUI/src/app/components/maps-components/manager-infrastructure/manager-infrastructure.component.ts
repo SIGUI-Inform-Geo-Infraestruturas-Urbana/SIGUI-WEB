@@ -17,9 +17,11 @@ import { StateMapService } from 'src/app/services/shared/state-map.service';
 })
 export class ManagerInfrastructureComponent implements OnInit {
 
+
   public infrastructures : Infrastructure[] = [];
   public streets : Street[] = [];  
   public subsystems : Subsystem[] = [];
+  public infrastructureAssociation!: Infrastructure; 
   public infrastructure : Infrastructure;
   public infrastrutureForm!: FormGroup;
   public enableAssociation: boolean = false;
@@ -28,38 +30,61 @@ export class ManagerInfrastructureComponent implements OnInit {
     public subsystemRepositoryService : SubsystemRepositoryService, public streetRepository: StreetRepositoryService , 
     private stateMap :StateMapService) {
     this.infrastructure = new Infrastructure(0);
+    this.createForm(new Infrastructure(0));
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log("+++6+iniciou")    
       console.log(feature)    
-      this.populateGeometry(feature);      
+      this.initializeForm(feature);      
     })
   }
 
-  ngOnInit(): void {
-    this.createForm(new Infrastructure(0));
+  ngOnInit(): void {    
     this.getSubsystem();
     this.infrastrutureForm.get("selectOcupante")?.valueChanges.subscribe(f => {this.onSelectOcupante(f)})
-    this.infrastrutureForm.get("selectSubsystem")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})
-    
+    this.infrastrutureForm.get("selectSubsystem")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})  
+  }
+
+  initializeForm(feature:DataSpatial ){
+    let infrastructure:Infrastructure = <Infrastructure>feature;   
+    if ((infrastructure.id_infra != undefined)&&(infrastructure.id_infra != 0)){
+      console.log(infrastructure.id_infra)
+      console.log('Valor já existe')
+      console.log(infrastructure)
+      this.updateForm(infrastructure);
+      this.infrastructure = infrastructure;
+      this.infrastructureAssociation = infrastructure;
+      this.enableAssociation = true;
+    }
+    else
+    {
+      console.log('Definir nova variavel')
+      this.populateGeometry(infrastructure);   
+      this.updateForm(new Infrastructure(0));       
+    }
+
   }
 
   createForm(infrastructure : Infrastructure):void{
     this.infrastrutureForm = new FormGroup({
-      infraName: new FormControl(infrastructure.name),
       idInfrastructure : new FormControl(infrastructure.id),
+      infraName: new FormControl(infrastructure.name),    
       infraCategory : new FormControl(infrastructure.category),
       selectOcupante : new FormControl(infrastructure.dependent),      
-      selectSubsystem: new FormControl(infrastructure.subsystems),
-          
+      selectSubsystem: new FormControl(infrastructure.subsystems),         
       
-    });
+    });    
+  }
+  updateForm(infrastructure : Infrastructure){
+    this.infrastrutureForm.patchValue({
+      idInfrastructure : infrastructure.id,
+      infraName: infrastructure.name,    
+      infraCategory : infrastructure.category,
+    })
   }
 
-  populateGeometry(feature:DataSpatial){
-    console.log('+++++++++++++++++');
-    console.log(feature);     
-    console.log('Teste register');
-    let infrastructure:Infrastructure = <Infrastructure>feature;   
+  populateGeometry(infrastructure:Infrastructure){
+    console.log('+++++++++++++++++');   
+    console.log('Teste register'); 
    
     if(infrastructure.infra_geometry != '0'){
       console.log('Teste register');      
@@ -118,7 +143,7 @@ export class ManagerInfrastructureComponent implements OnInit {
     this.infrastructureRepository.createData(infrastructure)
       .then((value:Infrastructure) => {
         console.log(value)
-        this.createForm(value);
+        this.initializeForm(value);
         this.enableAssociation = true;
       })
   }

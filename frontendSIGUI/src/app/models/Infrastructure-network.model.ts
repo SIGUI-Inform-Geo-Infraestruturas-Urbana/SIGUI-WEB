@@ -1,4 +1,5 @@
-import { Geometry } from "ol/geom";
+import { Feature } from "ol";
+import { Geometry, Point } from "ol/geom";
 import { DataSpatial } from "./data-spatial";
 import { Infrastructure } from "./infrastructure.model";
 import { Network } from "./network.model";
@@ -70,6 +71,20 @@ export class InfrastructureNetwork extends DataSpatial{
     }
     public set infra_geometry(value : string | Geometry){
         this.geometry = value;
+    }
+
+    deserialize(inputData : Feature<Geometry>) {        
+        let properties = inputData.getProperties();
+        console.log(properties);       
+        this.id = <number>inputData.getId();
+        this.infra_net_serial_number = properties['infra_net_serial_number'];
+        this.infra_net_representation= properties['infra_net_representation'];      
+        this.infra_net_infrastructure_in = properties['infra_net_infrastructure_in'];
+        this.infra_net_infrastructure_out = properties['infra_net_infrastructure_out'];       
+        this.infra_net_network = properties['infra_net_network'];
+        this.geometry = <Point> properties['geometry'];
+      
+        return this;
     }
 
 

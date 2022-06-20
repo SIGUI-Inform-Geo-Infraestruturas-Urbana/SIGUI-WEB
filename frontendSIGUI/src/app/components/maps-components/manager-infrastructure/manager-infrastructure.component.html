@@ -17,9 +17,10 @@
                     </mat-form-field>
                 </div>
                 <div class="content-form">
-                   <app-infrastructure-network>
-                        
-                   </app-infrastructure-network>
+                    <div *ngIf="enableAssociation">
+                        <app-infrastructure-network [infrastructure]="infrastructureAssociation">
+                        </app-infrastructure-network>
+                    </div>
                 </div>
             </div>
             <div class="div-item-content-form">

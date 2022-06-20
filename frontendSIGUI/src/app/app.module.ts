@@ -12,7 +12,7 @@ import { MatCardModule} from '@angular/material/card'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {DecimalPipe} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -62,6 +62,7 @@ import { ManagerEstructureComponent } from './components/maps-components/manager
 import { AssociationInfrastructuresComponent } from './components/maps-components/association-infrastructures/association-infrastructures.component';
 import { InfrastructureNetworkComponent } from './components/maps-components/infrastructure-network/infrastructure-network.component';
 import { PublicPlaceComponent } from './components/maps-components/manager-public-place/public-place.component'
+import { ErrorIntercept } from './error.interceptor';
 
 @NgModule({
   declarations: [
@@ -128,6 +129,11 @@ import { PublicPlaceComponent } from './components/maps-components/manager-publi
   providers: [
     DecimalPipe,
     AuthGuard, 
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass : ErrorIntercept,
+    //   multi : true
+    // }
   ],
   bootstrap: [AppComponent]
 })

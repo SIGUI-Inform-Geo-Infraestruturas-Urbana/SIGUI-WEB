@@ -198,14 +198,21 @@ export class PopupOptionsManagerComponent implements OnInit {
 
     if (this.featureSelect != undefined)
     {
-      console.log('click infra');
+      console.log('click associations');
       let geom :Point = <Point>this.populatePoint(this.featureSelect);
-      let geome : Point = <Point> this.dataAssociationService.getGeom();
+      let infraAssociation = <InfrastructureNetwork>this.dataAssociationService.getInfraNet();
+      let geome : Point = <Point> infraAssociation.infrastructure_in.infra_geometry;
       var points:Coordinate[] = [geome.getCoordinates(),geom.getCoordinates()]
 
-      let nerFeature = new Feature({
-        geometry : new LineString(points)
-      })
+      // let nerFeature = new Feature({
+      //   geometry : new LineString(points)
+      // })
+      infraAssociation.infrastructure_out = new Infrastructure().serialize(this.featureSelect,geom)
+      infraAssociation.infra_geometry = new LineString(points);
+      this.dataAssociationService.setnfraNetNext(infraAssociation);
+
+      console.log('---TESTE----')
+      console.log(infraAssociation)
 
       this.dataAssociationService.setDataOut( new Infrastructure().serialize(this.featureSelect,geom));
      // this.stateMap.create(this.featureSelect);

@@ -18,10 +18,13 @@ from .api.subsystem_viewset import SubsystemViewSet
 from .api.public_place_viewset import PublicPlaceViewSet
 from .api.equipament_urban_viewset import EquipamentUrbanViewSet
 from .api.network_viewset import NetworkViewSet
+from .api.infraestrutura_network_viewset import InfraestruturaNetworkViewSet
+from .api.user_viewset import UserViewSet
 from .api import viewsets
 app_name = 'app_maps'
 
 router = routers.SimpleRouter()
+router.register(r'user', UserViewSet,basename='user')
 router.register(r'provedores', ProviderViewSet,basename='provi')
 router.register(r'subsistemas', SubsystemViewSet,basename='subs')
 router.register(r'infraestrutura', InfraestruturaViewSet,basename='infra')
@@ -35,6 +38,7 @@ router.register(r'street', StreetViewSet,basename='rua')
 router.register(r'logradouro', PublicPlaceViewSet,basename='rua')
 router.register(r'equipament', EquipamentUrbanViewSet,basename='rua')
 router.register(r'rede', NetworkViewSet, basename='rua' )
+router.register(r'infrarede', InfraestruturaNetworkViewSet, basename='rua' )
 
 urlpatterns = [
     path('data/', include(router.urls)),

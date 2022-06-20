@@ -1,4 +1,5 @@
 from email.policy import strict
+from enum import unique
 import os
 from statistics import mode
 from django.contrib.gis.gdal import DataSource
@@ -8,6 +9,7 @@ from operator import truediv
 from pyexpat import model
 from django.contrib.gis.db import models
 from uuid import uuid4
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -40,6 +42,8 @@ def upload_file_espatial(instance, filename):
 
 class GeoDadosEspaciais(models.Model):
     id_espatial = models.UUIDField(primary_key=True,default=uuid4,editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
+    category = models.CharField(max_length=50,blank=True, null=True)#nome_uf
     file = models.ImageField(upload_to=upload_file_espatial, blank=True, null=True)
     fileupload = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
     file_dbf = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
@@ -61,20 +65,34 @@ class GeoDadosEspaciais(models.Model):
         print('shape')
         print(pathResult)
 
-        # mapping = {'nome_municipio':'Nome',
-        #             'cod_ambiental':'Cod_Cetesb',
-        #             'cod_ibge':'Cod_ibge',
-        #             'numero_ugrhi':'UGRHI',
-        #             'nome_ugrhi':'Nome_ugrhi',
-        #             'poly':'POLYGON',
-        #             }
         mapping = {'co_name':'NM_MUN',
-           # 'cod_ibge':'CD_MUN',
+            'co_cod_ibge':'CD_MUN',
             'co_initials_uf':'NM_MUN',
-            'co_area_county':'AREA_KM2',
+            'uf_name_region':'AREA_KM2',
             'geometry':'POLYGON',
             }
-        lm = LayerMapping(County, pathResult, mapping)
+        lm = LayerMapping(County, pathResult, mapping,unique=('co_name'))
+        lm.save(verbose=True, strict=True)
+        return pathResult
+
+    def parserShapFileState(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+
+        print('shape')
+        print(pathResult)
+
+        mapping = {'uf_name':'NM_UF',
+            'uf_initials':'SIGLA',
+            'co_initials_uf':'NM_REGIAO',
+            'geometry':'POLYGON',
+            }
+        lm = LayerMapping(FederativeUnit, pathResult, mapping,unique=('co_name'))
         lm.save(verbose=True, strict=True)
         return pathResult
 
@@ -100,7 +118,7 @@ class FederativeUnit(models.Model):
 
 class County(models.Model):
     id = models.AutoField(primary_key=True,editable=True)
-    # co_cod_ibge = models.IntegerField(blank=True, null=True)
+    co_cod_ibge = models.CharField(max_length=254,blank=True, null=True)
     co_name = models.CharField(max_length=254,blank=True, null=True)
     co_initials_uf = models.CharField(max_length=250,blank=True, null=True)
     co_name_ugrhi = models.CharField(max_length=254,blank=True, null=True)

@@ -8,17 +8,19 @@ import { DataSpatialService } from '../services/count/data-spatials.service';
 import { IRepository } from './repository';
 import { Infrastructure } from '../models/infrastructure.model';
 import { InfrastructureService } from '../services/infrastructure/infrastructure.service';
+import { InfrastructureNetwork } from '../models/Infrastructure-network.model';
+import { InfrastructureNetworkService } from '../services/infrastructureNetwork/infrastructure.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class InfrastructureRepositoryService implements IRepository<Infrastructure,Infrastructure>{
+export class InfrastructureNetworkRepositoryService implements IRepository<InfrastructureNetwork,InfrastructureNetwork>{
 
-  private readonly _infrastructure= new BehaviorSubject<Infrastructure[]>([]);
-  readonly infrastructure$: Observable<Infrastructure[]> = this._infrastructure.asObservable();
-  private stringConection = 'api/data/infraestrutura/';
+  private readonly _infrastructure= new BehaviorSubject<InfrastructureNetwork[]>([]);
+  readonly infrastructure$: Observable<InfrastructureNetwork[]> = this._infrastructure.asObservable();
+  private stringConection = 'api/data/infrarede/';
 
-  constructor(private restApiBackend: RestApiBackendService<Infrastructure,string>,private infrastructureService : InfrastructureService,
+  constructor(private restApiBackend: RestApiBackendService<InfrastructureNetwork,string>,private infrastructureService : InfrastructureNetworkService,
     private dataSpatialService : DataSpatialService ) { }
 
   findFetchData(idParam : number = 0):boolean{//Feature<Geometry>
@@ -26,10 +28,6 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
 
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
-    }
-    else
-    {
-      urlSearch = this.stringConection;
     }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
@@ -40,7 +38,7 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
     return true;
   }
 
-  findFetch():Observable<Infrastructure[]>{//Observable<string>
+  findFetch():Observable<InfrastructureNetwork[]>{//Observable<string>
     this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
       console.log(data)
       let featureObject : Feature<Geometry>[] = this.infrastructureService.conversionJson(<string>data.body);
@@ -52,7 +50,7 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
     return this.infrastructure$;
   }  
 
-  async createData (infra:Infrastructure):Promise<Infrastructure>{
+  async createData (infra:InfrastructureNetwork):Promise<InfrastructureNetwork>{
 
     console.log("Create")
     console.log(infra)
@@ -61,16 +59,16 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
       infra.infra_geometry = this.infrastructureService.preparObject(<Point>infra.infra_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,infra);
       let a = await firstValueFrom(postSpatial); 
-      let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
-      let infras = new Infrastructure().deserialize(featureObject);
-      console.log('createsucesse')
-      //console.log(infras)
-      return infras;
+      // let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
+      // let infras = new InfrastructureNetwork().deserialize(featureObject);
+      // console.log('createsucesse')
+      // //console.log(infras)
+      // return infras;
     }    
   
-   return new Infrastructure;
+   return new InfrastructureNetwork;
   }
-  changeData (dataSpatial : Infrastructure): boolean{
+  changeData (dataSpatial : InfrastructureNetwork): boolean{
     return false;
   }
   deleteData (idParam : number ): boolean {

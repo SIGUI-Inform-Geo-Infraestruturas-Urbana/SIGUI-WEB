@@ -6,7 +6,7 @@ import {RestApiService} from '../../../services/rest-api.service'
   templateUrl: './manegerlayers.component.html',
   styleUrls: ['./manegerlayers.component.css']
 })
-export class ManegerlayersComponent implements OnInit {
+export class ManegerLayerStateComponent implements OnInit {
 
   fileName = ''; 
 
@@ -95,7 +95,7 @@ export class ManegerlayersComponent implements OnInit {
           console.log('sasasasas')
           console.log(item)
           formData.append('files',selFiles[fileL])
-          formData.append('category','county')
+          formData.append('category','state')
           console.log(JSON.stringify(formData))
         }
       }

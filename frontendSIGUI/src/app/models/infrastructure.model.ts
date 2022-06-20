@@ -87,15 +87,21 @@ export class Infrastructure extends DataSpatial{
         return this;
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
-        console.log(properties);       
+        let properties = inputData.getProperties()['properties'];
+        console.log('????????????????????')
+        console.log(properties);  
+        //let a =properties['properties'] 
+        //console.log(properties['infra_name']);  
+        console.log('????????????????????')     
+        if (properties != undefined){
         this.id = <number>inputData.getId();
         this.infra_name = properties['infra_name'];
         this.infra_category= properties['infra_category'];      
         this.infra_dependent = properties['infra_dependent'];
-        this.infra_subsystems = properties['infra_subsystems'];   
+        this.infra_subsystems = properties['infra_subsystems']; 
+        }  
         this.geometry =  <Point> geom;             
-
+        console.log(this.infra_name);      
         return this;
     }
     

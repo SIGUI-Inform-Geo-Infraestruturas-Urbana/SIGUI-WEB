@@ -28,7 +28,7 @@ class InfraestruturaNetworkViewSet(viewsets.ModelViewSet):
 
         id_network=espatial_request["infra_net_network"]
         netObjectId=id_network["id"]
-        network = models.Subsystems.objects.get(id=netObjectId)
+        network = models.Network.objects.get(id=netObjectId)
 
         ####new_geoEspatial = CountySerializer(data = espatial_request)
 

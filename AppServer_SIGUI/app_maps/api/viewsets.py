@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from django.contrib.gis.gdal import DataSource
 from django.contrib.gis.utils import LayerMapping
 from rest_framework.decorators import action
+from django.contrib.auth.models import User
 #from django.contrib.gis.gdal import DataSource
 from yaml import serialize 
 from .serializers import * #FederativeUnitSerializer, InfrastructureSerializer,FileSerealizer, GeoDadosEspaciaisSerializer, CountySerializer, DistrictSerializer
@@ -45,14 +46,21 @@ class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
         espatial_request = request.data
         # new_geoEspatial = models.GeoDadosEspaciais.objects.create(
         # file=espatial_request["file"],fileupload=espatial_request["fileupload"])
-        new_geoEspatial = models.GeoDadosEspaciais.objects.create(file_dbf=espatial_request["file_dbf"],
+        queryset = User.objects.get(username='responsavel')
+        new_geoEspatial = models.GeoDadosEspaciais.objects.create(category=espatial_request["category"],file_dbf=espatial_request["file_dbf"],
         file_prj=espatial_request["file_prj"],file_cpg=espatial_request["file_cpg"],
         file_shp=espatial_request["file_shp"],file_shx=espatial_request["file_shx"])
         print('teste')
         new_geoEspatial.save()
         #conversionParser(new_geoEspatial.file_shp)
-        a = new_geoEspatial.parserShapFile()
-        print(a)
+        if espatial_request["category"] == 'county':
+            a = new_geoEspatial.parserShapFile()
+            print(a)
+        elif espatial_request["category"] == 'state':
+            a = new_geoEspatial.parserShapFile()
+            print(a)
+
+
         # print('teste2')
         # populateShapeFile(new_geoEspatial.file_shp)
         # print(new_geoEspatial.file_shp)
