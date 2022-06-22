@@ -32,6 +32,10 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>data.body);
@@ -62,6 +66,11 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
       publicPlace.pp_geometry = this.publicPlaceService.preparObject(<LineString>publicPlace.pp_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,publicPlace);
       let a = await firstValueFrom(postSpatial);  
+      let featureObject : Feature<Geometry> = this.publicPlaceService.conversionJsonObject(<string>a.body); 
+      let infras = new PublicPlace().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
     }    
   
    return new PublicPlace;

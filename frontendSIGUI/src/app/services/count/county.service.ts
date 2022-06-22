@@ -37,6 +37,10 @@ export class CountyService extends DataServices{
     let feature: Feature[] = new GeoJSON({featureProjection: 'EPSG:3857' }).readFeatures(JSON.stringify(geojsonObject));        
     return feature;
   }
+  public conversionJsonObject(geojsonObject: string):Feature{
+    let feature: Feature = new GeoJSON({featureProjection: 'EPSG:3857' }).readFeature(JSON.stringify(geojsonObject));        
+    return feature;
+  }
   public preparObject(geometryMultPoly: MultiPolygon):string{    
     console.log("objetct")
     console.log(geometryMultPoly)

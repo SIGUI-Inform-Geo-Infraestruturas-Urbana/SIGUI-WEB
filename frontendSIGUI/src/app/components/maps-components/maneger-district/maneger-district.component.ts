@@ -11,6 +11,7 @@ import { DataSpatial } from 'src/app/models/data-spatial';
 import { Geometry, MultiPolygon } from 'ol/geom';
 import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
 import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-maneger-district',
@@ -24,7 +25,7 @@ export class ManegerDistrictComponent implements OnInit {
   public districtForm!: FormGroup;
 
   constructor(public districtRepositoryService : DistrictRepositoryService, public countyRepository: CountyRepositoryService, 
-    private stateMap :StateMapService){ 
+    private stateMap :StateMapService, private snackBar: MatSnackBar){ 
     this.district = new District(0);
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log("+++6+iniciou")    
@@ -59,7 +60,7 @@ export class ManegerDistrictComponent implements OnInit {
     if(distric.dc_geometry != '0'){
       console.log('Teste register');      
       this.district.geometry = distric.dc_geometry;
-      console.log(this.district);
+      console.log(  this.district.geometry);
     }
   }
 
@@ -89,6 +90,10 @@ export class ManegerDistrictComponent implements OnInit {
     console.log('popu')
     console.log(district)
     this.districtRepositoryService.createData(district)
+    .then((value:District) => {
+      console.log(value)
+      this.snackBar.open(`Infraestrutura Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+    })
   }
  
   onSelectDistrict(value:number):void{

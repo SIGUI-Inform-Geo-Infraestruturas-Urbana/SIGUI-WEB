@@ -32,6 +32,10 @@ export class DistrictRepositoryService implements IRepository<District,District>
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.districtService.conversionJson(<string>data.body);
@@ -62,6 +66,11 @@ export class DistrictRepositoryService implements IRepository<District,District>
       district.dc_geometry = this.districtService.preparObject(<MultiPolygon>district.dc_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,district);
       let a = await firstValueFrom(postSpatial);  
+      let featureObject : Feature<Geometry> = this.districtService.conversionJsonObject(<string>a.body); 
+      let infras = new District().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
     }    
   
    return new District;

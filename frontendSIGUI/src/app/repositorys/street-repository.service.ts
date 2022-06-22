@@ -30,6 +30,10 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.streetService.conversionJson(<string>data.body);
@@ -59,7 +63,12 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
       console.log(street)
       street.st_geometry = this.streetService.preparObject(<LineString>street.st_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,street);
-      let a = await firstValueFrom(postSpatial);  
+      let a = await firstValueFrom(postSpatial);
+      let featureObject : Feature<Geometry> = this.streetService.conversionJsonObject(<string>a.body); 
+      let infras = new Street().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;  
     }    
   
    return new Street;

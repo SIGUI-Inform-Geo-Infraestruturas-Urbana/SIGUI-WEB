@@ -5,6 +5,7 @@ import { District } from "./district.model";
 import { Equipament } from "./equipament.model";
 // import { InfrastructureNetwork } from "./Infrastructure-network.model";
 import { Network } from "./network.model";
+import { Street } from "./street.model";
 import { Subsystem } from "./subsystem.model";
 
 export class Infrastructure extends DataSpatial{    
@@ -13,6 +14,7 @@ export class Infrastructure extends DataSpatial{
     private infra_category : string = '';
     private infra_dependent : Infrastructure | null = null;
     private infra_subsystems : Subsystem = new Subsystem();
+    private infra_street : Street | null = new Street();
    // private infra_equipaments : Equipament = new Equipament();
     // private infra_network : InfrastructureNetwork = new InfrastructureNetwork();   
 
@@ -53,6 +55,12 @@ export class Infrastructure extends DataSpatial{
     public set subsystems(value : Subsystem){
         this.infra_subsystems = value;
     }
+    public get street() : Street | null  {
+        return this.infra_street;
+    }
+    public set street(value : Street | null ){
+        this.infra_street = value;
+    }
 
     // public get equipaments() : Equipament {
     //     return this.infra_equipaments;
@@ -79,7 +87,8 @@ export class Infrastructure extends DataSpatial{
         console.log(properties);       
         this.id = <number>inputData.getId();
         this.infra_name = properties['infra_name'];
-        this.infra_category= properties['infra_category'];      
+        this.infra_category= properties['infra_category'];   
+        this.infra_street= properties['infra_street'];      
         this.infra_dependent = properties['infra_dependent'];
         this.infra_subsystems = properties['infra_subsystems'];       
         this.geometry = <Point> properties['geometry'];
@@ -96,6 +105,7 @@ export class Infrastructure extends DataSpatial{
         if (properties != undefined){
         this.id = <number>inputData.getId();
         this.infra_name = properties['infra_name'];
+        this.infra_street= properties['infra_street'];
         this.infra_category= properties['infra_category'];      
         this.infra_dependent = properties['infra_dependent'];
         this.infra_subsystems = properties['infra_subsystems']; 

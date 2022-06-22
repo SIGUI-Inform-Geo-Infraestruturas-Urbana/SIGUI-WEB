@@ -20,15 +20,30 @@ class InfraestruturaViewSet(viewsets.ModelViewSet):
             infraObjectId=id_infra["id"]
             infraD = models.Infrastructure.objects.get(id=infraObjectId)
 
-        id_subsystem=espatial_request["infra_subsystems"]
-        subsObjectId=id_subsystem["id"]
-        subsystem = models.Subsystems.objects.get(id=subsObjectId)
+        subsystem = None
+        id_subs=espatial_request["infra_subsystems"]
+        if id_subs != None:
+            subsObjectId=id_subs["id"]
+            subsystem = models.Subsystems.objects.get(id=subsObjectId)
 
-        ####new_geoEspatial = CountySerializer(data = espatial_request)
+        street = None
+        id_street=espatial_request["infra_street"]
+        if id_subs != None:
+            setreObjectId=id_street["id"]
+            street = models.Street.objects.get(id=setreObjectId)
+
+        geom = None
+        id_street=espatial_request["geometry"]
+        if id_street == '0':
+            geom = None
+        else: 
+            geom = espatial_request["geometry"]
+       
+        ####new_geoEspatial = CountySerializer(data = espatial_request)//infra_street
 
         new_geoEspatial = models.Infrastructure.objects.create(infra_name=espatial_request["infra_name"],
         infra_category=espatial_request["infra_category"],infra_dependent=infraD,infra_subsystems=subsystem,
-        geometry=espatial_request["geometry"])
+        infra_street=street,geometry=geom)
       
         new_geoEspatial.save()
 

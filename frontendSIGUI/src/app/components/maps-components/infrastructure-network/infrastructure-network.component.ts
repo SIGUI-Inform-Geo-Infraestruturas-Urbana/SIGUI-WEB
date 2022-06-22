@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup ,Validators} from '@angular/forms';
 import { Geometry } from 'ol/geom';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { InfrastructureNetwork } from 'src/app/models/Infrastructure-network.model';
@@ -10,7 +10,7 @@ import { InfrastructureRepositoryService } from 'src/app/repositorys/infrastruct
 import { NetworkRepositoryService } from 'src/app/repositorys/network-repository.service';
 import { DataAssociationService } from 'src/app/services/count/data-association.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
-
+import { MatSnackBar} from '@angular/material/snack-bar'
 @Component({
   selector: 'app-infrastructure-network',
   templateUrl: './infrastructure-network.component.html',
@@ -27,7 +27,8 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
   
   constructor( public networkRepository: NetworkRepositoryService,   
     private dataAssociationService :DataAssociationService,
-    private InfrastructureNetworkRepository : InfrastructureNetworkRepositoryService) {
+    private InfrastructureNetworkRepository : InfrastructureNetworkRepositoryService,
+    private snakeBar : MatSnackBar) {
     this.infraAssociation = new InfrastructureNetwork(0);
     
     dataAssociationService.getDataSpatial().subscribe(feature => {
@@ -48,7 +49,9 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
     console.log(changes['infrastructure'].currentValue);
     this.infraAssociation.infrastructure_in = changes['infrastructure'].currentValue;
     this.dataAssociationService.setnfraNet(this.infraAssociation)
+    this.labelInfra = this.infraAssociation.infrastructure_in.name
   }
+  
 
   onSelectNetwork(value:number){
     console.log('select')
@@ -70,11 +73,11 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
   createForm(infraNet : InfrastructureNetwork):void{
     this.infrastrutureForm = new FormGroup({
       id_network: new FormControl(infraNet.id_network),
-      serial_number : new FormControl(infraNet.serial_number),
-      status : new FormControl(infraNet.status),
+      serial_number : new FormControl(infraNet.serial_number,[Validators.required]),
+      status : new FormControl(infraNet.status,[Validators.required]),
       infrastructure_in : new FormControl(infraNet.infrastructure_in),
       infrastructure_out : new FormControl(infraNet.infrastructure_out),      
-      selectNetwork: new FormControl(infraNet.network),       
+      selectNetwork: new FormControl(infraNet.network,[Validators.required]),       
       
     });
   }
@@ -90,27 +93,45 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
       this.infraAssociation.infrastructure_out = infras.infrastructure_out
       this.infraAssociation.geometry = infras.infra_geometry;
       console.log(this.infrastructure);
+      this.Associada = this.infraAssociation.infrastructure_out.name
     }
   }
 
   onSubmit(){       
-   
-    const infraSubmit: InfrastructureNetwork = new InfrastructureNetwork(this.infraAssociation.id);
-    infraSubmit.serial_number = this.infrastrutureForm.get('serial_number')?.value;
-    infraSubmit.status = this.infrastrutureForm.get('status')?.value;
-    infraSubmit.infrastructure_in = this.infraAssociation.infrastructure_in;
-    infraSubmit.infrastructure_out = this.infraAssociation.infrastructure_out;
-    infraSubmit.network = this.infraAssociation.network;
-    infraSubmit.infra_geometry = <Geometry>this.infraAssociation.infra_geometry;     
-    console.log('sdaa');
-    console.log(infraSubmit);
-    this.createDistrict(infraSubmit);
+    if (this.infrastrutureForm.valid)
+    {
+      if((this.infraAssociation.geometry != '0')&&(this.infraAssociation.geometry != undefined)){  
+    
+        const infraSubmit: InfrastructureNetwork = new InfrastructureNetwork(this.infraAssociation.id);
+        infraSubmit.serial_number = this.infrastrutureForm.get('serial_number')?.value;
+        infraSubmit.status = this.infrastrutureForm.get('status')?.value;
+        infraSubmit.infrastructure_in = this.infraAssociation.infrastructure_in;
+        infraSubmit.infrastructure_out = this.infraAssociation.infrastructure_out;
+        infraSubmit.network = this.infraAssociation.network;
+        infraSubmit.infra_geometry = <Geometry>this.infraAssociation.infra_geometry;     
+        console.log('sdaa');
+        console.log(infraSubmit);
+        this.createDistrict(infraSubmit);
+      }
+      else{
+        console.log('Não Geomtria')
+      }
+    }
+    else
+    {
+      console.log('Não Validado')
+    }
   }
 
   createDistrict(network:InfrastructureNetwork):void{
     console.log('popu')
     console.log(network)
     this.InfrastructureNetworkRepository.createData(network)
+    .then((value:InfrastructureNetwork) => {
+      console.log(value)
+      this.snakeBar.open(`Infraestrutura Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+      // this.initializeForm(value);
+    })
   }
 
 }

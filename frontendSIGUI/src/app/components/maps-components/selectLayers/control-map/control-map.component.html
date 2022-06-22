@@ -1,0 +1,28 @@
+<form [formGroup]="controlMapForm" (ngSubmit)="onSubmit()">
+<div>    
+    <div class="componets-horizontal">
+        <div *ngIf="hiddenPoint">
+            <app-select-unit-federative [map]="map" (DrawMap)="onDrawChanged($event)" (UndoMap)="onUndo()"></app-select-unit-federative>       
+        </div>
+        <div *ngIf="hiddenPoligono">
+            <app-select-unit-poligono [map]="map" (DrawMap)="onDrawChanged($event)" (UndoMap)="onUndo()"></app-select-unit-poligono>       
+        </div>
+        <div *ngIf="hiddenLineString">
+            <app-select-unit-linestring [map]="map" (DrawMap)="onDrawChanged($event)" (UndoMap)="onUndo()"></app-select-unit-linestring>       
+        </div>
+    </div>
+    <div class="componets-horizontal">
+        <mat-form-field class="search-form-field" appearance="fill">
+            <mat-label>Camadas</mat-label>
+            <mat-select formControlName="selectDraw">
+                <mat-option *ngFor="let selectDraw of optionsDraws" [value]="selectDraw.id">
+                    {{selectDraw.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+</form>
+
+
+

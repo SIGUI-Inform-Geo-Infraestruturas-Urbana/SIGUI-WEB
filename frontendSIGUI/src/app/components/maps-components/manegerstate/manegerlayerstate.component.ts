@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service'
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
-  selector: 'app-manegerlayers',
-  templateUrl: './manegerlayers.component.html',
-  styleUrls: ['./manegerlayers.component.css']
+  selector: 'app-maneger-layers-state',
+  templateUrl: './manegerlayerstate.component.html',
+  styleUrls: ['./manegerlayerstate.component.css']
 })
 export class ManegerLayerStateComponent implements OnInit {
 
   fileName = ''; 
 
-  constructor(public restApi: RestApiService) { }
+  constructor(public restApi: RestApiService, private snackBar : MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -115,7 +116,9 @@ export class ManegerLayerStateComponent implements OnInit {
     this.restApi.setUploadFile(formData).subscribe((data : {}) => {
       console.log('populate')
       console.log(data)
+      this.snackBar.open(`Estados Cadastrados! }`,'Entendido',{duration: 8 * 1000});
     })
+    
   }
 
 }

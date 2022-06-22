@@ -30,6 +30,10 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<Network>) => {
       // let featureObject : Feature<Geometry>[] = this.subsystemService.conversionJson(<string>data.body);
@@ -54,8 +58,7 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
     console.log("Create")
     console.log(street)      
       let postSpatial = this.restApiBackend.postData(this.stringConection,street);
-      let a = await firstValueFrom(postSpatial);  
-       
+      let a = await firstValueFrom(postSpatial);       
   
    return new Network;
   }

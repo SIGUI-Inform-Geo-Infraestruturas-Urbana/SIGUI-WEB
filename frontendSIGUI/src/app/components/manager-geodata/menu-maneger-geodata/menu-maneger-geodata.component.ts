@@ -7,6 +7,10 @@ import { CountyRepositoryService } from 'src/app/repositorys/county-repository.s
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
 import { InfrastructureRepositoryService } from 'src/app/repositorys/infrastructure-repository.service';
+import { StreetRepositoryService } from 'src/app/repositorys/street-repository.service';
+import { PublicPlaceRepositoryService } from 'src/app/repositorys/public-place-repository.service';
+import { InfrastructureNetworkRepositoryService } from 'src/app/repositorys/infrastructure-network-repository.service';
+import { EquipamentUrbanRepositoryService } from 'src/app/repositorys/equipament-urban-repository.service';
 
 @Component({
   selector: 'app-menu-maneger-geodata',
@@ -33,7 +37,11 @@ export class MenuManegerGeodataComponent implements OnInit {
     public countyRepositoryService : CountyRepositoryService,
     public unitFederativeRepositoryService : UnitFederativeRepositoryService,
     public districtRepositoryService : DistrictRepositoryService,
-    public InfrastructureRepository : InfrastructureRepositoryService,
+    public streetRepository : StreetRepositoryService,
+    public publicPlaceRepository : PublicPlaceRepositoryService,
+    public infrastructureNetworkRepository : InfrastructureNetworkRepositoryService,
+    public infrastructureRepository : InfrastructureRepositoryService,
+    public equipamentUrbanRepository : EquipamentUrbanRepositoryService,
     public route: ActivatedRoute , public router: Router) {
     this.managerSession = new ManagerSession();
    }
@@ -50,20 +58,35 @@ export class MenuManegerGeodataComponent implements OnInit {
     });
   }
 
-  addLayerVetorMunicipios(){
-
-  }
   
   addLayerVetorState(){
-
+    this.unitFederativeRepositoryService.findFetchData(); 
   }
 
-  addLayerVetorCounties(){
-
+  addLayerVetorMunicipios(){
+    this.countyRepositoryService.findFetchData(); 
   }
 
-  addLayerVetorFerativeUnit(){
-    
+  addLayerdistrict(){
+    this.districtRepositoryService.findFetchData(); 
+  }
+
+  addLayerpublicplace(){
+    this.publicPlaceRepository.findFetchData(); 
+  }
+
+  addLayerstreet(){
+    this.streetRepository.findFetchData(); 
+  }
+
+  addLayerequipament(){
+    this.equipamentUrbanRepository.findFetchData(); 
+  }
+  addLayerrede(){
+    this.infrastructureNetworkRepository.findFetchData(); 
+  }
+  getFeatureInfrastructure(){
+    this.infrastructureRepository.findFetchData(); 
   }
 
   getFeatureState(){
@@ -81,9 +104,7 @@ export class MenuManegerGeodataComponent implements OnInit {
     this.getDistrict.emit(idSearch);
     this.districtRepositoryService.findFetchData(idSearch); 
   }
-  getFeatureInfrastructure(){
-    this.InfrastructureRepository.findFetchData(); 
-  }
+  
 
   onClickSelectCounty(){
 
@@ -217,5 +238,10 @@ export class MenuManegerGeodataComponent implements OnInit {
   onClickCountyFile(){   
     //this.router.navigateByUrl('/geo-view/manager-city');
     this.router.navigate(['manager-file'],{relativeTo:this.route});
+  }
+  onClickState(){   
+    //this.router.navigateByUrl('/geo-view/manager-city');
+    console.log('chamou')
+    this.router.navigate(['manager-file-state'],{relativeTo:this.route});
   }
 }

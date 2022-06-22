@@ -1,5 +1,5 @@
-<div #popup class="ol-popup">    
-    <a #popupCloser href="#" class="ol-popup-closer"></a>
+<div #popup class="ol-popup">  
+    <button class="ol-popup-closer" (click)="onClose()">X</button>  
     <div #popupContent class="ol-popup-content">
 
         <table>
@@ -10,6 +10,30 @@
                 <td>COORDENADA:</td>
                 <td>{{coordenadaPoint}}</td>
             </tr>
+            <tr *ngIf="hiddenState">
+                <table>
+                    <tr>
+                        <th colspan="2">Sobre a Representação:</th>
+                    </tr>
+                    <tr>
+                        <td>ITEM SELECIONADO:</td>
+                        <td>{{tipoItem}}</td>
+                    </tr>
+                    <tr>
+                        <td>ID:</td>
+                        <td>{{idItem}}</td>
+                    </tr>          
+                </table>
+            </tr>
+            <!-- <tr *ngIf="hiddenCounty"></tr>
+            <tr *ngIf="hiddenDistrict"></tr>
+            <tr *ngIf="hiddenStreet"></tr>
+            <tr *ngIf="hiddenPublicPlace"></tr>
+            <tr *ngIf="hiddenInfrastructure"></tr>
+            <tr *ngIf="hiddenEstructure"></tr>
+            <tr *ngIf="hiddenRede"></tr>    -->
+
+
         </table>   
         <div appShowUserAdmLogged>
             <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager>

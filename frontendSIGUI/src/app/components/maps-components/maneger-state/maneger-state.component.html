@@ -11,13 +11,16 @@
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Nome do Estado</mat-label>
-                        <input matInput placeholder="Input" formControlName="nameState">
+                        <input type="text" matInput placeholder="Input" formControlName="nameState">
+                        <span class="spanValidate" *ngIf="stateFormu.controls['nameState'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
                 </div>
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Id Estado</mat-label>
-                        <input matInput placeholder="Input" formControlName="idState">
+                        <input type="number" matInput placeholder="Input" formControlName="idState">
                     </mat-form-field>
                 </div>
             </div>
@@ -25,22 +28,22 @@
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Sigla UF </mat-label>
-                        <input matInput placeholder="Input" formControlName="initialsUf">
+                        <input type="text" matInput placeholder="Input" formControlName="initialsUf">
+                        <span class="spanValidate" *ngIf="stateFormu.controls['initialsUf'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
+
                 </div>
                 <div class="content-form">
                     <mat-form-field appearance="fill">
-                        <mat-label>Código UF </mat-label>
-                        <input matInput placeholder="Input" formControlName="codUf">
+                        <mat-label>Geocodigo Unidade Federativa</mat-label>
+                        <input type="text" matInput placeholder="Input" formControlName="codUf">
+                        <span class="spanValidate" *ngIf="stateFormu.controls['codUf'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
-                </div>
-            </div>
-            <div class="div-item-content-form">
-                <div class="content-form-principal">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Coordenada</mat-label>
-                        <input matInput placeholder="Input" formControlName="geometry">
-                    </mat-form-field>
+
                 </div>
             </div>
             <div class="div-item-content-form">
@@ -48,20 +51,26 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Nome Regiao</mat-label>
                         <input matInput placeholder="Input" formControlName="nomeRegion">
+                        <span class="spanValidate" *ngIf="stateFormu.controls['nomeRegion'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
                 </div>   
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Area do Estado</mat-label>
                         <input matInput placeholder="Input" formControlName="areaState">
-                    </mat-form-field>
+                        <span class="spanValidate" *ngIf="stateFormu.controls['areaState'].errors">
+                            Campo Obrigatorio
+                        </span>
+                    </mat-form-field>                    
                 </div>        
             </div>          
             <div class="div-item-content-form">
                 <div class="content-form">
                 </div>
                 <div class="content-form">
-                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                    <button type="submit" mat-raised-button color="primary" [disabled]="!stateFormu.valid">Save Data</button>
                 </div>
             </div>
         </div>    

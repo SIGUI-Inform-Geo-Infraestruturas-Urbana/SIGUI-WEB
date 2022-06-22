@@ -41,14 +41,14 @@ class EquipamentSerializer(serializers.Serializer):
 class FederativeUnitSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.FederativeUnit
-        fields = ['id','uf_name','uf_initials','uf_name_region','uf_area_state']
+        fields = ['id','uf_geocode','uf_name','uf_initials','uf_name_region','uf_area_state']
         geo_field = 'geometry'
 
 class CountySerializer(GeoFeatureModelSerializer):
     # state = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = models.County
-        fields = ['id','co_name','co_initials_uf','co_name_ugrhi','co_number_ugrhi',  
+        fields = ['id','co_name','co_cod_ibge','co_initials_uf','co_name_ugrhi','co_number_ugrhi',  
             'co_cod_environmental','co_unit_federal','co_area_county']
         geo_field = 'geometry'
 
@@ -148,7 +148,7 @@ class EquipamentSerializer(GeoFeatureModelSerializer):
 class InfrastructureSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.Infrastructure
-        fields = ['id','infra_name','infra_category','infra_dependent','infra_subsystems',
+        fields = ['id','infra_name','infra_street','infra_category','infra_dependent','infra_subsystems',
         'infra_equipaments','infra_network']
         geo_field = 'geometry'
 

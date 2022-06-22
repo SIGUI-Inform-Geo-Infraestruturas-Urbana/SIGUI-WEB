@@ -8,6 +8,7 @@ export class UnitFederal extends DataSpatial{
     private uf_initials : string = '';
     private uf_name_region : string = '';
     private uf_area_state  : number = 0;   
+    private uf_geocode : string = '';
    // private uf_geometry : string | Geometry  = '';
 
     constructor(id : number = 0, geometry : any = 0){
@@ -34,6 +35,12 @@ export class UnitFederal extends DataSpatial{
     public set initials(value : string){
         this.uf_initials = value;
     }
+    public get geocode() : string {
+        return this.uf_geocode;
+    }
+    public set geocode(value : string){
+        this.uf_geocode = value;
+    }
 
     public get name_region() : string {
         return this.uf_name_region;
@@ -54,7 +61,8 @@ export class UnitFederal extends DataSpatial{
     }
     public set uf_geometry(value : string | Geometry){
         this.geometry = value;
-    }      
+    }
+          
 
     deserialize(inputData : Feature<Geometry>) {        
         let properties = inputData.getProperties();
@@ -64,18 +72,22 @@ export class UnitFederal extends DataSpatial{
         this.uf_initials= properties['uf_initials'];      
         this.uf_name_region = properties['uf_name_region'];
         this.uf_area_state  = properties['uf_area_state'];
+        this.uf_geocode  = properties['uf_geocode'];
         this.geometry = <MultiPolygon> properties['geometry'];
       
         return this;
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
+        let properties = inputData.getProperties()['properties'];
         console.log(properties);       
         this.id = <number>inputData.getId();
+        if (properties != undefined){
         this.uf_name = properties['uf_name'];
         this.uf_initials= properties['uf_initials'];      
         this.uf_name_region = properties['uf_name_region'];
         this.uf_area_state  = properties['uf_area_state'];
+        this.uf_geocode  = properties['uf_geocode'];
+        }
         this.geometry =  <MultiPolygon> geom;       
 
         return this;

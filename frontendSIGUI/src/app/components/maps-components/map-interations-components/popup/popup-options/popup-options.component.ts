@@ -28,8 +28,19 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   featureSelect!: Feature; 
   managerSession!: ManagerSession;
   public overlay!: Overlay
-  public coordenadaPoint!:string
+  public coordenadaPoint!:string;
+  public tipoItem!:string;
+  public idItem!:number;
   public edited:boolean = true;
+
+  public hiddenState : boolean = true;
+  public hiddenCounty : boolean = true;
+  public hiddenDistrict : boolean = true;
+  public hiddenStreet : boolean = true;
+  public hiddenPublicPlace : boolean = true;
+  public hiddenInfrastructure : boolean = true;
+  public hiddenEstructure : boolean = true;  
+  public hiddenRede : boolean = true;  
 
   constructor(public dataSpatialService : DataSpatialService, public managerService : ManagerVisualizationService) {         
     managerService.getSessionVisualization().subscribe(sessionVizu => {
@@ -95,7 +106,14 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
         if (feature.getGeometry()?.getType() == 'LineString')
         {
           console.log('Line')
+          console.log(feature.getProperties()['properties'])          
+          let properties = feature.getProperties()['properties'] 
+          if (properties != undefined){      
+          this.idItem = properties['id'];
+          this.tipoItem = properties['typeRepresentation'];
+          }
           marcator = feature;  
+
           return;        
         }    
         console.log('nãoLine')   
@@ -103,11 +121,17 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       else
       {
         console.log('Point')
+        console.log(feature.getProperties()['properties'])
+        let properties = feature.getProperties()['properties']   
+        if (properties != undefined){    
+        this.idItem = properties['id'];
+        this.tipoItem = properties['typeRepresentation'];
+        }
         marcator = feature;
         return; 
       }       
     });   
-
+    
     if (marcator == null)
     {
       console.log('55555555555555555')
@@ -155,8 +179,14 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
  
   closerPopupClick(){
     this.overlay.setPosition(undefined);
-   // this.popupCloser.nativeElement.blur();
+   // this.popupCloser.nativeElement.blur();   
    return false;
+  }
+
+  onClose(){
+    this.overlay.setPosition(undefined)
+    this.tipoItem = ''
+    this.idItem = 0
   }
 
 

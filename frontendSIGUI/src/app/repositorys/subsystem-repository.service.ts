@@ -29,6 +29,10 @@ export class SubsystemRepositoryService implements IRepository<Subsystem,Subsyst
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<Subsystem>) => {
       // let featureObject : Feature<Geometry>[] = this.subsystemService.conversionJson(<string>data.body);

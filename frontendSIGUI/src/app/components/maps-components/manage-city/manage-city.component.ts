@@ -1,5 +1,5 @@
 import { Component, OnInit,  Output , EventEmitter} from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl ,Validators} from '@angular/forms';
 import {County} from '../../../models/county.model';
 import { Feature } from 'ol';
 import {RestApiService} from '../../../services/rest-api.service';
@@ -10,6 +10,8 @@ import { UnitFederal } from 'src/app/models/unit-federal.model';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
+import { getArea } from 'ol/sphere';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-manage-city',
@@ -24,16 +26,64 @@ export class ManageCityComponent implements OnInit {
   public cityForm!: FormGroup;
 
   constructor(public countyRepository: CountyRepositoryService, public unitFederativeRepository : UnitFederativeRepositoryService,
-     private stateMap :StateMapService){ 
+     private stateMap :StateMapService, private snackBar : MatSnackBar){ 
     this.city = new County();
-
+    this.createForm(new County(0));
     stateMap.getFeatureSelect().subscribe(feature => {
-      console.log("+++6+iniciou")    
       console.log(feature)    
-      this.populateGeometry(feature);      
-    })    
-
+      this.initializeForm(feature);       
+    }) 
   }
+
+  initializeForm(feature:DataSpatial ){
+    let city:County = <County>feature;   
+    if ((city.id_county != undefined)&&(city.id_county != 0)){
+      console.log(city.id_county)
+      console.log('Valor já existe')
+      console.log(city)
+      this.updateForm(city);
+      this.city = city;    
+    }
+    else
+    {
+      console.log('Definir nova variavel')
+      this.populateGeometry(city); 
+      this.updateForm(city);       
+    }
+  }
+
+  updateForm(city : County){
+    this.cityForm.patchValue({
+      nameCity : city.name,
+      identity :city.id_county,
+      siglaUF : city.initials_uf,
+      codigoIBGE : city.ibge,
+      codigoAmbiental: city.cod_environmental,
+      nomeUGRHI: city.name_ugrhi,
+      numeroUGRHI: city.number_ugrhi,
+      // coordenada: city.geometry,
+      areaLimite:  this.generateArea(city),
+     // selectDraw: city.id_county,
+
+    })
+  }
+
+  generateArea(city:County):number{  
+    if(city.geometry != '0'){  
+      const area = getArea(<Polygon>city.geometry);
+      let output;
+      if (area > 10000) {
+        output = Math.round((area / 1000000) * 100) / 100 //+ ' ' + 'km<sup>2</sup>';
+      } else {
+        output = Math.round(area * 100) / 100 //+ ' ' + 'm<sup>2</sup>';
+      }
+      console.log(output);
+      return output;
+    }
+    else{
+      return 0;
+    }
+  } 
 
   populateGeometry(feature:DataSpatial){ 
     console.log('+++++++++++++++++');
@@ -49,22 +99,22 @@ export class ManageCityComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createForm(new County());
+    //this.createForm(new County());
     this.getState();
     this.cityForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onSelectState(f)})
   }
   createForm(city : County):void{
     this.cityForm = new FormGroup({
-      nameCity : new FormControl(city.name),
+      nameCity : new FormControl(city.name,[Validators.required]),
       identity : new FormControl(city.id_county),
-      siglaUF : new FormControl(city.initials_uf),
-      codigoIBGE : new FormControl(city.id_county),
-      codigoAmbiental: new FormControl(city.cod_environmental),
-      nomeUGRHI: new FormControl(city.name_ugrhi),
-      numeroUGRHI: new FormControl(city.number_ugrhi),
-      coordenada: new FormControl(city.geometry),
+      siglaUF : new FormControl(city.initials_uf,[Validators.required]),
+      codigoIBGE : new FormControl(city.ibge,[Validators.required]),
+      codigoAmbiental: new FormControl(city.cod_environmental,[Validators.required]),
+      nomeUGRHI: new FormControl(city.name_ugrhi,[Validators.required]),
+      numeroUGRHI: new FormControl(city.number_ugrhi,[Validators.required]),
+      // coordenada: new FormControl(city.geometry),
       areaLimite: new FormControl(city.area_county),
-      selectDraw: new FormControl(city.id_county),
+      selectDraw: new FormControl(0,[Validators.required]),
     });
   }
 
@@ -81,39 +131,45 @@ export class ManageCityComponent implements OnInit {
   // }
 
   onSubmit(){
-    console.log("fdfdfdsfdsf")
-    console.log(this.city.geometry)
-    console.log("fdfdfdsfdsf")
 
-    const citySubmit: County = new County(this.city.id_county);
-    citySubmit.name = this.cityForm.get('nameCity')?.value;
-    citySubmit.initials_uf = this.cityForm.get('siglaUF')?.value;
-    //cod_ibge : this.cityForm.get('codigoIBGE')?.value,
-    citySubmit.cod_environmental = this.cityForm.get('codigoAmbiental')?.value;
-    citySubmit.name_ugrhi = this.cityForm.get('nomeUGRHI')?.value;
-    citySubmit.number_ugrhi = this.cityForm.get('numeroUGRHI')?.value;
-    citySubmit.area_county = this.cityForm.get('areaLimite')?.value,
-    citySubmit.co_geometry = <Geometry>this.city.geometry;
-    citySubmit.unit_federal = this.city.unit_federal;
-        
-    // const citySubmit: City = new City(this.cityForm.get('identity')?.value).deserialize({
-    //   name_county : this.cityForm.get('nameCity')?.value,
-    //   initials_uf : this.cityForm.get('siglaUF')?.value,
-    //   cod_ibge : this.cityForm.get('codigoIBGE')?.value,
-    //   cod_environmental : this.cityForm.get('codigoAmbiental')?.value,
-    //   name_ugrhi : this.cityForm.get('nomeUGRHI')?.value,
-    //   number_ugrhi : this.cityForm.get('numeroUGRHI')?.value,
-    //   area_county : this.cityForm.get('areaLimite')?.value,
-    //   id_state :  this.city.id_state,
-    //   geometry : this.city.geometry
-    // })
-    console.log(citySubmit);
-    this.createDistrict(citySubmit);
+    if (this.cityForm.valid)
+    {
+      if((this.city.geometry != '0')&&(this.city.geometry != undefined)){  
+     
+      console.log("fdfdfdsfdsf")
+      console.log(this.city.geometry)
+      console.log("fdfdfdsfdsf")
+
+      const citySubmit: County = new County(this.city.id_county);
+      citySubmit.name = this.cityForm.get('nameCity')?.value;
+      citySubmit.initials_uf = this.cityForm.get('siglaUF')?.value;
+      citySubmit.ibge = this.cityForm.get('codigoIBGE')?.value,
+      citySubmit.cod_environmental = this.cityForm.get('codigoAmbiental')?.value;
+      citySubmit.name_ugrhi = this.cityForm.get('nomeUGRHI')?.value;
+      citySubmit.number_ugrhi = this.cityForm.get('numeroUGRHI')?.value;
+      citySubmit.area_county = this.cityForm.get('areaLimite')?.value,
+      citySubmit.co_geometry = <Geometry>this.city.geometry;
+      citySubmit.unit_federal = this.city.unit_federal;        
+      
+      console.log('citySubmit');
+      console.log(citySubmit);
+      this.createDistrict(citySubmit);
+      }
+      else{
+        console.log('Não Geomtria')
+      }
+    }
+    else
+    {
+      console.log('Não Validado')
+    }
   }
   
   onSelectState(value:number):void{
     console.log('dsadsad')
-    this.city.unit_federal =this.states[value-1];
+    this.city.unit_federal =<UnitFederal> this.states.find( a => a.id == value)
+    console.log(this.city.unit_federal)
+    //this.city.unit_federal =this.states[value-1];
   }  
 
   onDrawChanged():void{
@@ -132,12 +188,12 @@ export class ManageCityComponent implements OnInit {
   createDistrict(city:County):void{
     console.log('popu')
     console.log(city)
-    let a = this.countyRepository.createData(city);
-
-    // this.countyRepository.(city).subscribe((data : {}) => {
-    //   console.log('populate')
-    //   console.log(data)
-    // })
+    let a = this.countyRepository.createData(city)
+      .then((value:County) => {
+        console.log(value)
+        this.initializeForm(value);      
+        this.snackBar.open(`Cidade Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+      })
   }
 
   getState():void{

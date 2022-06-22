@@ -34,7 +34,7 @@ class CountyViewSet(viewsets.ModelViewSet):
         test=id_state["id"]
         stateEntity = models.FederativeUnit.objects.get(id=test)
 
-        new_geoEspatial = models.County.objects.create(co_name=espatial_request["co_name"],
+        new_geoEspatial = models.County.objects.create(co_name=espatial_request["co_name"],co_cod_ibge=espatial_request["co_cod_ibge"],
         co_initials_uf=espatial_request["co_initials_uf"],co_name_ugrhi=espatial_request["co_name_ugrhi"],
         co_number_ugrhi=espatial_request["co_number_ugrhi"],co_cod_environmental=espatial_request["co_cod_environmental"],
         co_unit_federal=stateEntity,co_area_county=espatial_request["co_area_county"],

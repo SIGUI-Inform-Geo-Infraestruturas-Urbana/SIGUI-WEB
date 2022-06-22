@@ -29,6 +29,10 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.equipamentUrbanService.conversionJson(<string>data.body);
@@ -62,7 +66,8 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
       let featureObject : Feature<Geometry> = this.equipamentUrbanService.conversionJsonObject(<string>a.body); 
       let infras = new EquipmentUrban().deserialize(featureObject);
       console.log('createsucesse')
-      //console.log(infras)    
+      //console.log(infras)
+      return infras; 
     }    
   
    return new EquipmentUrban;

@@ -1,7 +1,7 @@
 <header>
-    <app-navheadersigui (ActiveSideNav)="activeSideNav()"></app-navheadersigui>
+  <app-navheadersigui (ActiveSideNav)="activeSideNav()"></app-navheadersigui>
   </header>
-  <mat-drawer-container>
+  <mat-drawer-container style="height: 100%;">
     <mat-drawer #drawer class="nav-container" mode="side" [opened]="isShowing">
       <button [routerLink]="['/user-zone']" mat-button class="button-nav">
         Home
@@ -11,10 +11,6 @@
       </button> 
       <button [routerLink]="['/network']" mat-button class="button-nav">
         Adicionar Redes
-      </button> 
-      <p *ngIf="showFiller">teste</p>
-      <button (click)="showFiller = !showFiller" mat-button class="button-nav">
-        Button teste
       </button> 
     </mat-drawer>
     <mat-drawer-content>

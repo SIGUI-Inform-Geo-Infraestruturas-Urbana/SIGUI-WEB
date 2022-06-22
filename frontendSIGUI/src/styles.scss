@@ -29,12 +29,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: black;
     font-family: 'Roboto';
 }
+
+
 body{
     background-color:aliceblue;
 }
 
 .white-icon{
     color: white;
+}
+
+.spanValidate{
+    font-size: 10px;
+    color: brown;
 }
 
 input{
@@ -69,6 +76,7 @@ button:active {
 
 
 .content{
+    width: 100%;
     width: 100%;
     display: block;
     margin: 0 auto;

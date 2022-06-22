@@ -61,13 +61,16 @@ export class District extends DataSpatial{
         return this;
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
-        console.log(properties);       
+        let properties = inputData.getProperties()['properties'];
         this.id = <number>inputData.getId();
+        if (properties != undefined){
+            console.log(properties);       
+   
         this.dc_name = properties['dc_name'];
         this.dc_area= properties['dc_area'];      
-        this.dc_county = properties['dc_county'];     
-        this.geometry =  <MultiPolygon> geom;       
+        this.dc_county = properties['dc_county'];
+        }   
+        this.geometry =  <MultiPolygon> geom;
 
         return this;
     }

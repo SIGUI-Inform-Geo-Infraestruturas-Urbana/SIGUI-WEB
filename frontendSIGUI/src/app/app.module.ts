@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSliderModule} from '@angular/material/slider';
 import { MatButtonModule} from '@angular/material/button';
@@ -8,6 +8,7 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatExpansionModule} from '@angular/material/expansion'
 import { MatGridListModule } from '@angular/material/grid-list'
+import { MatSnackBarModule} from '@angular/material/snack-bar'
 import { MatCardModule} from '@angular/material/card'
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +21,7 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './components/maps-components/map/map.component';
 import { ScalelineComponent } from './components/maps-components/scaleline/scaleline.component';
 import { TopHeaderComponent } from './components/angular-components/top-header/top-header.component';
-import { ControlMapComponent } from './components/maps-components/control-map/control-map.component';
+import { ControlMapComponent } from './components/maps-components/selectLayers/control-map/control-map.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsMapComponent } from './components/maps-components/forms-map/forms-map.component';
@@ -63,6 +64,15 @@ import { AssociationInfrastructuresComponent } from './components/maps-component
 import { InfrastructureNetworkComponent } from './components/maps-components/infrastructure-network/infrastructure-network.component';
 import { PublicPlaceComponent } from './components/maps-components/manager-public-place/public-place.component'
 import { ErrorIntercept } from './error.interceptor';
+import { ErrorComponent } from './error/error.component';
+import { ErrorService } from './error.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogPopUpComponent } from './dialog-pop-up/dialog-pop-up.component';
+import { SelectUnitFederativeComponent } from './components/maps-components/selectLayers/select-unit-federative/select-unit-federative.component'
+import { SelectPoligonoComponent } from './components/maps-components/selectLayers/select-unit-poligono/select-unit-poligono.component'
+import { SelectLineStringComponent} from './components/maps-components/selectLayers/select-unit-linestring/select-unit-linestring.component';
+import { SnackBarComponent } from './snack-bar/snack-bar.component';
+import { ManagerFileStateComponent } from './components/maps-components/manager-file-state/manager-file-state.component'
 
 @NgModule({
   declarations: [
@@ -101,6 +111,13 @@ import { ErrorIntercept } from './error.interceptor';
     AssociationInfrastructuresComponent,
     InfrastructureNetworkComponent,
     PublicPlaceComponent,
+    ErrorComponent,
+    DialogPopUpComponent,
+    SelectUnitFederativeComponent,
+    SelectPoligonoComponent,
+    SelectLineStringComponent,
+    SnackBarComponent,
+    ManagerFileStateComponent
  
 
   ],
@@ -114,6 +131,7 @@ import { ErrorIntercept } from './error.interceptor';
     MatCardModule,
     MatGridListModule,
     MatExpansionModule,
+    MatDialogModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -124,11 +142,18 @@ import { ErrorIntercept } from './error.interceptor';
     MatToolbarModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatSnackBarModule,
+    
   ],
   providers: [
     DecimalPipe,
     AuthGuard, 
+    // {
+    //   provide: ErrorHandler,
+    //   useClass : ErrorService,
+    //  // multi : true
+    // }
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass : ErrorIntercept,

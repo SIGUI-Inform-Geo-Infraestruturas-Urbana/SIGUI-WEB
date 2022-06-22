@@ -123,7 +123,7 @@ export class Street extends DataSpatial{
         return this;
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
+        let properties = inputData.getProperties()['properties'];
         console.log(properties);       
         this.id = <number>inputData.getId();
         this.st_cod_key = properties['st_cod_key'];

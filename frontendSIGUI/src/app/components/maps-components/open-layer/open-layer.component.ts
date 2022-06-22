@@ -58,7 +58,15 @@ export class OpenLayerComponent implements OnInit {
   marcatores:Feature<Point>[] = [];
   pointMarcator = '/assets/images/logoSIGUi.png';
   sourceData!:VectorSource;
-  sourceStreet!:VectorSource;
+  sourceunit!:VectorSource;
+  sourcestreet!:VectorSource;
+  sourcecounty!:VectorSource;
+  sourcedistrict!:VectorSource;
+  sourcepublicplace!:VectorSource;
+  sourceinfrastructure!:VectorSource;
+  sourcerede!:VectorSource;
+  sourceequipamente!:VectorSource;  
+
   sourceInfrastructure!:VectorSource;
   
   constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
@@ -77,30 +85,81 @@ export class OpenLayerComponent implements OnInit {
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
         switch (element.typeRepresentation) {
+          case 'unit':
+            let featureUnit= new Feature({
+              id: element.id,
+              properties : element,
+              geometry : <Geometry>element.geometry
+            })
+            this.sourceunit.addFeature(featureUnit);
+            break;
+            case 'county':
+              let featurecounty = new Feature({
+                id: element.id,
+                properties : element,
+                geometry : <Geometry>element.geometry
+              })
+              this.sourcecounty.addFeature(featurecounty);
+              break;
+          case 'district':
+            let featuredistrict = new Feature({
+              id: element.id,
+              properties : element,
+              geometry : <Geometry>element.geometry
+            })
+            this.sourcedistrict.addFeature(featuredistrict);
+            break;
+          case 'publicplace':
+            let featurepublicplace= new Feature({
+              id: element.id,
+              properties : element,
+              geometry : <Geometry>element.geometry
+            })
+            this.sourcepublicplace.addFeature(featurepublicplace);
+            break;
+            
           case 'street':
             let featureStreet = new Feature({
               id: element.id,
               properties : element,
               geometry : <Geometry>element.geometry
             })
-            this.sourceStreet.addFeature(featureStreet);
+            this.sourcestreet.addFeature(featureStreet);
             break;
           case 'infrastructure':
             let featureInfrastructura = new Feature({
               id: element.id,
-              properties : element,
+              properties : element, 
               geometry : <Geometry>element.geometry
             })
+            
             this.sourceInfrastructure.addFeature(featureInfrastructura);
-            break;         
+            break;   
+            case 'infraNet':
+              let featureinfraNet = new Feature({
+                id: element.id,
+                properties : element, 
+                geometry : <Geometry>element.geometry
+              })
+              
+              this.sourcerede.addFeature(featureinfraNet);
+              break;       
+          case 'estructure':
+              let featureestructure = new Feature({
+                id: element.id,
+                properties : element, 
+                geometry : <Geometry>element.geometry
+              })
+              
+              this.sourceequipamente.addFeature(featureestructure);
+              break;  
           default:
             break;
         }        
        
-      };
-         
+      };         
 
-      this.sourceData.addFeatures(this.dataSpatialService.converterFromFeatures(data));
+     // this.sourceData.addFeatures(this.dataSpatialService.converterFromFeatures(data));
     });
 
     // this.countyService.getCounties().subscribe((cities: City[]) => {
@@ -171,8 +230,14 @@ export class OpenLayerComponent implements OnInit {
       this.addVetorIterationTile();
 
       this.addLoadData();
+      this.addLoadDataUnit();
+      this.addLoadDataCounty();
+      this.addLoadDataDistrict();
       this.addLoadDataStreet();
+      this.addLoadDataPublicPlace();
+      this.addLoadDataRede(); 
       this.addLoadDataInfrastructure();
+      this.addLoadDataEquipament();
   }
 
   addStyleMap():void{
@@ -353,11 +418,59 @@ export class OpenLayerComponent implements OnInit {
       //   this.map.addLayer( layerSource )
       this.map.addLayer( layerSource );
   }
-  addLoadDataStreet():void{
-    this.sourceStreet = new VectorSource({});
+  addLoadDataUnit():void{
+    this.sourceunit = new VectorSource({});
 
     let layerSource = new VectorLayer({
-          source: this.sourceStreet,
+          source: this.sourceunit,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_unit')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataCounty():void{
+    this.sourcecounty = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourcecounty,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_county')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataDistrict():void{
+    this.sourcedistrict = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourcedistrict,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_district')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataPublicPlace():void{
+    this.sourcepublicplace = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourcepublicplace,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_public_place')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataStreet():void{
+    this.sourcestreet = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourcestreet,
           style: this.styleFunction,
         })     
 
@@ -369,11 +482,35 @@ export class OpenLayerComponent implements OnInit {
     this.sourceInfrastructure = new VectorSource({});
 
     let layerSource = new VectorLayer({
-          source: this.sourceStreet,
+          source: this.sourceInfrastructure,
           style: this.styleFunction,
         })     
 
       layerSource.set('name','layer_vector_infrastructure')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataEquipament():void{
+    this.sourceequipamente = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourceequipamente,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_equipament')
+      //   this.map.addLayer( layerSource )
+      this.map.addLayer( layerSource );
+  }
+  addLoadDataRede():void{
+    this.sourcerede = new VectorSource({});
+
+    let layerSource = new VectorLayer({
+          source: this.sourcerede,
+          style: this.styleFunction,
+        })     
+
+      layerSource.set('name','layer_vector_rede')
       //   this.map.addLayer( layerSource )
       this.map.addLayer( layerSource );
   }
@@ -460,13 +597,14 @@ export class OpenLayerComponent implements OnInit {
       } )
     }
   }
-  interactionMapChange(value:string): void{
+  interactionMapChange(value:string): void{  
     this.map.removeInteraction(this.draw);
     this.addInteraction(value);
   }
   removeMapPoint(): void{
     console.log('onUndo')
-    this.draw.removeLastPoint(); 
+    //this.draw.removeLastPoint(); 
+    this.layerIteration.getSource()?.clear();
     //console.log(this.map.getInteractions())
   }
   pointMapRegister(): void{

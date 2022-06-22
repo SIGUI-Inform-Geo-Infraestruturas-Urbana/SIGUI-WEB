@@ -68,7 +68,7 @@ class GeoDadosEspaciais(models.Model):
         mapping = {'co_name':'NM_MUN',
             'co_cod_ibge':'CD_MUN',
             'co_initials_uf':'NM_MUN',
-            'uf_name_region':'AREA_KM2',
+            'co_area_county':'AREA_KM2',
             'geometry':'POLYGON',
             }
         lm = LayerMapping(County, pathResult, mapping,unique=('co_name'))
@@ -89,10 +89,11 @@ class GeoDadosEspaciais(models.Model):
 
         mapping = {'uf_name':'NM_UF',
             'uf_initials':'SIGLA',
-            'co_initials_uf':'NM_REGIAO',
+            'uf_geocode':'CD_UF',
+            'uf_name_region':'NM_REGIAO',
             'geometry':'POLYGON',
             }
-        lm = LayerMapping(FederativeUnit, pathResult, mapping,unique=('co_name'))
+        lm = LayerMapping(FederativeUnit, pathResult, mapping,unique=('uf_name'))
         lm.save(verbose=True, strict=True)
         return pathResult
 
@@ -107,7 +108,7 @@ class GeoDadosEspaciais(models.Model):
 class FederativeUnit(models.Model):
     id = models.AutoField(primary_key=True,editable=True)
     uf_name = models.CharField(max_length=254,blank=True, null=True)#nome_uf
-    # uf_cod = models.CharField(max_length=250,blank=True, null=True)
+    uf_geocode = models.CharField(max_length=250,blank=True, null=True)
     uf_initials = models.CharField(max_length=250,blank=True, null=True)
     uf_name_region = models.CharField(max_length=250,blank=True, null=True)
     uf_area_state = models.FloatField(blank=True, null=True)    
@@ -219,9 +220,11 @@ class Infrastructure(models.Model):
     infra_name = models.CharField(max_length=254,blank=True, null=True)   
     infra_category = models.CharField(max_length=254,blank=True, null=True)      
     infra_dependent = models.ForeignKey('self', on_delete=models.CASCADE,related_name='dependent', blank=True, null=True)
+    infra_street = models.ForeignKey(Street, on_delete=models.CASCADE, blank=True, null=True)
     infra_subsystems = models.ForeignKey(Subsystems, on_delete=models.CASCADE, blank=True, null=True)
     infra_equipaments = models.ManyToManyField(Equipament,through='EquipamentInfrastructure')
     infra_network = models.ManyToManyField('self',through='InfrastructureNetwork',related_name='network',symmetrical=False)
+   
     geometry = models.PointField(srid=4326,blank=True, null=True)
     
     def __str__(self):

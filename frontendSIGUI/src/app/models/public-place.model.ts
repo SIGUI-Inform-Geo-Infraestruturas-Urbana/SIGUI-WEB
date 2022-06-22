@@ -17,7 +17,7 @@ export class PublicPlace extends DataSpatial{
 
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,'estructure',geometry)
+        super(id,'publicplace',geometry)
     }
 
     public get id_public_place() : number {
@@ -99,14 +99,16 @@ export class PublicPlace extends DataSpatial{
         return this;
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
+        let properties = inputData.getProperties()['properties'];
         this.id = <number>inputData.getId();
+        if (properties != undefined){
         this.pp_cod_sector = properties['pp_cod_sector'];
         this.pp_cod_block= properties['pp_cod_block'];      
         this.pp_cod_face = properties['pp_cod_face'];
         this.pp_total_residences  = properties['pp_total_residences'];
         this.pp_district  = properties['pp_total_residences'];
         this.pp_streat  = properties['pp_streat'];
+        }
         this.geometry =  <MultiPolygon> geom;       
 
         return this;

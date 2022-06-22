@@ -11,7 +11,10 @@
             <div class="content-form-principal">
                 <mat-form-field appearance="fill">
                     <mat-label>Nome Municipio</mat-label>
-                    <input matInput placeholder="Input" formControlName="nameCity">
+                    <input type="text" matInput placeholder="Input" formControlName="nameCity">
+                    <span class="spanValidate" *ngIf="cityForm.controls['nameCity'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
         </div>
@@ -19,13 +22,16 @@
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Identificação</mat-label>
-                    <input matInput placeholder="Input" formControlName="identity">
+                    <input type="number" matInput placeholder="Input" formControlName="identity">
                 </mat-form-field>
             </div>
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Sigla UF </mat-label>
-                    <input matInput placeholder="Input" formControlName="siglaUF">
+                    <input type="text" matInput placeholder="Input" formControlName="siglaUF">
+                    <span class="spanValidate" *ngIf="cityForm.controls['siglaUF'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
         </div>
@@ -38,23 +44,31 @@
                             {{stateL.name}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="cityForm.controls['selectDraw'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="content-form">
-
             </div>
         </div>
         <div class="div-item-content-form">
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Codigo IBGE</mat-label>
-                    <input matInput placeholder="Input" formControlName="codigoIBGE">
+                    <input type="text" matInput placeholder="Input" formControlName="codigoIBGE">
+                    <span class="spanValidate" *ngIf="cityForm.controls['codigoIBGE'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>   
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Codigo Ambiental</mat-label>
-                    <input matInput placeholder="Input" formControlName="codigoAmbiental">
+                    <input type="number" matInput placeholder="Input" formControlName="codigoAmbiental">
+                    <span class="spanValidate" *ngIf="cityForm.controls['codigoAmbiental'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>        
         </div>
@@ -62,7 +76,10 @@
             <div class="content-form-principal">
                 <mat-form-field appearance="fill">
                     <mat-label>Nome UGRHI</mat-label>
-                    <input matInput placeholder="Input" formControlName="nomeUGRHI">
+                    <input type="text" matInput placeholder="Input" formControlName="nomeUGRHI">
+                    <span class="spanValidate" *ngIf="cityForm.controls['nomeUGRHI'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
         </div>
@@ -70,11 +87,14 @@
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Numero UGRHI </mat-label>
-                    <input matInput placeholder="Input" formControlName="numeroUGRHI">
+                    <input type="number" matInput placeholder="Input" formControlName="numeroUGRHI">
+                    <span class="spanValidate" *ngIf="cityForm.controls['numeroUGRHI'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
         </div>
-        <div class="div-item-content-form">
+        <!-- <div class="div-item-content-form">
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Coordenadas</mat-label>
@@ -85,16 +105,16 @@
                 <button  mat-raised-button color="primary" (click)="onDrawChanged()">Draw Limites</button>
                 <button mat-stroked-button (click)="getState()">Draw Remove</button>
             </div>
-        </div>
+        </div> -->
         <div class="div-item-content-form">
             <div class="content-form">
                 <mat-form-field appearance="fill">
                     <mat-label>Area Municipio</mat-label>
-                    <input matInput placeholder="Input" formControlName="areaLimite">
+                    <input type="text" matInput placeholder="Input" formControlName="areaLimite">
                 </mat-form-field>
             </div>
             <div class="content-form">
-                <button type="submit" mat-raised-button color="primary">Save Data</button>
+                <button type="submit" mat-raised-button color="primary" [disabled]="!cityForm.valid">Save Data</button>
             </div>
         </div>
     </div>

@@ -36,9 +36,9 @@
     top: 2px;
     right: 8px;
   }
-  .ol-popup-closer:after {
+  /* .ol-popup-closer:after {
     content: "✖";
-  }
+  } */
   .ol-popup-content{
     float: left;
   }

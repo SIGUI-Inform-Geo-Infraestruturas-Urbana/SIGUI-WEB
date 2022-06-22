@@ -29,6 +29,10 @@ export class InfrastructureNetworkRepositoryService implements IRepository<Infra
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.infrastructureService.conversionJson(<string>data.body);
@@ -59,11 +63,11 @@ export class InfrastructureNetworkRepositoryService implements IRepository<Infra
       infra.infra_geometry = this.infrastructureService.preparObject(<Point>infra.infra_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,infra);
       let a = await firstValueFrom(postSpatial); 
-      // let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
-      // let infras = new InfrastructureNetwork().deserialize(featureObject);
-      // console.log('createsucesse')
-      // //console.log(infras)
-      // return infras;
+      let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
+      let infras = new InfrastructureNetwork().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
     }    
   
    return new InfrastructureNetwork;

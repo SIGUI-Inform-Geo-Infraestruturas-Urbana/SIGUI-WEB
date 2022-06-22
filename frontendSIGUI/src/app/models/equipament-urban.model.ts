@@ -170,8 +170,9 @@ export class EquipmentUrban extends DataSpatial{
        
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
+        let properties = inputData.getProperties()['properties'];
         this.id = <number>inputData.getId();
+        if (properties != undefined){
         this.eq_co_cod = properties['eq_co_cod'];
         this.eq_co_equipament =properties['eq_co_equipament'];
         this.eq_co_type =properties['eq_co_type'];
@@ -185,6 +186,7 @@ export class EquipmentUrban extends DataSpatial{
         this.eq_co_number_building =properties['eq_co_number_building'];
         this.eq_co_district = properties['eq_co_district'];
         this.eq_co_observation =properties['eq_co_observation'];
+        }
         this.geometry = <MultiPolygon> geom;  
         
 

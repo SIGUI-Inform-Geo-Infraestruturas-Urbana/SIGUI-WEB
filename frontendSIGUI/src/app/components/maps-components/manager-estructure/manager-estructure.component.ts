@@ -15,6 +15,7 @@ import { PublicPlaceRepositoryService } from 'src/app/repositorys/public-place-r
 import { StreetRepositoryService } from 'src/app/repositorys/street-repository.service';
 import { SubsystemRepositoryService } from 'src/app/repositorys/subsystem-repository.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-manager-infrastructure',
@@ -33,6 +34,7 @@ export class ManagerEstructureComponent implements OnInit {
    public streetRepository: StreetRepositoryService , 
    public publicPlaceRepository: PublicPlaceRepositoryService , 
    public EquipamentUrbanRepository: EquipamentUrbanRepositoryService , 
+   public snackBar : MatSnackBar,
     private stateMap :StateMapService) {
     this.equipament = new EquipmentUrban(0);
     stateMap.getFeatureSelect().subscribe(feature => {
@@ -168,6 +170,12 @@ export class ManagerEstructureComponent implements OnInit {
     console.log('popu')
     console.log(equi)
     this.EquipamentUrbanRepository.createData(equi)
+    .then((value:EquipmentUrban) => {
+      console.log(value)
+      this.snackBar.open(`Equipamento Cadastrado! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+      // this.initializeForm(value);
+    })
+
   }
 
 }

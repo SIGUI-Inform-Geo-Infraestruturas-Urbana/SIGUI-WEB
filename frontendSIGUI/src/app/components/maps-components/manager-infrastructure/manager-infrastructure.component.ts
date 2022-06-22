@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Geometry } from 'ol/geom';
+import { FormControl, FormGroup ,Validators} from '@angular/forms';
+import { getArea } from 'ol/sphere';
+import { Geometry, Point, Polygon } from 'ol/geom';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { Infrastructure } from 'src/app/models/infrastructure.model';
 import { Street } from 'src/app/models/street.model';
@@ -9,6 +10,9 @@ import { InfrastructureRepositoryService } from 'src/app/repositorys/infrastruct
 import { StreetRepositoryService } from 'src/app/repositorys/street-repository.service';
 import { SubsystemRepositoryService } from 'src/app/repositorys/subsystem-repository.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
+import { Coordinate, toStringHDMS } from 'ol/coordinate';
+import { toLonLat } from 'ol/proj';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-manager-infrastructure',
@@ -28,7 +32,7 @@ export class ManagerInfrastructureComponent implements OnInit {
 
   constructor( public infrastructureRepository : InfrastructureRepositoryService,
     public subsystemRepositoryService : SubsystemRepositoryService, public streetRepository: StreetRepositoryService , 
-    private stateMap :StateMapService) {
+    private stateMap :StateMapService, private snakeBar : MatSnackBar) {
     this.infrastructure = new Infrastructure(0);
     this.createForm(new Infrastructure(0));
     stateMap.getFeatureSelect().subscribe(feature => {
@@ -40,8 +44,11 @@ export class ManagerInfrastructureComponent implements OnInit {
 
   ngOnInit(): void {    
     this.getSubsystem();
+    this.getInfraestructure();
+    this.getStreet();
     this.infrastrutureForm.get("selectOcupante")?.valueChanges.subscribe(f => {this.onSelectOcupante(f)})
     this.infrastrutureForm.get("selectSubsystem")?.valueChanges.subscribe(f => {this.onSelectsubsystem(f)})  
+    this.infrastrutureForm.get("selectStreet")?.valueChanges.subscribe(f => {this.onSelectstreet(f)})  
   }
 
   initializeForm(feature:DataSpatial ){
@@ -58,8 +65,9 @@ export class ManagerInfrastructureComponent implements OnInit {
     else
     {
       console.log('Definir nova variavel')
-      this.populateGeometry(infrastructure);   
-      this.updateForm(new Infrastructure(0));       
+      this.populateGeometry(infrastructure);
+
+      this.updateForm(infrastructure);       
     }
 
   }
@@ -67,11 +75,12 @@ export class ManagerInfrastructureComponent implements OnInit {
   createForm(infrastructure : Infrastructure):void{
     this.infrastrutureForm = new FormGroup({
       idInfrastructure : new FormControl(infrastructure.id),
-      infraName: new FormControl(infrastructure.name),    
-      infraCategory : new FormControl(infrastructure.category),
+      infraName: new FormControl(infrastructure.name, [Validators.required]),    
+      infraCategory : new FormControl(infrastructure.category,[Validators.required]),
       selectOcupante : new FormControl(infrastructure.dependent),      
-      selectSubsystem: new FormControl(infrastructure.subsystems),         
-      
+      selectSubsystem: new FormControl(infrastructure.subsystems,[Validators.required]),         
+      selectStreet: new FormControl(infrastructure.subsystems),   
+      geometry: new FormControl(0),   
     });    
   }
   updateForm(infrastructure : Infrastructure){
@@ -79,6 +88,10 @@ export class ManagerInfrastructureComponent implements OnInit {
       idInfrastructure : infrastructure.id,
       infraName: infrastructure.name,    
       infraCategory : infrastructure.category,
+     // selectOcupante : 0,      
+    //  selectSubsystem: 0, 
+     // selectStreet: 0,
+      geometry : this.generateCoordinate(infrastructure)
     })
   }
 
@@ -92,6 +105,20 @@ export class ManagerInfrastructureComponent implements OnInit {
       console.log(this.infrastructure);
     }
   }
+
+
+  generateCoordinate(unit:Infrastructure):string{
+      if((unit.geometry != '0')&&(unit.geometry != null)){  
+        let geom = <Point>unit.geometry;
+        let coordinatePoint:Coordinate= <Coordinate>geom.getCoordinates();
+        console.log('Coord')
+        console.log(coordinatePoint)         
+        return toStringHDMS(toLonLat(coordinatePoint));
+      }
+      else{
+        return ''
+      }
+    } 
 
   getSubsystem(){
     this.subsystemRepositoryService.findFetch().subscribe((data : Subsystem[])=>{
@@ -109,6 +136,14 @@ export class ManagerInfrastructureComponent implements OnInit {
     })
   }
 
+  getStreet(){
+    this.streetRepository.findFetch().subscribe((data : Street[])=>{
+      console.log('45645456454564654654654')
+      console.log(data[0])
+      this.streets = data;
+    })
+  }
+
   onSelectOcupante(value:number){
     console.log('select')
     console.log(value)
@@ -123,21 +158,59 @@ export class ManagerInfrastructureComponent implements OnInit {
     //this.district.county =this.cities[value-1];
     console.log(this.infrastructure.subsystems)
   }
-
-  onSubmit(){
-   
-    const infraSubmit: Infrastructure = new Infrastructure(this.infrastructure.id_infra);
-    infraSubmit.name = this.infrastrutureForm.get('infraName')?.value;
-    infraSubmit.category = this.infrastrutureForm.get('infraCategory')?.value;
-    infraSubmit.dependent = this.infrastructure.dependent;
-    infraSubmit.subsystems = this.infrastructure.subsystems;
-    infraSubmit.infra_geometry = <Geometry>this.infrastructure.geometry;       
-    console.log('sdaa');
-    console.log(infraSubmit.subsystems);
-    this.createDistrict(infraSubmit);
+  onSelectstreet(value:number){
+    console.log('select')
+    console.log(value)
+    this.infrastructure.street= <Street> this.streets.find( a => a.id == value)
+    //this.district.county =this.cities[value-1];
+    console.log(this.infrastructure.street)
   }
 
+  onSubmit(){
+    if (this.infrastrutureForm.valid)
+      {
+        if((this.infrastructure.geometry != '0')&&(this.infrastructure.geometry != undefined)){  
+      
+          const infraSubmit: Infrastructure = new Infrastructure(this.infrastructure.id_infra);
+          infraSubmit.name = this.infrastrutureForm.get('infraName')?.value;
+          infraSubmit.category = this.infrastrutureForm.get('infraCategory')?.value;
+          infraSubmit.dependent = null//this.infrastructure.dependent != undefined ? this.infrastructure.dependent : null;
+          infraSubmit.subsystems = this.infrastructure.subsystems;
+          infraSubmit.street = this.infrastructure.street;
+          infraSubmit.infra_geometry = <Geometry>this.infrastructure.geometry;       
+          console.log('sdaa');
+          console.log(infraSubmit.subsystems);
+          this.createDistrict(infraSubmit);
+        }
+        else if((this.infrastructure.dependent != undefined)){  
+    
+          console.log('passoy')
+          const infraSubmit: Infrastructure = new Infrastructure(this.infrastructure.id_infra);
+          infraSubmit.name = this.infrastrutureForm.get('infraName')?.value;
+          infraSubmit.category = this.infrastrutureForm.get('infraCategory')?.value;
+          infraSubmit.dependent = this.infrastructure.dependent != undefined ? this.infrastructure.dependent : null;
+          infraSubmit.subsystems = this.infrastructure.subsystems;
+          infraSubmit.street = this.infrastructure.street;
+          infraSubmit.infra_geometry = '0'
+          console.log('sdaa');
+          console.log(infraSubmit.subsystems);
+          this.createDistrict(infraSubmit);
+        }
+        else{
+          this.snakeBar.open('Geometria ou Infraestrutura Ocupada, não informada!','Fechar',{duration: 5 * 1000});     
+        }
+        
+      }
+      else
+      {
+        this.snakeBar.open('Parametros Incorretos!','Fechar',{duration: 5 * 1000});     
+
+      }
+  } 
+  
+
   createDistrict(infrastructure:Infrastructure):void{
+   
     console.log('popu')
     console.log(infrastructure)
     this.infrastructureRepository.createData(infrastructure)
@@ -145,7 +218,9 @@ export class ManagerInfrastructureComponent implements OnInit {
         console.log(value)
         this.initializeForm(value);
         this.enableAssociation = true;
+        this.snakeBar.open(`Infraestrutura Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
       })
-  }
+        
+    }
 
 }

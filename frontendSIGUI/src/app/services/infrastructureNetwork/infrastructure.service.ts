@@ -23,12 +23,12 @@ export class InfrastructureNetworkService extends DataServices{
  
   public convertFeature(features :Feature<Geometry>[]):InfrastructureNetwork[]{
     let streetList:InfrastructureNetwork[] = [];
-    // console.log('aaaaaa')
-    // for (let index = 0; index < features.length; index++) {
+    console.log('aaaaaa')
+    for (let index = 0; index < features.length; index++) {
 
-    //   let street = new InfrastructureNetworkService().deserialize(features[index]);
-    //   streetList.push(street);
-    // }
+      let street = new InfrastructureNetwork().deserialize(features[index]);
+      streetList.push(street);
+    }
     return streetList;
   }
 

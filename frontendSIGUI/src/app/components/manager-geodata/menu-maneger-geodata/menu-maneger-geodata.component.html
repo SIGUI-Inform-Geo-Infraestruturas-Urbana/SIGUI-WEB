@@ -21,7 +21,7 @@
             </div>       
             <button mat-stroked-button color="primary" (click)="onClickSelectState()"> Adicionar Estado</button>                
             <button mat-stroked-button color="primary" (click)="addLayerVetorState()"> Visualizar Estados</button>
-            <button mat-stroked-button color="primary" (click)="panelOpenAdFileMunicios=!panelOpenAdFileMunicios"> Adicionar Arquivo</button>
+            <button mat-stroked-button color="primary" (click)="onClickState()"> Adicionar Arquivo</button>
         </mat-expansion-panel>  
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
@@ -62,7 +62,7 @@
                 </form>   
             </div>     
             <button mat-stroked-button color="primary" (click)="onClickSelectDistrict()"> Adicionar Bairro</button>                                  
-            <button mat-stroked-button color="primary"> Visualizar Bairros</button>
+            <button mat-stroked-button color="primary" (click)="addLayerdistrict()"> Visualizar Bairros</button>
             <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
         </mat-expansion-panel> 
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
@@ -80,8 +80,8 @@
                     <mat-icon>search</mat-icon>
                 </button>
             </div>                       
-            <button mat-stroked-button color="primary" (click)="onClickSelectStreet()"> Visualizar Rua</button>
-            <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
+            <button mat-stroked-button color="primary" (click)="onClickSelectStreet()"> Adicionar Rua</button>
+            <button mat-stroked-button color="primary" (click)="addLayerstreet()"> Visualizar Ruas</button>
         </mat-expansion-panel>  
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
@@ -99,7 +99,7 @@
                 </button>
             </div>                       
             <button mat-stroked-button color="primary" (click)="onClickSelectPublicPlace()"> Adicionar Logradouro</button>
-            <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
+            <button mat-stroked-button color="primary" (click)="addLayerpublicplace()"> Visualizar Logradouros</button>
         </mat-expansion-panel> 
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
@@ -116,8 +116,9 @@
                     <mat-icon>search</mat-icon>
                 </button>
             </div>                       
-            <button mat-stroked-button color="primary" (click)="onClickSelectInfrastructure()">  Visualizar Infraestruturas</button>
-            <button mat-stroked-button color="primary" (click)="getFeatureInfrastructure()">  Consultar Infraestruturas</button>
+            <button mat-stroked-button color="primary" (click)="onClickSelectInfrastructure()">  Adicionar Infraestruturas</button>
+            <button mat-stroked-button color="primary" (click)="getFeatureInfrastructure()">  Visualizar Infraestruturas</button>
+            <button mat-stroked-button color="primary" (click)="addLayerrede()">  Visualizar Redes</button>
             </mat-expansion-panel>     
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>
@@ -134,8 +135,8 @@
                     <mat-icon>search</mat-icon>
                 </button>
             </div>                       
-            <button mat-stroked-button color="primary" (click)="onClickEquipamentFile()"> Visualizar Estruturas</button>
-            <button mat-stroked-button color="primary"> Adicionar Arquivo</button>
+            <button mat-stroked-button color="primary" (click)="onClickEquipamentFile()"> Adicionar Estruturas</button>
+            <button mat-stroked-button color="primary" (click)="addLayerequipament()"> Visualizar Equipamentos </button>
         </mat-expansion-panel>    
 
 </mat-accordion>     

@@ -5,6 +5,7 @@ import { Subsystem } from 'src/app/models/subsystem.model';
 import { NetworkRepositoryService } from 'src/app/repositorys/network-repository.service';
 import { SubsystemRepositoryService } from 'src/app/repositorys/subsystem-repository.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-manager-network',
@@ -18,7 +19,8 @@ export class ManagerNetworkComponent implements OnInit {
   public networkForm!: FormGroup;
 
   constructor( public networkRepositoryService : NetworkRepositoryService,
-    public subsystemRepositoryService : SubsystemRepositoryService) {
+    public subsystemRepositoryService : SubsystemRepositoryService,
+    private snackBar: MatSnackBar) {
     this.network = new Network(0);
   }
 
@@ -72,6 +74,10 @@ export class ManagerNetworkComponent implements OnInit {
     console.log('popu')
     console.log(network)
     this.networkRepositoryService.createData(network)
+    .then((value:Network) => {
+      console.log(value)     
+      this.snackBar.open(`Infraestrutura Cadastrada! }`,'Entendido',{duration: 8 * 1000});
+    })
   }
 
 }

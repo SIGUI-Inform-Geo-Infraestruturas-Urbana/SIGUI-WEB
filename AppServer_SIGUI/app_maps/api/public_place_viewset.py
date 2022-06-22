@@ -21,7 +21,7 @@ class PublicPlaceViewSet(viewsets.ModelViewSet):
             infraObjectId=id_infra["id"]
             infraD = models.Street.objects.get(id=infraObjectId)
 
-        id_subsystem=espatial_request["eq_co_district"]
+        id_subsystem=espatial_request["pp_district"]
         subsObjectId=id_subsystem["id"]
         subsystem = models.District.objects.get(id=subsObjectId)
 

@@ -11,6 +11,7 @@
 }
 
 .map-container-menu{
+    overflow: auto;
     position: relative; 
     float: right;
      width: 20%; 

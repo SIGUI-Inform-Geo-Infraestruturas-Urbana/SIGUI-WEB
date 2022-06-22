@@ -66,7 +66,18 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
       console.log('createsucesse')
       //console.log(infras)
       return infras;
-    }    
+    } 
+    else
+    {
+      console.log(infra)
+      let postSpatial = this.restApiBackend.postData(this.stringConection,infra);
+      let a = await firstValueFrom(postSpatial); 
+      let featureObject : Feature<Geometry> = this.infrastructureService.conversionJsonObject(<string>a.body); 
+      let infras = new Infrastructure().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
+    }   
   
    return new Infrastructure;
   }

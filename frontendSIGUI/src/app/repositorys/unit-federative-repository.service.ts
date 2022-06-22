@@ -30,6 +30,10 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.unitFederalService.conversionJson(<string>data.body);
@@ -60,6 +64,11 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
       unit.uf_geometry = this.unitFederalService.preparObject(<MultiPolygon>unit.uf_geometry);
       let postSpatial = this.restApiBackend.postData(this.stringConection,unit);
       let a = await firstValueFrom(postSpatial);  
+      let featureObject : Feature<Geometry> = this.unitFederalService.conversionJsonObject(<string>a.body); 
+      let infras = new UnitFederal().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras;
     }
     
     

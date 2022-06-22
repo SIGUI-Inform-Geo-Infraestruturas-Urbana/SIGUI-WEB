@@ -9,6 +9,7 @@ import { DistrictRepositoryService } from 'src/app/repositorys/district-reposito
 import { PublicPlaceRepositoryService } from 'src/app/repositorys/public-place-repository.service';
 import { StreetRepositoryService } from 'src/app/repositorys/street-repository.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
+import { MatSnackBar} from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-public-place',
@@ -23,7 +24,8 @@ export class PublicPlaceComponent implements OnInit {
   public ppForm!: FormGroup;
 
   constructor(public publicplaceRepository: PublicPlaceRepositoryService,public districtRepository : DistrictRepositoryService, 
-    public streetRepositoryService : StreetRepositoryService, private stateMap :StateMapService) {
+    public streetRepositoryService : StreetRepositoryService, private stateMap :StateMapService, 
+    private snackBar : MatSnackBar) {
       this.publicPlace = new PublicPlace();
       stateMap.getFeatureSelect().subscribe(feature => {
         console.log("+++6+iniciou")    
@@ -88,6 +90,10 @@ export class PublicPlaceComponent implements OnInit {
     console.log('popu')
     console.log(street)
     this.publicplaceRepository.createData(street)
+    .then((value:PublicPlace) => {
+      console.log(value)
+      this.snackBar.open(`Logradouro Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+    })
   }
 
   getDistrict(){

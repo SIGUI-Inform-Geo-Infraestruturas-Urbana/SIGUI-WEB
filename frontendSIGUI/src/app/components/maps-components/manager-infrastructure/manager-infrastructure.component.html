@@ -17,10 +17,14 @@
                     </mat-form-field>
                 </div>
                 <div class="content-form">
-                    <div *ngIf="enableAssociation">
-                        <app-infrastructure-network [infrastructure]="infrastructureAssociation">
-                        </app-infrastructure-network>
-                    </div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Selecionar Rua</mat-label>
+                        <mat-select formControlName="selectStreet">
+                            <mat-option *ngFor="let street of streets" [value]="street.id">
+                                {{street.name_street}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
             <div class="div-item-content-form">
@@ -28,12 +32,18 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Nome da Infraestrutura</mat-label>
                         <input matInput placeholder="Input" formControlName="infraName">
+                        <span class="spanValidate" *ngIf="infrastrutureForm.controls['infraName'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
                 </div>
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Nome Categoria</mat-label>
                         <input matInput placeholder="Input" formControlName="infraCategory">
+                        <span class="spanValidate" *ngIf="infrastrutureForm.controls['infraCategory'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
                 </div>
             </div>
@@ -56,6 +66,9 @@
                                 {{subsystem.ss_name}}
                             </mat-option>
                         </mat-select>
+                        <span class="spanValidate" *ngIf="infrastrutureForm.controls['selectSubsystem'].errors">
+                            Campo Obrigatorio
+                        </span>
                     </mat-form-field>
                 </div>              
             </div>
@@ -65,13 +78,19 @@
                         <mat-label>Coordenada</mat-label>
                         <input matInput placeholder="Input" formControlName="geometry">
                     </mat-form-field>
-                </div>                     
+                </div>    
+                <div class="content-form">
+                    <div *ngIf="enableAssociation">
+                        <app-infrastructure-network [infrastructure]="infrastructureAssociation">
+                        </app-infrastructure-network>
+                    </div>
+                </div>                 
             </div>           
             <div class="div-item-content-form">
                 <div class="content-form">
                 </div>
                 <div class="content-form">
-                    <button type="submit" mat-raised-button color="primary">Save Data</button>
+                    <button type="submit"  [disabled]="!infrastrutureForm.valid" mat-raised-button color="primary">Save Data</button>
                 </div>
             </div>
         </div>    

@@ -10,6 +10,7 @@ export class County extends DataSpatial{
     //private id : number = 0;   
     private co_name : string = '';
     private co_initials_uf: string = '';
+    private co_cod_ibge : string = '';
     private co_name_ugrhi : string = '';
     private co_number_ugrhi : number = 0;
     private co_cod_environmental: number = 0;
@@ -44,6 +45,12 @@ export class County extends DataSpatial{
     }
     public set name(value : string){
         this.co_name = value;
+    }
+    public get ibge() : string {
+        return this.co_cod_ibge;
+    }
+    public set ibge(value : string){
+        this.co_cod_ibge = value;
     }
 
     public get initials_uf() : string {
@@ -102,7 +109,8 @@ export class County extends DataSpatial{
         this.id = <number>inputData.getId();
         this.co_name = properties['co_name'];
         this.co_initials_uf= properties['co_initials_uf'];      
-        this.co_cod_environmental = properties['co_cod_environmental'];
+        this.co_cod_environmental = properties['co_cod_environmental'];//co_cod_ibge
+        this.co_cod_ibge  = properties['co_cod_ibge'];
         this.co_name_ugrhi  = properties['co_name_ugrhi'];
         this.co_number_ugrhi = properties['numbeco_number_ugrhir_ugrhi'];
         this.co_geometry = <MultiPolygon> properties['geometry'];
@@ -112,17 +120,20 @@ export class County extends DataSpatial{
         return this;
     }
     seserialize(inputData : Feature<Geometry>, geom : Geometry) {        
-        let properties = inputData.getProperties();
+        let properties = inputData.getProperties()['properties'];
         console.log(properties);       
         this.id = <number>inputData.getId();
+        if (properties != undefined){
         this.co_name = properties['co_name'];
         this.co_initials_uf= properties['co_initials_uf'];      
         this.co_cod_environmental = properties['co_cod_environmental'];
+        this.co_cod_ibge  = properties['co_cod_ibge'];
         this.co_name_ugrhi  = properties['co_name_ugrhi'];
         this.co_number_ugrhi = properties['co_number_ugrhi'];
-        this.co_geometry = <MultiPolygon> geom;
         this.co_unit_federal = properties['co_unit_federal']; //Feature<Geometry> = new Feature();
         this.co_area_county = properties['co_area_county'];
+        }
+        this.co_geometry = <MultiPolygon> geom;
 
         return this;
     }

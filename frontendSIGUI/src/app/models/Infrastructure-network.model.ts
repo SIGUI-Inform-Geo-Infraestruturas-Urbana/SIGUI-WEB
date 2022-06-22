@@ -86,6 +86,22 @@ export class InfrastructureNetwork extends DataSpatial{
       
         return this;
     }
+    serialize(inputData : Feature<Geometry>, geom : Geometry) {        
+        let properties = inputData.getProperties()['properties'];
+        console.log('????????????????????')
+        console.log(properties);  
+        console.log('????????????????????')     
+        if (properties != undefined){
+            this.infra_net_serial_number = properties['infra_net_serial_number'];
+            this.infra_net_representation= properties['infra_net_representation'];      
+            this.infra_net_infrastructure_in = properties['infra_net_infrastructure_in'];
+            this.infra_net_infrastructure_out = properties['infra_net_infrastructure_out'];       
+            this.infra_net_network = properties['infra_net_network']; 
+        }  
+        this.geometry =  <Point> geom;             
+       // console.log(this.infra_name);      
+        return this;
+    }
 
 
 }

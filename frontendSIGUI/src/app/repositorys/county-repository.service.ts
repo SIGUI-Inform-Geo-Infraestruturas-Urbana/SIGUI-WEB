@@ -30,6 +30,10 @@ export class CountyRepositoryService implements IRepository<County,County> {
     if (idParam != 0){
       urlSearch = this.stringConection + idParam.toString();
     }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
 
     this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>data.body);
@@ -59,7 +63,12 @@ export class CountyRepositoryService implements IRepository<County,County> {
     console.log(city)
     city.co_geometry = this.countyService.preparObject(<MultiPolygon>city.co_geometry);
     let postSpatial = this.restApiBackend.postData(this.stringConection,city);
-    let a = await firstValueFrom(postSpatial);  
+    let a = await firstValueFrom(postSpatial); 
+    let featureObject : Feature<Geometry> = this.countyService.conversionJsonObject(<string>a.body); 
+      let infras = new County().deserialize(featureObject);
+      console.log('createsucesse')
+      //console.log(infras)
+      return infras; 
   
    return new County;
   }

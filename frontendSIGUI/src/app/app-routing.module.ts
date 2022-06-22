@@ -23,6 +23,7 @@ import { ManagerNetworkComponent} from './components/maps-components/manager-net
 import { ManagerEstructureComponent } from './components/maps-components/manager-estructure/manager-estructure.component'
 import { PublicPlaceComponent} from './components/maps-components/manager-public-place/public-place.component'
 import { ManagerStreetComponent } from './components/maps-components/manager-street/manager-street/manager-street.component';
+import { ManagerFileStateComponent} from './components/maps-components/manager-file-state/manager-file-state.component'
 const routes: Routes = [
   {
     path: '', 
@@ -30,6 +31,7 @@ const routes: Routes = [
     children: [     
       // {path: '',redirectTo: '/user-zone',pathMatch:'full'},
       {path: '', component: UserZoneComponent},
+      {path: 'user-zone', component: UserZoneComponent},
       {path: 'geo-view', component: GeoEspatialComponent,
       children: [
         {path :'manager-city', component: ManageCityComponent},//app-maneger-state
@@ -38,8 +40,10 @@ const routes: Routes = [
         {path :'infrastructure', component: ManagerInfrastructureComponent},//app-maneger-state
         {path :'manager-street', component: ManagerStreetComponent},//app-maneger-state
         {path :'manager-file', component: ManegerlayersComponent},
+        {path :'manager-file-state', component: ManagerFileStateComponent},
         {path :'manager-equipament', component: ManagerEstructureComponent},
         {path :'manager-public-place', component: PublicPlaceComponent}
+        //manager-state
 
       ]},
       {path: 'network', component: ManagerNetworkComponent},
