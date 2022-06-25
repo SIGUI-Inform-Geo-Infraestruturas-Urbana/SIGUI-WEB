@@ -247,7 +247,7 @@ class Network(models.Model):
     net_name= models.CharField(max_length=254,blank=True, null=True) 
     net_category = models.CharField(max_length=254,blank=True, null=True) 
     net_status = models.CharField(max_length=254,blank=True, null=True) 
-    net_subsystems = models.ForeignKey(Subsystems, on_delete=models.CASCADE, blank=True, null=True)
+    net_subsystems = models.ForeignKey(Subsystems, related_name='subsystems' ,on_delete=models.CASCADE, blank=True, null=True)
         
     def __str__(self):
        return 'id: %s' % self.id  

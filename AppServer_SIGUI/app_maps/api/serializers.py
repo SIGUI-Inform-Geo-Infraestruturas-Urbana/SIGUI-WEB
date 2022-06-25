@@ -53,9 +53,22 @@ class CountySerializer(GeoFeatureModelSerializer):
         geo_field = 'geometry'
 
     def create(self, validated_data):
-        a = validated_data.pop('co_initials_uf')
+
+        # id_state=validated_data["co_unit_federal"]
+        # test=id_state["id"]
+        # stateEntity = models.FederativeUnit.objects.get(id=test)
+
+        new_geoEspatial = models.County.objects.create(co_name=validated_data["co_name"],co_cod_ibge=validated_data["co_cod_ibge"],
+        co_initials_uf=validated_data["co_initials_uf"],co_name_ugrhi=validated_data["co_name_ugrhi"],
+        co_number_ugrhi=validated_data["co_number_ugrhi"],co_cod_environmental=validated_data["co_cod_environmental"],
+        co_unit_federal=validated_data["co_unit_federal"],co_area_county=validated_data["co_area_county"],
+        geometry=validated_data["geometry"])
+        return new_geoEspatial
+
+   # def create(self, validated_data):
+        #a = validated_data.pop('co_initials_uf')
         
-        return a
+        #return a
         # print(validated_data)
         #validate_field = models.County.objects.create(co_unit_federal = validated_data['co_unit_federal'])
         
@@ -160,11 +173,35 @@ class EquipamentInfrastructureSerializer(GeoFeatureModelSerializer):
       
 
 class NetworkSerializer(serializers.ModelSerializer):
+    
+   # subsystems = SubsystemsSerializer(many = True,read_only= True)
+
     class Meta:
         model = models.Network
-        fields = '__all__'
-        # ['id','net_name','net_category','net_status',
-        # 'net_subsysytems']
+        fields = ['id','net_name','net_category','net_status','net_subsystems']
+        #depth = 1
+
+        # def validate(self,data):
+        #     if data["net_subsystems"]["id"] != None:
+        #         data["net_subsystems"] = models.Subsystems.objects.get(id=data["net_subsystems"]['id'])
+        #         print('stateEntity')
+        #         print(data["net_subsystems"])
+        #     return data
+
+        def create(self, validated_data):
+
+            #primeira opção
+            ##tracks = validated_data.pop('net_subsystems')
+            ##stateEntity = models.Subsystems.objects.get(id=validated_data["net_subsystems"]['id'])#validated_data["net_subsystems"])
+            
+            #segunda
+            # # instance = models.Network.objects.create(**validated_data)
+            # # return instance
+
+            new_geoEspatial = models.Network.objects.create(net_name=validated_data["net_name"],
+            net_category=validated_data["net_category"],net_status=validated_data["net_status"],
+            net_subsystems=validated_data["net_subsystems"])
+            return new_geoEspatial
         
 
 class InfrastructureNetworkSerializer(GeoFeatureModelSerializer):

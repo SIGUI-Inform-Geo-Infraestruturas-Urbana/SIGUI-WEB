@@ -59,7 +59,8 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
     console.log(street)      
       let postSpatial = this.restApiBackend.postData(this.stringConection,street);
       let a = await firstValueFrom(postSpatial);       
-  
+      console.log("response create")
+      console.log(a)     
    return new Network;
   }
   changeData (dataSpatial : Network): boolean{

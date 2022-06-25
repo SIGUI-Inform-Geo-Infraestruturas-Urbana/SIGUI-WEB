@@ -167,7 +167,7 @@ export class ManageCityComponent implements OnInit {
   
   onSelectState(value:number):void{
     console.log('dsadsad')
-    this.city.unit_federal =<UnitFederal> this.states.find( a => a.id == value)
+    this.city.unit_federal =<number> this.states.find( a => a.id == value)?.id
     console.log(this.city.unit_federal)
     //this.city.unit_federal =this.states[value-1];
   }  

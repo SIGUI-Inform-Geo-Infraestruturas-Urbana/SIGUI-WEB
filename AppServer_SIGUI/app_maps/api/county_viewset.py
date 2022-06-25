@@ -46,6 +46,25 @@ class CountyViewSet(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    def create(self, request, *args, **kwargs):
+        espatial_request = request.data
+        print(espatial_request)
+
+        write_serializer = CountySerializer(data=espatial_request)
+        if write_serializer.is_valid():
+            a = write_serializer.save()
+            print(write_serializer.data)
+            print(write_serializer.errors)
+            print('Passou!')
+            # print(a.net_name)
+            return Response(write_serializer.data)
+        else: 
+            print('Não deu certo!')
+            print(write_serializer.data)
+            print(write_serializer.errors)
+            return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
     # def create(self, request, *args, **kwargs):
     #     espatial_request = request.data

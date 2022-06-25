@@ -14,7 +14,7 @@ export class County extends DataSpatial{
     private co_name_ugrhi : string = '';
     private co_number_ugrhi : number = 0;
     private co_cod_environmental: number = 0;
-    private co_unit_federal : UnitFederal = new UnitFederal(0); 
+    private co_unit_federal : number|UnitFederal = new UnitFederal(0); 
     private co_area_county: number = 0;   
     //private co_geometry : string | Geometry = '';     
 
@@ -82,10 +82,10 @@ export class County extends DataSpatial{
         this.co_cod_environmental = value;
     }
 
-    public get unit_federal() : UnitFederal {
+    public get unit_federal() : number|UnitFederal {
         return this.co_unit_federal;
     }
-    public set unit_federal(value : UnitFederal){
+    public set unit_federal(value : number|UnitFederal){
         this.co_unit_federal = value;
     }
 

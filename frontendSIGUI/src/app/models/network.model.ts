@@ -6,7 +6,7 @@ export class Network {
     net_name : string = '';
     net_category : string = ''; 
     net_status : string = '';
-    net_subsystems : Subsystem = new Subsystem(0);      
+    net_subsystems : number | Subsystem = new Subsystem(0);      
 
     constructor(id : number = 0){
       this.id  = id;
@@ -37,10 +37,10 @@ export class Network {
     public set status(value : string){
         this.net_status = value;
     }
-    public get subsystems() : Subsystem {
+    public get subsystems() : number | Subsystem {
         return this.net_subsystems;
     }
-    public set subsystems(value : Subsystem){
+    public set subsystems(value : number | Subsystem){
         this.net_subsystems = value;
     }
 }

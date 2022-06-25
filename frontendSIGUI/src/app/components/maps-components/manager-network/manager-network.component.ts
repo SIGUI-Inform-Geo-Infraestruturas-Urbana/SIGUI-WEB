@@ -53,7 +53,7 @@ export class ManagerNetworkComponent implements OnInit {
   onSelectsubsystem(value:number){
     console.log('select')
     console.log(value)
-    this.network.subsystems = <Subsystem> this.subsystems.find( a => a.id == value)
+    this.network.subsystems = <number> this.subsystems.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.network.subsystems)
   }
