@@ -49,14 +49,15 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
     console.log(changes['infrastructure'].currentValue);
     this.infraAssociation.infrastructure_in = changes['infrastructure'].currentValue;
     this.dataAssociationService.setnfraNet(this.infraAssociation)
-    this.labelInfra = this.infraAssociation.infrastructure_in.name
+    let infra = <Infrastructure>this.infraAssociation.infrastructure_in
+    this.labelInfra = infra.name
   }
   
 
   onSelectNetwork(value:number){
     console.log('select')
     console.log(value)
-    this.infraAssociation.network = <Network> this.networks.find( a => a.id == value)
+    this.infraAssociation.network = <number> this.networks.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.infrastructure.dependent)
   }
@@ -92,8 +93,10 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
       console.log('Teste register');      
       this.infraAssociation.infrastructure_out = infras.infrastructure_out
       this.infraAssociation.geometry = infras.infra_geometry;
-      console.log(this.infrastructure);
-      this.Associada = this.infraAssociation.infrastructure_out.name
+      console.log( this.infraAssociation.infrastructure_out );
+      let infra = <Infrastructure>this.infraAssociation.infrastructure_out
+      this.Associada = infra.name   
+      console.log(infra.id)
     }
   }
 
@@ -105,9 +108,12 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
         const infraSubmit: InfrastructureNetwork = new InfrastructureNetwork(this.infraAssociation.id);
         infraSubmit.serial_number = this.infrastrutureForm.get('serial_number')?.value;
         infraSubmit.status = this.infrastrutureForm.get('status')?.value;
-        infraSubmit.infrastructure_in = this.infraAssociation.infrastructure_in;
-        infraSubmit.infrastructure_out = this.infraAssociation.infrastructure_out;
-        infraSubmit.network = this.infraAssociation.network;
+        let infrastructure_in = <Infrastructure>this.infraAssociation.infrastructure_in
+        infraSubmit.infrastructure_in = <number>infrastructure_in.id;
+        let infrastructure_out = <Infrastructure>this.infraAssociation.infrastructure_out
+        infraSubmit.infrastructure_out = <number>infrastructure_out.id;
+        let network = <Network>this.infraAssociation.network
+        infraSubmit.network = <number>this.infraAssociation.network
         infraSubmit.infra_geometry = <Geometry>this.infraAssociation.infra_geometry;     
         console.log('sdaa');
         console.log(infraSubmit);

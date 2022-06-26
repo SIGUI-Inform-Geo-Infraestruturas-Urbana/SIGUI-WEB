@@ -35,15 +35,7 @@ class NetworkViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
-        #print(espatial_request)
-        #id_state=espatial_request["net_subsystems"]["id"]       
-        #espatial_request["net_subsystems"] = #models.Subsystems.objects.get(id=id_state)
         print(espatial_request)
-
-        # obje = models.Subsystems.objects.get(id=espatial_request["net_subsystems"]['id'])
-        # espatial_request["net_subsystems"] = obje.id
-        # print('stateEntity')
-        # print(espatial_request["net_subsystems"])
 
         write_serializer = NetworkSerializer(data=espatial_request)
         if write_serializer.is_valid():

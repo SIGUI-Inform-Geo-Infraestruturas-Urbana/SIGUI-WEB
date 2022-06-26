@@ -9,11 +9,6 @@ from django.core.serializers import serialize
 
 from app_maps import models
 
-# class LayersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Layers
-#         fields = '__all__'
-
 class EquipamentSerializer(serializers.Serializer):
     value = serializers.CharField(max_length=80)
     viewValue = serializers.CharField(max_length=80)
@@ -21,28 +16,19 @@ class EquipamentSerializer(serializers.Serializer):
     def create(self, validated_data):
         return models.Equipament.objects.create(**validated_data)
 
-# class EquipamentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = models.Equipament
-#         fields = '__all__'
-
-# class InfraestructureSerializer(GeoFeatureModelSerializer):
-#     def serializer():
-#         serialize('geojson',models.Infrastructure.objects.all(),
-#                 geometry_field='position',fields=('nomeInfraestructure',))
-
-# class InfraestruturaSerializer(GeoFeatureModelSerializer):
-#     class Meta:
-#         model = models.Infrastructure
-#         fields = '__all__'
-#         geo_field = 'position'
-
-
 class FederativeUnitSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.FederativeUnit
         fields = ['id','uf_geocode','uf_name','uf_initials','uf_name_region','uf_area_state']
         geo_field = 'geometry'
+
+    def create(self, validated_data):
+
+        new_geoEspatial = models.FederativeUnit.objects.create(uf_name=validated_data["uf_name"],
+        uf_geocode=validated_data["uf_geocode"],uf_initials=validated_data["uf_initials"],uf_name_region=validated_data["uf_name_region"],
+        uf_area_state=validated_data["uf_area_state"],geometry=validated_data["geometry"])
+      
+        return new_geoEspatial
 
 class CountySerializer(GeoFeatureModelSerializer):
     # state = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -65,66 +51,40 @@ class CountySerializer(GeoFeatureModelSerializer):
         geometry=validated_data["geometry"])
         return new_geoEspatial
 
-   # def create(self, validated_data):
-        #a = validated_data.pop('co_initials_uf')
-        
-        #return a
-        # print(validated_data)
-        #validate_field = models.County.objects.create(co_unit_federal = validated_data['co_unit_federal'])
-        
-        #return validated_data['co_unit_federal']
-        #validate_field = validated_data['co_unit_federal']
-        #item = []
-        #item = validated_data.pop('id_state')
-        #print('TESRTTRTT')
-        #print(item)
-        #print('AAAAAAAAA')
-        #print(item.id_state)
-        #stateEntity = models.State.objects.get(id_state=item.id_state)
-        #county = models.County.objects.create(id_state = stateEntity)   
-        #return county
-        #return super().create(validated_data)
-
-    # def create(self, validated_data):
-    #     #item = []
-    #     #item = validated_data.pop('name_county')
-    #     print('TESRTTRTT')
-    #    # print(item)
-    #     print('AAAAAAAAA')
-    #     stateEntity = models.State.objects.get(id_state=1)
-    #     county = models.County.objects.create(id_state = stateEntity)   
-    #     return county
-    #     #return super().create(validated_data)
-
-    
-    # def create(self, validated_data):
-    #     item = []
-    #     item = validated_data.pop('id_state')
-    #     print('TESRTTRTT')
-    #     print(item)
-    #     print('AAAAAAAAA')
-    #     print(item.id_state)
-    #     stateEntity = models.State.objects.get(id_state=item.id_state)
-    #     county = models.County.objects.create(id_state = stateEntity)   
-    #     return county
-    #     #return super().create(validated_data)
-
+  
 class DistrictSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.District
         fields = ['id','dc_name','dc_area','dc_county']
         geo_field = 'geometry'
 
+    def create(self, validated_data):
+
+        new_geoEspatial = models.District.objects.create(dc_name=validated_data["dc_name"],
+        dc_area=validated_data["dc_area"],dc_county=validated_data['dc_county'],
+        geometry=validated_data["geometry"])
+
+        return new_geoEspatial
+
 class ProviderSerializer(serializers.ModelSerializer):
     # state = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = models.Provider
         fields = ['id','p_name','p_description']
+    
 
 class SubsystemsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Subsystems
         fields = ['id','ss_name','ss_description','ss_category','ss_county','co_provider']
+
+    # def create(self, validated_data):
+
+    #     new_geoEspatial = models.District.objects.create(dc_name=validated_data["dc_name"],
+    #     dc_area=validated_data["dc_area"],dc_county=validated_data['dc_county'],
+    #     geometry=validated_data["geometry"])
+
+    #     return new_geoEspatial
 
 class StreetSerializer(GeoFeatureModelSerializer):
     class Meta:
@@ -134,6 +94,22 @@ class StreetSerializer(GeoFeatureModelSerializer):
         'st_zip_code_d','st_district']
         geo_field = 'geometry'
 
+    def create(self, validated_data):
+
+        # id_district=espatial_request["st_district"]
+        # districtObjectId=id_district["id"]
+        # district = models.District.objects.get(id=districtObjectId)
+
+        # ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.Street.objects.create(st_cod_key=validated_data["st_cod_key"],st_name_street=validated_data["st_name_street"],
+        st_status=validated_data["st_status"],st_name_street_pre=validated_data["st_name_street_pre"],st_type_street=validated_data["st_type_street"],
+        st_type_legislation=validated_data["st_type_legislation"],st_district_e=validated_data["st_district_e"],st_district_d=validated_data["st_district_d"],
+        st_zip_code_e=validated_data["st_zip_code_e"],st_zip_code_d=validated_data["st_zip_code_d"],st_district=validated_data['st_district'],
+        geometry=validated_data["geometry"]) 
+
+        return new_geoEspatial
+
 class PublicPlaceSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.PublicPlace
@@ -141,11 +117,28 @@ class PublicPlaceSerializer(GeoFeatureModelSerializer):
         'pp_streat']
         geo_field = 'geometry'
 
-class DistrictSerializer(GeoFeatureModelSerializer):
-    class Meta:
-        model = models.District
-        fields = ['id','dc_name','dc_area','dc_county']
-        geo_field = 'geometry'
+    def create(self, validated_data):
+
+        # id_infra=espatial_request["pp_streat"]
+        
+        # infraD = None
+        # if id_infra != None:
+        #     infraObjectId=id_infra["id"]
+        #     infraD = models.Street.objects.get(id=infraObjectId)
+
+        # id_subsystem=espatial_request["pp_district"]
+        # subsObjectId=id_subsystem["id"]
+        # subsystem = models.District.objects.get(id=subsObjectId)
+
+        # ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.PublicPlace.objects.create(pp_cod_sector=validated_data["pp_cod_sector"],
+        pp_cod_block=validated_data["pp_cod_block"], pp_cod_face=validated_data["pp_cod_face"], 
+        pp_total_residences=validated_data["pp_total_residences"],pp_total_general=validated_data["pp_total_general"],
+        pp_streat=validated_data['pp_streat'],pp_district=validated_data['pp_district'],geometry=validated_data["geometry"])
+
+        return new_geoEspatial
+
 
 class ManufacturerSerializer(GeoFeatureModelSerializer):
     class Meta:
@@ -164,6 +157,42 @@ class InfrastructureSerializer(GeoFeatureModelSerializer):
         fields = ['id','infra_name','infra_street','infra_category','infra_dependent','infra_subsystems',
         'infra_equipaments','infra_network']
         geo_field = 'geometry'
+
+    def create(self, validated_data):
+
+        # espatial_request = request.data
+        # id_infra=espatial_request["infra_dependent"]
+        # infraD = None
+        # if id_infra != None:
+        #     infraObjectId=id_infra["id"]
+        #     infraD = models.Infrastructure.objects.get(id=infraObjectId)
+
+        # subsystem = None
+        # id_subs=espatial_request["infra_subsystems"]
+        # if id_subs != None:
+        #     subsObjectId=id_subs["id"]
+        #     subsystem = models.Subsystems.objects.get(id=subsObjectId)
+
+        # street = None
+        # id_street=espatial_request["infra_street"]
+        # if id_subs != None:
+        #     setreObjectId=id_street["id"]
+        #     street = models.Street.objects.get(id=setreObjectId)
+
+        # geom = None
+        # id_street=espatial_request["geometry"]
+        # if id_street == '0':
+        #     geom = None
+        # else: 
+        #     geom = espatial_request["geometry"]
+       
+        ####new_geoEspatial = CountySerializer(data = espatial_request)//infra_street
+
+        new_geoEspatial = models.Infrastructure.objects.create(infra_name=validated_data["infra_name"],
+        infra_category=validated_data["infra_category"],infra_dependent=validated_data['infra_dependent'],infra_subsystems=validated_data['infra_subsystems'],
+        infra_street=validated_data['infra_street'],geometry=validated_data['geometry'])
+
+        return new_geoEspatial
 
 class EquipamentInfrastructureSerializer(GeoFeatureModelSerializer):
     class Meta:
@@ -212,12 +241,40 @@ class InfrastructureNetworkSerializer(GeoFeatureModelSerializer):
         'infra_net_network']
         geo_field = 'geometry'
 
+    def create(self, validated_data):
+        #  id_infra=espatial_request["infra_net_infrastructure_in"]
+        # infraIN = None
+        # if id_infra != None:
+        #     infraObjectId=id_infra["id"]
+        #     infraIN = models.Infrastructure.objects.get(id=infraObjectId)
+
+        # id_infraOut=espatial_request["infra_net_infrastructure_out"]
+        # infraOUT = None
+        # if id_infraOut != None:
+        #     infraoutObjectId=id_infra["id"]
+        #     infraOUT = models.Infrastructure.objects.get(id=infraoutObjectId)
+
+        # id_network=espatial_request["infra_net_network"]
+        # netObjectId=id_network["id"]
+        # network = models.Network.objects.get(id=netObjectId)
+
+        # ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+        new_geoEspatial = models.InfrastructureNetwork.objects.create(infra_net_serial_number=validated_data["infra_net_serial_number"],
+        infra_net_representation=validated_data["infra_net_representation"],infra_net_status=validated_data["infra_net_status"],
+        infra_net_infrastructure_in=validated_data['infra_net_infrastructure_in'],infra_net_infrastructure_out=validated_data['infra_net_infrastructure_out'],infra_net_network=validated_data['infra_net_network'],
+        geometry=validated_data["geometry"])
+
+        return new_geoEspatial
+
 class EquipamentInfrastructureNetworkSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = models.EquipamentInfrastructureNetwork
         fields = ['id','eq_infra_net_serial_number','eq_infra_net_representation',
         'eq_infra_net_status','eq_infra_net_infraestructure','eq_infra_net_equipament',
         'eq_infra_net_subsystem']
+
+        
 
 class EquipamentCountySerializer(GeoFeatureModelSerializer):
     class Meta:
@@ -227,6 +284,34 @@ class EquipamentCountySerializer(GeoFeatureModelSerializer):
         'eq_co_name','eq_co_name_map','eq_co_street','eq_co_number_building',
         'eq_co_district','eq_co_observation','eq_co_cod_maintainer']
         geo_field = 'geometry'
+
+    def create(self, validated_data):
+
+        # id_infra=espatial_request["eq_co_street"]
+        # stretId = None
+        # if id_infra != None:
+        #     infraObjectId=id_infra["id"]
+        #     stretId = models.Street.objects.get(id=infraObjectId)
+
+        # id_dist=espatial_request["eq_co_district"]
+        # ditObjectId=id_dist["id"]
+        # ddID = models.District.objects.get(id=ditObjectId)
+
+        # id_pp=espatial_request["eq_co_public_place"]
+        # ppObjectId=id_pp["id"]
+        # ppID = models.PublicPlace.objects.get(id=ppObjectId)
+        #      
+
+        new_geoEspatial = models.EquipamentCounty.objects.create(eq_co_cod=validated_data["eq_co_cod"],
+        eq_co_equipament=validated_data["eq_co_equipament"], eq_co_type=validated_data["eq_co_type"], 
+        eq_co_departament_admin=validated_data["eq_co_departament_admin"],eq_co_name_complete=validated_data["eq_co_name_complete"],
+        eq_co_first_name=validated_data["eq_co_first_name"],eq_co_name=validated_data["eq_co_name"],
+        eq_co_name_map=validated_data["eq_co_name_map"],eq_co_number_building=validated_data["eq_co_number_building"],
+        eq_co_observation=validated_data["eq_co_observation"],#,eq_co_cod_maintainer=espatial_request["eq_co_cod_maintainer"]
+        eq_co_street=validated_data['eq_co_street'],eq_co_public_place=validated_data['eq_co_public_place'],eq_co_district=validated_data['validated_data'],
+        geometry=validated_data["geometry"])
+
+        return new_geoEspatial
 
 
 class FileSerealizer (serializers.Serializer):

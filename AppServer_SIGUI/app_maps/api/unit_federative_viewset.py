@@ -18,18 +18,24 @@ class UnitFederativeViewset(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
+        print(espatial_request)
 
-        ####new_geoEspatial = CountySerializer(data = espatial_request) //uf_geocode
+        write_serializer = FederativeUnitSerializer(data=espatial_request)
+        if write_serializer.is_valid():
+            a = write_serializer.save()
+            print(write_serializer.data)
+            print(write_serializer.errors)
+            print('Passou!')
+            print(a.net_name)
+            #serializer = NetworkSerializer(write_serializer)
+            #print(serializer)
+            return Response(write_serializer.data)
+        else: 
+            print('Não deu certo!')
+            print(write_serializer.data)
+            print(write_serializer.errors)
+            return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        new_geoEspatial = models.FederativeUnit.objects.create(uf_name=espatial_request["uf_name"],
-        uf_geocode=espatial_request["uf_geocode"],uf_initials=espatial_request["uf_initials"],uf_name_region=espatial_request["uf_name_region"],
-        uf_area_state=espatial_request["uf_area_state"],geometry=espatial_request["geometry"])
-      
-        new_geoEspatial.save()
-
-        serializer = FederativeUnitSerializer(new_geoEspatial)
-
-        return Response(serializer.data)
 
 
 

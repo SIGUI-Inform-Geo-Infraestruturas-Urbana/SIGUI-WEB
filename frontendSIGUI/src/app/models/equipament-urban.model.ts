@@ -17,10 +17,10 @@ export class EquipmentUrban extends DataSpatial{
     private eq_co_first_name : string = '';
     private eq_co_name : string = '';
     private eq_co_name_map : string = '';
-    private eq_co_street : Street = new Street();
-    private eq_co_public_place : PublicPlace = new PublicPlace();
+    private eq_co_street :number| Street = new Street();
+    private eq_co_public_place : number|PublicPlace = new PublicPlace();
     private eq_co_number_building : string= '';
-    private eq_co_district :District = new District();
+    private eq_co_district : number|District = new District();
     private eq_co_observation : string= ''; 
      // eq_co_cod_maintainer= "models.IntegerField(blank=True, null=True) "
 
@@ -92,26 +92,26 @@ export class EquipmentUrban extends DataSpatial{
         this.eq_co_name_map = value;
     }
 
-    public get co_street() : Street {
+    public get co_street() : number|Street {
         return this.eq_co_street;
     }
 
-    public set co_street(value : Street){
+    public set co_street(value : number|Street){
         this.eq_co_street = value;
     }
 
-    public get co_public_place() : PublicPlace {
+    public get co_public_place() : number|PublicPlace {
         return this.eq_co_public_place;
     }
 
-    public set co_public_place(value : PublicPlace){
+    public set co_public_place(value : number|PublicPlace){
         this.eq_co_public_place = value;
     }
 
-    public get co_district () : District {
+    public get co_district () : number|District {
         return this.eq_co_district;
     }
-    public set co_district (value : District)  {
+    public set co_district (value : number|District)  {
        this.eq_co_district = value;
     }
     public set co_number_building(value : District){

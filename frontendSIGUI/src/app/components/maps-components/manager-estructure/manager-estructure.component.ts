@@ -114,21 +114,21 @@ export class ManagerEstructureComponent implements OnInit {
   onSelectDistrict(value:number){
     console.log('select')
     console.log(value)
-    this.equipament.co_district = <District> this.districts.find( a => a.id == value)
+    this.equipament.co_district = <number> this.districts.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.equipament)
   }
   onSelectPP(value:number){
     console.log('select')
     console.log(value)
-    this.equipament.co_public_place = <PublicPlace> this.publicPlaces.find( a => a.id == value)
+    this.equipament.co_public_place = <number> this.publicPlaces.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.equipament)
   }
   onSelectStreet(value:number){
     console.log('select')
     console.log(value)
-    this.equipament.co_street = <Street> this.streets.find( a => a.id == value)
+    this.equipament.co_street = <number> this.streets.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.equipament)
   }

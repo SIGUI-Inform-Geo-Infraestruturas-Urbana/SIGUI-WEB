@@ -15,7 +15,7 @@ export class Street extends DataSpatial{
     private st_district_d : string= '';
     private st_zip_code_e:string = '';
     private st_zip_code_d :string= '';
-    private st_district : District=  new District(); 
+    private st_district : number|District=  new District(); 
 
     constructor(id : number = 0, geometry : any = 0){
         super(id, 'street' ,geometry)
@@ -90,10 +90,10 @@ export class Street extends DataSpatial{
     public set zip_code_d(value : string){
         this.st_zip_code_d = value;
     }    
-    public get district() : District {
+    public get district() : number|District {
         return this.st_district;
     }
-    public set district(value : District){
+    public set district(value : number|District){
         this.st_district = value;
     }
     public get st_geometry() : string | Geometry {

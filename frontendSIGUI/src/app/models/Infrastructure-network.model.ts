@@ -9,9 +9,9 @@ export class InfrastructureNetwork extends DataSpatial{
     private infra_net_serial_number :number = 0;
     private infra_net_representation : string = '';
     private infra_net_status : string = '';
-    private infra_net_infrastructure_in : Infrastructure = new Infrastructure();
-    private infra_net_infrastructure_out : Infrastructure = new Infrastructure();
-    private infra_net_network : Network = new Network();   
+    private infra_net_infrastructure_in : number|Infrastructure = new Infrastructure();
+    private infra_net_infrastructure_out : number|Infrastructure = new Infrastructure();
+    private infra_net_network : number|Network = new Network();   
 
     constructor(id : number = 0, geometry : any = 0){
         super(id,'infraNet',geometry)
@@ -45,24 +45,24 @@ export class InfrastructureNetwork extends DataSpatial{
         this.infra_net_status = value;
     }
 
-    public get infrastructure_in () : Infrastructure {
+    public get infrastructure_in () : number|Infrastructure {
         return this.infra_net_infrastructure_in;
     }
-    public set infrastructure_in (value : Infrastructure){
+    public set infrastructure_in (value : number|Infrastructure){
         this.infra_net_infrastructure_in = value;
     }
 
-    public get infrastructure_out () : Infrastructure {
+    public get infrastructure_out () : number|Infrastructure {
         return this.infra_net_infrastructure_out;
     }
-    public set infrastructure_out (value : Infrastructure){
+    public set infrastructure_out (value : number|Infrastructure){
         this.infra_net_infrastructure_out = value;
     }
 
-    public get network () : Network {
+    public get network () : number|Network {
         return this.infra_net_network;
     }
-    public set network (value : Network){
+    public set network (value : number|Network){
         this.infra_net_network = value;
     }
 

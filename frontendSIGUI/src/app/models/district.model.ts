@@ -8,7 +8,7 @@ export class District extends DataSpatial{
     private dc_name : string = '';
     private dc_area : number = 0;
     // private geometry : string | Geometry  = '';
-    private dc_county : County = new County(0); //Feature<Geometry> = new Feature();
+    private dc_county : number|County = new County(0); //Feature<Geometry> = new Feature();
 
     constructor(id : any = 0,geometry: any = 0){
         super(id,'district',<Geometry>geometry);
@@ -35,10 +35,10 @@ export class District extends DataSpatial{
         this.dc_area = value;
     }
 
-    public get county() : County {
+    public get county() : number|County {
         return this.dc_county;
     }
-    public set county(value : County){
+    public set county(value : number|County){
         this.dc_county = value;
     }
 

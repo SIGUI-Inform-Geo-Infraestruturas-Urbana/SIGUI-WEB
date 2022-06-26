@@ -12,9 +12,9 @@ export class Infrastructure extends DataSpatial{
    
     private infra_name : string = '';   
     private infra_category : string = '';
-    private infra_dependent : Infrastructure | null = null;
-    private infra_subsystems : Subsystem = new Subsystem();
-    private infra_street : Street | null = new Street();
+    private infra_dependent : number|Infrastructure | null = null;
+    private infra_subsystems : number|Subsystem = new Subsystem();
+    private infra_street : number|Street | null = new Street();
    // private infra_equipaments : Equipament = new Equipament();
     // private infra_network : InfrastructureNetwork = new InfrastructureNetwork();   
 
@@ -43,22 +43,22 @@ export class Infrastructure extends DataSpatial{
         this.infra_category = value;
     }
 
-    public get dependent() : Infrastructure | null{
+    public get dependent() : number|Infrastructure | null{
         return this.infra_dependent;
     }
-    public set dependent(value : Infrastructure| null){
+    public set dependent(value :number| Infrastructure| null){
         this.infra_dependent = value;
     }
-    public get subsystems() : Subsystem {
+    public get subsystems() : number|Subsystem {
         return this.infra_subsystems;
     }
-    public set subsystems(value : Subsystem){
+    public set subsystems(value : number|Subsystem){
         this.infra_subsystems = value;
     }
-    public get street() : Street | null  {
+    public get street() : number|Street | null  {
         return this.infra_street;
     }
-    public set street(value : Street | null ){
+    public set street(value : number|Street | null ){
         this.infra_street = value;
     }
 
@@ -101,9 +101,10 @@ export class Infrastructure extends DataSpatial{
         console.log(properties);  
         //let a =properties['properties'] 
         //console.log(properties['infra_name']);  
-        console.log('????????????????????')     
+        console.log('????????????????????')   
+        this.id = <number>inputData.getId();  
         if (properties != undefined){
-        this.id = <number>inputData.getId();
+        this.id = properties['id'];
         this.infra_name = properties['infra_name'];
         this.infra_street= properties['infra_street'];
         this.infra_category= properties['infra_category'];      

@@ -12,8 +12,8 @@ export class PublicPlace extends DataSpatial{
     private pp_cod_face : number = 0;
     private pp_total_residences : number = 0;   
     private pp_total_general : number = 0;     
-    private pp_district : District = new District();
-    private pp_streat : Street = new Street (); 
+    private pp_district : number|District = new District();
+    private pp_streat : number|Street = new Street (); 
 
 
     constructor(id : number = 0, geometry : any = 0){
@@ -62,17 +62,17 @@ export class PublicPlace extends DataSpatial{
         this.pp_total_general = value;
     }
 
-    public get district() : District {
+    public get district() : number|District {
         return this.pp_district;
     }
-    public set district(value : District){
+    public set district(value : number|District){
         this.pp_district = value;
     }
 
-    public get streat() : Street {
+    public get streat() : number|Street {
         return this.pp_streat;
     }
-    public set streat(value : Street){
+    public set streat(value : number|Street){
         this.pp_streat = value;
     }
     public get pp_geometry() : string | Geometry {

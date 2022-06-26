@@ -99,7 +99,7 @@ export class ManegerDistrictComponent implements OnInit {
   onSelectDistrict(value:number):void{
     console.log('select')
     console.log(value)
-    this.district.county =<County> this.cities.find( a => a.id == value)
+    this.district.county =<number> this.cities.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.district.county)
   }  

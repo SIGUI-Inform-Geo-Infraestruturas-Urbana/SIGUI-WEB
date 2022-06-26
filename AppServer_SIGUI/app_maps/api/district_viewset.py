@@ -13,19 +13,41 @@ class DistrictViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        espatial_request = request.data
-        id_county=espatial_request["dc_county"]
-        countyObjectId=id_county["id"]
-        county = models.County.objects.get(id=countyObjectId)
+        try:
+            espatial_request = request.data
+            print(espatial_request)
 
-        ####new_geoEspatial = CountySerializer(data = espatial_request)
+            write_serializer = DistrictSerializer(data=espatial_request)
+            if write_serializer.is_valid():
+                write_serializer.save()
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                print('Passou!')
+                # print(a.net_name)
+                return Response(write_serializer.data)
+            else: 
+                print('Não deu certo!')
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        new_geoEspatial = models.District.objects.create(dc_name=espatial_request["dc_name"],
-        dc_area=espatial_request["dc_area"],dc_county=county,
-        geometry=espatial_request["geometry"])
+
+    # def create(self, request, *args, **kwargs):
+    #     espatial_request = request.data
+    #     id_county=espatial_request["dc_county"]
+    #     countyObjectId=id_county["id"]
+    #     county = models.County.objects.get(id=countyObjectId)
+
+    #     ####new_geoEspatial = CountySerializer(data = espatial_request)
+
+    #     new_geoEspatial = models.District.objects.create(dc_name=espatial_request["dc_name"],
+    #     dc_area=espatial_request["dc_area"],dc_county=county,
+    #     geometry=espatial_request["geometry"])
       
-        new_geoEspatial.save()
+    #     new_geoEspatial.save()
 
-        serializer = DistrictSerializer(new_geoEspatial)
+    #     serializer = DistrictSerializer(new_geoEspatial)
 
-        return Response(serializer.data)
+    #     return Response(serializer.data)

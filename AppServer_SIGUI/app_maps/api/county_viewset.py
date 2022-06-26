@@ -13,57 +13,31 @@ class CountyViewSet(viewsets.ModelViewSet):
     #     return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
 
     def get_queryset(self):
-
-        # a = self.request.query_params.get('county_id',None)
         queryset = ''
-        ##countyId = self.kwargs.get('county_id')
-        # if countyId != None:
-        #     county = models.County.objects.filter(id_County=countyId)
-        #     print(county)
-        # else:
         queryset = models.County.objects.all()
-        # if 'pk' in self.kwargs:
-        #     return models.County.objects.filter(id_County=self.kwargs['pk'])     
-
         return queryset
 
-    def create(self, request, *args, **kwargs):
-        espatial_request = request.data
-
-        id_state=espatial_request["co_unit_federal"]
-        test=id_state["id"]
-        stateEntity = models.FederativeUnit.objects.get(id=test)
-
-        new_geoEspatial = models.County.objects.create(co_name=espatial_request["co_name"],co_cod_ibge=espatial_request["co_cod_ibge"],
-        co_initials_uf=espatial_request["co_initials_uf"],co_name_ugrhi=espatial_request["co_name_ugrhi"],
-        co_number_ugrhi=espatial_request["co_number_ugrhi"],co_cod_environmental=espatial_request["co_cod_environmental"],
-        co_unit_federal=stateEntity,co_area_county=espatial_request["co_area_county"],
-        geometry=espatial_request["geometry"])
-
-        new_geoEspatial.save()
-
-        serializer = CountySerializer(new_geoEspatial)
-
-        return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
-        espatial_request = request.data
-        print(espatial_request)
+        try:
+            espatial_request = request.data
+            print(espatial_request)
 
-        write_serializer = CountySerializer(data=espatial_request)
-        if write_serializer.is_valid():
-            a = write_serializer.save()
-            print(write_serializer.data)
-            print(write_serializer.errors)
-            print('Passou!')
-            # print(a.net_name)
-            return Response(write_serializer.data)
-        else: 
-            print('Não deu certo!')
-            print(write_serializer.data)
-            print(write_serializer.errors)
-            return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+            write_serializer = CountySerializer(data=espatial_request)
+            if write_serializer.is_valid():
+                a = write_serializer.save()
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                print('Passou!')
+                # print(a.net_name)
+                return Response(write_serializer.data)
+            else: 
+                print('Não deu certo!')
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+             return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
     # def create(self, request, *args, **kwargs):

@@ -147,21 +147,21 @@ export class ManagerInfrastructureComponent implements OnInit {
   onSelectOcupante(value:number){
     console.log('select')
     console.log(value)
-    this.infrastructure.dependent = <Infrastructure> this.infrastructures.find( a => a.id == value)
+    this.infrastructure.dependent = <number> this.infrastructures.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.infrastructure.dependent)
   }
   onSelectsubsystem(value:number){
     console.log('select')
     console.log(value)
-    this.infrastructure.subsystems = <Subsystem> this.subsystems.find( a => a.id == value)
+    this.infrastructure.subsystems = <number> this.subsystems.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.infrastructure.subsystems)
   }
   onSelectstreet(value:number){
     console.log('select')
     console.log(value)
-    this.infrastructure.street= <Street> this.streets.find( a => a.id == value)
+    this.infrastructure.street= <number> this.streets.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.infrastructure.street)
   }

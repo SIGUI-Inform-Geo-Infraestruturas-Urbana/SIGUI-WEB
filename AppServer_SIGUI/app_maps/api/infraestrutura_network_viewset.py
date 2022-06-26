@@ -13,32 +13,22 @@ class InfraestruturaNetworkViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        espatial_request = request.data
-        id_infra=espatial_request["infra_net_infrastructure_in"]
-        infraIN = None
-        if id_infra != None:
-            infraObjectId=id_infra["id"]
-            infraIN = models.Infrastructure.objects.get(id=infraObjectId)
+        try:
+            espatial_request = request.data
+            print(espatial_request)
 
-        id_infraOut=espatial_request["infra_net_infrastructure_out"]
-        infraOUT = None
-        if id_infraOut != None:
-            infraoutObjectId=id_infra["id"]
-            infraOUT = models.Infrastructure.objects.get(id=infraoutObjectId)
-
-        id_network=espatial_request["infra_net_network"]
-        netObjectId=id_network["id"]
-        network = models.Network.objects.get(id=netObjectId)
-
-        ####new_geoEspatial = CountySerializer(data = espatial_request)
-
-        new_geoEspatial = models.InfrastructureNetwork.objects.create(infra_net_serial_number=espatial_request["infra_net_serial_number"],
-        infra_net_representation=espatial_request["infra_net_representation"],infra_net_status=espatial_request["infra_net_status"],
-        infra_net_infrastructure_in=infraIN,infra_net_infrastructure_out=infraOUT,infra_net_network=network,
-        geometry=espatial_request["geometry"])
-      
-        new_geoEspatial.save()
-
-        serializer = InfrastructureNetworkSerializer(new_geoEspatial)
-
-        return Response(serializer.data)
+            write_serializer = InfrastructureNetworkSerializer(data=espatial_request)
+            if write_serializer.is_valid():
+                write_serializer.save()
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                print('Passou!')
+                # print(a.net_name)
+                return Response(write_serializer.data)
+            else: 
+                print('Não deu certo!')
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

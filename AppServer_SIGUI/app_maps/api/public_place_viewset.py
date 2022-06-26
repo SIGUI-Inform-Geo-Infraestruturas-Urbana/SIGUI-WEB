@@ -14,27 +14,22 @@ class PublicPlaceViewSet(viewsets.ModelViewSet):
         return queryset
 
     def create(self, request, *args, **kwargs):
-        espatial_request = request.data
-        id_infra=espatial_request["pp_streat"]
-        infraD = None
-        if id_infra != None:
-            infraObjectId=id_infra["id"]
-            infraD = models.Street.objects.get(id=infraObjectId)
+        try:
+            espatial_request = request.data
+            print(espatial_request)
 
-        id_subsystem=espatial_request["pp_district"]
-        subsObjectId=id_subsystem["id"]
-        subsystem = models.District.objects.get(id=subsObjectId)
-
-        ####new_geoEspatial = CountySerializer(data = espatial_request)
-
-        new_geoEspatial = models.PublicPlace.objects.create(pp_cod_sector=espatial_request["pp_cod_sector"],
-        pp_cod_block=espatial_request["pp_cod_block"], pp_cod_face=espatial_request["pp_cod_face"], 
-        pp_total_residences=espatial_request["pp_total_residences"],pp_total_general=espatial_request["pp_total_general"],
-        pp_streat=infraD,pp_district=subsystem,
-        geometry=espatial_request["geometry"])
-      
-        new_geoEspatial.save()
-
-        serializer = PublicPlaceSerializer(new_geoEspatial)
-
-        return Response(serializer.data)
+            write_serializer = PublicPlaceSerializer(data=espatial_request)
+            if write_serializer.is_valid():
+                write_serializer.save()
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                print('Passou!')
+                # print(a.net_name)
+                return Response(write_serializer.data)
+            else: 
+                print('Não deu certo!')
+                print(write_serializer.data)
+                print(write_serializer.errors)
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+                return Response(write_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

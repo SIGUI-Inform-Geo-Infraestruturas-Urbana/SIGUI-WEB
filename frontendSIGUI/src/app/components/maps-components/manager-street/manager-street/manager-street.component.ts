@@ -137,7 +137,7 @@ export class ManagerStreetComponent implements OnInit {
   onSelectDistrict(value:number){
     console.log('select')
     console.log(value)
-    this.street.district = <District> this.districts.find( a => a.id == value)
+    this.street.district = <number> this.districts.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.street.district_e)
   }

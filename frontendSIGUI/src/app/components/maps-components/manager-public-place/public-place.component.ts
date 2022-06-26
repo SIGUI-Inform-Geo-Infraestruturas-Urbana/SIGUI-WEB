@@ -141,14 +141,14 @@ export class PublicPlaceComponent implements OnInit {
   onSelectDistrict(value:number){
     console.log('select')
     console.log(value)
-    this.publicPlace.district = <District> this.districts.find( a => a.id == value)
+    this.publicPlace.district = <number> this.districts.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.publicPlace.district)
   }
   onSelectStreet(value:number){
     console.log('select')
     console.log(value)
-    this.publicPlace.streat = <Street> this.streets.find( a => a.id == value)
+    this.publicPlace.streat = <number> this.streets.find( a => a.id == value)?.id
     //this.district.county =this.cities[value-1];
     console.log(this.publicPlace.district)
   }
