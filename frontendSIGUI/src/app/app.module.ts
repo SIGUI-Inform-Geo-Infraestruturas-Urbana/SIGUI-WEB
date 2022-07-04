@@ -72,7 +72,10 @@ import { SelectUnitFederativeComponent } from './components/maps-components/sele
 import { SelectPoligonoComponent } from './components/maps-components/selectLayers/select-unit-poligono/select-unit-poligono.component'
 import { SelectLineStringComponent} from './components/maps-components/selectLayers/select-unit-linestring/select-unit-linestring.component';
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
-import { ManagerFileStateComponent } from './components/maps-components/manager-file-state/manager-file-state.component'
+import { ManagerFileStateComponent } from './components/maps-components/manager-file-state/manager-file-state.component';
+import { ExpansionUnitComponent } from './components/manager-geodata/expansion-unit/expansion-unit.component';
+import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component'
+
 
 @NgModule({
   declarations: [
@@ -117,7 +120,10 @@ import { ManagerFileStateComponent } from './components/maps-components/manager-
     SelectPoligonoComponent,
     SelectLineStringComponent,
     SnackBarComponent,
-    ManagerFileStateComponent
+    ManagerFileStateComponent,
+    UserZoneComponent,
+    ExpansionUnitComponent,
+    ManagerGeoUnitComponent,
  
 
   ],
@@ -154,11 +160,11 @@ import { ManagerFileStateComponent } from './components/maps-components/manager-
     //   useClass : ErrorService,
     //  // multi : true
     // }
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass : ErrorIntercept,
-    //   multi : true
-    // }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass : ErrorIntercept,
+      multi : true
+    }
   ],
   bootstrap: [AppComponent]
 })

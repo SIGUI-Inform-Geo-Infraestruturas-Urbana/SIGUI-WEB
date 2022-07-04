@@ -6,6 +6,7 @@ from typing import ValuesView
 from rest_framework import serializers 
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
 from django.core.serializers import serialize
+from rest_framework.exceptions import ValidationError
 
 from app_maps import models
 
@@ -204,20 +205,22 @@ class EquipamentInfrastructureSerializer(GeoFeatureModelSerializer):
 class NetworkSerializer(serializers.ModelSerializer):
     
    # subsystems = SubsystemsSerializer(many = True,read_only= True)
+    net_name = serializers.CharField(required=True)
+    net_category = serializers.CharField(required=True)
+    net_status = serializers.CharField(required=True)  
 
-    class Meta:
-        model = models.Network
-        fields = ['id','net_name','net_category','net_status','net_subsystems']
-        #depth = 1
+    def validate(self,data):
+        value = data['net_name']
+        print('value')
+        print(value)
 
-        # def validate(self,data):
-        #     if data["net_subsystems"]["id"] != None:
-        #         data["net_subsystems"] = models.Subsystems.objects.get(id=data["net_subsystems"]['id'])
-        #         print('stateEntity')
-        #         print(data["net_subsystems"])
-        #     return data
+        if data['net_name'] == 'aaa':
+           # data['net_name'] = 'Teste'
+           raise serializers.ValidationError("Nome da Rede Incorreto")
 
-        def create(self, validated_data):
+        return data
+
+    def create(self, validated_data):
 
             #primeira opção
             ##tracks = validated_data.pop('net_subsystems')
@@ -226,11 +229,36 @@ class NetworkSerializer(serializers.ModelSerializer):
             #segunda
             # # instance = models.Network.objects.create(**validated_data)
             # # return instance
-
+            # if validated_data["net_name"] != None:
             new_geoEspatial = models.Network.objects.create(net_name=validated_data["net_name"],
             net_category=validated_data["net_category"],net_status=validated_data["net_status"],
             net_subsystems=validated_data["net_subsystems"])
             return new_geoEspatial
+            # else:
+            #     print('net_name not informed')
+            #     raise serializers.ValidationError("net_name not informed")
+
+
+    class Meta:
+        model = models.Network
+        fields = ['id','net_name','net_category','net_status','net_subsystems']
+        #depth = 1
+
+        # def validate_net_name(self,data):
+        #     if data["net_name"] != None:
+        #       #  data["uf_geocode"] = models.Subsystems.objects.get(id=data["net_subsystems"]['id'])
+        #         print('net_name')
+        #         print(data["net_name"])
+        #         return data
+        #     else:
+        #         print('net_name not informed')
+        #         raise serializers.ValidationError("net_name not informed")
+        
+       
+       
+
+       
+          
         
 
 class InfrastructureNetworkSerializer(GeoFeatureModelSerializer):

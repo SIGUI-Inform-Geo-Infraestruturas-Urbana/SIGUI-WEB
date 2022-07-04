@@ -24,6 +24,7 @@ import { ManagerEstructureComponent } from './components/maps-components/manager
 import { PublicPlaceComponent} from './components/maps-components/manager-public-place/public-place.component'
 import { ManagerStreetComponent } from './components/maps-components/manager-street/manager-street/manager-street.component';
 import { ManagerFileStateComponent} from './components/maps-components/manager-file-state/manager-file-state.component'
+import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component'
 const routes: Routes = [
   {
     path: '', 
@@ -32,6 +33,7 @@ const routes: Routes = [
       // {path: '',redirectTo: '/user-zone',pathMatch:'full'},
       {path: '', component: UserZoneComponent},
       {path: 'user-zone', component: UserZoneComponent},
+      {path: 'geo-data', component: ManagerGeoUnitComponent},
       {path: 'geo-view', component: GeoEspatialComponent,
       children: [
         {path :'manager-city', component: ManageCityComponent},//app-maneger-state
@@ -42,7 +44,8 @@ const routes: Routes = [
         {path :'manager-file', component: ManegerlayersComponent},
         {path :'manager-file-state', component: ManagerFileStateComponent},
         {path :'manager-equipament', component: ManagerEstructureComponent},
-        {path :'manager-public-place', component: PublicPlaceComponent}
+        {path :'manager-public-place', component: PublicPlaceComponent},
+
         //manager-state
 
       ]},

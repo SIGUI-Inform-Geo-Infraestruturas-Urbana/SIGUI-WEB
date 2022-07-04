@@ -8,20 +8,7 @@
                         Estado
                     </mat-panel-title>
             </mat-expansion-panel-header>
-            <div>
-                <form [formGroup]="searchStateForm" (ngSubmit)="getFeatureState()"> 
-                    <mat-form-field class="search-form-field" appearance="fill">
-                        <mat-label>Buscar por ID</mat-label>
-                        <input matInput placeholder="Consulte ID" formControlName="idState">
-                    </mat-form-field>
-                    <button mat-mini-fab color="primary" type="submit">
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </form>   
-            </div>       
-            <button mat-stroked-button color="primary" (click)="onClickSelectState()"> Adicionar Estado</button>                
-            <button mat-stroked-button color="primary" (click)="addLayerVetorState()"> Visualizar Estados</button>
-            <button mat-stroked-button color="primary" (click)="onClickState()"> Adicionar Arquivo</button>
+            <app-expansion-unit></app-expansion-unit>
         </mat-expansion-panel>  
         <mat-expansion-panel class="mat-accordion-manager" (open)="panelOpenState=true" (false)="panelOpenState=false">
             <mat-expansion-panel-header>

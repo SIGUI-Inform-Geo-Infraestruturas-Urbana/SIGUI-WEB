@@ -4,7 +4,7 @@
     margin-bottom: 30px;
 }
 .logo_content{
-    margin-top: 160px;
+    margin-top: 100px;
     max-width: 100%;
     max-height: 100%;
     margin-left: 10%;
@@ -14,4 +14,81 @@
     max-width: 100%;
     max-height: 100%;
     margin-left: 10%;
+}
+
+.wrapper_top{   
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    /* grid-template-rows: 70px 70px; */
+}
+.wrapper_content{
+    margin-top: 25%;
+    margin-left: 10%; 
+}
+
+.wrapper_content h1{   
+    color: white;
+}
+.wrapper_content h3{   
+    color: azure;
+}
+
+
+.img-card{
+
+}
+
+.wrapper{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    /* grid-template-rows: 70px 70px; */
+}
+.box{
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+.box-div{
+    margin: 20px;
+}
+
+.box-header-left{
+    grid-column-start: 1;
+    grid-row-start: span 3;
+    
+}
+.box-header-left img{
+    position: relative;
+    top: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.box-header{
+    display: table;
+    text-align: center;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    background-color: blue;
+   
+}
+.box-header h3{
+    vertical-align: middle;
+    display: table-cell;
+    color: azure;
+}
+.box-button{
+    grid-column-start: 2;
+    grid-column-end: 4;
+}
+
+.button-box{
+    float: right;
+}
+
+.options-data{
+    color: aquamarine;
 }

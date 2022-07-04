@@ -84,7 +84,7 @@ button:active {
 }
 
 #div_Content_Primary{
-    height: 600px;
+    height: 300px;  
     border-radius: 0 0 8% 0;
     background-color: #030f2d;
 }
@@ -124,6 +124,13 @@ button:active {
 }
 .inner_elements_body{
     width: 1000px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+        /* background-color: red; */
+}
+.inner_elements_body_magin{
+    width: 90%;
     height: auto;
     display: block;
     margin: 0 auto;

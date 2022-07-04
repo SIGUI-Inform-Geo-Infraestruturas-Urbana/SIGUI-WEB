@@ -24,7 +24,7 @@ export class MenuManegerGeodataComponent implements OnInit {
   @Output() getDistrict = new EventEmitter();
 
   public managerSession : ManagerSession;
-  public searchStateForm!: FormGroup;
+ 
   public searchCountyForm!: FormGroup;
   public searchDistrictForm!: FormGroup;
   //
@@ -47,9 +47,6 @@ export class MenuManegerGeodataComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.searchStateForm = new FormGroup({
-      idState: new FormControl(),
-    });
     this.searchCountyForm = new FormGroup({
       idMunicipio: new FormControl(),
     });
@@ -59,9 +56,6 @@ export class MenuManegerGeodataComponent implements OnInit {
   }
 
   
-  addLayerVetorState(){
-    this.unitFederativeRepositoryService.findFetchData(); 
-  }
 
   addLayerVetorMunicipios(){
     this.countyRepositoryService.findFetchData(); 
@@ -89,11 +83,7 @@ export class MenuManegerGeodataComponent implements OnInit {
     this.infrastructureRepository.findFetchData(); 
   }
 
-  getFeatureState(){
-    let idSearch = this.searchStateForm.get('idState')?.value;
-    //this.getState.emit(idSearch);
-    this.unitFederativeRepositoryService.findFetchData(idSearch); 
-  }
+  
   getFeatureCounty(){
     let idSearch = this.searchCountyForm.get('idMunicipio')?.value;
     // this.getCounty.emit(idSearch);
@@ -124,22 +114,7 @@ export class MenuManegerGeodataComponent implements OnInit {
     this.router.navigate(['manager-city'],{relativeTo:this.route});
   }
 
-  onClickSelectState(){
-
-    this.managerSession = {
-      session_visualization : false,
-      session_county: false,
-      session_country: false,
-      session_ditrict : false,
-      session_streat: false,
-      session_public_place : false,
-      session_state: true,
-      session_infrastructure: false,
-      session_estructure : false,   
-    }
-    this.managerVisualization.setSessionVisualization(this.managerSession); 
-    this.router.navigate(['manager-state'],{relativeTo:this.route});
-  }
+  
 
   onClickSelectDistrict(){
 
@@ -239,9 +214,5 @@ export class MenuManegerGeodataComponent implements OnInit {
     //this.router.navigateByUrl('/geo-view/manager-city');
     this.router.navigate(['manager-file'],{relativeTo:this.route});
   }
-  onClickState(){   
-    //this.router.navigateByUrl('/geo-view/manager-city');
-    console.log('chamou')
-    this.router.navigate(['manager-file-state'],{relativeTo:this.route});
-  }
+  
 }

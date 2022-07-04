@@ -1,8 +1,145 @@
 <div id='div_Content_Primary' class="content"> 
-    <div id='div_Content_Register' class="content_body"> 
+    <!-- <div id='div_Content_Register' class="content_body">  -->
       <div class="inner_elements">
-        <img [src]="imgCorLogo" class="logo_content" width="300" height="95">
-        <h5 class="leg_content"style="color: aliceblue;"> Sistema de Informações Geograficas Urbanas de Infraestrutura</h5>
+        <div class="wrapper_top">
+          <div>
+            <img [src]="imgCorLogo" class="logo_content" width="300" height="95">
+            <h5 class="leg_content"style="color: aliceblue;"> Sistema de Informações Geograficas Urbanas de Infraestrutura</h5>
+          </div>
+          <div class="wrapper_content">
+            <h1 >BEM VINDO!</h1>
+            <h3>Confira suas opções</h3>
+          </div>
+        </div>
       </div>
+    <!-- </div> -->
+</div>
+<div class="inner_elements_body_magin"> 
+  <div class="wrapper">
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Unidades Federativas</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button (click)="managerUnit()"> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
     </div>
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Municípios</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button (click)="managerCounty()" > Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Distritos</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Ruas</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Logradouros</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div> 
+  <div class="box-div">
+    <h2>Components Urbanos</h2>
+    <mat-divider inset></mat-divider>
   </div>
+  <div class="wrapper">
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Infraestruturas</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div >
+      <mat-card class="options-data">
+        <mat-card-title-group>
+          <mat-card-title>Equipamentos Urbanos</mat-card-title>
+          <mat-card-subtitle>Camadas Base</mat-card-subtitle>
+          <img class="img-card" mat-card-sm-image [src]="imgLogo">
+        </mat-card-title-group>
+        <mat-card-content>
+         <p>Teste de Descrição</p>
+         <p>Descrever funcionalidade</p>
+        </mat-card-content>
+        <mat-divider inset></mat-divider>
+        <mat-card-actions align="end">
+          <button mat-button> Acessar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div> 
+</div>
