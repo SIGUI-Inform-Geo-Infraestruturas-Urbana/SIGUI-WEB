@@ -77,7 +77,8 @@ import { ExpansionUnitComponent } from './components/manager-geodata/expansion-u
 import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component';
 import { HomePageComponent } from './layout/home-page/home-page.component';
 import { GeoDataComponent } from './layout/geo-data/geo-data.component';
-import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component'
+import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component';
+import { ManagerFilePopupComponent } from './components/dialogs-components/manager-file-popup/manager-file-popup.component'
 
 
 @NgModule({
@@ -130,6 +131,7 @@ import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodat
     HomePageComponent,
     GeoDataComponent,
     SidenavGeodataComponent,
+    ManagerFilePopupComponent,
  
 
   ],

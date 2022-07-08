@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ManagerFilePopupComponent } from 'src/app/components/dialogs-components/manager-file-popup/manager-file-popup.component';
 
 @Component({
   selector: 'app-geo-data',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GeoDataComponent implements OnInit {
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   isShowing: boolean = true;
   isShowingNavRight: boolean = true;
@@ -15,6 +17,10 @@ export class GeoDataComponent implements OnInit {
   sizeSidenav: number = 100;
 
   ngOnInit(): void {
+  }
+
+  openDialog(){
+    this.dialog.open(ManagerFilePopupComponent)
   }
 
 }
