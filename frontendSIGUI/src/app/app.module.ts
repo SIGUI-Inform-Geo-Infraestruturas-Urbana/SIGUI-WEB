@@ -74,7 +74,10 @@ import { SelectLineStringComponent} from './components/maps-components/selectLay
 import { SnackBarComponent } from './snack-bar/snack-bar.component';
 import { ManagerFileStateComponent } from './components/maps-components/manager-file-state/manager-file-state.component';
 import { ExpansionUnitComponent } from './components/manager-geodata/expansion-unit/expansion-unit.component';
-import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component'
+import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component';
+import { HomePageComponent } from './layout/home-page/home-page.component';
+import { GeoDataComponent } from './layout/geo-data/geo-data.component';
+import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component'
 
 
 @NgModule({
@@ -124,6 +127,9 @@ import { ManagerGeoUnitComponent } from './components/angular-components/geodata
     UserZoneComponent,
     ExpansionUnitComponent,
     ManagerGeoUnitComponent,
+    HomePageComponent,
+    GeoDataComponent,
+    SidenavGeodataComponent,
  
 
   ],

@@ -1,0 +1,33 @@
+.nav-container{
+    /* width: 200px;*/
+    height: 100%; 
+    border: 1px solid #555;
+    background-color: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-sidenav-container {
+    height: 100%; 
+    mat-sidenav {
+        background-color: blue;
+        mat-nav-list{
+            .expanded-button{
+                transition: 300ms ease-in-out;
+                transform: rotate(0deg);
+                right: 0;
+                float: right;
+                position: absolute;
+            }
+            .expanded-button.rotated{
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+footer{
+    width: 100%;
+    background-color: blue;
+}

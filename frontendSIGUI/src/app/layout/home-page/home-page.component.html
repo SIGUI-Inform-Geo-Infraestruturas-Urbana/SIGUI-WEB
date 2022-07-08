@@ -1,0 +1,51 @@
+<header>
+    <app-navheadersigui (ActiveSideNav)="activeSideNav()"></app-navheadersigui>
+</header>
+<mat-sidenav-container autosize>
+    <mat-sidenav #sidenav mode="side" [opened]="isShowing">
+        <mat-nav-list>
+            <mat-list-item>
+               <mat-icon mat-list-icon class="expanded-button sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+            </mat-list-item>   
+            <mat-divider [vertical]="true"></mat-divider>    
+            <mat-list-item>
+                <mat-icon mat-list-icon class="">home</mat-icon> 
+                <span *ngIf="isExpanded">Home</span>                
+            </mat-list-item>
+            <mat-divider></mat-divider>       
+            <mat-list-item>
+                <mat-icon mat-list-icon class="">grid_on</mat-icon> 
+                <span *ngIf="isExpanded">Camadas</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>       
+            <mat-list-item>
+                <mat-icon mat-list-icon class="">grid_on</mat-icon> 
+                <span *ngIf="isExpanded">Geo Dados</span>
+            </mat-list-item>
+            <mat-divider></mat-divider>       
+        </mat-nav-list>
+    </mat-sidenav>
+    <div style="height: 100%;">
+        <app-geo-data></app-geo-data>      
+    </div>
+
+    <!-- <div class="content">
+        <router-outlet></router-outlet>
+      </div> -->
+
+</mat-sidenav-container>
+<footer>
+    Rodapé
+</footer>
+
+
+<!-- <mat-drawer-container style="height: 100%;">
+    <mat-drawer #drawer class="nav-container" mode="side" [opened]="isShowing">
+        Desenho
+    </mat-drawer>
+    <mat-drawer-content>
+      <div class="content">
+        <p>home-page works!</p>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container> -->

@@ -3,6 +3,9 @@
   </header>
   <mat-drawer-container style="height: 100%;">
     <mat-drawer #drawer class="nav-container" mode="side" [opened]="isShowing">
+      <button mat-icon-button aria-label="Teste Button">
+        <mat-icon>home</mat-icon>
+      </button> 
       <button [routerLink]="['/user-zone']" mat-button class="button-nav">
         Home
       </button> 

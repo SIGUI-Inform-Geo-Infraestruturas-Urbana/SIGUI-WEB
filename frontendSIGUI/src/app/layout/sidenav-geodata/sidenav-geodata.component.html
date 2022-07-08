@@ -1,0 +1,10 @@
+<p>sidenav-geodata works!</p>
+<mat-sidenav-container autosize>
+    <mat-sidenav #sidenav mode="side" [opened]="isShowing">
+        <mat-nav-list>
+            <mat-list-item>
+               <mat-icon mat-list-icon class="expanded-button sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+            </mat-list-item>               
+        </mat-nav-list>
+    </mat-sidenav>
+</mat-sidenav-container>

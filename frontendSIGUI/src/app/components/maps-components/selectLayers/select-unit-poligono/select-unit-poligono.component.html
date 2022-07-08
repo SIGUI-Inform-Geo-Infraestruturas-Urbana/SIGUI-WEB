@@ -3,7 +3,7 @@
     <!-- <div class="componets-horizontal">
         <button mat-raised-button color="primary" id="selecionarDraw" (click)="selecionarDraw()">Search</button>
     </div> -->
-    <mat-form-field class="search-form-field" appearance="fill">
+    <mat-form-field color="primary" appearance="fill"> 
         <mat-label>Desenhar Elemento</mat-label>
         <mat-select formControlName="selectDraw">
             <mat-option *ngFor="let selectDraw of optionsDraws" [value]="selectDraw.id">

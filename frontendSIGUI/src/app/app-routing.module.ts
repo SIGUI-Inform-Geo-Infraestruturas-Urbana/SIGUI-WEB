@@ -11,7 +11,6 @@ import { ManegerlayersComponent} from './components/maps-components/manegerlayer
 import { OpenLayerComponent } from './components/maps-components/open-layer/open-layer.component';
 import { PageNotFoundComponent } from './components/angular-components/page-not-found/page-not-found.component';
 import { MasterComponent } from './layout/master/master.component';
-import { HomeComponent } from './layout/home/home.component';
 import { GeoEspatialComponent  } from './layout/geo-espatial/geo-espatial.component'
 
 import { AuthGuard } from './account/shared/auth.guard'
@@ -25,10 +24,13 @@ import { PublicPlaceComponent} from './components/maps-components/manager-public
 import { ManagerStreetComponent } from './components/maps-components/manager-street/manager-street/manager-street.component';
 import { ManagerFileStateComponent} from './components/maps-components/manager-file-state/manager-file-state.component'
 import { ManagerGeoUnitComponent } from './components/angular-components/geodata/manager-geo-unit/manager-geo-unit.component'
+import { HomePageComponent} from './layout/home-page/home-page.component';
+import { HomeComponent } from './layout/home/home.component';
+
 const routes: Routes = [
   {
     path: '', 
-    component: HomeComponent,
+    component: HomePageComponent,
     children: [     
       // {path: '',redirectTo: '/user-zone',pathMatch:'full'},
       {path: '', component: UserZoneComponent},

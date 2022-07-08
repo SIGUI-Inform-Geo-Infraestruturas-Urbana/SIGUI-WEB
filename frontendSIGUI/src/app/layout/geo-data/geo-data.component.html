@@ -1,0 +1,47 @@
+<mat-drawer-container autosize>
+    <mat-drawer #drawer class="nav-container" mode="side" position="start" [opened]="isShowing">
+        <div class="subtitle-nav">
+            Desenho
+        </div>
+        <div style="width: 100%; height: 100%;">
+        <div class="sidenav-container" >
+            <mat-nav-list style="width: auto;">
+                <mat-list-item>
+                   <mat-icon mat-list-icon class="sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+                </mat-list-item>  
+                <mat-list-item >
+                    <mat-icon mat-list-icon class="sidenav-button">home</mat-icon> 
+                    <span *ngIf="isExpanded">Home</span>        
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+        <div class="container">
+            <p>home-page works!</p>
+        </div>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div class="content">
+        <div class="button-extends-options">
+            <button>
+                <mat-icon mat-list-icon class="" (click)="isShowing = !isShowing">grid_on</mat-icon> 
+            </button>
+        </div>
+        <div class="button-extends-options-right">
+            <button>
+                <mat-icon mat-list-icon class="" (click)="isShowingNavRight = !isShowingNavRight">grid_on</mat-icon> 
+            </button>
+        </div>
+        <p>aaaaaa</p>
+        <!-- <app-sidenav-geodata></app-sidenav-geodata> -->
+      </div>
+    </mat-drawer-content>
+    <mat-drawer class="sidenav-container-right" mode="side" position="end" [opened]="isShowingNavRight">
+        <div class="subtitle-nav">
+            Desenho
+        </div>
+    </mat-drawer>
+  
+
+
+</mat-drawer-container>

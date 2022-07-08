@@ -7,7 +7,72 @@ $custom-app-warn: mat-palette($mat-red);
 
 $custom-theme: mat-light-theme($custom-app-primary,$custom-app-secondary,$custom-app-warn);
 
-@include angular-material-theme($custom-theme);
+//@include angular-material-theme($custom-theme);
+
+@function my-mat-light-theme-foreground($color) {
+    @return (
+        base:              $color,
+        divider:           $black-12-opacity,
+        dividers:          $black-12-opacity,
+        disabled:          rgba($color, 0.38),
+        disabled-button:   rgba($color, 0.38),
+        disabled-text:   rgba(255,255,255),
+        hint-text:       rgba(255,255,255),
+        secondary-text:  rgba(255,255,255),
+        icon:            rgba(255,255,255),
+        icons:           rgba(255,255,255),
+        text:            rgba(255,255,255),
+        slider-min:        rgba($color, 0.87),
+        slider-off:        rgba($color, 0.26),
+        slider-off-active: rgba($color, 0.38),
+    );
+};
+
+$mat-foreground:my-mat-light-theme-foreground(mat-color($custom-app-primary,700));
+
+$my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
+
+@include angular-material-theme($my-app-theme-custom);
+
+//Definindo temas base
+// @use '../node_modules/@angular/material' as mat;
+
+// $my-primary: mat.define-palette(mat.$indigo-palette, 800);
+// $my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// $my-warn: mat.define-palette(mat.$red-palette);
+
+// $my-theme: mat.define-light-theme((
+//     color: (
+//         primary: $my-primary,
+//         accent: $my-accent,
+//         warn: $my-warn,
+//         foreground: _mat-create-light-color-config($my-primary,$my-accent)//$mat-light-theme-foreground
+//     )
+// ));
+
+// $mat-background-color: #720808;
+// $mat-foreground-color: #720808;
+
+// $mat-foreground: map-get($my-theme, foreground);
+// $mat-foreground: map_merge($mat-foreground, (foreground: $mat-foreground-color));
+// $my-theme: map_merge($my-theme,(foreground: $mat-foreground));
+
+// @include mat.all-component-themes($my-theme);
+
+
+
+
+
+
+
+// $my-primary: mat-palette($mat-indigo,900,900,900);
+// $my-secondary: mat-palette($mat-gray,50);
+// $my-warn: mat-palette($mat-red);
+
+// $custom-theme: mat-light-theme($custom-app-primary,$custom-app-secondary,$custom-app-warn);
+
+// @include angular-material-theme($custom-theme);
 
 // $custom-typography: mat-typography-config(
 //     $font-family: 'Ralaway'
@@ -26,7 +91,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 0;
     list-style: none;
     text-decoration: none;
-    color: black;
+    // color: black;
     font-family: 'Roboto';
 }
 
