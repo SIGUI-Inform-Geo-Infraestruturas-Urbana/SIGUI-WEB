@@ -82,30 +82,24 @@ mat-drawer-container {
     grid-column-end: 4;
    
 }
-.wrapper-table{
+.wrapper-manipulation{
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: 2fr 2fr 2fr;
     grid-column-gap: 10px;
     grid-row-gap: 1em;
-    width: 100%;
-
+    width: auto;
     /* grid-template-rows: 70px 70px; */
 }
-.box-table{
-    grid-column-start: 1;
-    grid-column-end: 3;
-  
-}
-.box-table-l{
-    grid-column-start: 1;
-   
-  
-}
-.box-table-r{
+.box-field-ex{
     grid-column-start: 2;
- 
   
+   
+}
+.box-field-ed{
+    grid-column-start: 3;
+
+   
 }
 .input-filter{
     width: 100%;

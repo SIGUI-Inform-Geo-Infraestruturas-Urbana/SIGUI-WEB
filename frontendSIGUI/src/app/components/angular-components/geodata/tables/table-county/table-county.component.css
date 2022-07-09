@@ -1,0 +1,25 @@
+.wrapper-table{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: 100%;
+
+    /* grid-template-rows: 70px 70px; */
+}
+.box-table{
+    grid-column-start: 1;
+    grid-column-end: 3;
+  
+}
+.box-table-l{
+    grid-column-start: 1;
+   
+  
+}
+.box-table-r{
+    grid-column-start: 2;
+ 
+  
+}

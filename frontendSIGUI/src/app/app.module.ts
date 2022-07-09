@@ -38,6 +38,7 @@ import { NavheadersiguiComponent } from './components/angular-components/navhead
 import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
 import { LayerSwitcherComponent } from './components/maps-components/layer-switcher/layer-switcher.component';
 import { ManageCityComponent } from './components/maps-components/manage-city/manage-city.component';
+import { ManageCountyComponent } from './components/angular-components/geodata/geo-elements/manage-city/manage-city.component';
 import { LoginComponent } from './account/login/login.component';
 import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { HomeComponent } from './layout/home/home.component';
@@ -78,7 +79,8 @@ import { ManagerGeoUnitComponent } from './components/angular-components/geodata
 import { HomePageComponent } from './layout/home-page/home-page.component';
 import { GeoDataComponent } from './layout/geo-data/geo-data.component';
 import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component';
-import { ManagerFilePopupComponent } from './components/dialogs-components/manager-file-popup/manager-file-popup.component'
+import { ManagerFilePopupComponent } from './components/dialogs-components/manager-file-popup/manager-file-popup.component';
+import { TableCountyComponent } from './components/angular-components/geodata/tables/table-county/table-county.component'
 
 
 @NgModule({
@@ -100,6 +102,7 @@ import { ManagerFilePopupComponent } from './components/dialogs-components/manag
     ManegerlayersComponent,
     LayerSwitcherComponent,
     ManageCityComponent,
+    ManageCountyComponent,
     LoginComponent,
     CreateAccountComponent,
     HomeComponent,
@@ -132,6 +135,7 @@ import { ManagerFilePopupComponent } from './components/dialogs-components/manag
     GeoDataComponent,
     SidenavGeodataComponent,
     ManagerFilePopupComponent,
+    TableCountyComponent,
  
 
   ],

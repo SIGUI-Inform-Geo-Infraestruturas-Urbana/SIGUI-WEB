@@ -58,62 +58,24 @@
                 </div> 
             </div>
             <div class="container">          
-                <div class="wrapper-table">
-                    <div class="box-table"> 
-                        <h3>MUNICIPIO SELEIONADO</h3>
-                    </div>
-                    <div class="box-table"> 
-                        <label >Identificador:</label>
-                        <label >01</label>
-                    </div>
-                    <div class="box-table-l">                  
-                        <label >Cod Estado:</label>
-                        <label >01</label>
-                    </div>   
-                    <div class="box-table-r">                  
-                        <label >Sigla:</label>
-                        <label >01</label>
-                    </div>    
-                    <div class="box-table"> 
-                        <label >Nome:</label>
-                        <label >01</label>
-                    </div>  
-                    <div class="box-table-l">                  
-                        <label >Cod IBGE:</label>
-                        <label >01</label>
-                    </div>   
-                    <div class="box-table-r">                  
-                        <label >Ambiental:</label>
-                        <label >01</label>
-                    </div>    
-                    <div class="box-table"> 
-                        <label >Area:</label>
-                        <label >01</label>
-                    </div>        
-                </div>
+                <app-table-county></app-table-county>
             </div>
             <div class="container">  
-                <div class="wrapper">
-                    <div >
-                            <button class="button-event"> 
-                                <mat-icon >home</mat-icon> 
-                                ShapeFiles Municipios
-                            </button>                   
-                        </div>
-                        <div >
-                            <button class="button-event"> 
-                                <mat-icon >home</mat-icon> 
-                                Manipular Limites Municipais
-                            </button>  
-                        </div>
-                        <div >
-                            <button class="button-event"> 
-                                <mat-icon >home</mat-icon> 
-                                Buscar Limites Municipais
-                            </button>  
-                        </div>
-                    </div> 
-                </div>
+                <div class="wrapper-manipulation">
+                    <div class="box-field-ex">
+                        <button class="button-event">
+                            <mat-icon >home</mat-icon> 
+                            Excluir Municipios
+                        </button>  
+                    </div>
+                    <div class="box-field-ed">
+                        <button class="button-event">
+                            <mat-icon >home</mat-icon> 
+                            Editar Municipios
+                        </button>  
+                    </div>
+                </div> 
+            </div>
 
         </div>
         
@@ -135,9 +97,10 @@
       </div>
     </mat-drawer-content>
     <mat-drawer class="sidenav-container-right" mode="side" position="end" [opened]="isShowingNavRight">
-        <div class="subtitle-nav">
+        <!-- <div class="subtitle-nav">
             Desenho
-        </div>
+        </div> -->
+        <app-manage-county></app-manage-county>
     </mat-drawer>
   
 

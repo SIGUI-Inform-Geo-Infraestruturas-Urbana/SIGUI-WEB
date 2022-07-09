@@ -1,0 +1,81 @@
+::ng-deep .mat-grid-tile-content{
+    justify-content : left !important;
+    align-items: flex-start !important;
+}
+
+::ng-deep .mat-form-field {
+     /* margin: 20px 0px 0px 0px; */
+    width: 100%; 
+     /* background-color: bisque;      */
+}
+
+::ng-deep .mat-grid-tile {
+    padding-top: 30px !important;
+    background-color: bisque;     
+}
+.grid-tile{
+    padding-top: 10px;
+}
+.div-content-form{
+    width: 100%;
+}
+.div-item-content-form{
+    float: right;
+    width: 100%;
+}
+.content-form{
+    width: 40%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-form-principal{
+    width: 82%;
+    margin: 20px 0px 0px 20px;
+    display: inline-block;
+}
+.content-button{    
+    position: absolute;
+    right: 150px;  
+}
+
+.header{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: #1d46b8;    
+}
+
+.elements_body{
+    width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+        /* background-color: red; */
+}
+
+.wrapper-form{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: 50%;   
+}
+.box-form{
+    grid-column-start: 1;
+    grid-column-end: 3;
+  
+}
+.box-form-l{
+    grid-column-start: 1;
+   
+  
+}
+.box-form-r{
+    grid-column-start: 2;
+ 
+  
+}
+
+
+

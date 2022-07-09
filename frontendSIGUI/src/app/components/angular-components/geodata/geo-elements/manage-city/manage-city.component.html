@@ -1,0 +1,100 @@
+<form [formGroup]="cityForm" (ngSubmit)="onSubmit()"> 
+
+<div class="header">
+    <div class="elements_body">    
+        <h2>Gerenciar Dados Municipio</h2>
+    </div>
+</div>
+
+<div class="wrapper-form">
+    <div class="box-form-l"> 
+        <mat-form-field appearance="fill">
+            <mat-label>Identificação</mat-label>
+            <input type="number" matInput placeholder="Input" formControlName="identity">
+        </mat-form-field>
+    </div>
+    <div class="box-form"> 
+        <mat-form-field appearance="fill">
+            <mat-label>Nome Municipio</mat-label>
+            <input type="text" matInput placeholder="Input" formControlName="nameCity">
+            <span class="spanValidate" *ngIf="cityForm.controls['nameCity'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>  
+    <div class="box-form-l">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Sigla UF </mat-label>
+            <input type="text" matInput placeholder="Input" formControlName="siglaUF">
+            <span class="spanValidate" *ngIf="cityForm.controls['siglaUF'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>   
+    <div class="box-form-r">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Selecionar Estado</mat-label>
+            <mat-select formControlName="selectDraw">
+                <mat-option *ngFor="let stateL of states" [value]="stateL.id">
+                    {{stateL.name}}
+                </mat-option>
+            </mat-select>
+            <span class="spanValidate" *ngIf="cityForm.controls['selectDraw'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>    
+    <div class="box-form-l">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Codigo IBGE</mat-label>
+            <input type="text" matInput placeholder="Input" formControlName="codigoIBGE">
+            <span class="spanValidate" *ngIf="cityForm.controls['codigoIBGE'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>   
+    <div class="box-form-r">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Codigo Ambiental</mat-label>
+            <input type="number" matInput placeholder="Input" formControlName="codigoAmbiental">
+            <span class="spanValidate" *ngIf="cityForm.controls['codigoAmbiental'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>    
+    <div class="box-form-l">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Nome UGRHI</mat-label>
+            <input type="text" matInput placeholder="Input" formControlName="nomeUGRHI">
+            <span class="spanValidate" *ngIf="cityForm.controls['nomeUGRHI'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>   
+    <div class="box-form-r">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Numero UGRHI </mat-label>
+            <input type="number" matInput placeholder="Input" formControlName="numeroUGRHI">
+            <span class="spanValidate" *ngIf="cityForm.controls['numeroUGRHI'].errors">
+                Campo Obrigatorio
+            </span>
+        </mat-form-field>
+    </div>  
+    <div class="box-form-l">                  
+        <mat-form-field appearance="fill">
+            <mat-label>Area Municipio</mat-label>
+            <input type="text" matInput placeholder="Input" formControlName="areaLimite">
+        </mat-form-field>
+    </div>   
+    <div class="box-form-l">                  
+
+    </div>  
+    <div class="box-form-r">                  
+        <button class="button-event">
+            <mat-icon >home</mat-icon> 
+            Editar Municipios
+        </button>  
+    </div>  
+      
+</div>
+</form>
