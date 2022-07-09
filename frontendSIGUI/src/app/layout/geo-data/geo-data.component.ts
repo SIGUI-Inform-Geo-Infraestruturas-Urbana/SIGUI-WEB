@@ -12,7 +12,7 @@ export class GeoDataComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   isShowing: boolean = true;
-  isShowingNavRight: boolean = true;
+  isShowingNavRight: boolean = false;
   isExpanded: boolean = true;
   sizeSidenav: number = 100;
 

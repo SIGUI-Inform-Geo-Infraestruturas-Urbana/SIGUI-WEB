@@ -81,20 +81,22 @@
         
     </mat-drawer>
     <mat-drawer-content>
-      <div class="content">
+        <div class="map-container-area">
+            <div style="width: 100%; height: 100%;display: inline-block;">
+                <app-open-layer></app-open-layer>
+            </div>
+        </div>
         <div class="button-extends-options">
-            <button>
-                <mat-icon mat-list-icon class="" (click)="isShowing = !isShowing">grid_on</mat-icon> 
-            </button>
+        <button>
+            <mat-icon mat-list-icon class="" (click)="isShowing = !isShowing">grid_on</mat-icon> 
+        </button>
         </div>
         <div class="button-extends-options-right">
             <button>
                 <mat-icon mat-list-icon class="" (click)="isShowingNavRight = !isShowingNavRight">grid_on</mat-icon> 
             </button>
-        </div>
-        <p>aaaaaa</p>
-        <!-- <app-sidenav-geodata></app-sidenav-geodata> -->
-      </div>
+        </div> 
+ 
     </mat-drawer-content>
     <mat-drawer class="sidenav-container-right" mode="side" position="end" [opened]="isShowingNavRight">
         <!-- <div class="subtitle-nav">
