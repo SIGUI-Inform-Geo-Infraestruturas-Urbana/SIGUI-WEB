@@ -119,7 +119,7 @@ input{
     display: inline-block;
 }
 
-button {
+.button-event {
     background-color: #008CBA;
     color: white;
     border: 2px solid #008CBA; /* Azure */
@@ -128,12 +128,14 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    width: 90px;
+    height: 90px;
 }
-button:hover {
+.button-event:hover {
     background-color: #013141; /* Azure */
     color: white;
 }
-button:active {
+.button-event:active {
     background-color: #013141; /* Azure */
     border: 2px solid #013141; /* Azure */
     color: black;

@@ -9,7 +9,7 @@
 }
 .subtitle-nav{
     width:100%; 
-    height: 20px;
+    height: 60px;
     background-color: aqua;
 }
 .sidenav-container{
@@ -36,8 +36,8 @@
 }
 .container{
     width: auto;
-    float: left;
-    height: 100px; 
+    //float: left;
+    height: auto; 
     border: 1px solid #555;
     background-color: aquamarine;
     display: flex;
@@ -67,4 +67,51 @@ mat-drawer-container {
 }
 .content{
     background-color: rgb(153, 165, 42);
+}
+.wrapper{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: auto;
+    /* grid-template-rows: 70px 70px; */
+}
+.box-field{
+    grid-column-start: 1;
+    grid-column-end: 4;
+   
+}
+.wrapper-table{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: 100%;
+
+    /* grid-template-rows: 70px 70px; */
+}
+.box-table{
+    grid-column-start: 1;
+    grid-column-end: 3;
+  
+}
+.box-table-l{
+    grid-column-start: 1;
+   
+  
+}
+.box-table-r{
+    grid-column-start: 2;
+ 
+  
+}
+.input-filter{
+    width: 100%;
+    background-color: blue;
+}
+.input-filter-secondary{
+    width: 55%;
+    background-color: blue;
 }
