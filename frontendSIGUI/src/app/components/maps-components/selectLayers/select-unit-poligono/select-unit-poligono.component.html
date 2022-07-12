@@ -1,8 +1,23 @@
 <form [formGroup]="controlMapForm" >
 
-    <!-- <div class="componets-horizontal">
-        <button mat-raised-button color="primary" id="selecionarDraw" (click)="selecionarDraw()">Search</button>
-    </div> -->
+    <div class="componets-horizontal">
+        <div class="componets-horizontal" (click)="onDrawPoligony()">
+            <button mat-icon-button color="primary">
+                <mat-icon>home</mat-icon>
+            </button>
+        </div>
+        <div class="componets-horizontal">
+            <button mat-icon-button color="primary" (click)="onDrawNone()">
+                <mat-icon>home</mat-icon>
+            </button>
+        </div>
+        <div class="componets-horizontal">
+            <button mat-icon-button color="primary" (click)="onDrawClear()">
+                <mat-icon>home</mat-icon>
+            </button>
+        </div>
+    </div>
+    
     <mat-form-field color="primary" appearance="fill"> 
         <mat-label>Desenhar Elemento</mat-label>
         <mat-select formControlName="selectDraw">

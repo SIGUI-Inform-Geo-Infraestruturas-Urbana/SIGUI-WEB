@@ -80,7 +80,16 @@ import { HomePageComponent } from './layout/home-page/home-page.component';
 import { GeoDataComponent } from './layout/geo-data/geo-data.component';
 import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component';
 import { ManagerFilePopupComponent } from './components/dialogs-components/manager-file-popup/manager-file-popup.component';
-import { TableCountyComponent } from './components/angular-components/geodata/tables/table-county/table-county.component'
+import { TableCountyComponent } from './components/angular-components/geodata/tables/table-county/table-county.component';
+import { ManipulateUnitComponent } from './components/angular-components/geodata/geo-elements/manipulate-unit/manipulate-unit.component';
+import { ManipulateCountyComponent } from './components/angular-components/geodata/geo-elements/manipulate-county/manipulate-county.component';
+import { PopupControlUnitComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-unit/popup-control-unit.component'
+import { PopupControlCountyComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-county/popup-control-county.component';
+import { PopupControlDistrictComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-district/popup-control-district.component';
+import { PopupControlStreetComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-street/popup-control-street.component';
+import { PopupControlPublicplaceComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-publicplace/popup-control-publicplace.component';
+import { PopupControlInfrastructureComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-infrastructure/popup-control-infrastructure.component';
+import { PopupControlEquipamenturbanComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-equipamenturban/popup-control-equipamenturban.component'
 
 
 @NgModule({
@@ -136,7 +145,16 @@ import { TableCountyComponent } from './components/angular-components/geodata/ta
     SidenavGeodataComponent,
     ManagerFilePopupComponent,
     TableCountyComponent,
- 
+    ManipulateUnitComponent,
+    ManipulateCountyComponent,
+    PopupControlUnitComponent,
+    PopupControlCountyComponent,
+    PopupControlDistrictComponent,
+    PopupControlStreetComponent,
+    PopupControlPublicplaceComponent,
+    PopupControlInfrastructureComponent,
+    PopupControlEquipamenturbanComponent, 
+
 
   ],
   imports: [

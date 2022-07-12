@@ -12,6 +12,7 @@ import { CountyRepositoryService } from 'src/app/repositorys/county-repository.s
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { getArea } from 'ol/sphere';
 import { MatSnackBar} from '@angular/material/snack-bar'
+import { CountyManipulationService } from 'src/app/services/count/county-manager/county-manipulation.service';
 
 @Component({
   selector: 'app-manage-city',
@@ -26,16 +27,18 @@ export class ManageCityComponent implements OnInit {
   public cityForm!: FormGroup;
 
   constructor(public countyRepository: CountyRepositoryService, public unitFederativeRepository : UnitFederativeRepositoryService,
-     private stateMap :StateMapService, private snackBar : MatSnackBar){ 
+    private countyVizualization :CountyManipulationService, private snackBar : MatSnackBar){ 
     this.city = new County();
+    //private countyVizualization :CountyManipulationService
+    //private stateMap :StateMapService
     this.createForm(new County(0));
-    stateMap.getFeatureSelect().subscribe(feature => {
+    countyVizualization.getCountyManipulation().subscribe(feature => {
       console.log(feature)    
       this.initializeForm(feature);       
     }) 
   }
 
-  initializeForm(feature:DataSpatial ){
+  initializeForm(feature:County ){
     let city:County = <County>feature;   
     if ((city.id_county != undefined)&&(city.id_county != 0)){
       console.log(city.id_county)

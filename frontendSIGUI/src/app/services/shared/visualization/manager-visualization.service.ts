@@ -9,6 +9,7 @@ export class ManagerVisualizationService {
 
     //private featureSelect!: Feature; 
     private sessionVisualization = new BehaviorSubject<ManagerSession>(new ManagerSession());
+    private sessionSelectManipulation = new BehaviorSubject<ManagerSession>(new ManagerSession());
 
     constructor() { }
   
@@ -18,5 +19,14 @@ export class ManagerVisualizationService {
   
     getSessionVisualization(): Observable<ManagerSession>{
       return this.sessionVisualization.asObservable();
+    }
+
+      
+    setSessionSelectManipulation(visualization : ManagerSession):void{
+      this.sessionSelectManipulation.next(visualization);
+    }
+  
+    getSessionSelectManipulation(): Observable<ManagerSession>{
+      return this.sessionSelectManipulation.asObservable();
     }
 }

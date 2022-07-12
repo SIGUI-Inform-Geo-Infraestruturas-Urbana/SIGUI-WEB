@@ -11,7 +11,7 @@
                 <td>{{coordenadaPoint}}</td>
             </tr>
             <tr *ngIf="hiddenState">
-                <table>
+                <!-- <table>
                     <tr>
                         <th colspan="2">Sobre a Representação:</th>
                     </tr>
@@ -23,20 +23,35 @@
                         <td>ID:</td>
                         <td>{{idItem}}</td>
                     </tr>          
-                </table>
+                </table> -->
+                <app-popup-control-unit [featureSelect]="featureSelect" ></app-popup-control-unit>
             </tr>
-            <!-- <tr *ngIf="hiddenCounty"></tr>
-            <tr *ngIf="hiddenDistrict"></tr>
-            <tr *ngIf="hiddenStreet"></tr>
-            <tr *ngIf="hiddenPublicPlace"></tr>
-            <tr *ngIf="hiddenInfrastructure"></tr>
-            <tr *ngIf="hiddenEstructure"></tr>
-            <tr *ngIf="hiddenRede"></tr>    -->
+            <tr *ngIf="hiddenCounty">
+                <app-popup-control-county [featureSelect]="featureSelect" ></app-popup-control-county>
+            </tr>
+            <tr *ngIf="hiddenDistrict">
+                <app-popup-control-district [featureSelect]="featureSelect"></app-popup-control-district>
+            </tr>
+            <tr *ngIf="hiddenStreet">
+                <app-popup-control-street [featureSelect]="featureSelect"></app-popup-control-street>
+            </tr>
+            <tr *ngIf="hiddenPublicPlace">
+                <app-popup-control-publicplace [featureSelect]="featureSelect"></app-popup-control-publicplace>
+            </tr>
+            <tr *ngIf="hiddenInfrastructure">
+                <app-popup-control-infrastructure [featureSelect]="featureSelect"></app-popup-control-infrastructure>
+            </tr>
+            <tr *ngIf="hiddenEstructure">
+                <app-popup-control-equipamenturban [featureSelect]="featureSelect"></app-popup-control-equipamenturban>
+            </tr>
+            <tr *ngIf="hiddenRede">
+                <app-popup-control-street [featureSelect]="featureSelect"></app-popup-control-street>
+            </tr>   
 
 
         </table>   
         <div appShowUserAdmLogged>
-            <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager>
+            <!-- <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager> -->
         </div>
       
     </div>   

@@ -30,8 +30,23 @@ export class SelectPoligonoComponent implements OnInit {
     });
    this.controlMapForm.get("selectDraw")?.valueChanges.subscribe(f => {this.onDrawChanged(f)})     
   }
+  onDrawPoligony():void{
+    let itemSelected:string = this.optionsDraws[1 - 1].name
+    console.log(itemSelected)
+    this.DrawMap.emit(itemSelected);
+  }
+  onDrawNone():void{
+    let itemSelected:string = this.optionsDraws[2 - 1].name
+    console.log(itemSelected)
+    this.DrawMap.emit(itemSelected);
+  }
+  onDrawClear():void{
+    let itemSelected:string = this.optionsDraws[3 - 1].name
+    console.log(itemSelected)
+    this.clearSource()
+  }
 
-
+  
  
   onDrawChanged(value:number):void{
     console.log('dsadsad')

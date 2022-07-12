@@ -33,14 +33,14 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   public idItem!:number;
   public edited:boolean = true;
 
-  public hiddenState : boolean = true;
-  public hiddenCounty : boolean = true;
-  public hiddenDistrict : boolean = true;
-  public hiddenStreet : boolean = true;
-  public hiddenPublicPlace : boolean = true;
-  public hiddenInfrastructure : boolean = true;
-  public hiddenEstructure : boolean = true;  
-  public hiddenRede : boolean = true;  
+  public hiddenState : boolean = false;
+  public hiddenCounty : boolean = false;
+  public hiddenDistrict : boolean = false;
+  public hiddenStreet : boolean = false;
+  public hiddenPublicPlace : boolean = false;
+  public hiddenInfrastructure : boolean = false;
+  public hiddenEstructure : boolean = false;  
+  public hiddenRede : boolean = false;  
 
   constructor(public dataSpatialService : DataSpatialService, public managerService : ManagerVisualizationService) {         
     managerService.getSessionVisualization().subscribe(sessionVizu => {
@@ -95,12 +95,10 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     
     });
   }
-
-  onClickMap(evt:MapBrowserEvent<any>): void{      
-   
-    console.log('onClick')
-    let marcator = null;
-    let a = this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {  
+  
+  searchFeatureAtPixel(evt:MapBrowserEvent<any>):any{
+    let sFeature = null;
+    this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {  
       if ((this.managerSession.session_streat == true)||((this.managerSession.session_public_place)))
       {
         if (feature.getGeometry()?.getType() == 'LineString')
@@ -112,7 +110,7 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
           this.idItem = properties['id'];
           this.tipoItem = properties['typeRepresentation'];
           }
-          marcator = feature;  
+          sFeature = feature;  
 
           return;        
         }    
@@ -127,55 +125,160 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
         this.idItem = properties['id'];
         this.tipoItem = properties['typeRepresentation'];
         }
-        marcator = feature;
+        sFeature = feature;
         return; 
       }       
-    });   
+    });  
+    return sFeature;
+  }
+  selectPoint(featuretSelect :Feature):boolean{
+   
+    let vertice:Point= <Point>featuretSelect.getGeometry();
+    let coordinatePoint:Coordinate= vertice.getCoordinates();
+    console.log('Coord')
+    console.log(coordinatePoint)     
+    this.overlay.setPosition(coordinatePoint); 
+    this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+    this.featureSelect = featuretSelect; 
+    return true
+  }
+  selectLineString(featuretSelect :Feature, evt:MapBrowserEvent<any>):boolean{
+    // let featuretSelect = <Feature>marcator;
+    console.log(featuretSelect.getGeometry()?.getType())
+    let coordinate:Coordinate = evt.coordinate;
+    this.overlay.setPosition(coordinate); 
+    this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+    this.featureSelect = featuretSelect; 
+    return true
+  }
+  selectPoligony(featuretSelect :Feature, evt:MapBrowserEvent<any>):boolean{
+   
+    console.log(featuretSelect.getGeometry()?.getType())
+    let coordinate:Coordinate = evt.coordinate;
+    this.overlay.setPosition(coordinate); 
+    this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+    this.featureSelect = featuretSelect; 
+    return true
+  }
+  definedVizualization(){
+    this.hiddenPublicPlace = false;
+    this.hiddenInfrastructure = false;
+    this.hiddenEstructure = false;
+    this.hiddenStreet = false;
+    this.hiddenDistrict = false;
+    this.hiddenCounty =false;
+    this.hiddenState = false;
+  }
+
+  onClickMap(evt:MapBrowserEvent<any>): void{      
+   
+    console.log('onClick')
+    let marcator = this.searchFeatureAtPixel(evt);     
     
     if (marcator == null)
-    {
-      console.log('55555555555555555')
+    {     
       let coordinate:Coordinate = evt.coordinate;
       this.overlay.setPosition(coordinate); 
-     // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
       this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+      if(this.managerSession.session_state == true)
+      {
+        console.log('***SESSION STATE****')
+        this.definedVizualization();
+        this.hiddenState = true;      
+      }  
+      else if(this.managerSession.session_county == true)
+      {
+        console.log('***SESSION COUNTY****')
+        this.definedVizualization();
+        this.hiddenCounty = true;
+      }
+      else if(this.managerSession.session_ditrict == true)
+      {
+        console.log('***SESSION DISTRICT****')
+        this.definedVizualization();
+        this.hiddenDistrict = true;
+      }
+      else if(this.managerSession.session_streat == true)
+      {
+        console.log('***SESSION STREAT****')
+        this.definedVizualization();
+        this.hiddenStreet = true;
+      }
+      else if (this.managerSession.session_public_place == true)
+      {
+        console.log('***SESSION PUBLICPLACE****')
+        this.definedVizualization();
+        this.hiddenPublicPlace = true;
+      }
+      else if (this.managerSession.session_infrastructure == true)
+      {
+        console.log('***SESSION INFRASTRUCTURE****')
+        this.definedVizualization();
+        this.hiddenInfrastructure = true;
+      }
+      else if (this.managerSession.session_estructure == true)
+      {
+        console.log('***SESSION ESTRUCTURE****')
+        this.definedVizualization();
+        this.hiddenEstructure = true;
+      }
+
+      // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
     }
     else{
 
-      if ((this.managerSession.session_streat == true)||((this.managerSession.session_public_place)))
+      if(this.managerSession.session_state == true)
       {
-        console.log('*******')
-        let featuretSelect = <Feature>marcator;
-        console.log(featuretSelect.getGeometry()?.getType())
-        let coordinate:Coordinate = evt.coordinate;
-        this.overlay.setPosition(coordinate); 
-        this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
-        this.featureSelect = <Feature>marcator; 
+        console.log('***SESSION STATE****')
+        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+        this.definedVizualization();
+        this.hiddenState = true;    
+      }  
+      else if(this.managerSession.session_county == true)
+      {
+        console.log('***SESSION COUNTY****')
+        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+        this.definedVizualization();
+        this.hiddenCounty = true;
       }
-      else if ((this.managerSession.session_infrastructure == true)||((this.managerSession.session_infrastructure))){
-        console.log('-----')
-        let featuretSelect = <Feature>marcator;
-        let vertice:Point= <Point>featuretSelect.getGeometry();
-        let coordinatePoint:Coordinate= vertice.getCoordinates();
-        console.log('Coord')
-        console.log(coordinatePoint)     
-        this.overlay.setPosition(coordinatePoint); 
-        this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
-        this.featureSelect = <Feature>marcator; 
+      else if(this.managerSession.session_ditrict == true)
+      {
+        console.log('***SESSION DISTRICT****')
+        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+        this.definedVizualization();
+        this.hiddenDistrict = true;
       }
-      else{
-        console.log('+++++')
-        let featuretSelect = <Feature>marcator;
-        console.log(featuretSelect.getGeometry()?.getType())
-        let coordinate:Coordinate = evt.coordinate;
-        this.overlay.setPosition(coordinate); 
-        this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
-        this.featureSelect = <Feature>marcator; 
-      }      
-    
-   console.log(marcator)
+      else if(this.managerSession.session_streat == true)
+      {
+        console.log('***SESSION STREAT****')
+        let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+        this.definedVizualization();
+        this.hiddenStreet = true;
+      }
+      else if (this.managerSession.session_public_place == true)
+      {
+        console.log('***SESSION PUBLICPLACE****')
+        let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+        this.definedVizualization();
+        this.hiddenPublicPlace = true;
+      }
+      else if (this.managerSession.session_infrastructure == true)
+      {
+        console.log('***SESSION INFRASTRUCTURE****')
+        let featuretSelect = this.selectPoint(<Feature>marcator)
+        this.definedVizualization();
+        this.hiddenInfrastructure = true;
+      }
+      else if (this.managerSession.session_estructure == true)
+      {
+        console.log('***SESSION ESTRUCTURE****')
+        let featuretSelect = this.selectPoint(<Feature>marcator)
+        this.definedVizualization();
+        this.hiddenEstructure = true;
+      }
     }
   }
+
  
   closerPopupClick(){
     this.overlay.setPosition(undefined);

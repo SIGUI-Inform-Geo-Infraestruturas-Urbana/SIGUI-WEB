@@ -68,20 +68,7 @@ mat-drawer-container {
 .content{
     background-color: rgb(153, 165, 42);
 }
-.wrapper{
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
-    grid-column-gap: 10px;
-    grid-row-gap: 1em;
-    width: auto;
-    /* grid-template-rows: 70px 70px; */
-}
-.box-field{
-    grid-column-start: 1;
-    grid-column-end: 4;
-   
-}
+
 .wrapper-manipulation{
     margin-top: 20px;
     display: grid;
