@@ -1,3 +1,22 @@
+
+
+@import '../../../../node_modules/@angular/material/theming';
+// @import '../material-design-icons/iconfont/material-icons.css';
+@include mat-core();
+@import '../../../styles.scss';
+$accent : map-get($custom-theme , accent);
+
+.header-menu{
+    box-shadow: 0 0 1em black;
+    z-index: 10;
+    position: absolute;
+    width: 100%;
+}
+
+.man{
+    position: absolute;
+}
+
 .nav-container{
     /* width: 200px;*/
     height: 100%; 
@@ -11,7 +30,7 @@
 mat-sidenav-container {
     height: 100%; 
     mat-sidenav {
-        background-color: blue;
+        background-color: mat-color($accent);
         mat-nav-list{
             .expanded-button{
                 transition: 300ms ease-in-out;

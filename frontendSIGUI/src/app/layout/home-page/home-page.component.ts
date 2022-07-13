@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomePageComponent implements OnInit {
 
   constructor() { }
-  isShowing: boolean = true;
+  isShowing: boolean = false;
   isExpanded: boolean = false;
   
 

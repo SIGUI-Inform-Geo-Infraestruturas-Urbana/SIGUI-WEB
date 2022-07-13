@@ -1,8 +1,14 @@
+@import '../../../../node_modules/@angular/material/theming';
+@include mat-core();
+@import '../../../styles.scss';
+$primary : map-get($custom-theme , primary);
+$accent : map-get($custom-theme , accent);
+
 .nav-container{
     /* width: 200px;*/
     height: 100%; 
     border: 1px solid #555;
-    background-color: blue;
+    background-color:  mat-color($accent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10,14 +16,14 @@
 .subtitle-nav{
     width:100%; 
     height: 60px;
-    background-color: aqua;
+    background-color: mat-color($accent);;
 }
 .sidenav-container{
         width: auto; 
         float: left;
         height: 100%; 
         border: 1px solid #555;
-        background-color: blueviolet;
+        background-color: rgb(129, 129, 129);
         flex: 1 1 auto;
         align-items: center;
         flex-direction: row;
@@ -39,7 +45,7 @@
     //float: left;
     height: auto; 
     border: 1px solid #555;
-    background-color: aquamarine;
+    background-color: white;
     display: flex;
     align-items: center;
    // justify-content: center;        
@@ -100,5 +106,9 @@ mat-drawer-container {
     width: 100%;
     height: 100%;   
     overflow: hidden;
-    background-color: #010a22;    
+    background-color: mat-color($primary);    
+}
+
+.secondary-text{
+   // background-color: mat-color($primary);
 }

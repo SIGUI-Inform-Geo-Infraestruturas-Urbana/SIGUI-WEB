@@ -9,7 +9,7 @@ import { ManagerVisualizationService } from 'src/app/services/shared/visualizati
 @Component({
   selector: 'app-manipulate-county',
   templateUrl: './manipulate-county.component.html',
-  styleUrls: ['./manipulate-county.component.css']
+  styleUrls: ['./manipulate-county.component.scss']
 })
 export class ManipulateCountyComponent implements OnInit {
 
