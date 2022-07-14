@@ -87,6 +87,12 @@ $my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
     color: black;
 }
 
+.component{
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+}
+
 //Definindo temas base
 // @use '../node_modules/@angular/material' as mat;
 
@@ -152,10 +158,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 mat-divider{
     width: 100%;
 }
-
-// // body{
-// //     background-color:aliceblue;
-// // }
 
 .white-pallete-light{
     color: white !important;

@@ -4,6 +4,13 @@
 $primary : map-get($custom-theme , primary);
 $accent : map-get($custom-theme , accent);
 
+mat-drawer-container{
+    height: 100%;
+}
+mat-drawer-content{
+    height: 100%;
+}
+
 .nav-container{
     /* width: 200px;*/
     height: 100%; 

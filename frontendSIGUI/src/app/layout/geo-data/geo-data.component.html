@@ -1,9 +1,9 @@
 <mat-drawer-container autosize>
     <mat-drawer #drawer class="nav-container " mode="side" position="start" [opened]="isShowing">
-        <div class="subtitle-nav header-light-pallete">
-           <h2 class="secondary-text ">GEODADOS</h2>
-        </div>
-        <div style="width: 100%; height: 100%;">
+        <div style="width: 100%; height: 120%;">
+            <div class="subtitle-nav header-light-pallete">
+                <h2 class="secondary-text ">GEODADOS</h2>
+             </div>
             <div class="sidenav-container color-pallete" >
                 <mat-nav-list style="width: auto;">
                     <mat-list-item>
@@ -23,8 +23,8 @@
                 <div class="container">          
                     <app-manipulate-county></app-manipulate-county>                    
                 </div>
-               
-                <div class="container" *ngIf="managerVizualizaton.session_county">          
+               <!-- managerVizualizaton.session_county -->
+                <div class="container" *ngIf="true">          
                     <app-table-county></app-table-county>
                 </div>
                 <div class="container">  

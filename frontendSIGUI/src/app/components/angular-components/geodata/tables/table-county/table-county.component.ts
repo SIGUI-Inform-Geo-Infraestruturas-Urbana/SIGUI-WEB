@@ -9,6 +9,8 @@ import { CountyManipulationService } from 'src/app/services/count/county-manager
   styleUrls: ['./table-county.component.css']
 })
 export class TableCountyComponent implements OnInit, OnDestroy {
+  imgLogo = '/assets/images/logotipo_SIGUI_header.png';
+
   public county: County;
   private vizualizationService : Subscription;
   constructor(private countyVizualization :CountyManipulationService) {
