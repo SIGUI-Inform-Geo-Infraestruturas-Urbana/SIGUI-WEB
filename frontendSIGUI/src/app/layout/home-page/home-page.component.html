@@ -2,24 +2,24 @@
     <app-navheadersigui (ActiveSideNav)="activeSideNav()"></app-navheadersigui>
 </header>
 <mat-sidenav-container style="top: 65px;" autosize>
-    <mat-sidenav class="man" #sidenav mode="side" [opened]="isShowing">
+    <mat-sidenav class="header-light-pallete" #sidenav mode="side" [opened]="isShowing">
         <mat-nav-list>
-            <mat-list-item>
-               <mat-icon mat-list-icon class="expanded-button sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+            <mat-list-item class="white-pallete-light">
+               <mat-icon mat-list-icon class="expanded-button sidenav-button " (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
             </mat-list-item>   
             <mat-divider [vertical]="true"></mat-divider>    
-            <mat-list-item>
-                <mat-icon mat-list-icon class="">home</mat-icon> 
+            <mat-list-item class="white-pallete-light">
+                <mat-icon mat-list-icon >home</mat-icon> 
                 <span *ngIf="isExpanded">Home</span>                
             </mat-list-item>
             <mat-divider></mat-divider>       
-            <mat-list-item>
-                <mat-icon mat-list-icon class="">grid_on</mat-icon> 
+            <mat-list-item class="white-pallete-light">
+                <mat-icon mat-list-icon class="light-icon">grid_on</mat-icon> 
                 <span *ngIf="isExpanded">Camadas</span>
             </mat-list-item>
             <mat-divider></mat-divider>       
-            <mat-list-item>
-                <mat-icon mat-list-icon class="">grid_on</mat-icon> 
+            <mat-list-item class="white-pallete-light" >
+                <mat-icon mat-list-icon class="light-icon">grid_on</mat-icon> 
                 <span *ngIf="isExpanded">Geo Dados</span>
             </mat-list-item>
             <mat-divider></mat-divider>       

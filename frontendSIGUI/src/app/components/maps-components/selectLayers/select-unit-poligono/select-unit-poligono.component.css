@@ -4,8 +4,15 @@
 
 
 .componets-horizontal{
-    float: left;
+    float: left; 
 }
+
+.button-mat-control{
+    padding-top: 10px;
+    margin-right: 10px;
+    
+}
+
 .componets-horizontal label,input,button,select {
     display: block;
 }

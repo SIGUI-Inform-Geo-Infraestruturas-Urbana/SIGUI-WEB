@@ -1,11 +1,12 @@
 <form [formGroup]="cityForm" (ngSubmit)="onSubmit()"> 
 
-<div class="header">
-    <div class="elements_body">    
+<div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
         <h2>Gerenciar Dados Municipio</h2>
-    </div>
-</div>
 
+</div>
+<div class="container-div">   
 <div class="wrapper-form">
     <div class="box-form-l"> 
         <mat-form-field appearance="fill">
@@ -89,12 +90,12 @@
     <div class="box-form-l">                  
 
     </div>  
-    <div class="box-form-r">                  
-        <button class="button-event">
-            <mat-icon >home</mat-icon> 
-            Editar Municipios
-        </button>  
+    <div class="box-form-r">   
+        <button mat-flat-button color="primary"> 
+            <mat-icon >save</mat-icon>                 
+        </button> 
     </div>  
       
+</div>
 </div>
 </form>

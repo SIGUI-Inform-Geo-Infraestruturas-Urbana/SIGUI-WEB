@@ -40,9 +40,10 @@
 
 .header{
     width: 100%;
-    height: auto;
+    height: 70px;
     overflow: hidden;
-    background-color: #1d46b8;    
+    text-align: center;
+    padding-top: 10px;
 }
 
 .elements_body{
@@ -77,5 +78,12 @@
   
 }
 
-
+.container-div{
+    width: auto; 
+    height: 100%;
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+         
+}
 

@@ -21,7 +21,7 @@ $accent : map-get($custom-theme , accent);
     /* width: 200px;*/
     height: 100%; 
     border: 1px solid #555;
-    background-color: blue;
+   // background-color: blue;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +30,7 @@ $accent : map-get($custom-theme , accent);
 mat-sidenav-container {
     height: 100%; 
     mat-sidenav {
-        background-color: mat-color($accent);
+//background-color: mat-color($accent);
         mat-nav-list{
             .expanded-button{
                 transition: 300ms ease-in-out;

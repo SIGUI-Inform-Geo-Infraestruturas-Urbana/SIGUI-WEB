@@ -3,7 +3,9 @@
 @include mat-core();
 
 $custom-app-primary: mat-palette($mat-indigo,900,900,900);
-$custom-app-secondary: mat-palette($mat-indigo,700,700,700);
+//$custom-app-primary-light: mat-palette($mat-gray,300,300,300);
+$custom-app-primary-light: mat-palette($mat-indigo,700,700,700);
+$custom-app-secondary: mat-palette($mat-indigo,300,300,300);
 $custom-app-warn: mat-palette($mat-red);
 
 $custom-theme: mat-light-theme($custom-app-primary,$custom-app-secondary,$custom-app-warn);
@@ -13,16 +15,16 @@ $custom-theme: mat-light-theme($custom-app-primary,$custom-app-secondary,$custom
 @function my-mat-light-theme-foreground($color) {
     @return (
         base:              $color,
-        divider:           $black-12-opacity,
-        dividers:          $black-12-opacity,
+        divider:           rgba(0,0,0),//$black-12-opacity,
+        dividers:          rgba(0,0,0),
         disabled:          rgba($color, 0.38),
         disabled-button:   rgba($color, 0.38),
         disabled-text:   rgba(255,255,255),
         hint-text:       rgba(255,255,255),
         secondary-text:  rgba(151, 28, 28),
-        icon:            rgba(255,255,255),
-        icons:           rgba(255,255,255),
-        text:            rgba(0,0,0),
+        icon:            rgb(8, 0, 49),
+        icons:           rgb(8, 0, 49),
+        text:            rgb(8, 0, 49),
         slider-min:        rgba($color, 0.87),
         slider-off:        rgba($color, 0.26),
         slider-off-active: rgba($color, 0.38),
@@ -34,6 +36,56 @@ $mat-foreground:my-mat-light-theme-foreground(mat-color($custom-app-primary,700)
 $my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
 
 @include angular-material-theme($my-app-theme-custom);
+
+@function select-light(){
+    $primary : map-get($custom-theme , primary);
+    @return(
+        mat-color($primary)
+    );
+}
+
+.light-icon{
+    color: white;
+}
+
+.header-light-pallete{
+    background-color: mat-color($custom-app-primary-light);
+    color: white;
+}
+.color-pallete{
+    background-color: mat-color($custom-app-secondary);
+}
+
+.button-control-data{
+    width: 90px;
+    height: 90px;
+    white-space: normal;
+    line-height: 15px;
+
+}
+
+.button-event {
+
+    background-color:  mat-color($custom-app-secondary);
+    //color: white;
+    border: 2px solid  mat-color($custom-app-secondary);
+    border-radius: 8px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+}
+.button-event:hover {
+    background-color: #013141; /* Azure */
+    color: white;
+}
+.button-event:active {
+    background-color: #013141; /* Azure */
+    border: 2px solid #013141; /* Azure */
+    color: black;
+}
 
 //Definindo temas base
 // @use '../node_modules/@angular/material' as mat;
@@ -97,12 +149,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
-body{
-    background-color:aliceblue;
+mat-divider{
+    width: 100%;
 }
 
-.white-icon{
-    color: white;
+// // body{
+// //     background-color:aliceblue;
+// // }
+
+.white-pallete-light{
+    color: white !important;
 }
 
 .spanValidate{
@@ -120,27 +176,7 @@ input{
     display: inline-block;
 }
 
-.button-event {
-    background-color: #008CBA;
-    color: white;
-    border: 2px solid #008CBA; /* Azure */
-    border-radius: 8px;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    width: 90px;
-    height: 90px;
-}
-.button-event:hover {
-    background-color: #013141; /* Azure */
-    color: white;
-}
-.button-event:active {
-    background-color: #013141; /* Azure */
-    border: 2px solid #013141; /* Azure */
-    color: black;
-}
+
 
 
 .content{
@@ -213,12 +249,12 @@ input{
     color: black;
 }
 
-.header{
-    width: 100%;
-    height: 80px;
-    display: block;
-    background-color: #010a22;
-}
+// .header{
+//     width: 100%;
+//     height: 80px;
+//     display: block;
+//     background-color: #010a22;
+// }
 
 .text_content{
     margin-top: 15px;

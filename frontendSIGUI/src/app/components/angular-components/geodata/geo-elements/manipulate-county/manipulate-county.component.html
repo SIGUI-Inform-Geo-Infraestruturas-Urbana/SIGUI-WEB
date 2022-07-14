@@ -1,7 +1,10 @@
 <div class="wrapper">
     <div class="box-field"> 
         <h3>GERENCIAR MUNICIPIO</h3>
+        <div class="divider-div header-light-pallete"></div>
+       
     </div>
+
     <div class="box-field"> 
         <div style="width: auto;">
             <label>Buscar Municipio </label>
@@ -15,22 +18,25 @@
             <mat-icon >menu</mat-icon>
         </button>  
     </div>
-    <div >
-        <button class="button-event"> 
-            <mat-icon >home</mat-icon> 
-            ShapeFiles Municipios
+    <div class="button-colum">
+        <button mat-flat-button class="button-control-data" color="primary"> 
+            <mat-icon >home</mat-icon><br> 
+            <span> ShapeFiles Municipios</span>           
         </button>                   
     </div>
-    <div >
-        <button class="button-event" (click)="onClickSelectCounty()"> 
-            <mat-icon >home</mat-icon> 
-            Manipular Limites Municipais
-        </button>  
+    <div class="button-colum">
+        <button mat-flat-button class="button-control-data" color="primary" (click)="onClickSelectCounty()"> 
+            <mat-icon >home</mat-icon><br> 
+            <span>Manipular Limites Municipais</span>           
+        </button>   
     </div>
-    <div >
-        <button class="button-event" (click)="addLayerVetorMunicipios()"> 
-            <mat-icon >home</mat-icon> 
-            Buscar Limites Municipais
-        </button>  
+    <div class="button-colum">
+        <button mat-flat-button class="button-control-data" color="primary" (click)="addLayerVetorMunicipios()"> 
+            <mat-icon >home</mat-icon><br> 
+            <span>Buscar Limites Municipais</span>           
+        </button> 
     </div>
+    <div class="box-field">
+        <mat-divider></mat-divider>
+    </div>   
 </div> 

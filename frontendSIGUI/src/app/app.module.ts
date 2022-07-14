@@ -68,6 +68,7 @@ import { ErrorIntercept } from './error.interceptor';
 import { ErrorComponent } from './error/error.component';
 import { ErrorService } from './error.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule} from '@angular/material/divider'
 import { DialogPopUpComponent } from './dialog-pop-up/dialog-pop-up.component';
 import { SelectUnitFederativeComponent } from './components/maps-components/selectLayers/select-unit-federative/select-unit-federative.component'
 import { SelectPoligonoComponent } from './components/maps-components/selectLayers/select-unit-poligono/select-unit-poligono.component'
@@ -180,6 +181,7 @@ import { PopupControlEquipamenturbanComponent } from './components/maps-componen
     MatIconModule,
     MatListModule,
     MatSnackBarModule,
+    MatDividerModule,
     
   ],
   providers: [

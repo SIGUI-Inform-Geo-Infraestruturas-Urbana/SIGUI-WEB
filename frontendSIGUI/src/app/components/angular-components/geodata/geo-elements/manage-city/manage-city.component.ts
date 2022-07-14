@@ -16,7 +16,7 @@ import { MatSnackBar} from '@angular/material/snack-bar'
 @Component({
   selector: 'app-manage-county',
   templateUrl: './manage-city.component.html',
-  styleUrls: ['./manage-city.component.css']
+  styleUrls: ['./manage-city.component.scss']
 })
 export class ManageCountyComponent implements OnInit {
   @Output() DrawMap: EventEmitter<string> = new EventEmitter();

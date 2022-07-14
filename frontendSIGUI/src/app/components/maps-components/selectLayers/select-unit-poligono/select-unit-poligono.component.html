@@ -1,29 +1,29 @@
 <form [formGroup]="controlMapForm" >
 
     <div class="componets-horizontal">
-        <div class="componets-horizontal" (click)="onDrawPoligony()">
-            <button mat-icon-button color="primary">
-                <mat-icon>home</mat-icon>
+        <div class="componets-horizontal" >
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawPoligony()">
+                <mat-icon>edit</mat-icon>
             </button>
         </div>
         <div class="componets-horizontal">
-            <button mat-icon-button color="primary" (click)="onDrawNone()">
-                <mat-icon>home</mat-icon>
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawNone()">
+                <mat-icon>swipe_up</mat-icon>
             </button>
         </div>
         <div class="componets-horizontal">
-            <button mat-icon-button color="primary" (click)="onDrawClear()">
-                <mat-icon>home</mat-icon>
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawClear()">
+                <mat-icon>delete</mat-icon>
             </button>
         </div>
     </div>
     
-    <mat-form-field color="primary" appearance="fill"> 
+    <!-- <mat-form-field color="primary" appearance="fill"> 
         <mat-label>Desenhar Elemento</mat-label>
         <mat-select formControlName="selectDraw">
             <mat-option *ngFor="let selectDraw of optionsDraws" [value]="selectDraw.id">
                 {{selectDraw.name}}
             </mat-option>
         </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
 </form>
