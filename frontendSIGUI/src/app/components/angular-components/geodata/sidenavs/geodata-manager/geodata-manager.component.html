@@ -1,0 +1,44 @@
+<div class="subtitle-nav header-light-pallete">
+    <h2 class="secondary-text ">GEODADOS</h2>
+ </div>
+<div class="sidenav-container color-pallete" >
+    <mat-nav-list style="width: auto;">
+        <mat-list-item>
+        <mat-icon mat-list-icon class="sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+        </mat-list-item>  
+        <mat-list-item >
+            <mat-icon mat-list-icon class="sidenav-button">home</mat-icon> 
+            <span *ngIf="isExpanded">Home</span>        
+        </mat-list-item>
+        <mat-list-item >
+            <mat-icon mat-list-icon class="sidenav-button">home</mat-icon> 
+            <span *ngIf="isExpanded" (click)="openDialog()">File</span>        
+        </mat-list-item>
+    </mat-nav-list>
+</div>
+<div class="container-div">                
+    <div class="container">          
+        <app-manipulate-county></app-manipulate-county>                    
+    </div>
+   <!-- managerVizualizaton.session_county -->
+    <div class="container" *ngIf="true">          
+        <app-table-county></app-table-county>
+    </div>
+    <div class="container">  
+        
+        <div class="wrapper-manipulation">
+            <div class="box-field-ex">
+                <button mat-flat-button class="button-control-data" color="primary" > 
+                    <mat-icon >home</mat-icon><br> 
+                    <span>Excluir Municipios</span>           
+                </button>   
+            </div>
+            <div class="box-field-ed">
+                <button mat-flat-button class="button-control-data" color="primary" > 
+                    <mat-icon >home</mat-icon><br> 
+                    <span> Editar Municipios</span>           
+                </button>               
+            </div>
+        </div> 
+    </div>
+</div>

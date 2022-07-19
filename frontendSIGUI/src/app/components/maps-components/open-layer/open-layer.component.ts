@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-import Map from 'ol/Map';
+import OlMap from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
@@ -17,9 +17,9 @@ import Draw from 'ol/interaction/Draw'
 import {DrawEvent} from 'ol/interaction/Draw'
 import { fromLonLat , toLonLat, transform} from 'ol/proj';
 import {Style, Stroke, Icon, Fill} from 'ol/style';
-import { MapBrowserEvent, Feature } from 'ol';
+import { MapBrowserEvent, Feature, Collection } from 'ol';
 import { Coordinate, toStringHDMS } from 'ol/coordinate';
-import { Modify , Select, defaults as defaultInteraction} from 'ol/interaction'
+import { Modify , Select, defaults as defaultInteraction, Interaction} from 'ol/interaction'
 //import {SelectFeature} from 'ol/control/Control/SelectFeature'
 import Layer from 'ol/layer/Layer';
 import { style } from '@angular/animations';
@@ -42,9 +42,10 @@ import { CountyRepositoryService } from 'src/app/repositorys/county-repository.s
 })
 export class OpenLayerComponent implements OnInit {
 
+  @Input() map!:OlMap;
   coordenadaPoint!:string
 
-  map!: Map
+  //map: OlMap
   // edited:boolean = false;
   // insert_Infra!: boolean
   // layerSource!: VectorLayer<VectorSource<Geometry>>
@@ -68,14 +69,31 @@ export class OpenLayerComponent implements OnInit {
   sourceequipamente!:VectorSource;  
 
   sourceInfrastructure!:VectorSource;
+
+ 
+  
   
   constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
     public countyRepository : CountyRepositoryService){// public countyService : CountyService
-
+      //this.map = new OlMap({})
+      // this.map = new Map({ 
+      //    target: 'ol-map',
+      //    view: new View({
+      //      center: [ -5480159.755742349, -2930312.646903647 ],
+      //      zoom: 12,
+      //      multiWorld: true,
+      //    }),
+      //  })
   }
 
-  ngOnInit(): void { 
-    this.mapConstruct();   
+  
+
+  ngOnInit(): void {
+    console.log('TestMap');
+    console.log(this.map);
+
+    this.mapConstruct();
+    
     // this.insert_Infra = false;
     this.dataSpatialService.getDataSpatial().subscribe((data: DataSpatial[]) => {
       console.log('///////////');
@@ -169,63 +187,20 @@ export class OpenLayerComponent implements OnInit {
     // });
   }; 
 
-
-  mapConstruct():void{      
-
-      const geojsonObject = {
-        'type': 'FeatureCollection',
-        'crs': {
-          'type': 'name',
-          'properties': {
-            'name': 'EPSG:3857',
-          },
-        },
-        'features': [
-          {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'Point',
-              'coordinates': [4e6, -5e6],
-            },
-          },
-        ],
-      }
+  
+  mapConstruct():void{
+    
+    if(this.map != undefined){
 
       this.addStyleMap();
+      let intSelect = this.mapSelect();
+      let interation: Collection<Interaction> = defaultInteraction()
+        .extend([intSelect,this.maṕInteraction(intSelect)])   
 
-      const select = new Select({
-        style : this.overlayStyle, 
-      })
+      interation.forEach((interac) => {this.map.addInteraction(interac)})     
+    
+       // this.map.on('singleclick', (evt) => this.onClickMap(evt))    
 
-      const modify = new Modify({
-        features: select.getFeatures(),
-        style: this.overlayStyle,
-        insertVertexCondition: function(){
-          return !select
-            .getFeatures()
-            .getArray()
-            .every(function (feature) {
-              return feature.getGeometry()?.getType().match('/Polygon/');
-            })
-        }
-      })
-
-      this.map = new Map({
-       interactions: defaultInteraction().extend([select,modify]),
-       // layers: [layer],
-        target: 'ol-map',
-        view: new View({
-          center: [ -5480159.755742349, -2930312.646903647 ],
-          zoom: 12,
-          multiWorld: true,
-        }),
-      })
-
-      // this.map.on('singleclick', (evt) => this.onClickMap(evt))    
-
-      // const select: SelectFeature = new selectFea 
-
-     //this.addTileLayerOSM();
       this.addTileLayerGeoserver();
       this.addVetorIterationTile();
 
@@ -238,7 +213,44 @@ export class OpenLayerComponent implements OnInit {
       this.addLoadDataRede(); 
       this.addLoadDataInfrastructure();
       this.addLoadDataEquipament();
+    }
+
+    // this.map = new OlMap({
+    //   interactions: 
+    //   // layers: [layer],
+    //    target: 'ol-map',
+    //    view: new View({
+    //      center: [ -5480159.755742349, -2930312.646903647 ],
+    //      zoom: 12,
+    //      multiWorld: true,
+    //    }),
+    //  })
   }
+
+  mapSelect():Select{
+    const select = new Select({
+      style : this.overlayStyle, 
+    })
+    return select;
+  }
+
+  maṕInteraction(select :Select):Modify{
+  
+    const modify = new Modify({
+      features: select.getFeatures(),
+      style: this.overlayStyle,
+      insertVertexCondition: function(){
+        return !select
+          .getFeatures()
+          .getArray()
+          .every(function (feature) {
+            return feature.getGeometry()?.getType().match('/Polygon/');
+          })
+      }
+    })
+    return modify;
+
+  } 
 
   addStyleMap():void{
 

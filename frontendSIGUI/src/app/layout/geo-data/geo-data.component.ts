@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Feature } from 'ol';
+import { Feature, View } from 'ol';
+import OlMap from 'ol/Map';
 import { Geometry } from 'ol/geom';
 import { ManagerFilePopupComponent } from 'src/app/components/dialogs-components/manager-file-popup/manager-file-popup.component';
 import { OpenLayerComponent } from 'src/app/components/maps-components/open-layer/open-layer.component';
@@ -9,6 +10,7 @@ import { DataSpatial } from 'src/app/models/data-spatial';
 import { ManagerSession } from 'src/app/models/managerSession.model';
 import { CountyManipulationService } from 'src/app/services/count/county-manager/county-manipulation.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
+import { ManagerMenu } from 'src/app/models/managerMenu.model';
 
 @Component({
   selector: 'app-geo-data',
@@ -17,7 +19,9 @@ import { StateMapService } from 'src/app/services/shared/state-map.service';
 })
 export class GeoDataComponent implements OnInit {
 
-  @ViewChild('mapOpenLayer',{static:false}) mapOpenLayer !: OpenLayerComponent;
+  //@ViewChild('mapOpenLayer',{static:false}) mapOpenLayer !: OpenLayerComponent;
+  @Input() managerManu!:ManagerMenu;
+  public mapLayers!: OlMap;
   public managerVizualizaton :ManagerSession;
   public managerManipulation :ManagerSession;
 
@@ -31,6 +35,8 @@ export class GeoDataComponent implements OnInit {
     private countyVizualization :CountyManipulationService) { 
     this.managerVizualizaton = new ManagerSession();
     this.managerManipulation = new ManagerSession();
+    //this.mapLayers = this.mapOpenLayer.map;   
+    this.initializeOpenLayers();
 
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log('valor SELECIONADO-----------------s')
@@ -38,13 +44,23 @@ export class GeoDataComponent implements OnInit {
       this.validatedDataSelect(feature);   
 
     });
-  }
-
-  
+  }  
 
   ngOnInit(): void {
     console.log('sadsadsadsadsadsad')
     console.log(this.managerVizualizaton.session_county) 
+  }
+
+  initializeOpenLayers(){
+    
+  this.mapLayers = new OlMap({ 
+      target: 'ol-map',
+      view: new View({
+        center: [ -5480159.755742349, -2930312.646903647 ],
+        zoom: 12,
+        multiWorld: true,
+      }),
+    })
   }
 
   enableModalManipuledData(){
@@ -172,8 +188,6 @@ export class GeoDataComponent implements OnInit {
   
   }
 
-  openDialog(){
-    this.dialog.open(ManagerFilePopupComponent)
-  }
+
 
 }

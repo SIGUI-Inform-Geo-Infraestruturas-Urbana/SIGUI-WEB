@@ -48,7 +48,7 @@ export class ManagerFileStateComponent implements OnInit {
           break;
       }      
     }  
-    this.createFile(formData);
+    // this.createFile(formData);
 
    /* let a = currentFileUpload.name.split('.').pop();
     console.log('a')
@@ -111,14 +111,14 @@ export class ManagerFileStateComponent implements OnInit {
    
   }
 
-  createFile(formData:FormData):void{
-    this.restApi.setUploadFile(formData).subscribe((data : {}) => {
-      console.log('populate')
-      console.log(data)
-      this.snackBar.open(`Estados Cadastrados! }`,'Entendido',{duration: 8 * 1000});
-    })
+  // createFile(formData:FormData):void{
+  //   this.restApi.setUploadFile(formData).subscribe((data : {}) => {
+  //     console.log('populate')
+  //     console.log(data)
+  //     this.snackBar.open(`Estados Cadastrados! }`,'Entendido',{duration: 8 * 1000});
+  //   })
     
-  }
+  // }
 
 
 }

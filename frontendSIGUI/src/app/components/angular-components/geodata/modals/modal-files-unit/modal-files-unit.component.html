@@ -1,0 +1,46 @@
+<div class="subtitle-nav header-light-pallete">
+    <div class="control">
+        <h2 class="secondary-text ">Gerenciar ShapeFiles de Unidades Federativas</h2>
+        <button mat-button (click)="onNoClick()">Close</button>
+    </div>
+ </div>
+ <div class="div-modal">
+    <div class="container-modal">  
+        <div class="modal-control">
+            <div class="controlSub">
+                <h2 class="secondary-text ">Arquivos Salvos</h2>  
+                <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload multiple>
+                <button mat-icon-button color="accent" (click)="fileUpload.click()" aria-label="Example icon button with a heart icon">
+                    <mat-icon>folder_open</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" aria-label="Example icon button with a heart icon">
+                    <mat-icon>file_upload</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="modal-control">
+            <app-tree-data ></app-tree-data>
+        </div>  
+    </div>  
+     <div class="container-modal">     
+        <div class="modal-control"> 
+            <h2 class="secondary-text ">Arquivos Salvos</h2>  
+        </div>
+        <div class="modal-control">   
+            <mat-list>
+            <div mat-subheader>Folders</div>
+            <mat-list-item *ngFor="let folder of folders">
+                <mat-icon mat-list-icon>folder</mat-icon>
+                <button mat-icon-button (click)="getFiles(folder)">
+                    <mat-icon >file_download</mat-icon>
+                </button>               
+                <div mat-line>{{folder.name}}</div>
+                <div mat-line> {{folder.updated | date}} </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            </mat-list>              
+        </div>
+          
+    </div>  
+
+ </div>

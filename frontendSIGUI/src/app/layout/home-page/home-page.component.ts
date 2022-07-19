@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ManagerMenu } from 'src/app/models/managerMenu.model';
+import { ManagerSession } from 'src/app/models/managerSession.model';
 
 @Component({
   selector: 'app-home-page',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  public managerManu!:ManagerMenu;
   isShowing: boolean = false;
   isExpanded: boolean = false;
+
+  constructor() { 
+    this.managerManu = new ManagerMenu();
+  }
+  
   
 
   ngOnInit(): void {
@@ -19,5 +26,17 @@ export class HomePageComponent implements OnInit {
     console.log('dsadsad')
     this.isShowing= !this.isShowing;   
   }
+
+  onClickGeoData(){
+    this.managerManu = new ManagerMenu();
+    this.managerManu.session_geodata =true;
+  }
+
+  onClickGeoLayers(){
+    this.managerManu = new ManagerMenu();
+    this.managerManu.session_layers =true;
+  }
+
+
 
 }

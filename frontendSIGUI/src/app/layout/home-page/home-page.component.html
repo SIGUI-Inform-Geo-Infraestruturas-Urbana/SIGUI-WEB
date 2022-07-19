@@ -13,12 +13,12 @@
                 <span *ngIf="isExpanded">Home</span>                
             </mat-list-item>
             <mat-divider></mat-divider>       
-            <mat-list-item class="white-pallete-light">
+            <mat-list-item class="white-pallete-light" (click)="onClickGeoLayers()">
                 <mat-icon mat-list-icon class="light-icon">grid_on</mat-icon> 
                 <span *ngIf="isExpanded">Camadas</span>
             </mat-list-item>
             <mat-divider></mat-divider>       
-            <mat-list-item class="white-pallete-light" >
+            <mat-list-item class="white-pallete-light" (click)="onClickGeoData()">
                 <mat-icon mat-list-icon class="light-icon">grid_on</mat-icon> 
                 <span *ngIf="isExpanded">Geo Dados</span>
             </mat-list-item>
@@ -27,7 +27,7 @@
     </mat-sidenav>
     <div style="height: 100%;">       
 
-       <app-geo-data class="component"></app-geo-data>   
+       <app-geo-data [managerManu]="managerManu" class="component"></app-geo-data>   
     </div>
 
     <!-- <div class="content">

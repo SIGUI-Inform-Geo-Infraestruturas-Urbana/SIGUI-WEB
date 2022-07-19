@@ -33,6 +33,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatTreeModule} from '@angular/material/tree'
+import { MatCheckboxModule} from '@angular/material/checkbox'
+import { MatProgressBarModule} from '@angular/material/progress-bar'
 
 import { NavheadersiguiComponent } from './components/angular-components/navheadersigui/navheadersigui.component';
 import { ManegerlayersComponent } from './components/maps-components/manegerlayers/manegerlayers.component';
@@ -90,7 +93,16 @@ import { PopupControlDistrictComponent } from './components/maps-components/map-
 import { PopupControlStreetComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-street/popup-control-street.component';
 import { PopupControlPublicplaceComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-publicplace/popup-control-publicplace.component';
 import { PopupControlInfrastructureComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-infrastructure/popup-control-infrastructure.component';
-import { PopupControlEquipamenturbanComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-equipamenturban/popup-control-equipamenturban.component'
+import { PopupControlEquipamenturbanComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-equipamenturban/popup-control-equipamenturban.component';
+import { LayerManagerComponent } from './components/angular-components/geodata/sidenavs/layer-manager/layer-manager.component';
+import { GeodataManagerComponent } from './components/angular-components/geodata/sidenavs/geodata-manager/geodata-manager.component';
+import { TreeLayersManagerComponent } from './components/angular-components/geodata/sidenavs/tree-layers-manager/tree-layers-manager.component';
+import { ModalFilesCountyComponent } from './components/angular-components/geodata/modals/modal-files-county/modal-files-county.component';
+import { ModalFilesUnitComponent } from './components/angular-components/geodata/modals/modal-files-unit/modal-files-unit.component';
+import { TreeFilesComponent } from './components/angular-components/geodata/modals/tree-files/tree-files.component';
+import { TreeDataComponent } from './components/angular-components/geodata/modals/tree-data/tree-data.component'
+
+
 
 
 @NgModule({
@@ -154,11 +166,21 @@ import { PopupControlEquipamenturbanComponent } from './components/maps-componen
     PopupControlStreetComponent,
     PopupControlPublicplaceComponent,
     PopupControlInfrastructureComponent,
-    PopupControlEquipamenturbanComponent, 
+    PopupControlEquipamenturbanComponent,
+    LayerManagerComponent,
+    GeodataManagerComponent,
+    TreeLayersManagerComponent,
+    ModalFilesCountyComponent,
+    ModalFilesUnitComponent,
+    TreeFilesComponent,
+    TreeDataComponent, 
+   
 
 
   ],
   imports: [
+
+
     MatSliderModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -182,7 +204,10 @@ import { PopupControlEquipamenturbanComponent } from './components/maps-componen
     MatListModule,
     MatSnackBarModule,
     MatDividerModule,
-    
+    MatTreeModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
+
   ],
   providers: [
     DecimalPipe,

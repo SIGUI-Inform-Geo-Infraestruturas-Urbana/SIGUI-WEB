@@ -55,10 +55,11 @@ class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
        # conversionParser(new_geoEspatial.file_shp)
         if espatial_request["category"] == 'county':
             a = new_geoEspatial.parserShapFile()
-            print(a)
+            print('cidade')
         elif espatial_request["category"] == 'state':
             a = new_geoEspatial.parserShapFileState()
             print(a)
+            print('estados')
 
 
         # print('teste2')

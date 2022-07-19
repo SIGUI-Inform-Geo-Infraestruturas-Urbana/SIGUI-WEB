@@ -9,6 +9,7 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Feature } from 'ol';
 import { District } from '../models/district.model';
+import { FileData } from '../models/file-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -155,6 +156,8 @@ export class RestApiService {
   }
   
   setUploadFile(formdata: FormData){
+    // let jsonContent = JSON.stringify(formdata)
+    // console.log(jsonContent)
     return this.http.post( this.apiURL + '/api/data/uploads/',formdata);
   }
 
