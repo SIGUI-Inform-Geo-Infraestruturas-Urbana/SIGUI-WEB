@@ -13,9 +13,20 @@ class CountyViewSet(viewsets.ModelViewSet):
     #     return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
 
     def get_queryset(self):
+        
         queryset = ''
-        queryset = models.County.objects.all()
-        return queryset
+        print('CHEGOU')
+        pkSearch = self.kwargs['pk']
+        print(pkSearch)
+        if pkSearch is None:
+            queryset = models.County.objects.all()
+            return queryset
+        else:
+            queryset = models.County.objects.filter(id = pkSearch)
+            print('FILTRADO')       
+            print(queryset)   
+            return queryset
+            # //return models.County.objects.none
 
 
     def create(self, request, *args, **kwargs):

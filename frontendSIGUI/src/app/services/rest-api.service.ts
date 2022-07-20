@@ -163,6 +163,7 @@ export class RestApiService {
 
   handleError(error: any) {
     let errorMessage = '';
+    console.log('EROROROROROROROROROROROROR')
     if (error.error instanceof ErrorEvent) {
       // Get client-side error
       errorMessage = error.error.message;

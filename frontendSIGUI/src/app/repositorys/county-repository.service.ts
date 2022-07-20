@@ -24,6 +24,10 @@ export class CountyRepositoryService implements IRepository<County,County> {
   constructor(private restApiBackend: RestApiBackendService<County,string>,private countyService : CountyService,
     private dataSpatialService : DataSpatialService ) { }
 
+  getCounties():Observable<County[]>{
+    return this.counties$;
+  }
+
   findFetchData(idParam : number = 0):boolean{//Feature<Geometry>
     let urlSearch = '';
 
@@ -35,13 +39,50 @@ export class CountyRepositoryService implements IRepository<County,County> {
       urlSearch = this.stringConection;
     }
 
-    this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
-      let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>data.body);
-      let cities = this.countyService.convertFeature(featureObject);
-      this.dataSpatialService.setDataSpatial(cities);
-    })
-    return true;
+    this.restApiBackend.getData(urlSearch)
+    //.pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : HttpResponse<string>) => {
+        console.log(beers);
+        let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>beers.body);
+        let cities = this.countyService.convertFeature(featureObject);
+       // this.dataSpatialService.setDataSpatial(cities);
+        this._counties.next(cities);
+      },
+      error: (err) => {
+        console.log(err);
+        this._counties.error(err);
+      },
+    });
+     return true;
   }
+
+  /* findFetchData(idParam : number = 0):boolean{//Feature<Geometry>
+    let urlSearch = '';
+
+    if (idParam != 0){
+      urlSearch = this.stringConection + idParam.toString();
+    }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
+
+    this.restApiBackend.getData(urlSearch)
+    .pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : HttpResponse<string>) => {
+        console.log(beers);
+        let featureObject : Feature<Geometry>[] = this.countyService.conversionJson(<string>beers.body);
+        let cities = this.countyService.convertFeature(featureObject);
+        this.dataSpatialService.setDataSpatial(cities);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+     return true;
+  } */
 
   findFetch():Observable<County[]>{//Observable<string>
     this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {

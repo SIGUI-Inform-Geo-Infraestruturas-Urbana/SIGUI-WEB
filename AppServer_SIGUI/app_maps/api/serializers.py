@@ -349,3 +349,10 @@ class GeoDadosEspaciaisSerializer (serializers.ModelSerializer):
     class Meta:
         model = models.GeoDadosEspaciais
         fields = '__all__'
+
+    # def validate_file_dbf(self, file_dbf: str) -> str:
+    #     if len(file_dbf) < 10:
+    #         raise serializers.ValidationError(
+    #             "Username must be at least 10 characters long.",
+    #         )
+    #     return file_dbf

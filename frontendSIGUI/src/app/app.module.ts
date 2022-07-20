@@ -100,7 +100,8 @@ import { TreeLayersManagerComponent } from './components/angular-components/geod
 import { ModalFilesCountyComponent } from './components/angular-components/geodata/modals/modal-files-county/modal-files-county.component';
 import { ModalFilesUnitComponent } from './components/angular-components/geodata/modals/modal-files-unit/modal-files-unit.component';
 import { TreeFilesComponent } from './components/angular-components/geodata/modals/tree-files/tree-files.component';
-import { TreeDataComponent } from './components/angular-components/geodata/modals/tree-data/tree-data.component'
+import { TreeDataComponent } from './components/angular-components/geodata/modals/tree-data/tree-data.component';
+import { SnackAlertComponent } from './snack-alert/snack-alert.component'
 
 
 
@@ -173,7 +174,8 @@ import { TreeDataComponent } from './components/angular-components/geodata/modal
     ModalFilesCountyComponent,
     ModalFilesUnitComponent,
     TreeFilesComponent,
-    TreeDataComponent, 
+    TreeDataComponent,
+    SnackAlertComponent, 
    
 
 

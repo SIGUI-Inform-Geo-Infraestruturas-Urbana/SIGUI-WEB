@@ -1,23 +1,24 @@
+<form [formGroup]="searchCountyForm" (ngSubmit)="getFeatureCounty()"> 
 <div class="wrapper">
     <div class="box-field"> 
         <h3>GERENCIAR MUNICIPIO</h3>
         <div class="divider-div header-light-pallete"></div>
        
     </div>
-
-    <div class="box-field"> 
-        <div style="width: auto;">
-            <label>Buscar Municipio </label>
-        </div>                   
-        <input class="input-filter" type="text">
-    </div>
-    <div class="box-field">                  
-        <label >Código UF </label>
-        <input class="input-filter-secondary" type="text">  
-        <button mat-icon-button (click)="getFeatureCounty()"> 
-            <mat-icon >menu</mat-icon>
-        </button>  
-    </div>
+   
+        <div class="box-field"> 
+            <div style="width: auto;">
+                <label>Buscar Municipio </label>
+            </div>                   
+            <input class="input-filter" type="text" formControlName="idMunicipio">
+        </div>
+        <div class="box-field">                  
+            <label >Código UF </label>
+            <input class="input-filter-secondary" type="text" formControlName="idState">  
+            <button mat-icon-button type="submit"> 
+                <mat-icon >menu</mat-icon>
+            </button>  
+        </div>
     <div class="button-colum">
         <button mat-flat-button class="button-control-data" color="primary" (click)="onClickShapeFile()"> 
             <mat-icon >home</mat-icon><br> 
@@ -40,3 +41,4 @@
         <mat-divider></mat-divider>
     </div>   
 </div> 
+   </form>
