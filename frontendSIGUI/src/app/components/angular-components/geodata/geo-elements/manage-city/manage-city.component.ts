@@ -12,6 +12,7 @@ import { CountyRepositoryService } from 'src/app/repositorys/county-repository.s
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { getArea } from 'ol/sphere';
 import { MatSnackBar} from '@angular/material/snack-bar'
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-county',
@@ -188,12 +189,36 @@ export class ManageCountyComponent implements OnInit {
   createDistrict(city:County):void{
     console.log('popu')
     console.log(city)
-    let a = this.countyRepository.createData(city)
-      .then((value:County) => {
-        console.log(value)
-        this.initializeForm(value);      
-        this.snackBar.open(`Cidade Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
-      })
+
+    this.countyRepository.postData(city).subscribe({
+      next: (cities : County) => {
+        console.log(cities);
+        this.initializeForm(cities);    
+        this.snackBar.open(`Cidade Cadastrada! ID { ${cities.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+      
+      },
+    
+    }) 
+
+    // let a = this.countyRepository.createData(city)
+    //   .then((value:County) => {
+    //     console.log(value)
+    //     this.initializeForm(value);      
+    //     this.snackBar.open(`Cidade Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+    //   })
+  }
+
+  openSnackBar(mensagem : string) {
+    this.snackBar.open(mensagem, 'Entendido!', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   getState():void{

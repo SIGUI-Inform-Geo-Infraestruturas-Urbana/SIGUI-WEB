@@ -32,19 +32,19 @@ export class ManipulateCountyComponent implements OnInit {
     public dialog: MatDialog) {
 
     this.managerSession = new ManagerSession();
-    this.countyRepositoryService.getCounties()
-    //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
-    .subscribe({
-      next: (beers : County[]) => {
-        console.log(beers);
-      },
-      error: (err:HttpErrorResponse) => {
-        console.log('TRATAR');
-        console.log(err);
-        this.openSnackBar(err.statusText);
-        //this._counties.error(err);
-      },
-    });
+    // this.countyRepositoryService.getCounties()
+    // //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    // .subscribe({
+    //   next: (beers : County[]) => {
+    //     console.log(beers);
+    //   },
+    //   error: (err:HttpErrorResponse) => {
+    //     console.log('TRATAR');
+    //     console.log(err);
+    //     this.openSnackBar(err.statusText);
+    //     //this._counties.error(err);
+    //   },
+    // });
    }
 
   ngOnInit(): void {  
@@ -74,8 +74,23 @@ export class ManipulateCountyComponent implements OnInit {
   getFeatureCounty(){
     let idSearch = this.searchCountyForm.get('idMunicipio')?.value;
     // this.getCounty.emit(idSearch);
-    this.countyRepositoryService.findFetchData(idSearch); 
-  }
+    //this.countyRepositoryService.findFetchData(idSearch);
+    
+    this.countyRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : County[]) => {
+        console.log(beers);
+        this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
+   }
+  
 
   onClickSelectCounty(){
 

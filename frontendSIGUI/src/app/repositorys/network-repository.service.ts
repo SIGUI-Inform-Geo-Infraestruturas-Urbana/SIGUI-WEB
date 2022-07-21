@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, firstValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Observer, throwError } from 'rxjs';
 import { Feature } from 'ol';
 import { Geometry, LineString, MultiPolygon } from 'ol/geom';
 import { RestApiBackendService } from './rest-api-backend.service';
@@ -43,15 +43,65 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
     return true;
   }
 
-  findFetch():Observable<Network[]>{//Observable<string>
-    this.restApiBackend.getDatas(this.stringConection).subscribe((data : HttpResponse<Array<Network>>) => {
-      let bodys : Network[]= <Network[]>data.body;
-      console.log('testerede')
-      console.log(bodys)
-      this._networks.next(bodys);
-    })
+  // findFetch():Observable<Network[]>{//Observable<string>
+  //   this.restApiBackend.getDatas(this.stringConection).subscribe((data : HttpResponse<Array<Network>>) => {
+  //     let bodys : Network[]= <Network[]>data.body;
+  //     console.log('testerede')
+  //     console.log(bodys)
+  //     this._networks.next(bodys);
+  //   })
+  //   return this.networks$;
+  // }  
+
+  findFetch(idParam : number = 0):Observable<Network[]>{//Feature<Geometry>
+    let urlSearch = '';
+
+    if (idParam != 0){
+      urlSearch = this.stringConection + idParam.toString();
+    }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
+
+    this.restApiBackend.getDatas(urlSearch)
+    //.pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (response : HttpResponse<Array<Network>>) => {
+        let bodys : Network[]= <Network[]>response.body;
+        console.log('testerede')
+        console.log(bodys)
+        this._networks.next(bodys);
+      },
+      error: (err) => {
+        console.log(err);
+        this._networks.error(err);
+      },
+    });
     return this.networks$;
-  }  
+  }
+
+
+  postData (street:Network):Observable<Network>{
+
+    return new Observable((observer: Observer<Network>) => {
+      console.log("Create")
+      console.log(street)
+  
+     this.restApiBackend.postData(this.stringConection,street).subscribe({
+       next: (response : HttpResponse<string>) => {
+         console.log(response);
+         console.log(' cRIAdo')
+        //  observer.next(response);
+        //  observer.complete();
+       },
+       error: (err) => {
+         console.log(err);
+         observer.error(err);
+       },
+     }); 
+    }); 
+   }
 
   async createData (street:Network):Promise<Network>{
 

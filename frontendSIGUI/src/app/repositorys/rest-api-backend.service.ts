@@ -38,7 +38,7 @@ export class RestApiBackendService<T,U> implements IRest<T,U>{
           observe: 'response'
         }       
       )
-      .pipe(retry(1), catchError(this.handleError));
+      // .pipe(retry(1), catchError(this.handleError));
   }
 
   getData (url :string): Observable<HttpResponse<U>>{

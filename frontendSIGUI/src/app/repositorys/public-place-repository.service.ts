@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { toStringHDMS } from 'ol/coordinate';
-import { BehaviorSubject, firstValueFrom, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, Observer, throwError } from 'rxjs';
 import { County } from '../models/county.model';
 import { retry, catchError } from 'rxjs/operators'
 import { Feature } from 'ol';
@@ -45,17 +45,71 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
     return true;
   }
 
-  findFetch():Observable<PublicPlace[]>{//Observable<string>
-    this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
-      console.log(data)
-      let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>data.body);
-      console.log(featureObject)
-      let streets = this.publicPlaceService.convertFeature(featureObject);
-      console.log(streets)
-      this._publicplace.next(streets);
-    })
-    return this.publicplace$;
-  }  
+  // findFetch():Observable<PublicPlace[]>{//Observable<string>
+  //   this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
+  //     console.log(data)
+  //     let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>data.body);
+  //     console.log(featureObject)
+  //     let streets = this.publicPlaceService.convertFeature(featureObject);
+  //     console.log(streets)
+  //     this._publicplace.next(streets);
+  //   })
+  //   return this.publicplace$;
+  // }  
+
+  findFetch(idParam : number = 0):Observable<PublicPlace[]>{//Feature<Geometry>
+    let urlSearch = '';
+
+    if (idParam != 0){
+      urlSearch = this.stringConection + idParam.toString();
+    }
+    else
+    {
+      urlSearch = this.stringConection;
+    }
+
+    this.restApiBackend.getData(urlSearch)
+    //.pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (response : HttpResponse<string>) => {
+        console.log(response)
+        let featureObject : Feature<Geometry>[] = this.publicPlaceService.conversionJson(<string>response.body);
+        console.log(featureObject)
+        let streets = this.publicPlaceService.convertFeature(featureObject);
+        console.log(streets)
+        this._publicplace.next(streets);
+      },
+      error: (err) => {
+        console.log(err);
+        this._publicplace.error(err);
+      },
+    });
+    return  this.publicplace$;
+  }
+
+  postData (publicPlace:PublicPlace):Observable<PublicPlace>{
+    return new Observable((observer: Observer<PublicPlace>) => {
+     console.log("Create")
+     console.log(publicPlace)
+    // if(publicPlace.pp_geometry != '0'){
+     // console.log(publicPlace)
+      publicPlace.pp_geometry = this.publicPlaceService.preparObject(<LineString>publicPlace.pp_geometry);
+      let postSpatial = this.restApiBackend.postData(this.stringConection,publicPlace)
+      .subscribe({
+       next: (response : HttpResponse<string>) => {
+         console.log(response);
+         let featureObject : Feature<Geometry> = this.publicPlaceService.conversionJsonObject(<string>response.body); 
+         let infras = new PublicPlace().deserialize(featureObject);
+         observer.next(infras);
+         observer.complete();
+       },
+       error: (err) => {
+         console.log(err);
+         observer.error(err);
+       },
+     }); 
+  });
+  }
 
   async createData (publicPlace:PublicPlace):Promise<PublicPlace>{
 

@@ -49,7 +49,13 @@ export class SubsystemRepositoryService implements IRepository<Subsystem,Subsyst
       this._subsystems.next(bodys);
     })
     return this.subsystems$;
-  }  
+  } 
+
+  
+  
+  postData (city:Subsystem):Observable<Subsystem>{
+    return new Observable();
+  }
 
   async createData (street:Subsystem):Promise<Subsystem>{
 
