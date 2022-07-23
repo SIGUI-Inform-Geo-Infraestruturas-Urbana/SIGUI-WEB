@@ -1,0 +1,111 @@
+<form [formGroup]="streetForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados Street</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação da Rua</mat-label>
+                    <input type="number" matInput placeholder="Input" formControlName="idStreet">
+                </mat-form-field>
+            </div>
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome da Rua</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="nameStreet">
+                    <span class="spanValidate" *ngIf="streetForm.controls['nameStreet'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Chave da Rua</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="codKey">
+                    <span class="spanValidate" *ngIf="streetForm.controls['idStreet'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome rua Anterior</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="nameStreetPre">
+                    <span class="spanValidate" *ngIf="streetForm.controls['nameStreetPre'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">   
+                <mat-form-field appearance="fill">
+                    <mat-label>Tipo da Rua </mat-label>
+                    <input type='text' matInput placeholder="Input" formControlName="typeStreet">
+                    <span class="spanValidate" *ngIf="streetForm.controls['typeStreet'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field> 
+            </div>  
+            <div class="box-form-r">   
+                <mat-form-field appearance="fill">
+                    <mat-label>legislação da rua </mat-label>
+                    <input type='text' matInput placeholder="Input" formControlName="typeLegislation">
+                    <span class="spanValidate" *ngIf="streetForm.controls['typeLegislation'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>   
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Distrito Entrada</mat-label>
+                    <mat-select formControlName="selectDistrictE">
+                        <mat-option *ngFor="let district of districts" [value]="district.id">
+                            {{district.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">   
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Distrito Destino</mat-label>
+                    <mat-select formControlName="selectDistrictD">
+                        <mat-option *ngFor="let district of districts" [value]="district.id">
+                            {{district.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>CEP </mat-label>
+                    <input type='text' matInput placeholder="Input" formControlName="zipCodeE">
+                    <span class="spanValidate" *ngIf="streetForm.controls['zipCodeE'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">   
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Distrito</mat-label>
+                    <mat-select formControlName="selectDistrict">
+                        <mat-option *ngFor="let district of districts" [value]="district.id">
+                            {{district.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+
+            </div>  
+            <div class="box-form-r">   
+                <button type="submit" [disabled]="!streetForm.valid" mat-raised-button color="primary">Save Data</button>
+            </div> 
+             
+        </div>
+    </div>  
+   
+    </form>

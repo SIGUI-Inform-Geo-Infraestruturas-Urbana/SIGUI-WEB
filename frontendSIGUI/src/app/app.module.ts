@@ -85,8 +85,8 @@ import { GeoDataComponent } from './layout/geo-data/geo-data.component';
 import { SidenavGeodataComponent } from './layout/sidenav-geodata/sidenav-geodata.component';
 import { ManagerFilePopupComponent } from './components/dialogs-components/manager-file-popup/manager-file-popup.component';
 import { TableCountyComponent } from './components/angular-components/geodata/tables/table-county/table-county.component';
-import { ManipulateUnitComponent } from './components/angular-components/geodata/geo-elements/manipulate-unit/manipulate-unit.component';
-import { ManipulateCountyComponent } from './components/angular-components/geodata/geo-elements/manipulate-county/manipulate-county.component';
+import { ManipulateUnitComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-unit/manipulate-unit.component';
+import { ManipulateCountyComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-county/manipulate-county.component';
 import { PopupControlUnitComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-unit/popup-control-unit.component'
 import { PopupControlCountyComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-county/popup-control-county.component';
 import { PopupControlDistrictComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-district/popup-control-district.component';
@@ -101,9 +101,27 @@ import { ModalFilesCountyComponent } from './components/angular-components/geoda
 import { ModalFilesUnitComponent } from './components/angular-components/geodata/modals/modal-files-unit/modal-files-unit.component';
 import { TreeFilesComponent } from './components/angular-components/geodata/modals/tree-files/tree-files.component';
 import { TreeDataComponent } from './components/angular-components/geodata/modals/tree-data/tree-data.component';
-import { SnackAlertComponent } from './snack-alert/snack-alert.component'
-
-
+import { SnackAlertComponent } from './snack-alert/snack-alert.component';
+import { ManipulateDistrictComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-district/manipulate-district.component';
+import { ManipulateStreetComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-street/manipulate-street.component';
+import { ManipulatePublicPlaceComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-public-place/manipulate-public-place.component';
+import { ManipulateInfrastructureComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-infrastructure/manipulate-infrastructure.component';
+import { ManipulateUrbanEquipmentComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-urban-equipment/manipulate-urban-equipment.component';
+import { ManipulateUrbanNetworkComponent } from './components/angular-components/geodata/geo-elements/manipulates/manipulate-urban-network/manipulate-urban-network.component';
+import { ContainerDistrictComponent } from './components/angular-components/geodata/containers/container-district/container-district.component';
+import { ContainerStreetComponent } from './components/angular-components/geodata/containers/container-street/container-street.component';
+import { ContainerPublicPlaceComponent } from './components/angular-components/geodata/containers/container-public-place/container-public-place.component';
+import { ContainerInfrastructureComponent } from './components/angular-components/geodata/containers/container-infrastructure/container-infrastructure.component';
+import { ContainerUrbanEquipmentComponent } from './components/angular-components/geodata/containers/container-urban-equipment/container-urban-equipment.component';
+import { ContainerUrbanNetworkComponent } from './components/angular-components/geodata/containers/container-urban-network/container-urban-network.component';
+import { ContainerUnitComponent } from './components/angular-components/geodata/containers/container-unit/container-unit.component';
+import { ContainerCountyComponent } from './components/angular-components/geodata/containers/container-county/container-county.component';
+import { ManageUnitComponent } from './components/angular-components/geodata/geo-elements/manage-unit/manage-unit.component';
+import { ManageDistrictComponent } from './components/angular-components/geodata/geo-elements/manage-district/manage-district.component';
+import { ManageStreetComponent } from './components/angular-components/geodata/geo-elements/manage-street/manage-street.component';
+import { ManagePublicPlaceComponent } from './components/angular-components/geodata/geo-elements/manage-public-place/manage-public-place.component';
+import { ManageInfrastructureComponent } from './components/angular-components/geodata/geo-elements/manage-infrastructure/manage-infrastructure.component';
+import { ManageEquipamentUrbanComponent } from './components/angular-components/geodata/geo-elements/manage-equipament-urban/manage-equipament-urban.component'
 
 
 @NgModule({
@@ -175,8 +193,21 @@ import { SnackAlertComponent } from './snack-alert/snack-alert.component'
     ModalFilesUnitComponent,
     TreeFilesComponent,
     TreeDataComponent,
-    SnackAlertComponent, 
-   
+    SnackAlertComponent,
+    ManipulateDistrictComponent,
+    ManipulateStreetComponent,
+    ManipulatePublicPlaceComponent,
+    ManipulateInfrastructureComponent,
+    ManipulateUrbanEquipmentComponent,
+    ManipulateUrbanNetworkComponent,
+    ContainerDistrictComponent,
+    ContainerStreetComponent,
+    ContainerPublicPlaceComponent,
+    ContainerInfrastructureComponent,
+    ContainerUrbanEquipmentComponent,
+    ContainerUrbanNetworkComponent,
+    ContainerUnitComponent,  
+    ContainerCountyComponent, ManageUnitComponent, ManageDistrictComponent, ManageStreetComponent, ManagePublicPlaceComponent, ManageInfrastructureComponent, ManageEquipamentUrbanComponent,   
 
 
   ],

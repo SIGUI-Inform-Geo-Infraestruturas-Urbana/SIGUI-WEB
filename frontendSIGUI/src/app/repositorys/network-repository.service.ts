@@ -53,6 +53,7 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
   //   return this.networks$;
   // }  
 
+
   findFetch(idParam : number = 0):Observable<Network[]>{//Feature<Geometry>
     let urlSearch = '';
 

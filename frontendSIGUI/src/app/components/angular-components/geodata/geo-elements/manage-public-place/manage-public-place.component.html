@@ -1,0 +1,78 @@
+<form [formGroup]="ppForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados Logradouros</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação da Logradouro</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_public_place">
+                </mat-form-field>
+            </div>           
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Cod Setor</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_cod_sector">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Codigo da quadra</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_cod_block">
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Codigo da face</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_cod_face">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Total de Residencias </mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_total_residences">
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Total Geral </mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_total_general">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Rua</mat-label>
+                    <mat-select formControlName="pp_streat">
+                        <mat-option *ngFor="let street of streets" [value]="street.id">
+                            {{street.name_street}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Distrito</mat-label>
+                    <mat-select formControlName="pp_district">
+                        <mat-option *ngFor="let district of districts" [value]="district.id">
+                            {{district.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Codigo da quadra</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_cod_block">
+                </mat-form-field>
+            </div> 
+            <div class="box-form-r">   
+                <button type="submit" mat-raised-button color="primary">Save Data</button>
+            </div>   
+        </div>
+    </div>    
+    </form>

@@ -55,6 +55,10 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
   //   return this.units$;
   // }  
 
+  populateServiceViewMap(cities : UnitFederal[]){
+    this.dataSpatialService.setDataSpatial(cities);
+  }
+
   findFetch(idParam : number = 0):Observable<UnitFederal[]>{//Feature<Geometry>
     let urlSearch = '';
 

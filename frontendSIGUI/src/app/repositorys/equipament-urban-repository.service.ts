@@ -54,6 +54,10 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
   //   return this.equipament$;
   // }  
 
+  populateServiceViewMap(cities : EquipmentUrban[]){
+    this.dataSpatialService.setDataSpatial(cities);
+  }
+
   findFetch(idParam : number = 0):Observable<EquipmentUrban[]>{//Feature<Geometry>
     let urlSearch = '';
 

@@ -1,0 +1,72 @@
+<form [formGroup]="stateFormu" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados Estado</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Id Estado</mat-label>
+                    <input type="number" matInput placeholder="Input" formControlName="idState">
+                </mat-form-field>
+            </div>
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome do Estado</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="nameState">
+                    <span class="spanValidate" *ngIf="stateFormu.controls['nameState'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Sigla UF </mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="initialsUf">
+                    <span class="spanValidate" *ngIf="stateFormu.controls['initialsUf'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Geocodigo Unidade Federativa</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="codUf">
+                    <span class="spanValidate" *ngIf="stateFormu.controls['codUf'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome Regiao</mat-label>
+                    <input matInput placeholder="Input" formControlName="nomeRegion">
+                    <span class="spanValidate" *ngIf="stateFormu.controls['nomeRegion'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">   
+                <mat-form-field appearance="fill">
+                    <mat-label>Area do Estado</mat-label>
+                    <input matInput placeholder="Input" formControlName="areaState">
+                    <span class="spanValidate" *ngIf="stateFormu.controls['areaState'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>   
+            </div>   
+            <div class="box-form-l">                  
+
+            </div>  
+            <div class="box-form-r">   
+                <button type="submit" mat-raised-button color="primary" [disabled]="!stateFormu.valid">Save Data</button>
+            </div>   
+             
+        </div>
+    </div>      
+</form>

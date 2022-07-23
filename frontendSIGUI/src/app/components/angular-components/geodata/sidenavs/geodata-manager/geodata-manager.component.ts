@@ -8,14 +8,19 @@ import { ManagerSession } from 'src/app/models/managerSession.model';
 })
 export class GeodataManagerComponent implements OnInit, OnChanges {
 
-  @Input() managerVizualizaton!:ManagerSession;
+  @Input() Vizualizaton!:ManagerSession;
+  managerVizualizaton :ManagerSession;
+
   public isShowing: boolean = true;
   public isShowingNavRight: boolean = false;
   public isShowingButtonNavRight: boolean = false;
   public isExpanded: boolean = true;
   public sizeSidenav: number = 100;
 
-  constructor() { }
+  constructor() { 
+    this.managerVizualizaton = new ManagerSession();
+    this.managerVizualizaton.session_county = true;
+  }
 
   ngOnInit(): void {
   }
@@ -28,4 +33,40 @@ export class GeodataManagerComponent implements OnInit, OnChanges {
   openDialog(){
   //  this.dialog.open(ManagerFilePopupComponent)
   }
+
+  openUnit(){
+    this.managerVizualizaton = new ManagerSession();
+    this.managerVizualizaton.session_state = true;
+    console.log('clicoy')
+    console.log(this.managerVizualizaton)
+  }
+  openCounty(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_county = true;
+  }
+  openDistrict(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_ditrict = true;
+  }
+  openStreet(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_streat = true;
+  }
+  openPublicPlace(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_public_place = true;
+  }
+  openInfrastructure(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_infrastructure = true;
+  }
+  openEquipamentUrban(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_estructure = true;
+  }
+  openNetwork(){
+    this.managerVizualizaton = new ManagerSession();   
+    this.managerVizualizaton.session_estructure = true;
+  }
+  
 }

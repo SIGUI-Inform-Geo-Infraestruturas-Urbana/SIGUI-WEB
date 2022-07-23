@@ -1,0 +1,32 @@
+.wrapper-form{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: 50%;   
+}
+.box-form{
+    grid-column-start: 1;
+    grid-column-end: 3;
+  
+}
+.box-form-l{
+    grid-column-start: 1;
+   
+  
+}
+.box-form-r{
+    grid-column-start: 2;
+ 
+  
+}
+
+.container-div{
+    width: auto; 
+    height: 100%;
+    float: left;
+    padding-right: 15px;
+    padding-left: 15px;
+         
+}

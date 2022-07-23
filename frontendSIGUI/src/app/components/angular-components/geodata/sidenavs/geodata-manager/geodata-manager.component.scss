@@ -58,25 +58,6 @@ mat-drawer-container {
     background-color: rgb(153, 165, 42);
 }
 
-.wrapper-manipulation{
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 2fr 2fr 2fr;
-    grid-column-gap: 10px;
-    grid-row-gap: 1em;
-    width: 100%;
-    /* grid-template-rows: 70px 70px; */
-}
-.box-field-ex{
-    grid-column-start: 2;
-  
-   
-}
-.box-field-ed{
-    grid-column-start: 3;
-
-   
-}
 .input-filter{
     width: 100%;
     background-color: blue;

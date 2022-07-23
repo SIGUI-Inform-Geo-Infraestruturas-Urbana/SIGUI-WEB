@@ -4,51 +4,36 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
-import { County } from 'src/app/models/county.model';
+import { District } from 'src/app/models/district.model';
 import { ManagerSession } from 'src/app/models/managerSession.model';
-import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
+import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
-import { SnackAlertComponent } from 'src/app/snack-alert/snack-alert.component';
-import { ModalFilesCountyComponent } from '../../modals/modal-files-county/modal-files-county.component';
-import { ModalFilesUnitComponent } from '../../modals/modal-files-unit/modal-files-unit.component';
+import { ModalFilesCountyComponent } from '../../../modals/modal-files-county/modal-files-county.component';
+
 
 @Component({
-  selector: 'app-manipulate-county',
-  templateUrl: './manipulate-county.component.html',
-  styleUrls: ['./manipulate-county.component.scss']
+  selector: 'app-manipulate-urban-network',
+  templateUrl: './manipulate-urban-network.component.html',
+  styleUrls: ['./manipulate-urban-network.component.scss']
 })
-export class ManipulateCountyComponent implements OnInit {
+export class ManipulateUrbanNetworkComponent implements OnInit {
 
-  public searchCountyForm!: FormGroup;
+  public searchForm!: FormGroup;
   public managerSession : ManagerSession;
 
   constructor(public managerVisualization : ManagerVisualizationService, 
-    public countyRepositoryService : CountyRepositoryService,
+    public districtRepositoryService : DistrictRepositoryService,
     public unitFederativeRepositoryService : UnitFederativeRepositoryService,   
     public route: ActivatedRoute , public router: Router,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog) {
 
-    this.managerSession = new ManagerSession();
-    // this.countyRepositoryService.getCounties()
-    // //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
-    // .subscribe({
-    //   next: (beers : County[]) => {
-    //     console.log(beers);
-    //   },
-    //   error: (err:HttpErrorResponse) => {
-    //     console.log('TRATAR');
-    //     console.log(err);
-    //     this.openSnackBar(err.statusText);
-    //     //this._counties.error(err);
-    //   },
-    // });
+    this.managerSession = new ManagerSession();    
    }
 
   ngOnInit(): void {  
-    this.searchCountyForm = new FormGroup({
+    this.searchForm = new FormGroup({
       idMunicipio: new FormControl(),
       idState: new FormControl()
     });    
@@ -68,19 +53,17 @@ export class ManipulateCountyComponent implements OnInit {
   }
 
   addLayerVetorMunicipios(){
-    this.countyRepositoryService.findFetchData(); 
+    this.districtRepositoryService.findFetchData(); 
   }
 
   getFeatureCounty(){
-    let idSearch = this.searchCountyForm.get('idMunicipio')?.value;
-    // this.getCounty.emit(idSearch);
-    //this.countyRepositoryService.findFetchData(idSearch);
+    let idSearch = this.searchForm.get('idMunicipio')?.value;
     
-    this.countyRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    this.districtRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : County[]) => {
+      next: (beers : District[]) => {
         console.log(beers);
-        this.countyRepositoryService.populateServiceViewMap(beers)
+        this.districtRepositoryService.populateServiceViewMap(beers)
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');
@@ -106,8 +89,6 @@ export class ManipulateCountyComponent implements OnInit {
       session_estructure : false,     
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
-    //this.router.navigateByUrl('/geo-view/manager-city');
-    //this.router.navigate(['manager-city'],{relativeTo:this.route});
   }
 
   onClickShapeFile(){

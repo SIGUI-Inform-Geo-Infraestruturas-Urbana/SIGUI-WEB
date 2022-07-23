@@ -1,0 +1,25 @@
+<div class="container-div"> 
+    <div class="container">          
+        <app-manipulate-county></app-manipulate-county>                    
+    </div>
+    <!-- managerVizualizaton.session_county -->
+    <div class="container" *ngIf="true">          
+        <app-table-county></app-table-county>
+    </div>
+    <div class="container">         
+        <div class="wrapper-manipulation">
+            <div class="box-field-ex">
+                <button mat-flat-button class="button-control-data" color="primary" > 
+                    <mat-icon >home</mat-icon><br> 
+                    <span>Excluir Municipios</span>           
+                </button>   
+            </div>
+            <div class="box-field-ed">
+                <button mat-flat-button class="button-control-data" color="primary" > 
+                    <mat-icon >home</mat-icon><br> 
+                    <span> Editar Municipios</span>           
+                </button>               
+            </div>
+        </div> 
+    </div> 
+</div>

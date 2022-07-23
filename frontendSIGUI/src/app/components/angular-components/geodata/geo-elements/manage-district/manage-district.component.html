@@ -1,0 +1,49 @@
+<form [formGroup]="districtForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados Bairro</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação</mat-label>
+                    <input matInput placeholder="Input" formControlName="idDistrict">
+                </mat-form-field>
+            </div>
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome do Bairro</mat-label>
+                    <input matInput placeholder="Input" formControlName="nomeDistrict">
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Cidade</mat-label>
+                    <mat-select formControlName="selectDraw">
+                        <mat-option *ngFor="let city of cities" [value]="city.id">
+                            {{city.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Area do Bairro</mat-label>
+                        <input matInput placeholder="Input" formControlName="areaDistrict">
+                    </mat-form-field>
+                </div>  
+            </div> 
+            <div class="box-form-l">                  
+
+            </div>  
+            <div class="box-form-r">   
+                <button type="submit" mat-raised-button color="primary">Save Data</button>
+            </div>   
+        </div>
+    </div>    
+</form>

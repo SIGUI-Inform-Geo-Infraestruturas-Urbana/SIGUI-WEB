@@ -136,6 +136,49 @@ $my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
     align-items: center;    
 }
 
+//controls
+.wrapper-manipulation{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: 100%;
+    /* grid-template-rows: 70px 70px; */
+}
+
+.box-field-ex{
+    grid-column-start: 2;   
+}
+.box-field-ed{
+    grid-column-start: 3;   
+}
+
+
+.wrapper{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr;
+    grid-column-gap: 10px;
+    grid-row-gap: 1em;
+    width: auto;
+    /* grid-template-rows: 70px 70px; */
+}
+.box-field{
+    grid-column-start: 1;
+    grid-column-end: 4;
+   
+}
+.button-colum{
+    text-align: center;
+}
+
+.divider-div{
+    width: 250px;
+    height: 10px;
+}
+
+
 
 //Definindo temas base
 // @use '../node_modules/@angular/material' as mat;

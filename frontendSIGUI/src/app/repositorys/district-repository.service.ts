@@ -45,6 +45,10 @@ export class DistrictRepositoryService implements IRepository<District,District>
     return true;
   }
 
+  populateServiceViewMap(cities : District[]){
+    this.dataSpatialService.setDataSpatial(cities);
+  }
+
   // findFetch():Observable<District[]>{//Observable<string>
   //   this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
   //     console.log(data)

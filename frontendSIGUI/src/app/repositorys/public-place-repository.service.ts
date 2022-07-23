@@ -57,6 +57,10 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
   //   return this.publicplace$;
   // }  
 
+  populateServiceViewMap(cities : PublicPlace[]){
+    this.dataSpatialService.setDataSpatial(cities);
+  }
+
   findFetch(idParam : number = 0):Observable<PublicPlace[]>{//Feature<Geometry>
     let urlSearch = '';
 

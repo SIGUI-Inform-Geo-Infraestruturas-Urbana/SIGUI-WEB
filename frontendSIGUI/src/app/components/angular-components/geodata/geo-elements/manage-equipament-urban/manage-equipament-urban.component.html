@@ -1,0 +1,118 @@
+
+
+<form [formGroup]="equipamentForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados de Equipamento Urbano</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação da Equipamento</mat-label>
+                    <input type="number" matInput placeholder="Input" formControlName="eq_co_cod">
+                </mat-form-field>
+            </div>
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Primeiro Nome do Equipamento</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_first_name">
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome no Mapa</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_name_map">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome </mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_name">
+                </mat-form-field>  
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome Completo</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_name_complete">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome type</mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_type">
+                </mat-form-field>  
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Departamento</mat-label>
+                    <input matInput placeholder="Input" formControlName="eq_co_departament_admin">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome </mat-label>
+                    <input type="text" matInput placeholder="Input" formControlName="eq_co_name">
+                </mat-form-field>  
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Numero da construção</mat-label>
+                    <input matInput placeholder="Input" formControlName="eq_co_number_building">
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Distrito</mat-label>
+                    <mat-select formControlName="eq_co_district">
+                        <mat-option *ngFor="let distri of districts" [value]="distri.id">
+                            {{distri.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Rua</mat-label>
+                    <mat-select formControlName="eq_co_street">
+                        <mat-option *ngFor="let street of streets" [value]="street.id">
+                            {{street.name_street}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">   
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Logradouro</mat-label>
+                    <mat-select formControlName="eq_co_public_place">
+                        <mat-option *ngFor="let publicPlace of publicPlaces" [value]="publicPlace.id">
+                            {{publicPlace.id}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>          
+            </div> 
+            <div class="box-form-l">             
+                <mat-form-field appearance="fill">
+                    <mat-label>Observações</mat-label>
+                    <input matInput placeholder="Input" formControlName="eq_co_observation">
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Equipamento</mat-label>
+                    <input matInput placeholder="Input" formControlName="eq_co_equipament">
+                </mat-form-field>
+            </div> 
+            <div class="box-form-l">             
+                
+            </div> 
+            <div class="box-form-r">   
+                <button type="submit" mat-raised-button color="primary">Save Data</button>
+            </div>   
+        </div>
+    </div>  
+  
+</form> 

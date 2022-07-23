@@ -1,0 +1,93 @@
+
+
+<form [formGroup]="infrastrutureForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h2>Gerenciar Dados de Infraestrutura</h2>
+
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form-l"> 
+                <mat-form-field appearance="fill">
+                        <mat-label>Identificação da Infraestrutura</mat-label>
+                        <input matInput placeholder="Input" formControlName="idInfrastructure">
+                </mat-form-field>
+            </div>
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome da Infraestrutura</mat-label>
+                    <input matInput placeholder="Input" formControlName="infraName">
+                    <span class="spanValidate" *ngIf="infrastrutureForm.controls['infraName'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Rua</mat-label>
+                    <mat-select formControlName="selectStreet">
+                        <mat-option *ngFor="let street of streets" [value]="street.id">
+                            {{street.name_street}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <div class="content-form">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nome Categoria</mat-label>
+                        <input matInput placeholder="Input" formControlName="infraCategory">
+                        <span class="spanValidate" *ngIf="infrastrutureForm.controls['infraCategory'].errors">
+                            Campo Obrigatorio
+                        </span>
+                    </mat-form-field>
+                </div>  
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Ocupante</mat-label>
+                    <mat-select formControlName="selectOcupante">
+                        <mat-option *ngFor="let infra of infrastructures" [value]="infra.id">
+                            {{infra.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>  
+            <div class="box-form-r">                  
+              
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Subsistema</mat-label>
+                    <mat-select formControlName="selectSubsystem">
+                        <mat-option *ngFor="let subsystem of subsystems" [value]="subsystem.id">
+                            {{subsystem.ss_name}}
+                        </mat-option>
+                    </mat-select>
+                    <span class="spanValidate" *ngIf="infrastrutureForm.controls['selectSubsystem'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+                
+            </div> 
+            <div class="box-form-l">                  
+                <mat-form-field appearance="fill">
+                    <mat-label>Coordenada</mat-label>
+                    <input matInput placeholder="Input" formControlName="geometry">
+                </mat-form-field>
+            </div>
+            <div class="box-form-r">                  
+                <div *ngIf="enableAssociation">
+                    <app-infrastructure-network [infrastructure]="infrastructureAssociation">
+                    </app-infrastructure-network>
+                </div>
+            </div> 
+            <div class="box-form-r">   
+                <button type="submit"  [disabled]="!infrastrutureForm.valid" mat-raised-button color="primary">Save Data</button>
+            </div>   
+        </div>
+    </div>  
+
+  
+</form> 
