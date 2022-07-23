@@ -1,14 +1,20 @@
 <form [formGroup]="controlMapForm" >
 
-    <!-- <div class="componets-horizontal">
-        <button mat-raised-button color="primary" id="selecionarDraw" (click)="selecionarDraw()">Search</button>
-    </div> -->
-    <mat-form-field class="search-form-field" appearance="fill">
-        <mat-label>Desenhar Elemento</mat-label>
-        <mat-select formControlName="selectDraw">
-            <mat-option *ngFor="let selectDraw of optionsDraws" [value]="selectDraw.id">
-                {{selectDraw.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div class="componets-horizontal">
+        <div class="componets-horizontal" >
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawPoint()">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </div>
+        <div class="componets-horizontal">
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawNone()">
+                <mat-icon>swipe_up</mat-icon>
+            </button>
+        </div>
+        <div class="componets-horizontal">
+            <button mat-icon-button class="button-mat-control white-pallete-light" (click)="onDrawClear()">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
+    </div>
 </form>

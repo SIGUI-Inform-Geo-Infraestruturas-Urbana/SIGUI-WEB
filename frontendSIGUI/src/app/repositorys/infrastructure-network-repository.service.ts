@@ -9,7 +9,7 @@ import { IRepository } from './repository';
 import { Infrastructure } from '../models/infrastructure.model';
 import { InfrastructureService } from '../services/infrastructure/infrastructure.service';
 import { InfrastructureNetwork } from '../models/Infrastructure-network.model';
-import { InfrastructureNetworkService } from '../services/infrastructureNetwork/infrastructure.service';
+import { InfrastructureNetworkService } from '../services/InfrastructureNetwork/InfrastructureNetwork';
 
 @Injectable({
   providedIn: 'root'

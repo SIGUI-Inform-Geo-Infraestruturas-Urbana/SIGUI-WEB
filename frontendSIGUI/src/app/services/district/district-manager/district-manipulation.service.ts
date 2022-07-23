@@ -17,19 +17,19 @@ export class DistrictManipulationService {
     
   constructor() { }
 
-  getCountyManipulation():Observable<District>{
+  getDistrictManipulation():Observable<District>{
     return this._manipulation$;
   } 
 
-  setCountyManipulation(value : District){
+  setDistrictManipulation(value : District){
     this._manipulation.next(value);
   }
 
-  getCountyVisualization():Observable<District>{
+  getDistrictVisualization():Observable<District>{
     return this._manipulation$;
   } 
 
-  setCountyVisualization(value : District){
+  setDistrictVisualization(value : District){
     this._manipulation.next(value);
   }
 }

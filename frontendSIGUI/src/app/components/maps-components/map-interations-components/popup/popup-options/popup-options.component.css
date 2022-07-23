@@ -2,7 +2,7 @@
     position: absolute;
     background-color: white;
     box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    padding: 15px;
+    width: 400px;
     border-radius: 10px;
     border: 1px solid #cccccc;
     bottom: 12px;
@@ -40,6 +40,8 @@
     content: "✖";
   } */
   .ol-popup-content{
+    width: 93%;
+    padding: 15px;
     float: left;
   }
   .ol-popup-content h3{
@@ -54,4 +56,17 @@
     position: relative;
     float: left;
     color: blue;
+  }
+  
+  .col-header{
+    width: 10%;
+  }
+
+  .col-content{
+    width: 90%;
+  }
+
+  .popup-container{
+    width: 100%;
+    display: inline-block;
   }

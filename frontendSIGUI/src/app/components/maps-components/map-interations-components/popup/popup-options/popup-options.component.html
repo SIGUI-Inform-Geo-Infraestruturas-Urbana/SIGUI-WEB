@@ -1,55 +1,35 @@
 <div #popup class="ol-popup">  
-    <button class="ol-popup-closer" (click)="onClose()">X</button>  
+    <button class="ol-popup-closer" (click)="onClose()">X</button> 
+    <div class="header header-light-pallete">
+      
+        <mat-icon >home</mat-icon><br>
+        <h4>Geometria Selecionada</h4>
+
+    </div>  
     <div #popupContent class="ol-popup-content">
-
-        <table>
+        <table>        
             <tr>
-                <th colspan="2">Sobre o Vertice:</th>
+                <td class="col-header">COORDENADA:</td>
+                <td class="col-content">{{coordenadaPoint}}</td>
             </tr>
-            <tr>
-                <td>COORDENADA:</td>
-                <td>{{coordenadaPoint}}</td>
-            </tr>
-            <tr *ngIf="hiddenState">
-                <!-- <table>
-                    <tr>
-                        <th colspan="2">Sobre a Representação:</th>
-                    </tr>
-                    <tr>
-                        <td>ITEM SELECIONADO:</td>
-                        <td>{{tipoItem}}</td>
-                    </tr>
-                    <tr>
-                        <td>ID:</td>
-                        <td>{{idItem}}</td>
-                    </tr>          
-                </table> -->
-                <app-popup-control-unit [featureSelect]="featureSelect" ></app-popup-control-unit>
-            </tr>
-            <tr *ngIf="hiddenCounty">
-                <app-popup-control-county [featureSelect]="featureSelect" ></app-popup-control-county>
-            </tr>
-            <tr *ngIf="hiddenDistrict">
-                <app-popup-control-district [featureSelect]="featureSelect"></app-popup-control-district>
-            </tr>
-            <tr *ngIf="hiddenStreet">
-                <app-popup-control-street [featureSelect]="featureSelect"></app-popup-control-street>
-            </tr>
-            <tr *ngIf="hiddenPublicPlace">
-                <app-popup-control-publicplace [featureSelect]="featureSelect"></app-popup-control-publicplace>
-            </tr>
-            <tr *ngIf="hiddenInfrastructure">
-                <app-popup-control-infrastructure [featureSelect]="featureSelect"></app-popup-control-infrastructure>
-            </tr>
-            <tr *ngIf="hiddenEstructure">
-                <app-popup-control-equipamenturban [featureSelect]="featureSelect"></app-popup-control-equipamenturban>
-            </tr>
-            <tr *ngIf="hiddenRede">
-                <app-popup-control-street [featureSelect]="featureSelect"></app-popup-control-street>
-            </tr>   
+        </table>
 
+            <app-popup-control-unit class="popup-container" *ngIf="hiddenState" [featureSelect]="featureSelect" ></app-popup-control-unit>
+  
+            <app-popup-control-county class="popup-container" *ngIf="hiddenCounty" [featureSelect]="featureSelect" ></app-popup-control-county>
 
-        </table>   
+            <app-popup-control-district class="popup-container" *ngIf="hiddenDistrict" [featureSelect]="featureSelect"></app-popup-control-district>
+         
+            <app-popup-control-street class="popup-container" *ngIf="hiddenStreet"[featureSelect]="featureSelect"></app-popup-control-street>
+  
+            <app-popup-control-publicplace class="popup-container" *ngIf="hiddenPublicPlace" [featureSelect]="featureSelect"></app-popup-control-publicplace>
+
+            <app-popup-control-infrastructure class="popup-container" *ngIf="hiddenInfrastructure"[featureSelect]="featureSelect"></app-popup-control-infrastructure>
+
+            <app-popup-control-equipamenturban class="popup-container" *ngIf="hiddenEstructure"[featureSelect]="featureSelect"></app-popup-control-equipamenturban>
+
+            <app-popup-control-street class="popup-container" *ngIf="hiddenRede"[featureSelect]="featureSelect"></app-popup-control-street>
+
         <div appShowUserAdmLogged>
             <!-- <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager> -->
         </div>

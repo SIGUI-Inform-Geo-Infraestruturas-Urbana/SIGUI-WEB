@@ -124,19 +124,21 @@ export class Street extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        console.log(properties);       
+        console.log(properties);    
         this.id = <number>inputData.getId();
-        this.st_cod_key = properties['st_cod_key'];
-        this.st_district= properties['st_district'];      
-        this.st_district_d = properties['st_district_d'];
-        this.st_district_e = properties['st_district_e'];
-        this.st_name_street  = properties['st_name_street'];
-        this.st_name_street_pre  = properties['st_name_street_pre'];
-        this.st_status  = properties['st_status'];
-        this.st_type_legislation  = properties['st_type_legislation'];
-        this.st_type_street  = properties['st_type_street'];
-        this.st_zip_code_d  = properties['st_zip_code_d'];
-        this.st_zip_code_e  = properties['st_zip_code_e'];
+        if (properties != undefined){        
+            this.st_cod_key = properties['st_cod_key'];
+            this.st_district= properties['st_district'];      
+            this.st_district_d = properties['st_district_d'];
+            this.st_district_e = properties['st_district_e'];
+            this.st_name_street  = properties['st_name_street'];
+            this.st_name_street_pre  = properties['st_name_street_pre'];
+            this.st_status  = properties['st_status'];
+            this.st_type_legislation  = properties['st_type_legislation'];
+            this.st_type_street  = properties['st_type_street'];
+            this.st_zip_code_d  = properties['st_zip_code_d'];
+            this.st_zip_code_e  = properties['st_zip_code_e'];
+        }
         this.geometry =  <LineString> geom;      
 
         return this;

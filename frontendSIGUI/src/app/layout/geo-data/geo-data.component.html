@@ -22,23 +22,27 @@
  
     </mat-drawer-content>
     <mat-drawer class="sidenav-container-right" mode="side" position="end" [opened]="isShowingNavRight">
-        <div class="container" *ngIf="managerManipulation.session_county"> 
+        <div class="container" *ngIf="managerManipulation.session_state"> 
             <app-manage-unit></app-manage-unit>
         </div>
         <div class="container" *ngIf="managerManipulation.session_county">          
             <app-manage-county></app-manage-county>
         </div>
-        <div class="container" *ngIf="managerManipulation.session_county"> 
+        <div class="container" *ngIf="managerManipulation.session_ditrict"> 
             <app-manage-district></app-manage-district>
         </div>
-        <div class="container" *ngIf="managerManipulation.session_county"> 
-            <app-manage-infrastructure></app-manage-infrastructure>
-        </div>
-        <div class="container" *ngIf="managerManipulation.session_county"> 
+        <div class="container" *ngIf="managerManipulation.session_streat"> 
             <app-manage-street></app-manage-street>
         </div>
-        <div class="container" *ngIf="managerManipulation.session_county"> 
+        <div class="container" *ngIf="managerManipulation.session_public_place"> 
             <app-manage-public-place></app-manage-public-place>
         </div>  
+        <div class="container" *ngIf="managerManipulation.session_infrastructure"> 
+            <app-manage-infrastructure></app-manage-infrastructure>
+        </div>
+        <div class="container" *ngIf="managerManipulation.session_estructure"> 
+            <app-manage-equipament-urban></app-manage-equipament-urban>
+        </div>
+     
     </mat-drawer>
 </mat-drawer-container>

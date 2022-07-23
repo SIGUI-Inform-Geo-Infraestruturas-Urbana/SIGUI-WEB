@@ -1,14 +1,21 @@
-<table>
+<table> 
     <tr>
-        <th colspan="3">Opções para o Vertice:</th>
+        <h3>Bairro</h3>
+        <div class="divider-div header-light-pallete"></div>
     </tr>
-    <tr >
-        <td> Bairro:</td>
-        <!-- <td>                     
-            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="enableDivMunicipio()"> Adicionar </button>
-        </td> -->
-        <td>                     
-            <button id='btn_AdicionarRede' mat-flat-button color="primary" (click)="connectFeatureFromDistrict()"> Associar </button>
+    <tr> 
+        <td class="col-header"></td>
+        <td class="col-content">
+        <button mat-icon-button color="primary">
+            <mat-icon>delete</mat-icon>
+        </button>    
         </td>
-    </tr>
+        <td class="col-content">
+        <button class="button-event" (click)="connectFeatureFromDistrict()">
+            <mat-icon >home</mat-icon> 
+            Adicionar 
+        </button>
+        </td>
+    </tr>  
 </table>  
+

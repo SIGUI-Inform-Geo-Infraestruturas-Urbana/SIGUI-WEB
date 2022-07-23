@@ -8,7 +8,7 @@ import { Feature } from 'ol';
 import { Geometry, MultiPolygon } from 'ol/geom';
 import { RestApiBackendService } from './rest-api-backend.service';
 import { DataSpatialService } from '../services/count/data-spatials.service';
-import { UnitFederalService } from '../services/unity-federal/unit-federal.service';
+import { UnitFederalService } from '../services/unit-federal/unit-federal.service';
 import { UnitFederal } from '../models/unit-federal.model';
 import { DistrictService } from '../services/district/district.service';
 import { District } from '../models/district.model';

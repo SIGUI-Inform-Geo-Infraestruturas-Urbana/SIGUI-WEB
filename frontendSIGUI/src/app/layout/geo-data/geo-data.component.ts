@@ -11,6 +11,18 @@ import { ManagerSession } from 'src/app/models/managerSession.model';
 import { CountyManipulationService } from 'src/app/services/count/county-manager/county-manipulation.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 import { ManagerMenu } from 'src/app/models/managerMenu.model';
+import { UnitManipulation } from 'src/app/services/unit-federal/unit-federal-manager/unit-federal-manipulation.service';
+import { DistrictManipulationService } from 'src/app/services/district/district-manager/district-manipulation.service';
+import { StreetManipulation } from 'src/app/services/street/street-manipulation/street-manipulation.service';
+import { PublicPlaceManipulation } from 'src/app/services/public-place/public-place-manager/public-place-manipulation.service';
+import { InfrastructureManipulation } from 'src/app/services/infrastructure/infrastructure-manager/Infrastruture-manipulation.service';
+import { EquipamentUrbanManipulationService } from 'src/app/services/equipamentUrban/equipamentUrban-manager/equipamentUrban-manipulation.service';
+import { UnitFederal } from 'src/app/models/unit-federal.model';
+import { District } from 'src/app/models/district.model';
+import { PublicPlace } from 'src/app/models/public-place.model';
+import { Street } from 'src/app/models/street.model';
+import { Infrastructure } from 'src/app/models/infrastructure.model';
+import { EquipmentUrban } from 'src/app/models/equipament-urban.model';
 
 @Component({
   selector: 'app-geo-data',
@@ -32,7 +44,14 @@ export class GeoDataComponent implements OnInit {
   public sizeSidenav: number = 100;
 
   constructor(public dialog: MatDialog, private stateMap :StateMapService,
-    private countyVizualization :CountyManipulationService) { 
+    private countyVizualization :CountyManipulationService,
+    private unitManipulation :UnitManipulation,
+    private districtManipulation :DistrictManipulationService,
+    private streetManipulation :StreetManipulation,
+    private publicPlaceManipulation :PublicPlaceManipulation,
+    private infrastructureManipulation :InfrastructureManipulation,
+    private equipamentUrbanManipulation :EquipamentUrbanManipulationService,
+    ) { 
     this.managerVizualizaton = new ManagerSession();
     this.managerManipulation = new ManagerSession();
     //this.mapLayers = this.mapOpenLayer.map;   
@@ -75,8 +94,8 @@ export class GeoDataComponent implements OnInit {
       switch (element.typeRepresentation) {
           case 'unit':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.unitManipulation.setUnitVisualization(<UnitFederal>element);
+            this.managerVizualizaton.session_state = true;
           break;
           case 'county':
             this.managerVizualizaton = new ManagerSession();
@@ -85,23 +104,23 @@ export class GeoDataComponent implements OnInit {
           break;
           case 'district':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.districtManipulation.setDistrictVisualization(<District>element);
+            this.managerVizualizaton.session_ditrict = true;
             break;
           case 'publicplace':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.publicPlaceManipulation.setPublicPlaceVisualization(<PublicPlace>element);
+            this.managerVizualizaton.session_public_place = true;
             break;            
           case 'street':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.streetManipulation.setStreetVisualization(<Street>element);
+            this.managerVizualizaton.session_streat = true;
             break;
           case 'infrastructure':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.infrastructureManipulation.setInfrastructureVisualization(<Infrastructure>element);
+            this.managerVizualizaton.session_infrastructure = true;
             break;   
           case 'infraNet':
             this.managerVizualizaton = new ManagerSession();
@@ -110,8 +129,8 @@ export class GeoDataComponent implements OnInit {
           break;       
           case 'estructure':
             this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.equipamentUrbanManipulation.setEquipamentUrbanVisualization(<EquipmentUrban>element);
+            this.managerVizualizaton.session_estructure = true;
             break;  
           default:
             break;
@@ -123,9 +142,10 @@ export class GeoDataComponent implements OnInit {
       console.log(element.typeRepresentation)
       switch (element.typeRepresentation) {
         case 'unit':
+          this.enableModalManipuledData();
           this.managerManipulation = new ManagerSession();
-          this.countyVizualization.setCountyManipulation(<County>element);
-          this.managerManipulation.session_county = true;
+          this.unitManipulation.setUnitManipulation(<UnitFederal>element);
+          this.managerManipulation.session_state = true;
         break;
         case 'county':
           console.log('valor county')
@@ -133,36 +153,44 @@ export class GeoDataComponent implements OnInit {
           this.managerManipulation = new ManagerSession();
           this.countyVizualization.setCountyManipulation(<County>element);
           this.managerManipulation.session_county = true;
+          console.log(this.managerManipulation)
         break;
         case 'district':
-          this.managerVizualizaton = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.districtManipulation.setDistrictManipulation(<District>element);
+          this.managerManipulation.session_ditrict = true;
           break;
         case 'publicplace':
-          this.managerVizualizaton = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.publicPlaceManipulation.setPublicPlaceManipulation(<PublicPlace>element);
+          this.managerManipulation.session_public_place = true;
           break;            
         case 'street':
-          this.managerVizualizaton = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          console.log('valor street')
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.streetManipulation.setStreetManipulation(<Street>element);
+          this.managerManipulation.session_streat = true;
           break;
         case 'infrastructure':
-          this.managerVizualizaton = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.infrastructureManipulation.setInfrastructureManipulation(<Infrastructure>element);
+          this.managerManipulation.session_infrastructure = true;
           break;   
         case 'infraNet':
-          this.managerVizualizaton = new ManagerSession();
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
           this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          this.managerManipulation.session_county = true;
         break;       
         case 'estructure':
-          this.managerVizualizaton = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerVizualizaton.session_county = true;
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.equipamentUrbanManipulation.setEquipamentUrbanManipulation(<EquipmentUrban>element);
+          this.managerManipulation.session_estructure = true;
           break;  
         default:
           break;

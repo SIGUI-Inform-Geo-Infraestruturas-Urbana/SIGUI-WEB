@@ -44,9 +44,10 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
 
   constructor(public dataSpatialService : DataSpatialService, public managerService : ManagerVisualizationService) {         
     managerService.getSessionVisualization().subscribe(sessionVizu => {
-      console.log('----------------');
+      console.log('-----session-----------');
       console.log(sessionVizu);
       this.managerSession = sessionVizu;
+      console.log(this.managerSession )
     })
   }
 
@@ -226,6 +227,10 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
     }
     else{
+      let properties = <Feature>marcator.getProperties()['properties'];
+      console.log('testepropertie')
+      console.log(properties)
+      //if()
 
       if(this.managerSession.session_state == true)
       {
