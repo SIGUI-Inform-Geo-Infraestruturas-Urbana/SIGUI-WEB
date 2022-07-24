@@ -13,6 +13,13 @@ class StreetViewSet(viewsets.ModelViewSet):
         queryset = models.Street.objects.all()
         return queryset
 
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.Street.objects.filter(id=params['pk']) 
+       serializer = StreetSerializer(objects, many= True)
+       return Response((serializer.data))
+
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
         print(espatial_request)

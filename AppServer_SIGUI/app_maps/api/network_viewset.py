@@ -14,6 +14,14 @@ class NetworkViewSet(viewsets.ModelViewSet):
         queryset = models.Network.objects.all()
         return queryset
 
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.Network.objects.filter(id=params['pk']) 
+       serializer = NetworkSerializer(objects, many= True)
+       return Response((serializer.data))
+
+
     # def create(self, request, *args, **kwargs):
     #     espatial_request = request.data
     #     id_subsystem=espatial_request["net_subsystems"]

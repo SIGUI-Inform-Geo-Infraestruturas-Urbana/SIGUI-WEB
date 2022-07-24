@@ -16,6 +16,13 @@ class UnitFederativeViewset(viewsets.ModelViewSet):
         queryset = models.FederativeUnit.objects.all()
         return queryset
 
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.FederativeUnit.objects.filter(id=params['pk']) 
+       serializer = FederativeUnitSerializer(objects, many= True)
+       return Response((serializer.data))
+
     def create(self, request, *args, **kwargs):
         espatial_request = request.data
         print(espatial_request)

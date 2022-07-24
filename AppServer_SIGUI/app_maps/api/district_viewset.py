@@ -11,6 +11,13 @@ class DistrictViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = models.District.objects.all()
         return queryset
+    
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.District.objects.filter(id=params['pk']) 
+       serializer = DistrictSerializer(objects, many= True)
+       return Response((serializer.data))
 
     def create(self, request, *args, **kwargs):
         try:

@@ -1,4 +1,5 @@
 import os
+from urllib import response
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
@@ -7,26 +8,17 @@ from app_maps import models
 
 class CountyViewSet(viewsets.ModelViewSet):
     serializer_class = CountySerializer
-
-    # def retrieve(self, request, pk=None):
-    #     instance = self.get_object()
-    #     return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
-
+  
     def get_queryset(self):
-        
-        queryset = ''
-        print('CHEGOU')
-        pkSearch = self.kwargs['pk']
-        print(pkSearch)
-        if pkSearch is None:
-            queryset = models.County.objects.all()
-            return queryset
-        else:
-            queryset = models.County.objects.filter(id = pkSearch)
-            print('FILTRADO')       
-            print(queryset)   
-            return queryset
-            # //return models.County.objects.none
+        instance = models.County.objects.all()
+        return instance
+
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.County.objects.filter(id=params['pk']) 
+       serializer = CountySerializer(objects, many= True)
+       return Response((serializer.data))
 
 
     def create(self, request, *args, **kwargs):

@@ -13,6 +13,13 @@ class PublicPlaceViewSet(viewsets.ModelViewSet):
         queryset = models.PublicPlace.objects.all()
         return queryset
 
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects = models.Network.objects.filter(id=params['pk']) 
+       serializer = PublicPlaceSerializer(objects, many= True)
+       return Response((serializer.data))
+
     def create(self, request, *args, **kwargs):
         try:
             espatial_request = request.data
