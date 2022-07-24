@@ -113,6 +113,10 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
     }); 
    }  
 
+  editData (equip:Street):Observable<Street>{
+    return new Observable((observer: Observer<Street>) => {});
+  }
+
   async createData (street:Street):Promise<Street>{
 
     console.log("Create")

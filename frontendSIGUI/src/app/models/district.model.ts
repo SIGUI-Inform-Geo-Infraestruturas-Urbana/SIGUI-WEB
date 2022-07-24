@@ -64,7 +64,7 @@ export class District extends DataSpatial{
         let properties = inputData.getProperties()['properties'];
         this.id = <number>inputData.getId();
         if (properties != undefined){
-            console.log(properties);       
+            console.log(properties);     
    
         this.dc_name = properties['dc_name'];
         this.dc_area= properties['dc_area'];      

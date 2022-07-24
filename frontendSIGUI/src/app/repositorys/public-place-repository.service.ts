@@ -115,6 +115,10 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
   });
   }
 
+  editData (equip:PublicPlace):Observable<PublicPlace>{
+    return new Observable((observer: Observer<PublicPlace>) => {});
+  }
+
   async createData (publicPlace:PublicPlace):Promise<PublicPlace>{
 
     console.log("Create")

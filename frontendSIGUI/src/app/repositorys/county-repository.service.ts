@@ -121,8 +121,11 @@ export class CountyRepositoryService implements IRepository<County,County> {
         observer.error(err);
       },
     }); 
-});
+  });
+  }
 
+  editData (city:County):Observable<County>{
+    return new Observable((observer: Observer<County>) => {});
   }
 
   async createData (city:County):Promise<County>{

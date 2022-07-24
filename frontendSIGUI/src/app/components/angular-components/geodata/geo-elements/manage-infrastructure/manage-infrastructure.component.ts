@@ -13,6 +13,8 @@ import { StateMapService } from 'src/app/services/shared/state-map.service';
 import { Coordinate, toStringHDMS } from 'ol/coordinate';
 import { toLonLat } from 'ol/proj';
 import { MatSnackBar} from '@angular/material/snack-bar'
+import { HttpErrorResponse } from '@angular/common/http';
+import { InfrastructureManipulation } from 'src/app/services/infrastructure/infrastructure-manager/Infrastruture-manipulation.service';
 
 @Component({
   selector: 'app-manage-infrastructure',
@@ -28,16 +30,21 @@ export class ManageInfrastructureComponent implements OnInit {
   public infrastructure : Infrastructure;
   public infrastrutureForm!: FormGroup;
   public enableAssociation: boolean = false;
+  public editable : boolean = false;
+  public saving : boolean = true;
 
   constructor( public infrastructureRepository : InfrastructureRepositoryService,
-    public subsystemRepositoryService : SubsystemRepositoryService, public streetRepository: StreetRepositoryService , 
+    public subsystemRepositoryService : SubsystemRepositoryService, 
+    private infrastructureManipulation :InfrastructureManipulation,   
+    public streetRepository: StreetRepositoryService , 
     private stateMap :StateMapService, private snakeBar : MatSnackBar) {
     this.infrastructure = new Infrastructure(0);
     this.createForm(new Infrastructure(0));
-    stateMap.getFeatureSelect().subscribe(feature => {
+    infrastructureManipulation.getInfrastructureManipulation().subscribe(feature => {
       console.log("+++6+iniciou")    
       console.log(feature)    
       this.initializeForm(feature);      
+      //this.populateGeometry(feature);      
     })
   }
 
@@ -73,7 +80,7 @@ export class ManageInfrastructureComponent implements OnInit {
 
   createForm(infrastructure : Infrastructure):void{
     this.infrastrutureForm = new FormGroup({
-      idInfrastructure : new FormControl(infrastructure.id),
+      idInfrastructure : new FormControl({value : infrastructure.id,disabled : true}),
       infraName: new FormControl(infrastructure.name, [Validators.required]),    
       infraCategory : new FormControl(infrastructure.category,[Validators.required]),
       selectOcupante : new FormControl(infrastructure.dependent),      
@@ -120,27 +127,63 @@ export class ManageInfrastructureComponent implements OnInit {
     } 
 
   getSubsystem(){
-    this.subsystemRepositoryService.findFetch().subscribe((data : Subsystem[])=>{
-      console.log('45645456454564654654654')
-      console.log(data[0])     
-      this.subsystems = data;
-    })
+    this.subsystemRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (data : Subsystem[]) => {
+        console.log('getcounty')
+        console.log(data);
+        this.subsystems = data;
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getInfraestructure(){
-    this.infrastructureRepository.findFetch().subscribe((data : Infrastructure[])=>{
-      console.log('45645456454564654654654')
-      console.log(data[0])
-      this.infrastructures = data;
-    })
+
+    this.infrastructureRepository.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (data : Infrastructure[]) => {
+        console.log('getcounty')
+        console.log(data);
+        this.infrastructures = data;
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getStreet(){
-    this.streetRepository.findFetch().subscribe((data : Street[])=>{
-      console.log('45645456454564654654654')
-      console.log(data[0])
-      this.streets = data;
-    })
+
+    this.streetRepository.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (data : Street[]) => {
+        console.log('getcounty')
+        console.log(data);
+        this.streets = data;
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
+  }
+
+  openSnackBar(mensagem : string) {
+    this.snakeBar.open(mensagem, 'Entendido!', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   onSelectOcupante(value:number){
@@ -178,8 +221,16 @@ export class ManageInfrastructureComponent implements OnInit {
           infraSubmit.street = this.infrastructure.street;
           infraSubmit.infra_geometry = <Geometry>this.infrastructure.geometry;       
           console.log('sdaa');
-          console.log(infraSubmit.subsystems);
-          this.createDistrict(infraSubmit);
+          console.log(infraSubmit.subsystems);          
+        
+          if (this.saving == true){
+            this.createDistrict(infraSubmit);
+          }
+          else if (this.editable == true){
+            console.log('Não Geomtria')
+            infraSubmit.id = this.infrastrutureForm.get('eq_co_cod')?.value;
+            this.alterData(infraSubmit);
+          }
         }
         else if((this.infrastructure.dependent != undefined)){  
     
@@ -220,7 +271,50 @@ export class ManageInfrastructureComponent implements OnInit {
         this.snakeBar.open(`Infraestrutura Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
       })
         
-    }
+  }
+
+  createPublicPlace(equi:Infrastructure):void{
+    console.log('popu')
+    console.log(equi)
+
+    this.infrastructureRepository.postData(equi).subscribe({
+      next: (districts : Infrastructure) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snakeBar.open(`Equipamento Cadastrado! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+      
+      },
+    
+    })
+
+  }
+
+  alterData(equipament:Infrastructure):void{
+    console.log('popu')
+    console.log(equipament)
+
+    this.infrastructureRepository.editData(equipament).subscribe({
+      next: (districts : Infrastructure) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snakeBar.open(`Infrastructure Edit! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);      
+      },
+    
+    })
+  }
+  
 
 }
 

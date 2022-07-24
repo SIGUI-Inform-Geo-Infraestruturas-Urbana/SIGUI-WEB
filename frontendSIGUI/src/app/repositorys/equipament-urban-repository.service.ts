@@ -111,7 +111,11 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
        },
      }); 
     }); 
-   }
+  }
+
+  editData (equip:EquipmentUrban):Observable<EquipmentUrban>{
+    return new Observable((observer: Observer<EquipmentUrban>) => {});
+  }
 
   async createData (equiUrban:EquipmentUrban):Promise<EquipmentUrban>{
 

@@ -12,6 +12,8 @@ import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federa
 import { Infrastructure } from 'src/app/models/infrastructure.model';
 import { Coordinate } from 'ol/coordinate';
 import { MatSnackBar} from '@angular/material/snack-bar'
+import { UnitManipulation } from 'src/app/services/unit-federal/unit-federal-manager/unit-federal-manipulation.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-unit',
@@ -22,15 +24,23 @@ export class ManageUnitComponent implements OnInit {
 
   public stateEntity! : UnitFederal;
   public stateFormu!: FormGroup;
+  public editable : boolean = false;
+  public saving : boolean = true;
 
-  constructor(public unitFederativeRepository : UnitFederativeRepositoryService, private stateMap :StateMapService,
+
+  constructor(public unitFederativeRepository : UnitFederativeRepositoryService, 
+    private unitManipulation :UnitManipulation,
+    private stateMap :StateMapService,
     private snackBar: MatSnackBar){ 
-    this.stateEntity = new UnitFederal(0);
+    this.stateEntity = new UnitFederal();
     this.createForm(new UnitFederal(0));
-    stateMap.getFeatureSelect().subscribe(feature => {     
+  
+    unitManipulation.getUnitManipulation().subscribe(feature => {
+      console.log("+++6+iniciou")    
       console.log(feature)    
-      this.initializeForm(feature);   
-    })    
+      this.initializeForm(feature);      
+      //this.populateGeometry(feature);      
+    }) 
  }
 
   ngOnInit(): void {
@@ -128,14 +138,21 @@ export class ManageUnitComponent implements OnInit {
       if((this.stateEntity.geometry != '0')&&(this.stateEntity.geometry != undefined)){  
         const citySubmit: UnitFederal = new UnitFederal(this.stateFormu.get('idState')?.value);    
         citySubmit.name = this.stateFormu.get('nameState')?.value;
-        citySubmit.id_unit_federal = this.stateFormu.get('initialsUf')?.value;
+        citySubmit.initials = this.stateFormu.get('initialsUf')?.value;
         citySubmit.geometry = this.stateEntity.geometry,
         citySubmit.geocode = this.stateFormu.get('codUf')?.value
         citySubmit.name_region = this.stateFormu.get('nomeRegion')?.value,
         citySubmit.area_state = this.stateFormu.get('areaState')?.value,
         
         console.log(citySubmit);
-        this.createState(citySubmit); 
+        if (this.saving == true){
+          this.createState(citySubmit);
+        }
+        else if (this.editable == true){
+          console.log('Não Geomtria')
+          citySubmit.id = this.stateFormu.get('idState')?.value;
+          this.alterData(citySubmit);
+        }
       }
       else{
         console.log('Não Geomtria')
@@ -147,16 +164,50 @@ export class ManageUnitComponent implements OnInit {
     }
   } 
 
-  createState(stateE:UnitFederal):void{
+  createState(equi:UnitFederal):void{
     console.log('popu')
-    console.log(stateE)
-    let a = this.unitFederativeRepository.createData(stateE)
-    .then((value:UnitFederal) => {
-      console.log(value)
-      this.initializeForm(value);  
-      this.snackBar.open(`Unidade Federativa Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});   
+    console.log(equi)
+
+    this.unitFederativeRepository.postData(equi).subscribe({
+      next: (districts : UnitFederal) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snackBar.open(`Unidade Federativa Cadastrado! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);      
+      },    
     })
+  }
+
+  openSnackBar(mensagem : string) {
+    this.snackBar.open(mensagem, 'Entendido!', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
+  }
+
+  alterData(equipament:UnitFederal):void{
+    console.log('popu')
+    console.log(equipament)
+
+    this.unitFederativeRepository.editData(equipament).subscribe({
+      next: (districts : UnitFederal) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snackBar.open(`Unidade Federativa Edit! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);      
+      },
     
-  } 
+    })
+  }
 
 }

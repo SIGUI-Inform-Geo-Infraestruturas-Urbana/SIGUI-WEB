@@ -11,13 +11,16 @@
             <div class="box-form-l"> 
                 <mat-form-field appearance="fill">
                     <mat-label>Identificação</mat-label>
-                    <input matInput placeholder="Input" formControlName="idDistrict">
+                    <input matInput type="number" placeholder="Input" formControlName="idDistrict">
                 </mat-form-field>
             </div>
             <div class="box-form"> 
                 <mat-form-field appearance="fill">
                     <mat-label>Nome do Bairro</mat-label>
-                    <input matInput placeholder="Input" formControlName="nomeDistrict">
+                    <input matInput type="text" placeholder="Input" formControlName="nomeDistrict">
+                    <span class="spanValidate" *ngIf="districtForm.controls['nomeDistrict'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-l">                  
@@ -28,13 +31,16 @@
                             {{city.name}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="districtForm.controls['selectDraw'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <div class="content-form">
                     <mat-form-field appearance="fill">
                         <mat-label>Area do Bairro</mat-label>
-                        <input matInput placeholder="Input" formControlName="areaDistrict">
+                        <input type="number" matInput placeholder="Input" formControlName="areaDistrict">
                     </mat-form-field>
                 </div>  
             </div> 
@@ -42,7 +48,12 @@
 
             </div>  
             <div class="box-form-r">   
-                <button type="submit" mat-raised-button color="primary">Save Data</button>
+                <button [disabled]=" !saving" mat-flat-button color="primary"> 
+                    <mat-icon >save</mat-icon>                 
+                </button> 
+                <button [disabled]=" !editable" mat-flat-button color="primary"> 
+                    <mat-icon >save_as</mat-icon>                 
+                </button> 
             </div>   
         </div>
     </div>    

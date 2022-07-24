@@ -13,6 +13,7 @@ import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federa
 import { getArea } from 'ol/sphere';
 import { MatSnackBar} from '@angular/material/snack-bar'
 import { HttpErrorResponse } from '@angular/common/http';
+import { CountyManipulationService } from 'src/app/services/count/county-manager/county-manipulation.service';
 
 @Component({
   selector: 'app-manage-county',
@@ -25,31 +26,45 @@ export class ManageCountyComponent implements OnInit {
   public states : UnitFederal[] = [];
   public city : County;
   public cityForm!: FormGroup;
+  public editable : boolean = false;
+  public saving : boolean = true;
 
-  constructor(public countyRepository: CountyRepositoryService, public unitFederativeRepository : UnitFederativeRepositoryService,
+  constructor(public countyRepository: CountyRepositoryService,
+     public unitFederativeRepository : UnitFederativeRepositoryService,
+     private countyVizualization :CountyManipulationService,
      private stateMap :StateMapService, private snackBar : MatSnackBar){ 
     this.city = new County();
     this.createForm(new County(0));
-    stateMap.getFeatureSelect().subscribe(feature => {
+    //  private countyVizualization :CountyManipulationService,
+    // stateMap.getFeatureSelect().subscribe(feature => {
+    //   console.log(feature)    
+    //   this.initializeForm(feature);       
+    // }) 
+
+    countyVizualization.getCountyManipulation().subscribe(feature => {
       console.log(feature)    
       this.initializeForm(feature);       
     }) 
   }
 
-  initializeForm(feature:DataSpatial ){
-    let city:County = <County>feature;   
+  initializeForm(city:County ){//feature:DataSpatial
+    //let city:County = <County>feature;   
     if ((city.id_county != undefined)&&(city.id_county != 0)){
       console.log(city.id_county)
       console.log('Valor já existe')
       console.log(city)
       this.updateForm(city);
       this.city = city;    
+      this.editable = true;
+      this.saving = false;
     }
     else
     {
       console.log('Definir nova variavel')
       this.populateGeometry(city); 
-      this.updateForm(city);       
+      this.updateForm(city);      
+      this.editable = false;
+      this.saving = true; 
     }
   }
 
@@ -107,14 +122,15 @@ export class ManageCountyComponent implements OnInit {
   createForm(city : County):void{
     this.cityForm = new FormGroup({
       nameCity : new FormControl(city.name,[Validators.required]),
-      identity : new FormControl(city.id_county),
+      identity : new FormControl({ value: city.id, disabled : true}),
       siglaUF : new FormControl(city.initials_uf,[Validators.required]),
       codigoIBGE : new FormControl(city.ibge,[Validators.required]),
-      codigoAmbiental: new FormControl(city.cod_environmental,[Validators.required]),
+      codigoAmbiental: new FormControl({ value: city.cod_environmental },[Validators.required]),
       nomeUGRHI: new FormControl(city.name_ugrhi,[Validators.required]),
       numeroUGRHI: new FormControl(city.number_ugrhi,[Validators.required]),
       // coordenada: new FormControl(city.geometry),
-      areaLimite: new FormControl(city.area_county),
+      areaLimite : new FormControl({ value: city.area_county, disabled : true}),
+      // areaLimite: new FormControl(city.area_county),
       selectDraw: new FormControl(0,[Validators.required]),
     });
   }
@@ -135,28 +151,36 @@ export class ManageCountyComponent implements OnInit {
 
     if (this.cityForm.valid)
     {
-      if((this.city.geometry != '0')&&(this.city.geometry != undefined)){  
-     
-      console.log("fdfdfdsfdsf")
-      console.log(this.city.geometry)
-      console.log("fdfdfdsfdsf")
-
-      const citySubmit: County = new County(this.city.id_county);
-      citySubmit.name = this.cityForm.get('nameCity')?.value;
-      citySubmit.initials_uf = this.cityForm.get('siglaUF')?.value;
-      citySubmit.ibge = this.cityForm.get('codigoIBGE')?.value,
-      citySubmit.cod_environmental = this.cityForm.get('codigoAmbiental')?.value;
-      citySubmit.name_ugrhi = this.cityForm.get('nomeUGRHI')?.value;
-      citySubmit.number_ugrhi = this.cityForm.get('numeroUGRHI')?.value;
-      citySubmit.area_county = this.cityForm.get('areaLimite')?.value,
-      citySubmit.co_geometry = <Geometry>this.city.geometry;
-      citySubmit.unit_federal = this.city.unit_federal;        
+      if((this.city.geometry != '0')&&(this.city.geometry != undefined))
+      {  
       
-      console.log('citySubmit');
-      console.log(citySubmit);
-      this.createDistrict(citySubmit);
+        console.log("fdfdfdsfdsf")
+        console.log(this.city.geometry)
+        console.log("fdfdfdsfdsf")
+
+        const citySubmit: County = new County(this.city.id_county);
+        citySubmit.name = this.cityForm.get('nameCity')?.value;
+        citySubmit.initials_uf = this.cityForm.get('siglaUF')?.value;
+        citySubmit.ibge = this.cityForm.get('codigoIBGE')?.value,
+        citySubmit.cod_environmental = this.cityForm.get('codigoAmbiental')?.value;
+        citySubmit.name_ugrhi = this.cityForm.get('nomeUGRHI')?.value;
+        citySubmit.number_ugrhi = this.cityForm.get('numeroUGRHI')?.value;
+        citySubmit.area_county = this.cityForm.get('areaLimite')?.value,
+        citySubmit.co_geometry = <Geometry>this.city.geometry;
+        citySubmit.unit_federal = this.city.unit_federal;        
+        
+        console.log('citySubmit');
+        console.log(citySubmit);
+        if (this.saving == true){
+          this.createDistrict(citySubmit);
+        }
+        else if (this.editable == true){
+          console.log('Não Geomtria')
+          citySubmit.id = this.cityForm.get('identity')?.value;
+          this.alterData(citySubmit);
+        }
       }
-      else{
+      else {
         console.log('Não Geomtria')
       }
     }
@@ -204,14 +228,27 @@ export class ManageCountyComponent implements OnInit {
       
       },
     
-    }) 
+    })
+  }
 
-    // let a = this.countyRepository.createData(city)
-    //   .then((value:County) => {
-    //     console.log(value)
-    //     this.initializeForm(value);      
-    //     this.snackBar.open(`Cidade Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
-    //   })
+  alterData(city:County):void{
+    console.log('popu')
+    console.log(city)
+
+    this.countyRepository.editData(city).subscribe({
+      next: (cities : County) => {
+        console.log(cities);
+        this.initializeForm(cities);    
+        this.snackBar.open(`Cidade Edit! ID { ${cities.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);      
+      },
+    
+    })
   }
 
   openSnackBar(mensagem : string) {
@@ -223,11 +260,28 @@ export class ManageCountyComponent implements OnInit {
 
   getState():void{
     let a = {};
-    this.unitFederativeRepository.findFetch().subscribe((data : UnitFederal[])=>{
-      console.log('45645456454564654654654')
-      console.log(data[0])
-      this.states = data;
-    })
+    // this.unitFederativeRepository.findFetch().subscribe((data : UnitFederal[])=>{
+    //   console.log('45645456454564654654654')
+    //   console.log(data[0])
+    //   this.states = data;
+    // })
+
+    this.unitFederativeRepository.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (data : UnitFederal[]) => {
+        console.log('getcounty')
+        console.log(data);
+        this.states = data;
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
+
+
     // this.restApi.getState().subscribe((data:string) => {
     //   console.log('populateState+++++++')
     //   console.log(data)

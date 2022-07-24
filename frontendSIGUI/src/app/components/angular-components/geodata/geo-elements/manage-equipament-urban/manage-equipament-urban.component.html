@@ -20,42 +20,63 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Primeiro Nome do Equipamento</mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_first_name">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_first_name'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-l">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Nome no Mapa</mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_name_map">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_name_map'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Nome </mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_name">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_name'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>  
             </div> 
             <div class="box-form-l">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Nome Completo</mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_name_complete">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_name_complete'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Nome type</mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_type">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_type'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>  
             </div> 
             <div class="box-form-l">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Departamento</mat-label>
                     <input matInput placeholder="Input" formControlName="eq_co_departament_admin">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_departament_admin'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Nome </mat-label>
                     <input type="text" matInput placeholder="Input" formControlName="eq_co_name">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_name'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>  
             </div> 
             <div class="box-form-l">                  
@@ -72,6 +93,9 @@
                             {{distri.name}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_district'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div> 
             <div class="box-form-l">                  
@@ -82,6 +106,9 @@
                             {{street.name_street}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_street'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>  
             <div class="box-form-r">   
@@ -92,6 +119,9 @@
                             {{publicPlace.id}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_public_place'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>          
             </div> 
             <div class="box-form-l">             
@@ -104,13 +134,21 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Equipamento</mat-label>
                     <input matInput placeholder="Input" formControlName="eq_co_equipament">
+                    <span class="spanValidate" *ngIf="equipamentForm.controls['eq_co_equipament'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div> 
             <div class="box-form-l">             
                 
             </div> 
             <div class="box-form-r">   
-                <button type="submit" mat-raised-button color="primary">Save Data</button>
+                <button [disabled]=" !saving" mat-flat-button color="primary"> 
+                    <mat-icon >save</mat-icon>                 
+                </button> 
+                <button [disabled]=" !editable" mat-flat-button color="primary"> 
+                    <mat-icon >save_as</mat-icon>                 
+                </button> 
             </div>   
         </div>
     </div>  

@@ -102,7 +102,11 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
        },
      }); 
     }); 
-   }
+  }
+
+  editData (equip:Network):Observable<Network>{
+    return new Observable((observer: Observer<Network>) => {});
+  }
 
   async createData (street:Network):Promise<Network>{
 

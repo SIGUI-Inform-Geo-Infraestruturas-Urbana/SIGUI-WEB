@@ -18,18 +18,27 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Cod Setor</mat-label>
                     <input matInput placeholder="Input" formControlName="pp_cod_sector">
+                    <span class="spanValidate" *ngIf="ppForm.controls['eq_co_equipament'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <mat-form-field appearance="fill">
-                    <mat-label>Codigo da quadra</mat-label>
-                    <input matInput placeholder="Input" formControlName="pp_cod_block">
+                    <mat-label>Codigo da face</mat-label>
+                    <input matInput placeholder="Input" formControlName="pp_cod_face">
+                    <span class="spanValidate" *ngIf="ppForm.controls['pp_cod_face'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div> 
             <div class="box-form-l">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Codigo da face</mat-label>
                     <input matInput placeholder="Input" formControlName="pp_cod_face">
+                    <span class="spanValidate" *ngIf="ppForm.controls['pp_cod_face'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
@@ -52,6 +61,9 @@
                             {{street.name_street}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="ppForm.controls['pp_streat'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div> 
             <div class="box-form-l">                  
@@ -62,16 +74,27 @@
                             {{district.name}}
                         </mat-option>
                     </mat-select>
+                    <span class="spanValidate" *ngIf="ppForm.controls['pp_district'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div>
             <div class="box-form-r">                  
                 <mat-form-field appearance="fill">
                     <mat-label>Codigo da quadra</mat-label>
                     <input matInput placeholder="Input" formControlName="pp_cod_block">
+                    <span class="spanValidate" *ngIf="ppForm.controls['pp_cod_block'].errors">
+                        Campo Obrigatorio
+                    </span>
                 </mat-form-field>
             </div> 
             <div class="box-form-r">   
-                <button type="submit" mat-raised-button color="primary">Save Data</button>
+                <button [disabled]=" !saving" mat-flat-button color="primary"> 
+                    <mat-icon >save</mat-icon>                 
+                </button> 
+                <button [disabled]=" !editable" mat-flat-button color="primary"> 
+                    <mat-icon >save_as</mat-icon>                 
+                </button> 
             </div>   
         </div>
     </div>    

@@ -84,7 +84,12 @@
                 </div>
             </div> 
             <div class="box-form-r">   
-                <button type="submit"  [disabled]="!infrastrutureForm.valid" mat-raised-button color="primary">Save Data</button>
+                <button [disabled]=" !saving" mat-flat-button color="primary"> 
+                    <mat-icon >save</mat-icon>                 
+                </button> 
+                <button [disabled]=" !editable" mat-flat-button color="primary"> 
+                    <mat-icon >save_as</mat-icon>                 
+                </button> 
             </div>   
         </div>
     </div>  

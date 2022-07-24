@@ -114,6 +114,10 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
     }); 
    }  
 
+  editData (equip:UnitFederal):Observable<UnitFederal>{
+    return new Observable((observer: Observer<UnitFederal>) => {});
+  }
+
   async createData (unit:UnitFederal):Promise<UnitFederal>{
 
     console.log("Create")

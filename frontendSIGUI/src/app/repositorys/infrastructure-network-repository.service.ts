@@ -110,7 +110,12 @@ export class InfrastructureNetworkRepositoryService implements IRepository<Infra
        },
      }); 
     }); 
-   }
+  }
+
+  editData (equip:InfrastructureNetwork):Observable<InfrastructureNetwork>{
+    return new Observable((observer: Observer<InfrastructureNetwork>) => {});
+  }
+
 
   async createData (infra:InfrastructureNetwork):Promise<InfrastructureNetwork>{
 

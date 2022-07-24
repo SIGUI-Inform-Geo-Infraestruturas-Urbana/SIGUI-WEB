@@ -8,6 +8,8 @@ import { DistrictRepositoryService } from 'src/app/repositorys/district-reposito
 import { StreetRepositoryService } from 'src/app/repositorys/street-repository.service';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 import { MatSnackBar} from '@angular/material/snack-bar'
+import { HttpErrorResponse } from '@angular/common/http';
+import { StreetManipulation } from 'src/app/services/street/street-manipulation/street-manipulation.service';
 
 @Component({
   selector: 'app-manage-street',
@@ -19,20 +21,67 @@ export class ManageStreetComponent implements OnInit {
   public districts : District[] = [];
   public street : Street;
   public streetForm!: FormGroup;
+  public editable : boolean = false;
+  public saving : boolean = true;
 
-  constructor(public streetRepository: StreetRepositoryService,public districtRepository : DistrictRepositoryService, 
+  constructor(public streetRepository: StreetRepositoryService,
+    public districtRepository : DistrictRepositoryService, 
+    private streetManipulation :StreetManipulation,
     private stateMap :StateMapService, private snackbar : MatSnackBar) {
       this.street = new Street();
       this.createForm(new Street(0));
-      stateMap.getFeatureSelect().subscribe(feature => {
+      streetManipulation.getStreetManipulation().subscribe(feature => {
         console.log("+++6+iniciou")    
         console.log(feature)    
-        this.populateGeometry(feature);      
+        this.initializeForm(feature);      
+        //this.populateGeometry(feature);      
       })
   }
 
+  initializeForm(equipam:Street ){//feature:DataSpatial
+    //let city:County = <County>feature;   
+    if ((equipam.id != undefined)&&(equipam.id != 0)){
+      console.log(equipam.id)
+      console.log('Valor já existe')
+      console.log(equipam)
+      this.updateForm(equipam);
+      this.street = equipam;    
+      this.editable = true;
+      this.saving = false;
+    }
+    else
+    {
+      console.log('Definir nova variavel')
+      this.populateGeometry(equipam); 
+      this.updateForm(equipam);      
+      this.editable = false;
+      this.saving = true; 
+    }
+  }
+
+  updateForm(street : Street){
+    console.log('updateForm')
+    console.log(street)
+    
+    this.streetForm.patchValue({
+
+      nameStreet : street.name_street,
+      nameStreetPre : street.name_street_pre,
+      idStreet : street.id,      
+      codKey: street.cod_key,
+      typeStreet: street.type_street,
+      typeLegislation: street.type_legislation,
+      selectDistrictE: street.district_e,
+      selectDistrictD: street.district_d,
+      zipCodeE: street.zip_code_e,
+      zipCodeD: street.zip_code_d,
+      selectDistrict: street.district,//geometry//geometry      
+      geometry : street.st_geometry,//geometry//geometry       
+      
+    })
+  }
+
   ngOnInit(): void {
-    this.createForm(new Street(0));
     this.getDistrict();
     this.streetForm.get("selectDistrictE")?.valueChanges.subscribe(f => {this.onSelectDistrictE(f)})
     this.streetForm.get("selectDistrictD")?.valueChanges.subscribe(f => {this.onSelectDistrictD(f)})
@@ -43,7 +92,7 @@ export class ManageStreetComponent implements OnInit {
     this.streetForm = new FormGroup({
       nameStreet : new FormControl(street.name_street, [Validators.required]),
       nameStreetPre : new FormControl(street.name_street_pre, [Validators.required]),
-      idStreet : new FormControl(street.id),      
+      idStreet : new FormControl({value :  street.id, disabled : true}),      
       codKey: new FormControl(street.cod_key, [Validators.required]),
       typeStreet: new FormControl(street.type_street,[Validators.required]),
       typeLegislation: new FormControl(street.type_legislation,[Validators.required]),
@@ -75,7 +124,14 @@ export class ManageStreetComponent implements OnInit {
           streetSubmit.st_geometry = <Geometry>this.street.geometry;   
           
           console.log(streetSubmit);
-          this.createDistrict(streetSubmit);
+          if (this.saving == true){
+            this.createDistrict(streetSubmit);
+          }
+          else if (this.editable == true){
+            console.log('Não Geomtria')
+            streetSubmit.id = this.streetForm.get('eq_co_cod')?.value;
+            this.alterData(streetSubmit);
+          }
       }
       else{
         this.snackbar.open('Geometria ou Infraestrutura Ocupada, não informada!','Fechar',{duration: 5 * 1000});     
@@ -89,22 +145,71 @@ export class ManageStreetComponent implements OnInit {
     }
   }
 
-  createDistrict(street:Street):void{
+  createDistrict(equi:Street):void{
     console.log('popu')
-    console.log(street)
-    this.streetRepository.createData(street)
-    .then((value:Street) => {
-      console.log(value)
-      this.snackbar.open(`Rua Cadastrada! ID { ${value.id} }`,'Entendido',{duration: 8 * 1000});
+    console.log(equi)
+
+    this.streetRepository.postData(equi).subscribe({
+      next: (districts : Street) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snackbar.open(`Rua Cadastrado! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+      
+      },
+    
+    })
+
+  }
+
+  alterData(equipament:Street):void{
+    console.log('popu')
+    console.log(equipament)
+
+    this.streetRepository.editData(equipament).subscribe({
+      next: (districts : Street) => {
+        console.log(districts);
+        this.initializeForm(districts);    
+        this.snackbar.open(`Logradouro Edit! ID { ${districts.id} }`,'Entendido',{duration: 8 * 1000});
+        //this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);      
+      },
+    
     })
   }
 
   getDistrict(){
-    this.districtRepository.findFetch().subscribe((data : District[])=>{
-      console.log('45645456454564654654654')
-      console.log(data[0])
-      this.districts = data;
-    })
+
+    this.districtRepository.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (data : District[]) => {
+        console.log('getcounty')
+        console.log(data);
+        this.districts = data;
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
+  }
+
+  openSnackBar(mensagem : string) {
+    this.snackbar.open(mensagem, 'Entendido!', {
+      horizontalPosition: 'right',
+      verticalPosition: 'bottom',
+    });
   }
 
   populateGeometry(feature:DataSpatial){ 

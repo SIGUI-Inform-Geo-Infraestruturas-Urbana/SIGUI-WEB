@@ -86,6 +86,10 @@ export class InfrastructureRepositoryService implements IRepository<Infrastructu
     return this.infrastructure$;
   }
 
+  editData (equip:Infrastructure):Observable<Infrastructure>{
+    return new Observable((observer: Observer<Infrastructure>) => {});
+  }
+
   postData (infra:Infrastructure):Observable<Infrastructure>{
 
     return new Observable((observer: Observer<Infrastructure>) => {

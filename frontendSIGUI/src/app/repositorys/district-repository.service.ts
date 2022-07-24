@@ -113,8 +113,11 @@ export class DistrictRepositoryService implements IRepository<District,District>
        },
      }); 
     }); 
-   }
+  }
 
+  editData (distric:District):Observable<District>{
+    return new Observable((observer: Observer<District>) => {});
+  }
 
   async createData (district:District):Promise<District>{
 
