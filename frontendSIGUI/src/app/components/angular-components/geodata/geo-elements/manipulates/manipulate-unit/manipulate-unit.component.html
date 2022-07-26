@@ -1,39 +1,35 @@
 <form [formGroup]="searchForm" class="form-search" (ngSubmit)="getFeatureCounty()"> 
     <div class="wrapper">
         <div class="box-field"> 
-            <h3>GERENCIAR UNIT</h3>
+            <h3>GERENCIAR ESTADO</h3>
             <div class="divider-div header-light-pallete"></div>
            
-        </div>   
-            <div class="box-field"> 
+        </div>  
+            <div class="box-field">  
                 <div style="width: auto;">
-                    <label>Buscar Municipio </label>
-                </div>                   
-                <input class="input-filter" type="text" formControlName="idMunicipio">
-            </div>
-            <div class="box-field">                  
-                <label >Código UF </label>
-                <input class="input-filter-secondary" type="text" formControlName="idState">  
+                    <label >Buscar Estado </label>
+                </div>   
+                <input class="input-search color-pallete" type="text" formControlName="idMunicipio">  
                 <button mat-icon-button type="submit"> 
-                    <mat-icon >menu</mat-icon>
+                    <mat-icon >search</mat-icon>
                 </button>  
             </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="onClickShapeFile()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span> ShapeFiles Municipios</span>           
+                <span> ShapeFiles Estados</span>           
             </button>                   
         </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="onClickSelectCounty()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span>Manipular Limites Municipais</span>           
+                <span>Manipular Limites Estaduais</span>           
             </button>   
         </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="addLayerVetorMunicipios()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span>Buscar Limites Municipais</span>           
+                <span>Buscar Limites Estaduais</span>           
             </button> 
         </div>
         <div class="box-field">

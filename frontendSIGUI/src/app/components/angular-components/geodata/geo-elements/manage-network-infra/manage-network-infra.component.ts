@@ -12,12 +12,13 @@ import { DataAssociationService } from 'src/app/services/count/data-association.
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 import { MatSnackBar} from '@angular/material/snack-bar'
 import { InfrastructureNetworkManipulation } from 'src/app/services/InfrastructureNetwork/InfrastructureNetwork-manager/InfrastructureNetwork-manipulation.service';
+
 @Component({
-  selector: 'app-infrastructure-network',
-  templateUrl: './infrastructure-network.component.html',
-  styleUrls: ['./infrastructure-network.component.css']
+  selector: 'app-manage-network-infra',
+  templateUrl: './manage-network-infra.component.html',
+  styleUrls: ['./manage-network-infra.component.scss']
 })
-export class InfrastructureNetworkComponent implements OnInit , OnChanges{
+export class ManageNetworkInfraComponent implements OnInit {
 
   @Input() infrastructure!: Infrastructure; 
   @Input() infraAssociation!: InfrastructureNetwork;
@@ -37,6 +38,14 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
       console.log("+++6+iniciou")    
       console.log(feature)    
       this.populateGeometry(feature);      
+    })
+    infrastructureNetworkManipulation.getInfrastructureNetworkManipulation().subscribe(feature => {
+      console.log("+++6+iniciou")    
+      console.log(feature)    
+      this.infraAssociation.infrastructure_in = <Infrastructure>feature.infrastructure_in;
+      this.dataAssociationService.setnfraNet(this.infraAssociation)
+      let infra = <Infrastructure>this.infraAssociation.infrastructure_in
+      this.labelInfra = infra.name     
     })
    
   }
@@ -141,5 +150,4 @@ export class InfrastructureNetworkComponent implements OnInit , OnChanges{
       // this.initializeForm(value);
     })
   }
-
 }

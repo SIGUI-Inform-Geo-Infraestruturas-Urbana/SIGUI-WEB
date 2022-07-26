@@ -39,8 +39,8 @@
     position: absolute;
 }
 .div-title{
-    background-color: white;
-    border-radius: 10px;
+    /* background-color: aquamarine; */
+    border-radius: 0px 0px 10px 10px;
     z-index: 9;
     padding-top: 20px;
 }
@@ -55,14 +55,18 @@
 
 .div-img{
     height: 100px;
-    background-color: rgb(129, 20, 151);
+    /* background-color: rgb(129, 20, 151); */
+    background-image: url('/assets/images/brasao.png');
+    background-size: 100%;
+    background-position: center;
     border-radius: 10px;
     top: 50px;
     padding-top: 50px;
 }
 
 .img-element{
-
+    width: 128px;
+    height: 40px;    
 }
 
 .divider-div{

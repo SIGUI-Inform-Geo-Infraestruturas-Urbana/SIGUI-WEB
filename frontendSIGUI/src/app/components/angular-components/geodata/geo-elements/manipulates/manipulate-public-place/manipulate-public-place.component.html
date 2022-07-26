@@ -7,33 +7,33 @@
         </div>   
             <div class="box-field"> 
                 <div style="width: auto;">
-                    <label>Buscar Municipio </label>
+                    <label>Buscar Logradouro </label>
                 </div>                   
-                <input class="input-filter" type="text" formControlName="idMunicipio">
+                <input class="input-data input-filter color-pallete" type="text" formControlName="idMunicipio">
             </div>
             <div class="box-field">                  
-                <label >Código UF </label>
-                <input class="input-filter-secondary" type="text" formControlName="idState">  
+                <label >Código Rua </label>
+                <input class="input-search color-pallete" type="text" formControlName="idState">  
                 <button mat-icon-button type="submit"> 
-                    <mat-icon >menu</mat-icon>
+                    <mat-icon >search</mat-icon>
                 </button>  
             </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="onClickShapeFile()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span> ShapeFiles Municipios</span>           
+                <span> ShapeFiles Logradouros</span>           
             </button>                   
         </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="onClickSelectCounty()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span>Manipular Limites Municipais</span>           
+                <span>Manipular Logradouros</span>           
             </button>   
         </div>
         <div class="button-colum">
             <button mat-flat-button type="button" class="button-control-data" color="primary" (click)="addLayerVetorMunicipios()"> 
                 <mat-icon >home</mat-icon><br> 
-                <span>Buscar Limites Municipais</span>           
+                <span>Buscar Logradouros</span>           
             </button> 
         </div>
         <div class="box-field">

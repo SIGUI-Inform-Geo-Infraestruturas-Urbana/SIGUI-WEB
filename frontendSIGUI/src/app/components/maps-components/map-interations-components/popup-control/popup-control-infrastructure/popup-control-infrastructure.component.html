@@ -1,9 +1,12 @@
 <table> 
     <tr>
-        <h3>Infraestrutura</h3>
-        <div class="divider-div header-light-pallete"></div>
+        <td colspan="5">
+            <div class="divider-div header-light-pallete "></div>
+            <h3>Opções para INFRAESTRUTURA</h3>     
+            <mat-divider style="width: 100%;"></mat-divider>       
+        </td>
     </tr>
-    <tr> 
+    <tr class="controls"> 
         <td class="col-header"></td>
         <td class="col-content">
         <button mat-icon-button color="primary">
@@ -11,10 +14,22 @@
         </button>    
         </td>
         <td class="col-content">
-        <button class="button-event" (click)="connectFeatureFromInfrastructure()">
+        <button class="button-event" (click)="addNodeFatherNetwork()">
             <mat-icon >home</mat-icon> 
-            Adicionar 
+            Adicionar NO 
         </button>
+        </td>
+        <td class="col-content">
+            <button class="button-event" (click)="associateFeatureFromInfrastructure()">
+            <mat-icon >home</mat-icon> 
+                Adicionar DestinO
+            </button>
+        </td>
+        <td class="col-content">
+            <button class="button-event" (click)="connectFeatureFromInfrastructure()">
+            <mat-icon >home</mat-icon> 
+                Adicionar 
+            </button>
         </td>
     </tr>  
 </table>  

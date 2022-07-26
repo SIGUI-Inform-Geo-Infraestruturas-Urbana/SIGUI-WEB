@@ -87,6 +87,7 @@ export class ManipulateInfrastructureComponent implements OnInit {
       session_state: false,
       session_infrastructure: true,
       session_estructure : false,     
+      session_network : false
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
   }

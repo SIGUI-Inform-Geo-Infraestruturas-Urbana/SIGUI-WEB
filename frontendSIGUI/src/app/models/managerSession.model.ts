@@ -8,6 +8,7 @@ export class ManagerSession {
     session_public_place : boolean = false; 
     session_infrastructure : boolean = false; 
     session_estructure : boolean = false; 
+    session_network : boolean = false; 
 
     constructor(){
         this.session_visualization = true;
@@ -20,5 +21,6 @@ export class ManagerSession {
         this.session_public_place = false;
         this.session_infrastructure = false;
         this.session_estructure = false;
+        this.session_network = false;
     }
 }

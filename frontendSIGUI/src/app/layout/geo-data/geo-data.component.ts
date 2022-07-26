@@ -23,6 +23,8 @@ import { PublicPlace } from 'src/app/models/public-place.model';
 import { Street } from 'src/app/models/street.model';
 import { Infrastructure } from 'src/app/models/infrastructure.model';
 import { EquipmentUrban } from 'src/app/models/equipament-urban.model';
+import { InfrastructureNetworkManipulation } from 'src/app/services/InfrastructureNetwork/InfrastructureNetwork-manager/InfrastructureNetwork-manipulation.service';
+import { InfrastructureNetwork } from 'src/app/models/Infrastructure-network.model';
 
 @Component({
   selector: 'app-geo-data',
@@ -51,6 +53,7 @@ export class GeoDataComponent implements OnInit {
     private publicPlaceManipulation :PublicPlaceManipulation,
     private infrastructureManipulation :InfrastructureManipulation,
     private equipamentUrbanManipulation :EquipamentUrbanManipulationService,
+    private infrastructureNetworkManipulation : InfrastructureNetworkManipulation
     ) { 
     this.managerVizualizaton = new ManagerSession();
     this.managerManipulation = new ManagerSession();
@@ -125,7 +128,7 @@ export class GeoDataComponent implements OnInit {
           case 'infraNet':
             this.managerVizualizaton = new ManagerSession();
             this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
+            this.managerVizualizaton.session_network = true;
           break;       
           case 'estructure':
             this.managerVizualizaton = new ManagerSession();
@@ -183,8 +186,8 @@ export class GeoDataComponent implements OnInit {
         case 'infraNet':
           this.enableModalManipuledData();
           this.managerManipulation = new ManagerSession();
-          this.countyVizualization.setCountyVisualization(<County>element);
-          this.managerManipulation.session_county = true;
+          this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
+          this.managerManipulation.session_network = true;
         break;       
         case 'estructure':
           this.enableModalManipuledData();
@@ -196,8 +199,20 @@ export class GeoDataComponent implements OnInit {
           break;
       }  
       console.log('valor nao 87666666666')
+    }else if( (element.geometry == '0'))
+    {
+      console.log(element.typeRepresentation)
+      switch (element.typeRepresentation) {
+        case 'infraNet':
+          this.enableModalManipuledData();
+          this.managerManipulation = new ManagerSession();
+          this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
+          this.managerManipulation.session_network = true;
+        break;       
+        default:
+          break;
+      } 
     }
-
 
     // let city:County = <County>feature;   
     // if ((city.id_county != undefined)&&(city.id_county != 0)){

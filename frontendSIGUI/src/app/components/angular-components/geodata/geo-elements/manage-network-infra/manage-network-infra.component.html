@@ -1,0 +1,72 @@
+<form [formGroup]="infrastrutureForm" (ngSubmit)="onSubmit()"> 
+
+    <div class="header header-light-pallete">      
+        <mat-icon >route</mat-icon><br>
+        <h2>Gerenciar Redes</h2>
+    </div> 
+    <div class="container-div">   
+        <div class="wrapper-form">
+            <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Identificação</mat-label>
+                    <input matInput type="number" placeholder="Input" formControlName="idDistrict">
+                </mat-form-field>
+            </div>
+            <div class="box-form-l">                                  
+                <button mat-flat-button type="button" class="button-control-data" color="accent"> 
+                    <mat-icon >my_location</mat-icon><br> 
+                    <span>{{labelInfra}}</span>           
+                </button>         
+            </div>
+            <div class="box-form-r">     
+                <button mat-flat-button type="button" class="button-control-data" color="accent"> 
+                    <mat-icon >add_location_alt</mat-icon><br> 
+                    <span> {{Associada}}</span>           
+                </button>    
+ 
+            </div> 
+               <div class="box-form"> 
+                <mat-form-field appearance="fill">
+                    <mat-label>Serial Number</mat-label>
+                    <input matInput placeholder="Input" formControlName="serial_number">
+                    <span class="spanValidate" *ngIf="infrastrutureForm.controls['serial_number'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>
+            <div class="box-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Status</mat-label>
+                    <input matInput placeholder="Input" formControlName="status">
+                    <span class="spanValidate" *ngIf="infrastrutureForm.controls['status'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>                   
+            <div class="box-form">
+                <mat-form-field appearance="fill">
+                    <mat-label>Selecionar Network</mat-label>
+                    <mat-select formControlName="selectNetwork">
+                        <mat-option *ngFor="let network of networks" [value]="network.id">
+                            {{network.net_name}}
+                        </mat-option>
+                    </mat-select>
+                    <span class="spanValidate" *ngIf="infrastrutureForm.controls['selectNetwork'].errors">
+                        Campo Obrigatorio
+                    </span>
+                </mat-form-field>
+            </div>            
+            <div class="box-form-l">                  
+
+            </div>  
+            <div class="box-form-r">   
+                <button [disabled]="!infrastrutureForm.valid" mat-flat-button color="primary"> 
+                    <mat-icon >save</mat-icon>                 
+                </button> 
+                <button [disabled]="!infrastrutureForm.valid" mat-flat-button color="primary"> 
+                    <mat-icon >save_as</mat-icon>                 
+                </button> 
+            </div> 
+        </div>
+    </div>    
+</form>

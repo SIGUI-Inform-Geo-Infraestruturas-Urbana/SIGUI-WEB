@@ -66,7 +66,7 @@ export class GeodataManagerComponent implements OnInit, OnChanges {
   }
   openNetwork(){
     this.managerVizualizaton = new ManagerSession();   
-    this.managerVizualizaton.session_estructure = true;
+    this.managerVizualizaton.session_network = true;
   }
   
 }

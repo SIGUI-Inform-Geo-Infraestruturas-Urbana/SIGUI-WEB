@@ -108,6 +108,7 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_state: false,
       session_infrastructure: false,
       session_estructure : false,     
+      session_network : false
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
     //this.router.navigateByUrl('/geo-view/manager-city');
@@ -128,6 +129,7 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_state: false,
       session_infrastructure: false,
       session_estructure : false,  
+      session_network : false
      
     }
     this.managerVisualization.setSessionVisualization(this.managerSession); 
@@ -145,6 +147,7 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_state: false,
       session_infrastructure: false,
       session_estructure : false,  
+      session_network : false
     }
     this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-street'],{relativeTo:this.route});
@@ -160,7 +163,8 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_public_place : true,
       session_state: false,
       session_infrastructure: false,
-      session_estructure : false,  
+      session_estructure : false,
+      session_network : false  
     }
     this.managerVisualization.setSessionVisualization(this.managerSession); 
     this.router.navigate(['manager-public-place'],{relativeTo:this.route});
@@ -178,6 +182,7 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_state: false,
       session_infrastructure: true,
       session_estructure : false,  
+      session_network : false
      
     }
     console.log('odfdsfdsfdsfdsfdsf')
@@ -198,6 +203,7 @@ export class MenuManegerGeodataComponent implements OnInit {
       session_state: false,
       session_infrastructure: false,
       session_estructure : true,  
+      session_network : false
     }
     //this.router.navigateByUrl('/geo-view/manager-city');
     this.managerVisualization.setSessionVisualization(this.managerSession); 

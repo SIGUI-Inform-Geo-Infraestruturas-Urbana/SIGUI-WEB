@@ -161,7 +161,7 @@ $my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
     grid-template-columns: 2fr 2fr 2fr;
     grid-column-gap: 10px;
     grid-row-gap: 1em;
-    width: auto;
+    width: 340px;
     /* grid-template-rows: 70px 70px; */
 }
 .box-field{
@@ -178,6 +178,17 @@ $my-app-theme-custom: map-merge($custom-theme, (foreground: $mat-foreground));
     height: 10px;
 }
 
+
+//input 
+.input-search{
+    border-radius: 5px;
+    //width: 310px;
+    border-color: #050571;
+    // background-color: aqua;
+}
+.input-data{
+    width: 310px;
+}
 
 
 //Definindo temas base

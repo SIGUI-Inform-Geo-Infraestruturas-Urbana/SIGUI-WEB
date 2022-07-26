@@ -122,7 +122,8 @@ import { ManageStreetComponent } from './components/angular-components/geodata/g
 import { ManagePublicPlaceComponent } from './components/angular-components/geodata/geo-elements/manage-public-place/manage-public-place.component';
 import { ManageInfrastructureComponent } from './components/angular-components/geodata/geo-elements/manage-infrastructure/manage-infrastructure.component';
 import { ManageEquipamentUrbanComponent } from './components/angular-components/geodata/geo-elements/manage-equipament-urban/manage-equipament-urban.component';
-import { PopupControlDistrictsComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-districts/popup-control-districts.component'
+import { PopupControlDistrictsComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-districts/popup-control-districts.component';
+import { ManageNetworkInfraComponent } from './components/angular-components/geodata/geo-elements/manage-network-infra/manage-network-infra.component'
 
 
 @NgModule({
@@ -208,7 +209,7 @@ import { PopupControlDistrictsComponent } from './components/maps-components/map
     ContainerUrbanEquipmentComponent,
     ContainerUrbanNetworkComponent,
     ContainerUnitComponent,  
-    ContainerCountyComponent, ManageUnitComponent, ManageDistrictComponent, ManageStreetComponent, ManagePublicPlaceComponent, ManageInfrastructureComponent, ManageEquipamentUrbanComponent, PopupControlDistrictsComponent,   
+    ContainerCountyComponent, ManageUnitComponent, ManageDistrictComponent, ManageStreetComponent, ManagePublicPlaceComponent, ManageInfrastructureComponent, ManageEquipamentUrbanComponent, PopupControlDistrictsComponent, ManageNetworkInfraComponent,   
 
 
   ],

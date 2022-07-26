@@ -86,6 +86,7 @@ export class ManipulateUrbanEquipmentComponent implements OnInit {
       session_state: false,
       session_infrastructure: false,
       session_estructure : true,     
+      session_network : false
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
   }

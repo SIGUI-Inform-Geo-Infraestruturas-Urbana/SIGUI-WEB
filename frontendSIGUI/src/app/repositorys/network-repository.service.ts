@@ -82,6 +82,9 @@ export class NetworkRepositoryService implements IRepository<Network,Network>{
     return this.networks$;
   }
 
+  // populateServiceViewMap(cities : Network[]){
+  //   this.dataSpatialService.setDataSpatial(cities);
+  // }
 
   postData (street:Network):Observable<Network>{
 

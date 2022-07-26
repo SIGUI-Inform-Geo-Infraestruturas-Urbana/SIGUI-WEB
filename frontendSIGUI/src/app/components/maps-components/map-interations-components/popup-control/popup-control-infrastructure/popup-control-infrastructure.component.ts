@@ -66,6 +66,23 @@ export class PopupControlInfrastructureComponent implements OnInit {
     }
   }
 
+  addNodeFatherNetwork(){
+    if (this.featureSelect != undefined)
+    {
+
+     //console.log(this.featureSelect);
+     let geom :Geometry = this.populatePoint(this.featureSelect);
+     let spatial = new Infrastructure().serialize(this.featureSelect,geom)
+     let infraAssociation = new InfrastructureNetwork()
+     infraAssociation.infrastructure_in = <Infrastructure>spatial;
+     
+     this.stateMap.setFeatureSelect(infraAssociation);
+  
+    console.log('passou  fdfrd')
+    console.log(infraAssociation)
+    }
+  }
+
   associateFeatureFromInfrastructure():void{ 
 
     if (this.featureSelect != undefined)

@@ -7,35 +7,35 @@
         <mat-icon mat-list-icon class="sidenav-button" (click)="isExpanded = !isExpanded" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
     </mat-list-item> 
     <mat-list-item (click)="openUnit()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">public</mat-icon> 
         <span *ngIf="isExpanded">Estado</span>        
     </mat-list-item>
     <mat-list-item (click)="openCounty()">
-        <mat-icon mat-list-icon class="sidenav-button" >grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button" >public</mat-icon> 
         <span *ngIf="isExpanded">Municipio</span>        
     </mat-list-item>
     <mat-list-item (click)="openDistrict()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">villa</mat-icon> 
         <span *ngIf="isExpanded">Distrito</span>        
     </mat-list-item>
     <mat-list-item (click)="openStreet()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">edit_road</mat-icon> 
         <span *ngIf="isExpanded">Rua</span>        
     </mat-list-item>
     <mat-list-item (click)="openPublicPlace()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">signpost</mat-icon> 
         <span *ngIf="isExpanded">Logradouro</span>        
     </mat-list-item>
     <mat-list-item (click)="openInfrastructure()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">traffic</mat-icon> 
         <span *ngIf="isExpanded">Infraestrutura</span>        
     </mat-list-item>
     <mat-list-item (click)="openEquipamentUrban()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">home_work</mat-icon> 
         <span *ngIf="isExpanded">Equipamento Urbano</span>        
     </mat-list-item>
     <mat-list-item (click)="openNetwork()">
-        <mat-icon mat-list-icon class="sidenav-button">grid_on</mat-icon> 
+        <mat-icon mat-list-icon class="sidenav-button">route</mat-icon> 
         <span *ngIf="isExpanded">Rede</span>        
     </mat-list-item>
 
@@ -49,5 +49,5 @@
     <app-container-public-place *ngIf="managerVizualizaton.session_public_place"></app-container-public-place>
     <app-container-infrastructure *ngIf="managerVizualizaton.session_infrastructure"></app-container-infrastructure>
     <app-container-urban-equipment *ngIf="managerVizualizaton.session_estructure"></app-container-urban-equipment>
-    <app-container-urban-network *ngIf="false"></app-container-urban-network>    
+    <app-container-urban-network *ngIf="managerVizualizaton.session_network"></app-container-urban-network>    
 <!-- </div> -->

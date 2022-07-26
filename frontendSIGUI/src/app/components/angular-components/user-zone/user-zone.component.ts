@@ -31,7 +31,8 @@ export class UserZoneComponent implements OnInit {
       session_public_place : false,
       session_state: false,
       session_infrastructure: false,
-      session_estructure : false,     
+      session_estructure : false,  
+      session_network : false   
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
     //this.router.navigateByUrl('/geo-view/manager-city');
@@ -47,7 +48,8 @@ export class UserZoneComponent implements OnInit {
       session_public_place : false,
       session_state: false,
       session_infrastructure: false,
-      session_estructure : false,     
+      session_estructure : false,    
+      session_network : false 
     }
     this.managerVisualization.setSessionVisualization(this.managerSession);
     //this.router.navigateByUrl('/geo-view/manager-city');

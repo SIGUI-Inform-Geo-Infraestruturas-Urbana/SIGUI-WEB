@@ -2,6 +2,15 @@
     width: 60%;
   }
 
+.controls{
+  margin-top: 5px;
+}
+
+.col-header-pop{
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
   .col-content{
     width: 20%;
   }
