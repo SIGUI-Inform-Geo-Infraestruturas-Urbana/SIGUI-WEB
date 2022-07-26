@@ -81,6 +81,21 @@ mat-drawer-container {
     top: 50%;
     right: 0%;
 }
+.button-extends-options-layers{
+    background-color: blue;
+    // width: 70px;
+    // height: 70px;
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 85%;
+    left: 2%;    
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-grid;
+}
 .content{
     background-color: rgb(153, 165, 42);
 }

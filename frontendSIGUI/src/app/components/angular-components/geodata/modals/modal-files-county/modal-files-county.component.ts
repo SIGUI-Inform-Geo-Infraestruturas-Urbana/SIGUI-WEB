@@ -63,9 +63,7 @@ export class ModalFilesCountyComponent {
       fileUploadsService.insertItem(this.TREE_DATA)
   }
 
-  getFiles(section:SectionFiles){
-    console.log(section);
-  }
+ 
 
   onNoClick(): void {
     this.dialogRef.close();

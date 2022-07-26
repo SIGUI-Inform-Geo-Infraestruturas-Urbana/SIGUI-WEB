@@ -3,7 +3,7 @@
         <app-manipulate-district></app-manipulate-district>                    
     </div>
     <!-- managerVizualizaton.session_county -->
-    <div class="container" *ngIf="true">          
-        <app-table-county></app-table-county>
+    <div class="container" *ngIf="viewData">          
+        <app-table-district [data]="data" style="width: 100%;"></app-table-district>
     </div>    
 </div>

@@ -1,29 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { District } from 'src/app/models/district.model';
 import { DistrictManipulationService } from 'src/app/services/district/district-manager/district-manipulation.service';
 
 @Component({
-  selector: 'app-container-district',
-  templateUrl: './container-district.component.html',
-  styleUrls: ['./container-district.component.scss']
+  selector: 'app-table-district',
+  templateUrl: './table-district.component.html',
+  styleUrls: ['./table-district.component.css']
 })
-export class ContainerDistrictComponent implements OnInit , OnDestroy{
-  public viewData : boolean= false;
-  public data: District;
+export class TableDistrictComponent implements OnInit {
+
+  imgLogo = '/assets/images/brasao.png';
+  @Input() data!:District;
+
+  public county: District;
   private vizualizationService : Subscription;
   constructor(private countyVizualization :DistrictManipulationService) {
-    this.data = new District();
+    this.county = new District();
     this.vizualizationService = countyVizualization.getDistrictVisualization().subscribe(countySelect => {
       console.log(countySelect)    
       this.updateTable(countySelect);       
     }) 
-  }
-
-  updateTable(countySelect: District):void{
-    this.data = countySelect;
-    this.viewData = true;
-  }
+   }
 
   ngOnInit(): void {
   }
@@ -31,4 +29,9 @@ export class ContainerDistrictComponent implements OnInit , OnDestroy{
   ngOnDestroy(): void {
     this.vizualizationService.unsubscribe();
   }
+
+  updateTable(countySelect: District):void{
+    this.county = countySelect;
+  }
+
 }

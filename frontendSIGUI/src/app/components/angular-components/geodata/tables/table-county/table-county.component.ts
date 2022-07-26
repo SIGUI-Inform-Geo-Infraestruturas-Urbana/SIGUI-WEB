@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { County } from 'src/app/models/county.model';
 import { CountyManipulationService } from 'src/app/services/count/county-manager/county-manipulation.service';
@@ -10,22 +10,20 @@ import { CountyManipulationService } from 'src/app/services/count/county-manager
 })
 export class TableCountyComponent implements OnInit, OnDestroy {
   imgLogo = '/assets/images/brasao.png';
+  @Input() data!:County;
 
   public county: County;
-  private vizualizationService : Subscription;
-  constructor(private countyVizualization :CountyManipulationService) {
+  //private vizualizationService : Subscription;
+  constructor() {
     this.county = new County();
-    this.vizualizationService = countyVizualization.getCountyVisualization().subscribe(countySelect => {
-      console.log(countySelect)    
-      this.updateTable(countySelect);       
-    }) 
+
    }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-    this.vizualizationService.unsubscribe();
+   // this.vizualizationService.unsubscribe();
   }
 
   updateTable(countySelect: County):void{

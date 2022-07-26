@@ -11,12 +11,34 @@
         </div>
         <div class="button-extends-options">
         <button>
-            <mat-icon mat-list-icon class="" (click)="isShowing = !isShowing">grid_on</mat-icon> 
+            <mat-icon mat-list-icon class="expanded-button sidenav-button "   (click)="isShowing = !isShowing" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
         </button>
         </div>
         <div class="button-extends-options-right"  *ngIf="isShowingButtonNavRight">
             <button>
-                <mat-icon mat-list-icon class="" (click)="isShowingNavRight = !isShowingNavRight">grid_on</mat-icon> 
+                <mat-icon mat-list-icon class="expanded-button sidenav-button "  (click)="isShowingNavRight = !isShowingNavRight" [ngClass]="{'rotated':isExpanded}">chevron_right</mat-icon> 
+            </button>
+        </div> 
+        <div class="button-extends-options-layers" >
+            <button>
+                <button mat-flat-button type="button" class="button-control-data" color="primary"  (click)="layerBase = !layerBase" > 
+                    <mat-icon >layers</mat-icon><br> 
+                    <span>camadas</span>           
+                </button> 
+        
+                <button mat-flat-button type="button" *ngIf="layerBase"class="button-control-data" color="primary" > 
+                    <mat-icon >layers</mat-icon><br> 
+                    <span>ruas</span>           
+                </button> 
+                <button mat-flat-button type="button" *ngIf="layerBase"class="button-control-data" color="primary" > 
+                    <mat-icon >layers</mat-icon><br> 
+                    <span>avenidas</span>           
+                </button> 
+                <button mat-flat-button type="button" *ngIf="layerBase"class="button-control-data" color="primary" > 
+                    <mat-icon >layers</mat-icon><br> 
+                    <span>noturno</span>           
+                </button> 
+            
             </button>
         </div> 
  

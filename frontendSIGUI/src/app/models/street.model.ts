@@ -6,7 +6,7 @@ import { District } from "./district.model";
 export class Street extends DataSpatial{
     
     private st_cod_key :string = ''; 
-    private st_status :string = '';
+    private  st_status:string = '';
     private st_name_street :string = '';    
     private st_name_street_pre :string= '';
     private st_type_street :string= '';

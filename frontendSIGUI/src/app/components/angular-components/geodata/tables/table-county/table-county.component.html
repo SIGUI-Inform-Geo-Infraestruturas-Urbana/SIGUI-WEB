@@ -1,51 +1,58 @@
 <div class="div-select">
-<div class="div-s div-title header-light-pallete"> 
-    <h3 style="float: left; ">GERENCIAR MUNICIPIO</h3>
-    <button mat-icon-button disabled aria-label="Excluir" style="float: right;">
-        <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-icon-button disabled aria-label="Editar" style="float: right;">
-        <mat-icon>edit</mat-icon>
-    </button>
-    <!-- <div class="divider-div header-light-pallete"></div>    -->
-</div>
-<div class="div-s div-img">
-<!-- <img [src]="imgLogo " class="img-element"> -->
-</div>
+    <div class="div-s div-title header-light-pallete"> 
+        <h3 style="float: left; ">GERENCIAR MUNICIPIO</h3>
+        <button mat-icon-button disabled aria-label="Excluir" style="float: right;">
+            <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button disabled aria-label="Editar" style="float: right;">
+            <mat-icon>edit</mat-icon>
+        </button>
+        <!-- <div class="divider-div header-light-pallete"></div>    -->
+    </div>
+    <div class="div-s div-img">
+    <!-- <img [src]="imgLogo " class="img-element"> -->
+    </div>
 </div>
 <div>
     <div class="wrapper-table">
         <div class="box-table color-pallete div-radius"> 
-            <h3>MUNICIPIO SELEIONADO</h3>
+            <label >Identificador:</label>
+            <label >{{county.name}}</label>
         </div>
         <div class="box-table color-pallete div-radius"> 
             <label >Identificador:</label>
             <label >{{county.id}}</label>
         </div>
         <div class="box-table-l color-pallete div-radius">                  
-            <label >Cod Estado:</label>
-            <label >{{county.id}}</label>
-        </div>   
-        <div class="box-table-r color-pallete div-radius ">                  
-            <label >Sigla:</label>
-            <label >01</label>
-        </div>    
-        <div class="box-table color-pallete div-radius"> 
-            <label >Nome:</label>
-            <label >01</label>
-        </div>  
-        <div class="box-table-l color-pallete div-radius">                  
             <label >Cod IBGE:</label>
-            <label >01</label>
-        </div>   
+            <label >{{county.ibge}}</label>
+        </div>  
         <div class="box-table-r color-pallete div-radius">                  
             <label >Ambiental:</label>
-            <label >01</label>
-        </div>    
-        <div class="box-table color-pallete div-radius"> 
+            <label >{{county.cod_environmental}}</label>
+        </div>   
+        <div class="box-table-l color-pallete div-radius ">                  
+            <label >Sigla UF:</label>
+            <label >{{county.initials_uf}}</label>
+        </div> 
+        <div class="box-table-r color-pallete div-radius"> 
+            <label >Cod UF:</label>
+            <label >{{county.id}}</label>
+        </div>       
+        <div class="box-table-l color-pallete div-radius"> 
+            <label >Nome UGRHI:</label>
+            <label >{{county.name_ugrhi}}</label>
+        </div>  
+        <div class="box-table-r color-pallete div-radius">                  
+            <label >Number UGRHI:</label>
+            <label >{{county.number_ugrhi}}</label>
+        </div>   
+        <div class="box-table-l color-pallete div-radius"> 
             <label >Area:</label>
-            <label >01</label>
-        </div>        
+            <label >{{county.area_county}}</label>
+        </div> 
+      
+       
     </div>
 </div>
 

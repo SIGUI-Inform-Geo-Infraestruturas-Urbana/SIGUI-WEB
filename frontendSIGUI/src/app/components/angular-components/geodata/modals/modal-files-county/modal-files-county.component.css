@@ -26,6 +26,7 @@
 
 .control h2{
     top : 10px;
+    left: 10px;
     position: relative;
 }
 
@@ -38,6 +39,17 @@
     width: 100%;
     float: right;
     display: flex;
+}
+
+.control h2{
+    top : 10px;
+    left: 10px;
+    position: relative;
+}
+.divis{
+    width: 100%;
+    position: relative;
+    top: 50px;
 }
 /*
 .modal-control button{

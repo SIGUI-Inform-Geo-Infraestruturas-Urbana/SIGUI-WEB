@@ -3,7 +3,7 @@
         <app-manipulate-public-place></app-manipulate-public-place>                    
     </div>
     <!-- managerVizualizaton.session_county -->
-    <div class="container" *ngIf="true">          
-        <app-table-county></app-table-county>
+    <div class="container" *ngIf="viewData">          
+        <app-table-public-place [data]="data" style="width: 100%;"></app-table-public-place>
     </div>   
 </div>

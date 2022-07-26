@@ -123,7 +123,15 @@ import { ManagePublicPlaceComponent } from './components/angular-components/geod
 import { ManageInfrastructureComponent } from './components/angular-components/geodata/geo-elements/manage-infrastructure/manage-infrastructure.component';
 import { ManageEquipamentUrbanComponent } from './components/angular-components/geodata/geo-elements/manage-equipament-urban/manage-equipament-urban.component';
 import { PopupControlDistrictsComponent } from './components/maps-components/map-interations-components/popup-control/popup-control-districts/popup-control-districts.component';
-import { ManageNetworkInfraComponent } from './components/angular-components/geodata/geo-elements/manage-network-infra/manage-network-infra.component'
+import { ManageNetworkInfraComponent } from './components/angular-components/geodata/geo-elements/manage-network-infra/manage-network-infra.component';
+import { ListComponent } from './components/angular-components/geodata/modals/list/list.component';
+import { TableUnitComponent } from './components/angular-components/geodata/tables/table-unit/table-unit.component';
+import { TableDistrictComponent } from './components/angular-components/geodata/tables/table-district/table-district.component';
+import { TableStreetComponent } from './components/angular-components/geodata/tables/table-street/table-street.component';
+import { TablePublicPlaceComponent } from './components/angular-components/geodata/tables/table-public-place/table-public-place.component';
+import { TableInfrastructureComponent } from './components/angular-components/geodata/tables/table-infrastructure/table-infrastructure.component';
+import { TableEquipamentComponent } from './components/angular-components/geodata/tables/table-equipament/table-equipament.component';
+import { TableNetworkComponent } from './components/angular-components/geodata/tables/table-network/table-network.component'
 
 
 @NgModule({
@@ -209,7 +217,7 @@ import { ManageNetworkInfraComponent } from './components/angular-components/geo
     ContainerUrbanEquipmentComponent,
     ContainerUrbanNetworkComponent,
     ContainerUnitComponent,  
-    ContainerCountyComponent, ManageUnitComponent, ManageDistrictComponent, ManageStreetComponent, ManagePublicPlaceComponent, ManageInfrastructureComponent, ManageEquipamentUrbanComponent, PopupControlDistrictsComponent, ManageNetworkInfraComponent,   
+    ContainerCountyComponent, ManageUnitComponent, ManageDistrictComponent, ManageStreetComponent, ManagePublicPlaceComponent, ManageInfrastructureComponent, ManageEquipamentUrbanComponent, PopupControlDistrictsComponent, ManageNetworkInfraComponent, ListComponent, TableUnitComponent, TableDistrictComponent, TableStreetComponent, TablePublicPlaceComponent, TableInfrastructureComponent, TableEquipamentComponent, TableNetworkComponent,   
 
 
   ],

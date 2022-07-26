@@ -1,0 +1,5 @@
+@import '../../../../../../../node_modules/@angular/material/theming';
+@include mat-core();
+@import '../../../../../../styles.scss';
+$primary : map-get($custom-theme , primary);
+$accent : map-get($custom-theme , accent);

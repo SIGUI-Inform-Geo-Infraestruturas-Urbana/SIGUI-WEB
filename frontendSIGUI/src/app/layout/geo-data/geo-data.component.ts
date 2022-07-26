@@ -39,6 +39,7 @@ export class GeoDataComponent implements OnInit {
   public managerVizualizaton :ManagerSession;
   public managerManipulation :ManagerSession;
 
+  public layerBase: boolean =false;
   public isShowing: boolean = true;
   public isShowingNavRight: boolean = false;
   public isShowingButtonNavRight: boolean = false;

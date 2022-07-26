@@ -6,7 +6,7 @@ import { District } from "./district.model";
 import { Street } from "./street.model";
 
 export class PublicPlace extends DataSpatial{  
-   
+    
     private pp_cod_sector : number = 0; 
     private pp_cod_block : number = 0; 
     private pp_cod_face : number = 0;
