@@ -16,6 +16,7 @@ export class ShapefilesRepositoryService {
   private readonly _units= new BehaviorSubject<FileData[]>([]);
   readonly units$: Observable<FileData[]> = this._units.asObservable();
   private stringConection = 'api/data/uploads';
+  private stringConectionParam = 'api/data/uploads/?category=' 
 
   constructor(private restApiBackend: RestApiBackendService<FormData,string>) 
   { }  
@@ -46,13 +47,48 @@ export class ShapefilesRepositoryService {
     return  this.units$;
   }
 
+  findFetchParam(idParam : string = ''):Observable<FileData[]>{//Feature<Geometry>
+    let urlSearch = '';
+
+    if (idParam != ''){
+      urlSearch = this.stringConectionParam + idParam;
+    }
+    else
+    {
+      urlSearch = this.stringConectionParam ;
+    }
+
+    this.restApiBackend.getDataSimple(urlSearch)
+    //.pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (response : FileData[]) => {
+        console.log(response)
+        this._units.next(response);
+        this._units.complete();
+      },
+      error: (err) => {
+        console.log(err);
+        this._units.error(err);
+      },
+    });
+    return  this.units$;
+  }
+
   postData (stringParam : string , street:FormData):Observable<FileData>{
 
     return new Observable((observer: Observer<FileData>) => {
       console.log("Create")
-      this.restApiBackend.postDataSimple('',street).subscribe((data : {}) => {
-        console.log('populate')
-        console.log(data)
+      this.restApiBackend.postDataSimple('',street).subscribe({
+        next: (response : FileData) => {
+        console.log(response);  
+        console.log('cRIAdo')
+        observer.next(response);
+        observer.complete();
+        },
+        error: (err) => {
+          console.log(err);
+          observer.error(err);
+        },
         //this.snackBar.open(`Estados Cadastrados! }`,'Entendido',{duration: 8 * 1000});
       })
     //   console.log(street)

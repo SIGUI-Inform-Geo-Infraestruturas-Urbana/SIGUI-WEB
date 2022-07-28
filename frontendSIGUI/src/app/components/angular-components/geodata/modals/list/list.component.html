@@ -1,11 +1,10 @@
-<mat-list>
-    <div mat-subheader>Folders</div>
+<mat-list>   
     <mat-list-item *ngFor="let folder of folders">
         <mat-icon mat-list-icon>folder</mat-icon>
         <button mat-icon-button (click)="getFiles(folder)">
             <mat-icon >file_download</mat-icon>
         </button>               
-        <div mat-line>{{folder.name}}</div>
+        <div mat-line>{{folder.id_espatial}}</div>
         <div mat-line> {{folder.updated | date}} </div>
     </mat-list-item>
     <mat-divider></mat-divider>

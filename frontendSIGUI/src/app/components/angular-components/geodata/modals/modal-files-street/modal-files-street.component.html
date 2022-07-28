@@ -18,6 +18,12 @@
                 </button>
             </div>
             <mat-divider class="divis"></mat-divider>
+            <mat-progress-bar  
+                [color]="color"
+                [mode]="mode"
+                [value]="value"
+                [bufferValue]="bufferValue">
+            </mat-progress-bar>
 
         </div>
         <div class="modal-control">
@@ -26,11 +32,14 @@
     </div>  
      <div class="container-modal">     
         <div class="modal-control"> 
-            <h2 class="secondary-text ">Arquivos Salvos</h2> 
-            <mat-divider class="divis"></mat-divider> 
+            <h2 class="secondary-text sub">Arquivos Salvos</h2>
+            <mat-progress-bar mode="determinate" ></mat-progress-bar>
+
+           
         </div>
         <div class="modal-control">   
-            <app-list [folders]="folders"></app-list>          
+            <app-list [foldersFiles]="folders"></app-list>    
+                  
         </div>
           
     </div>  

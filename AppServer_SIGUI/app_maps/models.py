@@ -43,10 +43,20 @@ def upload_file_espatial(instance, filename):
     return nameurl
     # return f"{instance.id_espatial}/4100608_faces_de_logradouros_2020"
 
+def nameFilesPath(id_espatial):
+    print('instance')
+    nameurl = "shape_{0}".format( id_espatial)
+    print(nameurl)
+
+    return nameurl
+    # return f"{instance.id_espatial}/4100608_faces_de_logradouros_2020"
+
+
 class GeoDadosEspaciais(models.Model):
     id_espatial = models.UUIDField(primary_key=True,default=uuid4,editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, null=True)
     category = models.CharField(max_length=50,blank=True, null=True)#nome_uf
+    #namefile = models.CharField(default=nameFilesPath(id_espatial),max_length=50,blank=True, null=True)
     file = models.ImageField(upload_to=upload_file_espatial, blank=True, null=True)
     fileupload = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
     file_dbf = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
@@ -349,7 +359,7 @@ class Street(models.Model):
     st_zip_code_e =models.CharField(max_length=254,blank=True, null=True)  
     st_zip_code_d =models.CharField(max_length=254,blank=True, null=True)
     st_district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
-    geometry = models.LineStringField(srid=4326,blank=True, null=True)
+    geometry = models.MultiLineStringField(srid=4326,blank=True, null=True)
     
     def __str__(self):
        return 'id: %s' % self.id   

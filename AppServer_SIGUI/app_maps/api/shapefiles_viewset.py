@@ -7,12 +7,24 @@ from app_maps import models
 class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
     serializer_class = GeoDadosEspaciaisSerializer
 
-    def retrieve(self, request, pk=None):
-        instance = self.get_object()
-        return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
+    def retrieve(self, request, *args, **kwargs):
+       params = kwargs 
+       print( params['pk'])
+       objects =  models.GeoDadosEspaciais.objects.filter(id=params['pk']) 
+       serializer = GeoDadosEspaciaisSerializer(objects, many= True)
+       return Response((serializer.data))
+
+    # def retrieve(self, request, pk=None):
+    #     instance = self.get_object()
+    #     return Response(self.serializer_class(instance).data, status=status.HTTP_200_OK)
 
     def get_queryset(self):
+        print('qqqqqq')
+        #dominio /api/data/uploads/?category=state
         queryset = models.GeoDadosEspaciais.objects.all()
+        username = self.request.query_params.get('category')
+        if username is not None:
+            queryset = queryset.filter(category=username)
         return queryset
 
     def create(self, request, *args, **kwargs):
@@ -26,7 +38,7 @@ class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
             # conversionParser(new_geoEspatial.file_shp)
             if espatial_request["category"] == 'county':
                 #a = write_serializer.parserShapFile()
-                files.parserShapFile()
+                files.parserShapFile() 
                 print('cidade')
             elif espatial_request["category"] == 'state':
                 a = files.parserShapFileState()
@@ -51,9 +63,10 @@ class GeoDadosEspaciaisViewSet(viewsets.ModelViewSet):
                 print('equipament')
             print('Passou!')
             # print(a.net_name)
-            serializer = GeoDadosEspaciaisSerializer(write_serializer)
+            # serializer = GeoDadosEspaciaisSerializer(write_serializer)
 
-            return Response('serializer.data')
+            # return Response('serializer.data')
+            return Response(write_serializer.data)
             #return Response('aaaaa') # Response(write_serializer.data)
         else: 
             print('Não deu certo!')

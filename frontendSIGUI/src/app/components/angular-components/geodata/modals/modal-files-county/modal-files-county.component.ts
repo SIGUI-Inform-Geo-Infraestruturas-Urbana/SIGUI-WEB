@@ -2,7 +2,9 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileData } from 'src/app/models/file-data.model';
@@ -20,6 +22,11 @@ import { FileUploadsService } from '../service-file/file-uploads.service';
 })
 export class ModalFilesCountyComponent {
 
+  color: ThemePalette = 'primary';
+  mode: ProgressBarMode = 'determinate';
+  value = 100;
+  bufferValue = 75;
+
   TREE_DATA: SectionFiles[] = [
     {      
       name: "Arquivos Selecionados",
@@ -32,23 +39,25 @@ export class ModalFilesCountyComponent {
     }
   ];
 
-  folders: SectionFiles[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-      sub_brand: [],
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-      sub_brand: [],
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-      sub_brand: [],
-    },
-  ];
+  folders: FileData[] = []
+
+  // folders: SectionFiles[] = [
+  //   {
+  //     name: 'Photos',
+  //     updated: new Date('1/1/16'),
+  //     sub_brand: [],
+  //   },
+  //   {
+  //     name: 'Recipes',
+  //     updated: new Date('1/17/16'),
+  //     sub_brand: [],
+  //   },
+  //   {
+  //     name: 'Work',
+  //     updated: new Date('1/28/16'),
+  //     sub_brand: [],
+  //   },
+  // ];
 
   constructor(public restApi: ShapefilesRepositoryService, private snackBar : MatSnackBar,
     public dialogRef: MatDialogRef<ModalFilesCountyComponent>,
@@ -56,6 +65,7 @@ export class ModalFilesCountyComponent {
     @Inject(MAT_DIALOG_DATA) public data: ManagerSession,
   ) {
       fileUploadsService.insertItem(this.TREE_DATA)
+      this.getFile();
   }
 
  
@@ -130,17 +140,44 @@ export class ModalFilesCountyComponent {
     this.createFile(formData);
   }
 
+  getFile():void{
+    console.log('get')
+    // console.log(formData)
+    // this.mode = 'query';
+
+    this.restApi.findFetchParam('county').subscribe({
+      next: (cities : FileData[]) => {
+        console.log('updatesssss')
+        console.log(cities);       
+        
+        this.folders = cities;
+         this.snackBar.open(`ShapeFile Obtidos!`,'Entendido',{duration: 8 * 1000});
+       
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATARr');
+        console.log(err);
+        // this.openSnackBar(err.statusText);
+      
+      },
+    
+    })
+  }
+
   createFile(formData:FormData):void{
     console.log('popu')
     console.log(formData)
+    this.mode = 'query';
 
     this.restApi.postData('',formData).subscribe({
       next: (cities : FileData) => {
-        console.log(cities);
-      //   this.initializeForm(cities);    
-      //   this.snackBar.open(`Cidade Cadastrada! ID { ${cities.id} }`,'Entendido',{duration: 8 * 1000});
-      //   //this.countyRepositoryService.populateServiceViewMap(beers)
-       },
+        console.log(cities); 
+        this.color = 'warn';
+        this.mode = 'determinate';
+
+         this.snackBar.open(`ShapeFile Processado!`,'Entendido',{duration: 8 * 1000});
+       
+      },
       error: (err:HttpErrorResponse) => {
         console.log('TRATARr');
         console.log(err);

@@ -1,5 +1,5 @@
 import { Feature } from "ol";
-import { Geometry, LineString, MultiPolygon } from "ol/geom";
+import { Geometry, LineString, MultiLineString, MultiPolygon } from "ol/geom";
 import { DataSpatial } from "./data-spatial";
 import { District } from "./district.model";
 
@@ -118,7 +118,7 @@ export class Street extends DataSpatial{
         this.st_type_street  = properties['st_type_street'];
         this.st_zip_code_d  = properties['st_zip_code_d'];
         this.st_zip_code_e  = properties['st_zip_code_e'];
-        this.geometry = <LineString> properties['geometry'];
+        this.geometry = <MultiLineString> properties['geometry'];
       
         return this;
     }
@@ -139,7 +139,7 @@ export class Street extends DataSpatial{
             this.st_zip_code_d  = properties['st_zip_code_d'];
             this.st_zip_code_e  = properties['st_zip_code_e'];
         }
-        this.geometry =  <LineString> geom;      
+        this.geometry =  <MultiLineString> geom;      
 
         return this;
     }

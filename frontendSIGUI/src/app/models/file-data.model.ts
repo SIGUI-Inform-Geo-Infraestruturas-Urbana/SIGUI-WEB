@@ -4,8 +4,10 @@ import {County} from './county.model'
 import { DataSpatial } from './data-spatial';
 
 export class FileData {
-    
+    public id_espatial : number = 0;
     public category : string = '';
+    public namefile : string = '';
+    public updated: Date = new Date('1/1/22');
     public file_dbf : File | string = '';
     public file_prj : File | string = '';
     public file_qpj : File | string = '';

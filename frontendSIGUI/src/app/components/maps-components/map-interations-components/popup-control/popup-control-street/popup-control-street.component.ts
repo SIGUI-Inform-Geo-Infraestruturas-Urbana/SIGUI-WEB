@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
-import { Geometry, LineString } from 'ol/geom';
+import { Coordinate } from 'ol/coordinate';
+import { Geometry, LineString, MultiLineString, MultiPolygon, Polygon } from 'ol/geom';
 import { Street } from 'src/app/models/street.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -42,16 +43,21 @@ export class PopupControlStreetComponent implements OnInit {
   }
 
   populateLine(feature:Feature):Geometry{  
+
+    let multiLineString : LineString[]= [];
     console.log('+++++++++++++++++');
     console.log(feature);     
     console.log('Teste register');
     let geometria:LineString = <LineString>feature.getGeometry();
     if(geometria != undefined){     
-      return geometria;
+      multiLineString.push(geometria)
+      let geometryMultPoly: Geometry = new MultiLineString(multiLineString);
+      return geometryMultPoly;     
     }
     else{
       return geometria;
     }
+
   }
 
 }

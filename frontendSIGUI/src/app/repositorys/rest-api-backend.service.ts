@@ -9,6 +9,7 @@ import { retry, catchError } from 'rxjs/operators'
 import { Feature } from 'ol';
 import { Geometry } from 'ol/geom';
 import { IRepository } from './repository';
+import { FileData } from '../models/file-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +41,11 @@ export class RestApiBackendService<T,U> implements IRest<T,U>{
       )
       // .pipe(retry(1), catchError(this.handleError));
   }
-  postDataSimple(url :string, dataSpatial : FormData){
+  postDataSimple(url :string, dataSpatial : FormData): Observable<any>{
         return this.httpClient.post( this.stringConection + 'api/data/uploads/',dataSpatial);
+  }
+  getDataSimple (url :string): Observable<FileData[]>{
+    return this.httpClient.get<FileData[]>(this.stringConection + url);
   }
 
   getData (url :string): Observable<HttpResponse<U>>{
