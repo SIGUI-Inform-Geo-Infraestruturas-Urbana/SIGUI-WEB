@@ -10,6 +10,7 @@ import { DistrictRepositoryService } from 'src/app/repositorys/district-reposito
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
 import { ModalFilesCountyComponent } from '../../../modals/modal-files-county/modal-files-county.component';
+import { ModalFilesEquipamentUrbanComponent } from '../../../modals/modal-files-equipament-urban/modal-files-equipament-urban.component';
 
 @Component({
   selector: 'app-manipulate-urban-equipment',
@@ -92,7 +93,7 @@ export class ManipulateUrbanEquipmentComponent implements OnInit {
   }
 
   onClickShapeFile(){
-    const dialogRef = this.dialog.open(ModalFilesCountyComponent, {
+    const dialogRef = this.dialog.open(ModalFilesEquipamentUrbanComponent, {
       width: '800px',
       height: '400px',
       //data: {name: this.name, animal: this.animal},

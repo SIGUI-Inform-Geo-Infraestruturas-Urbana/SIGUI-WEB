@@ -20,6 +20,7 @@ from .api.equipament_urban_viewset import EquipamentUrbanViewSet
 from .api.network_viewset import NetworkViewSet
 from .api.infraestrutura_network_viewset import InfraestruturaNetworkViewSet
 from .api.user_viewset import UserViewSet
+from .api.shapefiles_viewset import GeoDadosEspaciaisViewSet
 from .api import viewsets
 app_name = 'app_maps'
 
@@ -29,7 +30,7 @@ router.register(r'provedores', ProviderViewSet,basename='provi')
 router.register(r'subsistemas', SubsystemViewSet,basename='subs')
 router.register(r'infraestrutura', InfraestruturaViewSet,basename='infra')
 router.register(r'files', viewsets.FileUploadViewSet,basename='file')
-router.register(r'uploads', viewsets.GeoDadosEspaciaisViewSet,basename='upload')
+router.register(r'uploads', GeoDadosEspaciaisViewSet,basename='upload')
 router.register(r'state', UnitFederativeViewset,basename='state')
 router.register(r'municipio', CountyViewSet,basename='municipio')
 router.register(r'municipio/(?P<county_id>[0-9]+)', CountyViewSet,basename='municipio')

@@ -1,6 +1,6 @@
 <div class="subtitle-nav header-light-pallete">
     <div class="control">
-        <h2 class="secondary-text ">Gerenciar ShapeFiles de Unidades Federativas</h2>
+        <h2 class="secondary-text ">ShapeFiles de Unidade Federativas</h2>
         <button mat-button (click)="onNoClick()">Close</button>
     </div>
  </div>
@@ -17,6 +17,8 @@
                     <mat-icon>file_upload</mat-icon>
                 </button>
             </div>
+            <mat-divider class="divis"></mat-divider>
+
         </div>
         <div class="modal-control">
             <app-tree-data ></app-tree-data>
@@ -24,21 +26,11 @@
     </div>  
      <div class="container-modal">     
         <div class="modal-control"> 
-            <h2 class="secondary-text ">Arquivos Salvos</h2>  
+            <h2 class="secondary-text ">Arquivos Salvos</h2> 
+            <mat-divider class="divis"></mat-divider> 
         </div>
         <div class="modal-control">   
-            <mat-list>
-            <div mat-subheader>Folders</div>
-            <mat-list-item *ngFor="let folder of folders">
-                <mat-icon mat-list-icon>folder</mat-icon>
-                <button mat-icon-button (click)="getFiles(folder)">
-                    <mat-icon >file_download</mat-icon>
-                </button>               
-                <div mat-line>{{folder.name}}</div>
-                <div mat-line> {{folder.updated | date}} </div>
-            </mat-list-item>
-            <mat-divider></mat-divider>
-            </mat-list>              
+            <app-list [folders]="folders"></app-list>          
         </div>
           
     </div>  

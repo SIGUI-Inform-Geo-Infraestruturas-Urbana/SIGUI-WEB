@@ -10,6 +10,7 @@ import { DistrictRepositoryService } from 'src/app/repositorys/district-reposito
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
 import { ModalFilesCountyComponent } from '../../../modals/modal-files-county/modal-files-county.component';
+import { ModalFilesPublicPlaceComponent } from '../../../modals/modal-files-public-place/modal-files-public-place.component';
 
 
 @Component({
@@ -93,7 +94,7 @@ export class ManipulatePublicPlaceComponent implements OnInit {
   }
 
   onClickShapeFile(){
-    const dialogRef = this.dialog.open(ModalFilesCountyComponent, {
+    const dialogRef = this.dialog.open(ModalFilesPublicPlaceComponent, {
       width: '800px',
       height: '400px',
       //data: {name: this.name, animal: this.animal},

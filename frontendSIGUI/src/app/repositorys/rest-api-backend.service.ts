@@ -25,8 +25,8 @@ export class RestApiBackendService<T,U> implements IRest<T,U>{
       }), 
       observe: 'response',   
     }
-    let jsonContent = JSON.stringify(dataSpatial)
-    console.log(jsonContent)
+    // let jsonContent = JSON.stringify(dataSpatial)
+    // console.log(jsonContent)
     return this.httpClient
       .post<string>(
         this.stringConection + url,
@@ -39,6 +39,9 @@ export class RestApiBackendService<T,U> implements IRest<T,U>{
         }       
       )
       // .pipe(retry(1), catchError(this.handleError));
+  }
+  postDataSimple(url :string, dataSpatial : FormData){
+        return this.httpClient.post( this.stringConection + 'api/data/uploads/',dataSpatial);
   }
 
   getData (url :string): Observable<HttpResponse<U>>{

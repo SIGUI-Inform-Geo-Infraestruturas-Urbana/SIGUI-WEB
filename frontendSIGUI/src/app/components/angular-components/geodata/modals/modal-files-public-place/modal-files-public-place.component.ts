@@ -1,24 +1,19 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileData } from 'src/app/models/file-data.model';
 import { ManagerSession } from 'src/app/models/managerSession.model';
 import { SectionFiles } from 'src/app/models/section.model';
 import { ShapefilesRepositoryService } from 'src/app/repositorys/shapefiles-repository.service';
-
-import { RestApiService } from 'src/app/services/rest-api.service';
 import { FileUploadsService } from '../service-file/file-uploads.service';
 
 @Component({
-  selector: 'app-modal-files-county',
-  templateUrl: './modal-files-county.component.html',
-  styleUrls: ['./modal-files-county.component.css']
+  selector: 'app-modal-files-public-place',
+  templateUrl: './modal-files-public-place.component.html',
+  styleUrls: ['./modal-files-public-place.component.css']
 })
-export class ModalFilesCountyComponent {
+export class ModalFilesPublicPlaceComponent {
 
   TREE_DATA: SectionFiles[] = [
     {      
@@ -51,7 +46,7 @@ export class ModalFilesCountyComponent {
   ];
 
   constructor(public restApi: ShapefilesRepositoryService, private snackBar : MatSnackBar,
-    public dialogRef: MatDialogRef<ModalFilesCountyComponent>,
+    public dialogRef: MatDialogRef<ModalFilesPublicPlaceComponent>,
     public fileUploadsService :FileUploadsService ,    
     @Inject(MAT_DIALOG_DATA) public data: ManagerSession,
   ) {
@@ -72,7 +67,7 @@ export class ModalFilesCountyComponent {
     treeFiles[0].sub_brand.splice(0);
     treeFiles[0].sub_brand = [];
 
-    let filesSelect = new FileData('county');
+    let filesSelect = new FileData('publicplace');
     for(let i=0; i< selectedFiles.length; i++ )
     {
       let currentFileUpload:File = selectedFiles.item(i);
@@ -118,8 +113,10 @@ export class ModalFilesCountyComponent {
   }
 
   preparFiles(files:FileData){
+    console.log('fprm')
+    console.log(files)
     let formData = new FormData();
-    formData.append('category','county')
+    formData.append('category','publicplace')
     formData.append('file_dbf',<File>files.file_dbf);  
     formData.append('file_prj',<File>files.file_prj);   
     formData.append('file_cpg',<File>files.file_cpg);   //<File>files.file_cpg

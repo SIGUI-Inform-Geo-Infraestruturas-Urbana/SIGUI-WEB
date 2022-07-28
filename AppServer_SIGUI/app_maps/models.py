@@ -37,8 +37,11 @@ from django.contrib.auth.models import User
 
 def upload_file_espatial(instance, filename):
     print('instance')
+    nameurl = "shape_{0}/{1}".format(instance.id_espatial, filename)
+    print(nameurl)
 
-    return f"{instance.id_espatial}/{instance.id_espatial}-{filename}"
+    return nameurl
+    # return f"{instance.id_espatial}/4100608_faces_de_logradouros_2020"
 
 class GeoDadosEspaciais(models.Model):
     id_espatial = models.UUIDField(primary_key=True,default=uuid4,editable=False)
@@ -52,6 +55,31 @@ class GeoDadosEspaciais(models.Model):
     file_cpg = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
     file_shp = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
     file_shx = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
+    file_sbn = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
+    file_sbx = models.FileField(upload_to=upload_file_espatial, blank=True, null=True)
+
+    def parserShapFileState(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+
+        print('shape')
+        print(pathResult)
+
+        mapping = {'uf_name':'NM_UF',
+            'uf_initials':'SIGLA',
+            'uf_geocode':'CD_UF',
+            'uf_name_region':'NM_REGIAO',
+            'geometry':'POLYGON',
+            }
+        lm = LayerMapping(FederativeUnit, pathResult, mapping,unique=('uf_name'))
+        lm.save(verbose=True, strict=True)
+        return pathResult
+        
 
     def parserShapFile(self):
         pathFileSelect = self.file_shp
@@ -75,7 +103,8 @@ class GeoDadosEspaciais(models.Model):
         lm.save(verbose=True, strict=True)
         return pathResult
 
-    def parserShapFileState(self):
+    
+    def parserShapFilePublicPlace(self):
         pathFileSelect = self.file_shp
         pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
         print('shaping')
@@ -87,15 +116,157 @@ class GeoDadosEspaciais(models.Model):
         print('shape')
         print(pathResult)
 
-        mapping = {'uf_name':'NM_UF',
-            'uf_initials':'SIGLA',
-            'uf_geocode':'CD_UF',
-            'uf_name_region':'NM_REGIAO',
-            'geometry':'POLYGON',
+        mapping = {
+            'pp_cod_sector':'CD_SETOR',
+            'pp_name_seg_log':'NM_LOG',
+            'pp_name_tip_log':'NM_TIP_LOG',
+            'pp_name_title':'NM_TIT_LOG',
+            'pp_cod_block':'CD_QUADRA',
+            'pp_cod_face':'CD_FACE',
+            'pp_total_residences':'TOT_RES',
+            'pp_total_general':'TOT_GERAL',          
+            'geometry':'LineString',
             }
-        lm = LayerMapping(FederativeUnit, pathResult, mapping,unique=('uf_name'))
+        lm = LayerMapping(PublicPlace, pathResult, mapping)
         lm.save(verbose=True, strict=True)
         return pathResult
+
+   
+    def parserShapFileStreet(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+
+        print('shape')
+        print(pathResult)
+
+        mapping = {'st_cod_key':'CHAVE',
+            #'CODVIA':'CODVIA', a analisar
+            #'uf_geocode':'NOINICIO',
+            #'uf_name_region':'NOFIM',
+            'st_status':'STATUS',
+            'st_name_street':'NMVIA',
+            'st_name_street_pre':'NMVIA_ANT',
+            'st_type_street':'SVIARIO',
+            'st_type_legislation':'SVIARIOLEG',
+            #'uf_name_region':'HIERARQUIA',
+            #'uf_name_region':'STATUS_DEM',
+            #'st_district':'COD_BAIRRO', analizar relacionamento auto
+            'st_district_e':'BAIRRO_E',
+            'st_district_d':'BAIRRO_D',
+            #'uf_name_region':'COD_REG',
+            #'uf_name_region':'REGIONAL_E',
+            #'uf_initials':'REGIONAL_D',
+            'st_zip_code_e':'CEP_E',
+            'st_zip_code_d':'CEP_D',
+            #'uf_initials':'CEP_INFO',
+            'geometry':'LineString',
+            }
+        lm = LayerMapping(Street, pathResult, mapping)
+        lm.save(verbose=True, strict=True)
+        return pathResult
+        
+        #['OBJECTID', 'CODIGO', 'TIPO', 'NOME', 'FONTE', 'CD_REGIONA', 'NM_REGIONA', 'SHAPE_AREA', 'SHAPE_LEN']
+    def parserShapFileDistrict(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+
+        print('shape')
+        print(pathResult)
+
+        mapping = {
+            #'id':'OBJECTID', cod impo
+            #'CODVIA':'CODIGO', 
+            #'uf_geocode':'TIPO', nao
+            'dc_name':'NOME',
+            #'st_status':'FONTE', importante
+            #'st_name_street':'CD_REGIONA',
+            #'st_name_street_pre':'NM_REGIONA',
+            'dc_area':'SHAPE_AREA',
+            #'st_type_legislation':'SHAPE_LEN',
+            'geometry':'Polygon',
+            }
+        lm = LayerMapping(District, pathResult, mapping)
+        lm.save(verbose=True, strict=True)
+        return pathResult
+    
+    def parserShapFileEquipament(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+
+        print('shape')
+        print(pathResult)
+
+        mapping = {'eq_co_cod':'CD_EQUI', 
+        #'':'CD_LOCAL',# 'CD_TEMA',#'TEMA',#'ID_EQUIP',
+        'eq_co_equipament': 'EQUIPAMENT',
+        'eq_co_type': 'TIPO_EQUI',
+        'eq_co_departament_admin':'DEP_ADMIN',
+        'eq_co_name_complete' : 'NOME_COMPL',
+        'eq_co_first_name':'PRE_NOME',
+        'eq_co_name':'NOME',
+        #'SIGLA_EQUI',#'CONVENIADO',#'NOME_ABREV',
+        'eq_co_name_map': 'NOME_MAPA',
+        #'eq_co_street':'CD_RUA', relacionamento
+        #'':'NOME_RUA',#'NOME_RUANO',
+        'eq_co_number_building':'NUM_PRED',
+        #'COMPL_END',
+        #'DIVULGAR_E', analizar atributo priva
+        #'INDFISCAL', analizar
+        #'CD_BAIRRO', relacionamento
+        #'BAIRRO',
+        #'QUADR_EQUI', relacionamento
+        #'CD_REGIONA',#'REGIONAL',
+        # 'CD_DISTRIT', 'NM_DISTRIT',
+        #'FUNC_MANHA',#'FUNC_TARDE',#'FUNC_NOITE',#'FUNC_24HR', 
+        #'TELEFONE',#'RAMAL',#'EMAIL',#'SITE',
+        #'DT_INAUGUR',#'DT_ATUALIZ', 
+        'eq_co_observation':'OBSERVACAO',
+        # 'FONTE', 
+        'eq_co_cod_maintainer':'CD_MANTENE',#'DS_MANTENE',
+        #'SIGLA_MANT',
+        #'COORD_E','COORD_N',
+        # 'LAT_SIRGAS','LON_SIRGAS',
+        'geometry':'Point'}
+
+        lm = LayerMapping(EquipamentCounty, pathResult, mapping, encoding='latin-1')
+        lm.save(verbose=True, strict=True)
+        return pathResult
+
+    def conversionParser(self):
+        pathFileSelect = self.file_shp
+        pwd = os.path.dirname(__file__)#/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api
+        print('shaping')
+        print(pwd)
+        #AppServer_SIGUI/media/teste/4100608_faces_de_logradouros_2020.shp
+        pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
+        pathResult = f'{pathFile}/{pathFileSelect}' 
+        print(pathResult)
+        #file = open('/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api/dssad.txt')
+        ds = DataSource(pathResult)
+        print (ds.layer_count)
+        layer = ds[0]
+        print(layer.fields)
+        print('---')
+        print(len(layer))
+        print('---')
+        print(layer.geom_type)
+        print('---')
+        print(layer.srs)
 
 # class TestGeo(models.Model):
 #     name = models.CharField(max_length=254)
@@ -185,11 +356,14 @@ class Street(models.Model):
 
 class PublicPlace(models.Model):
     id= models.AutoField(primary_key=True,editable=True)
-    pp_cod_sector = models.IntegerField(blank=True, null=True)   
-    pp_cod_block = models.IntegerField(blank=True, null=True)   
-    pp_cod_face = models.IntegerField(blank=True, null=True)   
-    pp_total_residences = models.IntegerField(blank=True, null=True)   
-    pp_total_general =models.IntegerField(blank=True, null=True)     
+    pp_name_seg_log = models.CharField(max_length=60,blank=True, null=True)  
+    pp_name_tip_log = models.CharField(max_length=20,blank=True, null=True)  
+    pp_name_title = models.CharField(max_length=30,blank=True, null=True)  
+    pp_cod_sector = models.BigIntegerField(blank=True, null=True)   
+    pp_cod_block = models.CharField(max_length=3,blank=True, null=True)   
+    pp_cod_face = models.CharField(max_length=3,blank=True, null=True)   
+    pp_total_residences = models.CharField(max_length=3 ,blank=True, null=True)   
+    pp_total_general =models.CharField(max_length=3 , blank=True, null=True)     
     pp_district = models.ForeignKey(District, on_delete=models.CASCADE, blank=True, null=True)
     pp_streat = models.ForeignKey(Street, on_delete=models.CASCADE, blank=True, null=True)
     geometry = models.LineStringField(srid=4326,blank=True, null=True)

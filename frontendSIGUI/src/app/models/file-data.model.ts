@@ -6,12 +6,15 @@ import { DataSpatial } from './data-spatial';
 export class FileData {
     
     public category : string = '';
-    public file_dbf : File | null = null;
-    public file_prj : File | null = null;
-    public file_qpj : File | null = null;
-    public file_cpg : File | null = null;
-    public file_shp : File | null = null;
-    public file_shx : File | null = null;
+    public file_dbf : File | string = '';
+    public file_prj : File | string = '';
+    public file_qpj : File | string = '';
+    public file_cpg : File | string = '';
+    public file_shp : File | string = '';
+    public file_shx : File | string = '';
+    public file_sbn : File | string = '';
+    public file_sbx : File | string = '';
+    //public file_shx : File | null = null;
 
 
     constructor(id : string){

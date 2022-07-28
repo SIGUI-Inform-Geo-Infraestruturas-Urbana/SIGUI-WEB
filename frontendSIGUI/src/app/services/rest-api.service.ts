@@ -158,7 +158,26 @@ export class RestApiService {
   setUploadFile(formdata: FormData){
     // let jsonContent = JSON.stringify(formdata)
     // console.log(jsonContent)
-    return this.http.post( this.apiURL + '/api/data/uploads/',formdata);
+    //return this.http.post( this.apiURL + '/api/data/uploads/',formdata);
+    let httpOptions = { 
+      headers : new HttpHeaders({
+        'Content-Type' : 'application/json',
+      }), 
+      observe: 'response',   
+    }
+    // let jsonContent = JSON.stringify(dataSpatial)
+    // console.log(jsonContent)
+    return this.http
+      .post<string>(
+        '/api/data/uploads/',
+        formdata,
+        {      
+          headers : new HttpHeaders({
+            'Content-Type' : 'application/json',
+          }),
+          observe: 'response'
+        }       
+      )
   }
 
   handleError(error: any) {

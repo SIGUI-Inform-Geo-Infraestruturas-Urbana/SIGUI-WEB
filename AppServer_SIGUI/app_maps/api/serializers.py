@@ -356,3 +356,13 @@ class GeoDadosEspaciaisSerializer (serializers.ModelSerializer):
     #             "Username must be at least 10 characters long.",
     #         )
     #     return file_dbf
+
+    def create(self, validated_data):            
+
+        new_geoEspatial = models.GeoDadosEspaciais.objects.create(category=validated_data["category"],file_dbf=validated_data["file_dbf"],
+        file_prj=validated_data["file_prj"],file_cpg=validated_data["file_cpg"],
+        file_sbn=validated_data["file_sbn"],file_sbx=validated_data["file_sbx"],
+        file_shp=validated_data["file_shp"],file_shx=validated_data["file_shx"])
+        #new_geoEspatial.add
+
+        return new_geoEspatial

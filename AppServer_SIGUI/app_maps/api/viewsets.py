@@ -95,19 +95,4 @@ def handle_uploaded_file(file):
         for chunk in file.chunks():
             destination.write(chunk)
 
-def conversionParser(pathFileSelect):
 
-    pathFile = '/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/media'
-    pathResult = f'{pathFile}/{pathFileSelect}' 
-    print(pathResult)
-    #file = open('/home/sigui_dev/Área de Trabalho/Development/SIGUI-WEB/AppServer_SIGUI/app_maps/api/dssad.txt')
-    ds = DataSource(pathResult)
-    print (ds.layer_count)
-    layer = ds[0]
-    print(layer.fields)
-    print('---')
-    print(len(layer))
-    print('---')
-    print(layer.geom_type)
-    print('---')
-    print(layer.srs)
