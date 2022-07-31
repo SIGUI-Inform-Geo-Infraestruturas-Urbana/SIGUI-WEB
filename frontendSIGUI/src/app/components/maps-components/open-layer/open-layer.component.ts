@@ -11,6 +11,7 @@ import TileWMS from 'ol/source/TileWMS';
 import Source from 'ol/source/Source';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
+import Group from 'ol/layer/Group';
 import { Geometry, MultiPolygon } from 'ol/geom';
 import Point  from 'ol/geom/Point';
 import Draw from 'ol/interaction/Draw'
@@ -34,6 +35,7 @@ import {County} from '../../../models/county.model'
 import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { CountyRepositoryService } from 'src/app/repositorys/county-repository.service';
+import BaseLayer from 'ol/layer/Base';
 
 @Component({
   selector: 'app-open-layer',
@@ -44,6 +46,7 @@ export class OpenLayerComponent implements OnInit {
 
   @Input() map!:OlMap;
   coordenadaPoint!:string
+  private contadorIdMap : number = 0;
 
   //map: OlMap
   // edited:boolean = false;
@@ -75,15 +78,7 @@ export class OpenLayerComponent implements OnInit {
   
   constructor(public restApi: RestApiService, public dataSpatialService : DataSpatialService, 
     public countyRepository : CountyRepositoryService){// public countyService : CountyService
-      //this.map = new OlMap({})
-      // this.map = new Map({ 
-      //    target: 'ol-map',
-      //    view: new View({
-      //      center: [ -5480159.755742349, -2930312.646903647 ],
-      //      zoom: 12,
-      //      multiWorld: true,
-      //    }),
-      //  })
+
   }
 
   
@@ -101,19 +96,21 @@ export class OpenLayerComponent implements OnInit {
       
       let features: Feature[] = [] 
       for (let index = 0; index < data.length; index++) {
+        this.contadorIdMap = this.contadorIdMap + 1;
         const element = data[index];
         switch (element.typeRepresentation) {
           case 'unit':
             let featureUnit= new Feature({
-              id: element.id,
+              id:  this.contadorIdMap, //element.id,
               properties : element,
               geometry : <Geometry>element.geometry
             })
+            
             this.sourceunit.addFeature(featureUnit);
             break;
             case 'county':
               let featurecounty = new Feature({
-                id: element.id,
+                id:  this.contadorIdMap, //element.id,
                 properties : element,
                 geometry : <Geometry>element.geometry
               })
@@ -121,7 +118,7 @@ export class OpenLayerComponent implements OnInit {
               break;
           case 'district':
             let featuredistrict = new Feature({
-              id: element.id,
+              id:  this.contadorIdMap, //element.id,
               properties : element,
               geometry : <Geometry>element.geometry
             })
@@ -129,7 +126,7 @@ export class OpenLayerComponent implements OnInit {
             break;
           case 'publicplace':
             let featurepublicplace= new Feature({
-              id: element.id,
+              id:  this.contadorIdMap, //element.id,
               properties : element,
               geometry : <Geometry>element.geometry
             })
@@ -138,7 +135,7 @@ export class OpenLayerComponent implements OnInit {
             
           case 'street':
             let featureStreet = new Feature({
-              id: element.id,
+              id:  this.contadorIdMap, //element.id,
               properties : element,
               geometry : <Geometry>element.geometry
             })
@@ -146,7 +143,7 @@ export class OpenLayerComponent implements OnInit {
             break;
           case 'infrastructure':
             let featureInfrastructura = new Feature({
-              id: element.id,
+              id:  this.contadorIdMap, //element.id,
               properties : element, 
               geometry : <Geometry>element.geometry
             })
@@ -155,7 +152,7 @@ export class OpenLayerComponent implements OnInit {
             break;   
             case 'infraNet':
               let featureinfraNet = new Feature({
-                id: element.id,
+                id:  this.contadorIdMap, //element.id,
                 properties : element, 
                 geometry : <Geometry>element.geometry
               })
@@ -164,7 +161,7 @@ export class OpenLayerComponent implements OnInit {
               break;       
           case 'estructure':
               let featureestructure = new Feature({
-                id: element.id,
+                id:  this.contadorIdMap, //element.id,
                 properties : element, 
                 geometry : <Geometry>element.geometry
               })
@@ -187,7 +184,10 @@ export class OpenLayerComponent implements OnInit {
     // });
   }; 
 
-  
+  setPropertsMap(evt:MapBrowserEvent<any>){
+
+  }
+
   mapConstruct():void{
     
     if(this.map != undefined){
@@ -199,6 +199,8 @@ export class OpenLayerComponent implements OnInit {
 
       interation.forEach((interac) => {this.map.addInteraction(interac)})     
     
+      //this.map.on('addfeature', (evt) => this.setPropertsMap(evt))    
+
        // this.map.on('singleclick', (evt) => this.onClickMap(evt))    
 
       this.addTileLayerGeoserver();
@@ -452,7 +454,8 @@ export class OpenLayerComponent implements OnInit {
 
       layerSource.set('name','layer_vector_county')
       //   this.map.addLayer( layerSource )
-      this.map.addLayer( layerSource );
+      this.map.addLayer( layerSource );    
+     
   }
   addLoadDataDistrict():void{
     this.sourcedistrict = new VectorSource({});
@@ -575,6 +578,32 @@ export class OpenLayerComponent implements OnInit {
   return sou;
   }
 
+  getFeatureById(){
+
+    this.map.getLayerGroup().get
+
+    // this.map.getLayerGroup().ge.forEach((element : BaseLayer) => {
+    //   var a = element;
+    //   console.log(element)
+      
+    //   // let vector : VectorLayer<VectorSource<Geometry>> = <VectorLayer<VectorSource<Geometry>>> element
+    //   // //let a : VectorLayer = <VectorLayer<VectorSource>> element
+    //   // var features = <VectorSource> vector.getSource()//?.getFeatureById(this.contadorIdMap)
+    //   // console.log(features)
+    //   // console.log(features.getAttributions)
+    //   // //var featur = features.forEachFeature
+    //   // console.log('features')
+    //   // //console.log(featur)
+    // });
+
+    
+    // this.map.getLayers().getArray().forEach((element:BaseLayer)=> {
+    //   let get = <VectorSource<Geometry> element
+    //   element.gets
+
+    // });;
+  }
+
   addInteraction(value:string): void{    
   console.log('aa'+value)
     if(value !== 'None')
@@ -586,11 +615,17 @@ export class OpenLayerComponent implements OnInit {
       this.map.addInteraction(this.draw)
 
       this.draw.on('drawend', (event:DrawEvent) => {//drawevent
-        var feature = event.feature;
-        var features = this.layerIteration.getSource()!.getFeatures();
-        features = features.concat(feature);
+        this.contadorIdMap = this.contadorIdMap + 1;
+        event.feature.setId(this.contadorIdMap);
+        // var features = this.layerIteration.getSource()!.getFeatures();
+        // features = features.concat(feature);
         // this.featureState = features;
-        console.log('deu certo');
+
+        ///////var features = this.layerIteration.getSource()?.getFeatureById(this.contadorIdMap)
+
+        
+
+  
         // console.log( this.featureState );
 
         /*console.log('deu certo');
@@ -612,6 +647,9 @@ export class OpenLayerComponent implements OnInit {
   interactionMapChange(value:string): void{  
     this.map.removeInteraction(this.draw);
     this.addInteraction(value);
+    console.log('DEU CERTO !!!!!!!!!!!!!!!');
+    this.getFeatureById()
+    console.log('DEU CERTO !!!!!!!!!!!!!!!');
   }
   removeMapPoint(): void{
     console.log('onUndo')

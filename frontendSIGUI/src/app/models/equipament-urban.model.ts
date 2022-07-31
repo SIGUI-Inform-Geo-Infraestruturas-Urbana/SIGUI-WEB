@@ -171,8 +171,10 @@ export class EquipmentUrban extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        this.id = <number>inputData.getId();
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
+        this.id = properties['id'];
         this.eq_co_cod = properties['eq_co_cod'];
         this.eq_co_equipament =properties['eq_co_equipament'];
         this.eq_co_type =properties['eq_co_type'];

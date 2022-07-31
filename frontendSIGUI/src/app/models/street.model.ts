@@ -125,8 +125,10 @@ export class Street extends DataSpatial{
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
         console.log(properties);    
-        this.id = <number>inputData.getId();
-        if (properties != undefined){        
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
+        if (properties != undefined){
+        this.id = properties['id'];    
             this.st_cod_key = properties['st_cod_key'];
             this.st_district= properties['st_district'];      
             this.st_district_d = properties['st_district_d'];

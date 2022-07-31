@@ -12,11 +12,12 @@
                 <td class="col-header">COORDENADA:</td>
                 <td class="col-content">{{coordenadaPoint}}</td>
             </tr>
+
         </table>
 
-            <app-popup-control-unit class="popup-container" *ngIf="hiddenState" [featureSelect]="featureSelect" ></app-popup-control-unit>
+            <app-popup-control-unit class="popup-container" *ngIf="hiddenState"  [featureSelect]="featureSelect" ></app-popup-control-unit>
   
-            <app-popup-control-county class="popup-container" *ngIf="hiddenCounty" [featureSelect]="featureSelect" ></app-popup-control-county>
+            <app-popup-control-county class="popup-container" (delete)="excludeFeature($event)" *ngIf="hiddenCounty" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect" ></app-popup-control-county>
 
             <app-popup-control-district class="popup-container" *ngIf="hiddenDistrict" [featureSelect]="featureSelect"></app-popup-control-district>
          

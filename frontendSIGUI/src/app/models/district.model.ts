@@ -62,9 +62,10 @@ export class District extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        this.id = <number>inputData.getId();
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
-            console.log(properties);     
+        this.id = properties['id'];  
    
         this.dc_name = properties['dc_name'];
         this.dc_area= properties['dc_area'];      

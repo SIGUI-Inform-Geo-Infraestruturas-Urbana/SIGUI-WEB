@@ -13,7 +13,13 @@
             <mat-icon>delete</mat-icon>
         </button>    
         </td>
-        <td class="col-content">
+        <td class="col-content" *ngIf="validEdit" >
+            <button class="button-event" (click)="connectFeatureFromStreet()">
+                <mat-icon >home</mat-icon> 
+                Visualizar 
+            </button>
+            </td>
+        <td class="col-content" *ngIf="validSave">
         <button class="button-event" (click)="connectFeatureFromStreet()">
             <mat-icon >home</mat-icon> 
             Adicionar 

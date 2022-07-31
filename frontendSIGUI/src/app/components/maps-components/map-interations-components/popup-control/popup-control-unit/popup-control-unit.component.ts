@@ -10,12 +10,16 @@ import { StateMapService } from 'src/app/services/shared/state-map.service';
   styleUrls: ['./popup-control-unit.component.css']
 })
 export class PopupControlUnitComponent implements OnInit {
-
+  @Input() validEdit: boolean; 
+  @Input() validSave: boolean; 
   @Input() featureSelect!: Feature; 
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
 
-  constructor(private stateMap :StateMapService) { }
+  constructor(private stateMap :StateMapService) { 
+    this.validEdit = false;
+    this.validSave = false;
+  }
 
   ngOnInit(): void {
   }

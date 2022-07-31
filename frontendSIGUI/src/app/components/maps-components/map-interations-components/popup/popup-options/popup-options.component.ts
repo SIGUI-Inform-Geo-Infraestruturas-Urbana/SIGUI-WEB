@@ -6,11 +6,13 @@ import Map from 'ol/Map';
 import Point  from 'ol/geom/Point';
 //import { CountyService } from 'src/app/services/count/county.service';
 import { County } from 'src/app/models/county.model';
-import { Geometry, LineString, MultiPolygon } from 'ol/geom';
+import { Geometry, LineString, MultiPolygon, Polygon } from 'ol/geom';
 import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
 import { ManagerSession } from 'src/app/models/managerSession.model';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
 
 @Component({
   selector: 'app-popup-options',
@@ -18,6 +20,9 @@ import { ManagerSession } from 'src/app/models/managerSession.model';
   styleUrls: ['./popup-options.component.css']
 })
 export class PopupOptionsComponent implements OnInit , AfterViewInit{
+
+  public validEdit: boolean; 
+  public validSave: boolean; 
 
   @ViewChild('popup',{static:false}) divPopup!: ElementRef<HTMLElement>;
   @ViewChild('popupContent',{static:false}) popupContent!: ElementRef<HTMLElement>;
@@ -43,6 +48,10 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   public hiddenRede : boolean = false;  
 
   constructor(public dataSpatialService : DataSpatialService, public managerService : ManagerVisualizationService) {         
+    
+    this.validEdit = false;
+    this.validSave = false;
+    
     managerService.getSessionVisualization().subscribe(sessionVizu => {
       console.log('-----session-----------');
       console.log(sessionVizu);
@@ -73,6 +82,20 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
      
   }  
 
+  excludeFeature(numberID : number){
+    console.log('aaakimpou');
+    this.map.getLayers().forEach((layer) => {
+      let layerSource = <VectorLayer<VectorSource>> layer
+      if (layerSource.get('name') == 'layer_vectorIteration'){
+        let a = layerSource.getSource()?.getFeatureById(numberID)//.clear();
+        layerSource.getSource()?.removeFeature(<Feature>a)
+        console.log(a);
+        console.log('limpou');
+        //layer_vectorIteration
+      }
+    })
+  }
+
   setSelect(){
     this.dataSpatialService.getDataSpatial().subscribe((cities: DataSpatial[]) => {
       let feature = this.dataSpatialService.converterFromFeatures(cities);
@@ -99,6 +122,9 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   
   searchFeatureAtPixel(evt:MapBrowserEvent<any>):any{
     let sFeature = null;
+
+
+
     this.map.forEachFeatureAtPixel(evt.pixel,(feature) => {  
       if ((this.managerSession.session_streat == true)||((this.managerSession.session_public_place)))
       {
@@ -159,6 +185,8 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     this.overlay.setPosition(coordinate); 
     this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
     this.featureSelect = featuretSelect; 
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+    console.log(featuretSelect)
     return true
   }
   definedVizualization(){
@@ -227,62 +255,297 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
     }
     else{
-      let properties = <Feature>marcator.getProperties()['properties'];
+      let properties = marcator.getProperties()['properties'];
       console.log('testepropertie')
-      console.log(properties)
+      let validProps =  properties === undefined ? false : true;
+      console.log(validProps)
+
+      let geomSelect = marcator.getGeometry()?.getType()
+
+
+     
+      switch (geomSelect) {
+        case 'Polygon'://Polygon
+          //let properties = <Feature>marcator.getProperties()['properties'];
+          if (validProps == false)
+          {
+            if(this.managerSession.session_state == true)
+            {
+              console.log('***SESSION STATE****')
+              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenState = true; 
+              this.validEdit = false;
+              this.validSave = true;  
+            }  
+            else if(this.managerSession.session_county == true)
+            {
+              console.log('***SESSION COUNTY****')
+              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenCounty = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+            else if(this.managerSession.session_ditrict == true)
+            {
+              console.log('***SESSION DISTRICT****')
+              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenDistrict = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+          }
+          else //para visualização
+          {
+            let type = properties['typeRepresentation'];
+
+            switch (type) {
+              case 'unit':
+                this.validEdit = true;
+                this.validSave = false;
+                break;
+              case 'county':
+                this.validEdit = true;
+                this.validSave = false;
+                break;
+              case 'district':  
+                this.validEdit = true;
+                this.validSave = false;
+                break;
+              default:
+                break;
+            }  
+          }
+
+          break;
+        case 'LineString':
+          
+          //let properties = <Feature>marcator.getProperties()['properties'];
+          if (validProps == false)
+          {
+            if(this.managerSession.session_streat == true)
+            {
+              console.log('***SESSION STREAT****')
+              let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenStreet = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+            else if (this.managerSession.session_public_place == true)
+            {
+              console.log('***SESSION PUBLICPLACE****')
+              let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenPublicPlace = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+            else if (this.managerSession.session_network == true)
+            {
+              console.log('***SESSION NETWORK****')
+              let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+              this.definedVizualization();
+              this.hiddenPublicPlace = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+          }
+          else //para visualização
+          {
+            let type = properties['typeRepresentation'];
+
+            switch (type) {
+              case 'publicplace':
+                this.validEdit = true;
+                this.validSave = false;
+              break;                
+              case 'street':
+                this.validEdit = true;
+                this.validSave = false;
+                break;
+              case 'infraNet':
+                this.validEdit = true;
+                this.validSave = false;
+              break;                 
+              default:
+                break;
+            }  
+          }
+
+          break;
+        case 'Point':
+          if (validProps == false)
+          {
+            if (this.managerSession.session_infrastructure == true)
+            {
+              console.log('***SESSION INFRASTRUCTURE****')
+              let featuretSelect = this.selectPoint(<Feature>marcator)
+              this.definedVizualization();
+              this.hiddenInfrastructure = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+            else if (this.managerSession.session_estructure == true)
+            {
+              console.log('***SESSION ESTRUCTURE****')
+              let featuretSelect = this.selectPoint(<Feature>marcator)
+              this.definedVizualization();
+              this.hiddenEstructure = true;
+              this.validEdit = false;
+              this.validSave = true;
+            }
+          }
+          else //para visualização
+          {
+            let type = properties['typeRepresentation'];
+
+            switch (type) {                   
+              case 'infrastructure':
+                this.validEdit = true;
+                this.validSave = false;
+                break;   
+   
+              case 'estructure':
+                this.validEdit = true;
+                this.validSave = false;
+                break;  
+              default:
+                break;
+            }  
+          }
+          break;      
+        default:
+          break;
+      }
+
       //if()
 
-      if(this.managerSession.session_state == true)
-      {
-        console.log('***SESSION STATE****')
-        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-        this.definedVizualization();
-        this.hiddenState = true;    
-      }  
-      else if(this.managerSession.session_county == true)
-      {
-        console.log('***SESSION COUNTY****')
-        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-        this.definedVizualization();
-        this.hiddenCounty = true;
-      }
-      else if(this.managerSession.session_ditrict == true)
-      {
-        console.log('***SESSION DISTRICT****')
-        let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-        this.definedVizualization();
-        this.hiddenDistrict = true;
-      }
-      else if(this.managerSession.session_streat == true)
-      {
-        console.log('***SESSION STREAT****')
-        let featuretSelect = this.selectLineString(<Feature>marcator,evt)
-        this.definedVizualization();
-        this.hiddenStreet = true;
-      }
-      else if (this.managerSession.session_public_place == true)
-      {
-        console.log('***SESSION PUBLICPLACE****')
-        let featuretSelect = this.selectLineString(<Feature>marcator,evt)
-        this.definedVizualization();
-        this.hiddenPublicPlace = true;
-      }
-      else if (this.managerSession.session_infrastructure == true)
-      {
-        console.log('***SESSION INFRASTRUCTURE****')
-        let featuretSelect = this.selectPoint(<Feature>marcator)
-        this.definedVizualization();
-        this.hiddenInfrastructure = true;
-      }
-      else if (this.managerSession.session_estructure == true)
-      {
-        console.log('***SESSION ESTRUCTURE****')
-        let featuretSelect = this.selectPoint(<Feature>marcator)
-        this.definedVizualization();
-        this.hiddenEstructure = true;
-      }
     }
+      
+
+    
   }
+
+
+
+  // onClickMap(evt:MapBrowserEvent<any>): void{      
+   
+  //   console.log('onClick')
+  //   let marcator = this.searchFeatureAtPixel(evt);     
+    
+  //   if (marcator == null)
+  //   {     
+  //     let coordinate:Coordinate = evt.coordinate;
+  //     this.overlay.setPosition(coordinate); 
+  //     this.coordenadaPoint = toStringHDMS(toLonLat(coordinate));
+  //     if(this.managerSession.session_state == true)
+  //     {
+  //       console.log('***SESSION STATE****')
+  //       this.definedVizualization();
+  //       this.hiddenState = true;      
+  //     }  
+  //     else if(this.managerSession.session_county == true)
+  //     {
+  //       console.log('***SESSION COUNTY****')
+  //       this.definedVizualization();
+  //       this.hiddenCounty = true;
+  //     }
+  //     else if(this.managerSession.session_ditrict == true)
+  //     {
+  //       console.log('***SESSION DISTRICT****')
+  //       this.definedVizualization();
+  //       this.hiddenDistrict = true;
+  //     }
+  //     else if(this.managerSession.session_streat == true)
+  //     {
+  //       console.log('***SESSION STREAT****')
+  //       this.definedVizualization();
+  //       this.hiddenStreet = true;
+  //     }
+  //     else if (this.managerSession.session_public_place == true)
+  //     {
+  //       console.log('***SESSION PUBLICPLACE****')
+  //       this.definedVizualization();
+  //       this.hiddenPublicPlace = true;
+  //     }
+  //     else if (this.managerSession.session_infrastructure == true)
+  //     {
+  //       console.log('***SESSION INFRASTRUCTURE****')
+  //       this.definedVizualization();
+  //       this.hiddenInfrastructure = true;
+  //     }
+  //     else if (this.managerSession.session_estructure == true)
+  //     {
+  //       console.log('***SESSION ESTRUCTURE****')
+  //       this.definedVizualization();
+  //       this.hiddenEstructure = true;
+  //     }
+
+  //     // var clickedCoordinate = transform(coordinate, 'EPSG:3857', 'EPSG:4326')//this.map.getCoordinateFromPixel(evt.pixel);
+  //   }
+  //   else{
+  //     let properties = <Feature>marcator.getProperties()['properties'];
+  //     console.log('testepropertie')
+  //     console.log(properties)
+
+  //     let a = marcator.getGeometry()?.getType()
+
+  //     //if()
+
+  //     if(this.managerSession.session_state == true)
+  //     {
+  //       console.log('***SESSION STATE****')
+  //       let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+  //       this.definedVizualization();
+  //       this.hiddenState = true;    
+  //     }  
+  //     else if(this.managerSession.session_county == true)
+  //     {
+  //       console.log('***SESSION COUNTY****')
+  //       let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+  //       this.definedVizualization();
+  //       this.hiddenCounty = true;
+  //     }
+  //     else if(this.managerSession.session_ditrict == true)
+  //     {
+  //       console.log('***SESSION DISTRICT****')
+  //       let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+  //       this.definedVizualization();
+  //       this.hiddenDistrict = true;
+  //     }
+  //     else if(this.managerSession.session_streat == true)
+  //     {
+  //       console.log('***SESSION STREAT****')
+  //       let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+  //       this.definedVizualization();
+  //       this.hiddenStreet = true;
+  //     }
+  //     else if (this.managerSession.session_public_place == true)
+  //     {
+  //       console.log('***SESSION PUBLICPLACE****')
+  //       let featuretSelect = this.selectLineString(<Feature>marcator,evt)
+  //       this.definedVizualization();
+  //       this.hiddenPublicPlace = true;
+  //     }
+  //     else if (this.managerSession.session_infrastructure == true)
+  //     {
+  //       console.log('***SESSION INFRASTRUCTURE****')
+  //       let featuretSelect = this.selectPoint(<Feature>marcator)
+  //       this.definedVizualization();
+  //       this.hiddenInfrastructure = true;
+  //     }
+  //     else if (this.managerSession.session_estructure == true)
+  //     {
+  //       console.log('***SESSION ESTRUCTURE****')
+  //       let featuretSelect = this.selectPoint(<Feature>marcator)
+  //       this.definedVizualization();
+  //       this.hiddenEstructure = true;
+  //     }
+  //   }
+  // }
 
  
   closerPopupClick(){

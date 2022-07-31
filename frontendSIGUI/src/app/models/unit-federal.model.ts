@@ -66,6 +66,7 @@ export class UnitFederal extends DataSpatial{
 
     deserialize(inputData : Feature<Geometry>) {        
         let properties = inputData.getProperties();
+        console.log('deserialize');
         console.log(properties);       
         this.id = <number>inputData.getId();
         this.uf_name = properties['uf_name'];
@@ -80,8 +81,10 @@ export class UnitFederal extends DataSpatial{
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
         console.log(properties);       
-        this.id = <number>inputData.getId();
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
+        this.id = properties['id'];
         this.uf_name = properties['uf_name'];
         this.uf_initials= properties['uf_initials'];      
         this.uf_name_region = properties['uf_name_region'];

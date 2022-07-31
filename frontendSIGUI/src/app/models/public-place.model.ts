@@ -100,8 +100,10 @@ export class PublicPlace extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        this.id = <number>inputData.getId();
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
+        this.id = properties['id'];
         this.pp_cod_sector = properties['pp_cod_sector'];
         this.pp_cod_block= properties['pp_cod_block'];      
         this.pp_cod_face = properties['pp_cod_face'];

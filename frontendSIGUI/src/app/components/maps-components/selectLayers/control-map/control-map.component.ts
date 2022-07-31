@@ -122,6 +122,7 @@ export class ControlMapComponent implements OnInit {
       if (layerSource.get('name') == select){
         layerSource.getSource()?.clear();
         console.log('limpou');
+        //layer_vectorIteration
       }
      // layers.push(layer.get('name'))
       // if (layer.get('name')== 'layer_vectorTerrain'){

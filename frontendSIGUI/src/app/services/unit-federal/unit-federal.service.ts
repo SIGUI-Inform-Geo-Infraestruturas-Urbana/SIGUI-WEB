@@ -31,6 +31,7 @@ export class UnitFederalService extends DataServices{
       let unitFederal = new UnitFederal().deserialize(features[index]);
       countieList.push(unitFederal);
     }
+    console.log(countieList)
     return countieList;
   }
 

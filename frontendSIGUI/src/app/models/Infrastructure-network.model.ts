@@ -88,10 +88,10 @@ export class InfrastructureNetwork extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        console.log('????????????????????')
-        console.log(properties);  
-        console.log('????????????????????')     
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
+            this.id = properties['id'];
             this.infra_net_serial_number = properties['infra_net_serial_number'];
             this.infra_net_representation= properties['infra_net_representation'];      
             this.infra_net_infrastructure_in = properties['infra_net_infrastructure_in'];

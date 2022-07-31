@@ -7,6 +7,7 @@ import { abstract } from "ol/util";
 
 export abstract class DataSpatial {      
     public id : number;
+    public idMap !: number;
     public typeRepresentation : string; 
     public geometry : string | Geometry;
 

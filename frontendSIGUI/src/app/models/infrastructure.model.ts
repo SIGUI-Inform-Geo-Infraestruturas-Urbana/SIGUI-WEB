@@ -97,12 +97,8 @@ export class Infrastructure extends DataSpatial{
     }
     serialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
-        console.log('????????????????????')
-        console.log(properties);  
-        //let a =properties['properties'] 
-        //console.log(properties['infra_name']);  
-        console.log('????????????????????')   
-        this.id = <number>inputData.getId();  
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
         this.id = properties['id'];
         this.infra_name = properties['infra_name'];

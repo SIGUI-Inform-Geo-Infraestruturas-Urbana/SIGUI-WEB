@@ -12,11 +12,17 @@ import { StateMapService } from 'src/app/services/shared/state-map.service';
 })
 export class PopupControlCountyComponent implements OnInit {
 
+  @Input() validEdit: boolean; 
+  @Input() validSave: boolean; 
   @Input() featureSelect!: Feature; 
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
 
-  constructor(private stateMap :StateMapService) { }
+  constructor(private stateMap :StateMapService) { 
+    this.validEdit = false;
+    this.validSave = false;
+  }
 
   ngOnInit(): void {
   }
@@ -40,9 +46,12 @@ export class PopupControlCountyComponent implements OnInit {
     if (this.featureSelect != undefined)
     {
       console.log('click infra');
+      console.log(this.featureSelect.getKeys());
+
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateGeometry(this.featureSelect);
+
       let spatial = new County().seserialize(this.featureSelect,geom)
       console.log(spatial);
       this.stateMap.setFeatureSelect(spatial);
@@ -68,5 +77,9 @@ export class PopupControlCountyComponent implements OnInit {
     else{
       return geometria;
     }
+  }
+
+  excludeFeature(){
+    this.delete.emit(1)
   }
 }

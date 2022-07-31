@@ -122,8 +122,11 @@ export class County extends DataSpatial{
     seserialize(inputData : Feature<Geometry>, geom : Geometry) {        
         let properties = inputData.getProperties()['properties'];
         console.log(properties);       
-        this.id = <number>inputData.getId();
+        //this.id = <number>inputData.getId();
+        this.idMap =  inputData.getId() == undefined ? 0 : <number>inputData.getId();
+        
         if (properties != undefined){
+        this.id = properties['id'];
         this.co_name = properties['co_name'];
         this.co_initials_uf= properties['co_initials_uf'];      
         this.co_cod_environmental = properties['co_cod_environmental'];
