@@ -14,7 +14,7 @@ export class PopupControlDistrictsComponent implements OnInit {
   @Input() featureSelect!: Feature; 
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
-
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   constructor(private stateMap :StateMapService) { }
 
   ngOnInit(): void {
@@ -50,6 +50,13 @@ export class PopupControlDistrictsComponent implements OnInit {
     }
     else{
       return geometria;
+    }
+  }
+  excludeFeature(){
+    if (this.featureSelect != undefined)
+    {
+      let id: number =<number> this.featureSelect.getId();
+      this.delete.emit(id)
     }
   }
 }

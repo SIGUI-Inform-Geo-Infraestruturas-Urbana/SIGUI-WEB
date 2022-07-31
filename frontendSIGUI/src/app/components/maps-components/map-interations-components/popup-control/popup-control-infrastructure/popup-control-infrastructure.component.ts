@@ -20,7 +20,8 @@ export class PopupControlInfrastructureComponent implements OnInit {
   @Input() featureSelect!: Feature; 
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
-
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
+  
   constructor(private stateMap :StateMapService, private dataAssociationService : DataAssociationService) { 
     this.validEdit = false;
     this.validSave = false;
@@ -116,6 +117,13 @@ export class PopupControlInfrastructureComponent implements OnInit {
     else
     {
       console.log('click infra vazio')
+    }
+  }
+  excludeFeature(){
+    if (this.featureSelect != undefined)
+    {
+      let id: number =<number> this.featureSelect.getId();
+      this.delete.emit(id)
     }
   }
 }

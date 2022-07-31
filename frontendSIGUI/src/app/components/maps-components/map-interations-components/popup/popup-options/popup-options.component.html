@@ -15,21 +15,21 @@
 
         </table>
 
-            <app-popup-control-unit class="popup-container" *ngIf="hiddenState"  [featureSelect]="featureSelect" ></app-popup-control-unit>
+            <app-popup-control-unit class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenState" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect" ></app-popup-control-unit>
   
             <app-popup-control-county class="popup-container" (delete)="excludeFeature($event)" *ngIf="hiddenCounty" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect" ></app-popup-control-county>
 
-            <app-popup-control-district class="popup-container" *ngIf="hiddenDistrict" [featureSelect]="featureSelect"></app-popup-control-district>
+            <app-popup-control-district class="popup-container" (delete)="excludeFeature($event)" *ngIf="hiddenDistrict" [validSave]="validSave" [validEdit]="validEdit"[featureSelect]="featureSelect"></app-popup-control-district>
          
-            <app-popup-control-street class="popup-container" *ngIf="hiddenStreet"[featureSelect]="featureSelect"></app-popup-control-street>
+            <app-popup-control-street class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenStreet" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect"></app-popup-control-street>
   
-            <app-popup-control-publicplace class="popup-container" *ngIf="hiddenPublicPlace" [featureSelect]="featureSelect"></app-popup-control-publicplace>
+            <app-popup-control-publicplace class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenPublicPlace" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect"></app-popup-control-publicplace>
 
-            <app-popup-control-infrastructure class="popup-container" *ngIf="hiddenInfrastructure"[featureSelect]="featureSelect"></app-popup-control-infrastructure>
+            <app-popup-control-infrastructure class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenInfrastructure" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect"></app-popup-control-infrastructure>
 
-            <app-popup-control-equipamenturban class="popup-container" *ngIf="hiddenEstructure"[featureSelect]="featureSelect"></app-popup-control-equipamenturban>
+            <app-popup-control-equipamenturban class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenEstructure" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect"></app-popup-control-equipamenturban>
 
-            <app-popup-control-street class="popup-container" *ngIf="hiddenRede"[featureSelect]="featureSelect"></app-popup-control-street>
+            <app-popup-control-street class="popup-container" (delete)="excludeFeature($event)"  *ngIf="hiddenRede" [validSave]="validSave" [validEdit]="validEdit" [featureSelect]="featureSelect"></app-popup-control-street>
 
         <div appShowUserAdmLogged>
             <!-- <app-popup-options-manager [featureSelect]="featureSelect" ></app-popup-options-manager> -->

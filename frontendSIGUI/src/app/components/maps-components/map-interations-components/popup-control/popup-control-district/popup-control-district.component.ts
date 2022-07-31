@@ -14,6 +14,7 @@ export class PopupControlDistrictComponent implements OnInit {
   @Input() validEdit: boolean; 
   @Input() validSave: boolean; 
   @Input() featureSelect!: Feature; 
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
 
@@ -56,6 +57,14 @@ export class PopupControlDistrictComponent implements OnInit {
     }
     else{
       return geometria;
+    }
+  }
+
+  excludeFeature(){
+    if (this.featureSelect != undefined)
+    {
+      let id: number =<number> this.featureSelect.getId();
+      this.delete.emit(id)
     }
   }
 }

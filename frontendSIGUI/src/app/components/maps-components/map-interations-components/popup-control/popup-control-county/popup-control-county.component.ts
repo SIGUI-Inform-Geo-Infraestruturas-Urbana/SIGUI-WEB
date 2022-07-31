@@ -80,6 +80,10 @@ export class PopupControlCountyComponent implements OnInit {
   }
 
   excludeFeature(){
-    this.delete.emit(1)
+    if (this.featureSelect != undefined)
+    {
+      let id: number =<number> this.featureSelect.getId();
+      this.delete.emit(id)
+    }
   }
 }

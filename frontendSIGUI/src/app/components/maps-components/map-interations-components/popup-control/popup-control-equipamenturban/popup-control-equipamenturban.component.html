@@ -9,19 +9,19 @@
     <tr> 
         <td class="col-header"></td>
         <td class="col-content">
-        <button mat-icon-button color="primary">
+        <button mat-icon-button color="primary" (click)="excludeFeature()">
             <mat-icon>delete</mat-icon>
         </button>    
         </td>
         <td class="col-content" *ngIf="validEdit" >
             <button class="button-event" (click)="connectFeatureFromEstruture()">
-                <mat-icon >home</mat-icon> 
+                <mat-icon >pageview</mat-icon> 
                 Visualizar 
             </button>
             </td>        
         <td class="col-content" *ngIf="validSave">
         <button class="button-event" (click)="connectFeatureFromEstruture()">
-            <mat-icon >home</mat-icon> 
+            <mat-icon >add</mat-icon> 
             Adicionar 
         </button>
         </td>

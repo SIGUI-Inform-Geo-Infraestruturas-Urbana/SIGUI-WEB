@@ -83,15 +83,12 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
   }  
 
   excludeFeature(numberID : number){
-    console.log('aaakimpou');
     this.map.getLayers().forEach((layer) => {
       let layerSource = <VectorLayer<VectorSource>> layer
       if (layerSource.get('name') == 'layer_vectorIteration'){
-        let a = layerSource.getSource()?.getFeatureById(numberID)//.clear();
+        let a = layerSource.getSource()?.getFeatureById(numberID)
         layerSource.getSource()?.removeFeature(<Feature>a)
-        console.log(a);
-        console.log('limpou');
-        //layer_vectorIteration
+        this.overlay.setPosition(undefined)       
       }
     })
   }

@@ -17,7 +17,8 @@ export class PopupControlStreetComponent implements OnInit {
   @Input() featureSelect!: Feature; 
   @Output() associarInfra: EventEmitter<Feature> = new EventEmitter<Feature>();
   @Output() associarCity: EventEmitter<Feature> = new EventEmitter<Feature>();
-
+  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
+  
   constructor(private stateMap :StateMapService) { 
     this.validEdit = false;
     this.validSave = false;
@@ -63,6 +64,13 @@ export class PopupControlStreetComponent implements OnInit {
       return geometria;
     }
 
+  }
+  excludeFeature(){
+    if (this.featureSelect != undefined)
+    {
+      let id: number =<number> this.featureSelect.getId();
+      this.delete.emit(id)
+    }
   }
 
 }
