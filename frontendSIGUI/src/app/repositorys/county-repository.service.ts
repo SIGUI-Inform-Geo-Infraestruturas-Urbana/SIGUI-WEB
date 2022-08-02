@@ -30,7 +30,7 @@ export class CountyRepositoryService implements IRepository<County,County> {
   
 
   populateServiceViewMap(cities : County[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetchData(idParam : number = 0):boolean{//Feature<Geometry>

@@ -25,6 +25,7 @@ import { Infrastructure } from 'src/app/models/infrastructure.model';
 import { EquipmentUrban } from 'src/app/models/equipament-urban.model';
 import { InfrastructureNetworkManipulation } from 'src/app/services/InfrastructureNetwork/InfrastructureNetwork-manager/InfrastructureNetwork-manipulation.service';
 import { InfrastructureNetwork } from 'src/app/models/Infrastructure-network.model';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 
 @Component({
   selector: 'app-geo-data',
@@ -63,7 +64,8 @@ export class GeoDataComponent implements OnInit {
 
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log('valor SELECIONADO-----------------s')
-      console.log(feature)    
+      console.log(feature)   
+
       this.validatedDataSelect(feature);   
 
     });
@@ -89,147 +91,143 @@ export class GeoDataComponent implements OnInit {
   enableModalManipuledData(){
     this.isShowingNavRight = true; 
     this.isShowingButtonNavRight = true;
-  }
+  }  
 
-  validatedDataSelect(element:DataSpatial):void{
+  validatedDataSelect(control:controlViewData):void{
     
-    if ((element.id != undefined )&&(element.id != 0)){
-      console.log('VALIDOU222222222')
-      switch (element.typeRepresentation) {
-          case 'unit':
-            this.managerVizualizaton = new ManagerSession();
-            this.unitManipulation.setUnitVisualization(<UnitFederal>element);
-            this.managerVizualizaton.session_state = true;
-          break;
-          case 'county':
-            this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_county = true;
-          break;
-          case 'district':
-            this.managerVizualizaton = new ManagerSession();
-            this.districtManipulation.setDistrictVisualization(<District>element);
-            this.managerVizualizaton.session_ditrict = true;
-            break;
-          case 'publicplace':
-            this.managerVizualizaton = new ManagerSession();
-            this.publicPlaceManipulation.setPublicPlaceVisualization(<PublicPlace>element);
-            this.managerVizualizaton.session_public_place = true;
-            break;            
-          case 'street':
-            this.managerVizualizaton = new ManagerSession();
-            this.streetManipulation.setStreetVisualization(<Street>element);
-            this.managerVizualizaton.session_streat = true;
-            break;
-          case 'infrastructure':
-            this.managerVizualizaton = new ManagerSession();
-            this.infrastructureManipulation.setInfrastructureVisualization(<Infrastructure>element);
-            this.managerVizualizaton.session_infrastructure = true;
-            break;   
+    let element:DataSpatial = <DataSpatial> control.dataSpatial;
+
+    if (element != null)
+    {
+      if ((element.id != undefined )&&(element.id != 0)){
+        console.log('VALIDOU VISUALIZAÇÃO')
+          this.validatedVisualization(element);
+        console.log('valor preechido')
+      }
+      else if ((element.geometry != '0')){ 
+        console.log('VALIDOU MANIPULAÇÃO')
+        console.log(element.typeRepresentation)
+          this.validatedManipulation(element);        
+        console.log('valor nao preenchido')
+      }else if( (element.geometry == '0'))
+      {
+        console.log(element.typeRepresentation)
+        switch (element.typeRepresentation) {
           case 'infraNet':
-            this.managerVizualizaton = new ManagerSession();
-            this.countyVizualization.setCountyVisualization(<County>element);
-            this.managerVizualizaton.session_network = true;
+            this.enableModalManipuledData();
+            this.managerManipulation = new ManagerSession();
+            this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
+            this.managerManipulation.session_network = true;
           break;       
-          case 'estructure':
-            this.managerVizualizaton = new ManagerSession();
-            this.equipamentUrbanManipulation.setEquipamentUrbanVisualization(<EquipmentUrban>element);
-            this.managerVizualizaton.session_estructure = true;
-            break;  
           default:
             break;
-        }  
-      console.log('valor preechido')
-    }
-    else if ((element.geometry != '0')){ 
-      console.log('valor nao preechido88888888888888888888888')
-      console.log(element.typeRepresentation)
-      switch (element.typeRepresentation) {
-        case 'unit':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.unitManipulation.setUnitManipulation(<UnitFederal>element);
-          this.managerManipulation.session_state = true;
-        break;
-        case 'county':
-          console.log('valor county')
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.countyVizualization.setCountyManipulation(<County>element);
-          this.managerManipulation.session_county = true;
-          console.log(this.managerManipulation)
-        break;
-        case 'district':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.districtManipulation.setDistrictManipulation(<District>element);
-          this.managerManipulation.session_ditrict = true;
-          break;
-        case 'publicplace':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.publicPlaceManipulation.setPublicPlaceManipulation(<PublicPlace>element);
-          this.managerManipulation.session_public_place = true;
-          break;            
-        case 'street':
-          console.log('valor street')
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.streetManipulation.setStreetManipulation(<Street>element);
-          this.managerManipulation.session_streat = true;
-          break;
-        case 'infrastructure':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.infrastructureManipulation.setInfrastructureManipulation(<Infrastructure>element);
-          this.managerManipulation.session_infrastructure = true;
-          break;   
-        case 'infraNet':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
-          this.managerManipulation.session_network = true;
-        break;       
-        case 'estructure':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.equipamentUrbanManipulation.setEquipamentUrbanManipulation(<EquipmentUrban>element);
-          this.managerManipulation.session_estructure = true;
-          break;  
-        default:
-          break;
-      }  
-      console.log('valor nao 87666666666')
-    }else if( (element.geometry == '0'))
-    {
-      console.log(element.typeRepresentation)
-      switch (element.typeRepresentation) {
-        case 'infraNet':
-          this.enableModalManipuledData();
-          this.managerManipulation = new ManagerSession();
-          this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
-          this.managerManipulation.session_network = true;
-        break;       
-        default:
-          break;
+        } 
       } 
-    }
+    }   
+  }
+  validatedManipulation( element:DataSpatial){
+    switch (element.typeRepresentation) {
+      case 'layer_vector_unit':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.unitManipulation.setUnitManipulation(<UnitFederal>element);
+        this.managerManipulation.session_state = true;
+      break;
+      case 'layer_vector_county':
+        console.log('valor county')
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.countyVizualization.setCountyManipulation(<County>element);
+        this.managerManipulation.session_county = true;
+        console.log(this.managerManipulation)
+      break;
+      case 'layer_vector_district':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.districtManipulation.setDistrictManipulation(<District>element);
+        this.managerManipulation.session_ditrict = true;
+        break;
+      case 'layer_vector_publicplace':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.publicPlaceManipulation.setPublicPlaceManipulation(<PublicPlace>element);
+        this.managerManipulation.session_public_place = true;
+        break;            
+      case 'layer_vector_street':
+        console.log('valor street')
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.streetManipulation.setStreetManipulation(<Street>element);
+        this.managerManipulation.session_streat = true;
+        break;
+      case 'layer_vector_infrastructure':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.infrastructureManipulation.setInfrastructureManipulation(<Infrastructure>element);
+        this.managerManipulation.session_infrastructure = true;
+        break;   
+      case 'layer_vector_rede':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.infrastructureNetworkManipulation.setInfrastructureNetworkManipulation(<InfrastructureNetwork>element);
+        this.managerManipulation.session_network = true;
+      break;       
+      case 'layer_vector_equipament':
+        this.enableModalManipuledData();
+        this.managerManipulation = new ManagerSession();
+        this.equipamentUrbanManipulation.setEquipamentUrbanManipulation(<EquipmentUrban>element);
+        this.managerManipulation.session_estructure = true;
+        break;  
+      default:
+        break;
+    } 
+  }
 
-    // let city:County = <County>feature;   
-    // if ((city.id_county != undefined)&&(city.id_county != 0)){
-    //   console.log(city.id_county)
-    //   console.log('Valor já existe')
-    //   console.log(city)
-    //   this.updateForm(city);
-    //   this.city = city;    
-    // }
-    // else
-    // {
-    //   console.log('Definir nova variavel')
-    //   this.populateGeometry(city); 
-    //   this.updateForm(city);       
-    // }
-  
+  validatedVisualization( element:DataSpatial){
+    switch (element.typeRepresentation) {
+      case 'layer_vector_unit':
+        this.managerVizualizaton = new ManagerSession();
+        this.unitManipulation.setUnitVisualization(<UnitFederal>element);
+        this.managerVizualizaton.session_state = true;
+      break;
+      case 'layer_vector_county':
+        this.managerVizualizaton = new ManagerSession();
+        this.countyVizualization.setCountyVisualization(<County>element);
+        this.managerVizualizaton.session_county = true;
+      break;
+      case 'layer_vector_district':
+        this.managerVizualizaton = new ManagerSession();
+        this.districtManipulation.setDistrictVisualization(<District>element);
+        this.managerVizualizaton.session_ditrict = true;
+        break;
+      case 'layer_vector_publicplace':
+        this.managerVizualizaton = new ManagerSession();
+        this.publicPlaceManipulation.setPublicPlaceVisualization(<PublicPlace>element);
+        this.managerVizualizaton.session_public_place = true;
+        break;            
+      case 'layer_vector_street':
+        this.managerVizualizaton = new ManagerSession();
+        this.streetManipulation.setStreetVisualization(<Street>element);
+        this.managerVizualizaton.session_streat = true;
+        break;
+      case 'layer_vector_infrastructure':
+        this.managerVizualizaton = new ManagerSession();
+        this.infrastructureManipulation.setInfrastructureVisualization(<Infrastructure>element);
+        this.managerVizualizaton.session_infrastructure = true;
+        break;   
+      case 'layer_vector_rede':
+        this.managerVizualizaton = new ManagerSession();
+        this.countyVizualization.setCountyVisualization(<County>element);
+        this.managerVizualizaton.session_network = true;
+      break;       
+      case 'layer_vector_equipament':
+        this.managerVizualizaton = new ManagerSession();
+        this.equipamentUrbanManipulation.setEquipamentUrbanVisualization(<EquipmentUrban>element);
+        this.managerVizualizaton.session_estructure = true;
+        break;  
+      default:
+        break;
+    }  
   }
 
 

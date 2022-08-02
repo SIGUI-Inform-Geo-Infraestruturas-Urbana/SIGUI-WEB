@@ -96,72 +96,73 @@ export class OpenLayerComponent implements OnInit {
       
       let features: Feature[] = [] 
       for (let index = 0; index < data.length; index++) {
-        this.contadorIdMap = this.contadorIdMap + 1;
+        //this.contadorIdMap = this.contadorIdMap + 1;
+
         const element = data[index];
         switch (element.typeRepresentation) {
-          case 'unit':
+          case 'layer_vector_unit':
             let featureUnit= new Feature({
-              id:  this.contadorIdMap, //element.id,
+              id:element.id, //this.contadorIdMap,
               properties : element,
               geometry : <Geometry>element.geometry
             })
             
             this.sourceunit.addFeature(featureUnit);
             break;
-            case 'county':
+            case 'layer_vector_county':
               let featurecounty = new Feature({
-                id:  this.contadorIdMap, //element.id,
+                id:element.id, //this.contadorIdMap,
                 properties : element,
                 geometry : <Geometry>element.geometry
               })
               this.sourcecounty.addFeature(featurecounty);
               break;
-          case 'district':
+          case 'layer_vector_district':
             let featuredistrict = new Feature({
-              id:  this.contadorIdMap, //element.id,
+              id:element.id, //this.contadorIdMap,
               properties : element,
               geometry : <Geometry>element.geometry
             })
             this.sourcedistrict.addFeature(featuredistrict);
             break;
-          case 'publicplace':
+          case 'layer_vector_publicplace':
             let featurepublicplace= new Feature({
-              id:  this.contadorIdMap, //element.id,
+              id:element.id, //this.contadorIdMap,
               properties : element,
               geometry : <Geometry>element.geometry
             })
             this.sourcepublicplace.addFeature(featurepublicplace);
             break;
             
-          case 'street':
+          case 'layer_vector_street':
             let featureStreet = new Feature({
-              id:  this.contadorIdMap, //element.id,
+              id:element.id, //this.contadorIdMap,
               properties : element,
               geometry : <Geometry>element.geometry
             })
             this.sourcestreet.addFeature(featureStreet);
             break;
-          case 'infrastructure':
+          case 'layer_vector_infrastructure':
             let featureInfrastructura = new Feature({
-              id:  this.contadorIdMap, //element.id,
+              id:element.id, //this.contadorIdMap,
               properties : element, 
               geometry : <Geometry>element.geometry
             })
             
             this.sourceInfrastructure.addFeature(featureInfrastructura);
             break;   
-            case 'infraNet':
+            case 'layer_vector_rede':
               let featureinfraNet = new Feature({
-                id:  this.contadorIdMap, //element.id,
+                id:element.id, //this.contadorIdMap,
                 properties : element, 
                 geometry : <Geometry>element.geometry
               })
               
               this.sourcerede.addFeature(featureinfraNet);
               break;       
-          case 'estructure':
+          case 'layer_vector_equipament':
               let featureestructure = new Feature({
-                id:  this.contadorIdMap, //element.id,
+                id:element.id, //this.contadorIdMap,
                 properties : element, 
                 geometry : <Geometry>element.geometry
               })
@@ -617,6 +618,9 @@ export class OpenLayerComponent implements OnInit {
       this.draw.on('drawend', (event:DrawEvent) => {//drawevent
         this.contadorIdMap = this.contadorIdMap + 1;
         event.feature.setId(this.contadorIdMap);
+        let even = event.feature;
+        event.feature = this.dataSpatialService.definedGeomIteration(even);
+
         // var features = this.layerIteration.getSource()!.getFeatures();
         // features = features.concat(feature);
         // this.featureState = features;

@@ -4,8 +4,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs';
 import { District } from 'src/app/models/district.model';
 import { ManagerSession } from 'src/app/models/managerSession.model';
+import { UnitFederal } from 'src/app/models/unit-federal.model';
 import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
@@ -24,7 +26,6 @@ export class ManipulateUnitComponent implements OnInit {
   public managerSession : ManagerSession;
 
   constructor(public managerVisualization : ManagerVisualizationService, 
-    public districtRepositoryService : DistrictRepositoryService,
     public unitFederativeRepositoryService : UnitFederativeRepositoryService,   
     public route: ActivatedRoute , public router: Router,
     private _snackBar: MatSnackBar,
@@ -53,18 +54,12 @@ export class ManipulateUnitComponent implements OnInit {
     });
   }
 
-  addLayerVetorMunicipios(){
-    this.districtRepositoryService.findFetchData(); 
-  }
-
-  getFeatureCounty(){
-    let idSearch = this.searchForm.get('idMunicipio')?.value;
-    
-    this.districtRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+  addLayerVetores(){
+    this.unitFederativeRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : District[]) => {
+      next: (beers : UnitFederal[]) => {
         console.log(beers);
-        this.districtRepositoryService.populateServiceViewMap(beers)
+        this.unitFederativeRepositoryService.populateServiceViewMap(beers)
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');
@@ -72,6 +67,40 @@ export class ManipulateUnitComponent implements OnInit {
         this.openSnackBar(err.statusText);
         //this._counties.error(err);
       },
+    });
+  }
+
+  getFeatureCounty(){
+    let unitS: UnitFederal[] = [];
+    console.log('getFeatureCounty')
+    let idSearch = this.searchForm.get('idMunicipio')?.value;
+    
+    this.unitFederativeRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+   // .pipe(take(1))
+    .subscribe({
+      next: (unitSearch : UnitFederal[]) => {
+        console.log('consulta estado')
+        console.log(unitSearch)
+        unitS = unitSearch;       
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+      complete : () => {
+        if (unitS.length != 0)
+        {
+          console.log('consulta aaa')
+          this.unitFederativeRepositoryService.populateServiceViewMap(unitS)
+          //this.openSnackBar('O {ID} foi encontrado!');
+        }
+        else{
+          console.log('err estado')
+          this.openSnackBar('O {ID} não foi encontrado!');
+        } 
+      }
     });
    }
   

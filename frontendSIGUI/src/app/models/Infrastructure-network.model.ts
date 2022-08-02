@@ -14,7 +14,7 @@ export class InfrastructureNetwork extends DataSpatial{
     private infra_net_network : number|Network = new Network();   
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,'infraNet',geometry)
+        super(id,'layer_vector_rede',geometry)
     }
 
     public get id_network() : number {

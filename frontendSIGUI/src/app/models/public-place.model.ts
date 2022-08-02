@@ -17,7 +17,7 @@ export class PublicPlace extends DataSpatial{
 
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,'publicplace',geometry)
+        super(id,'layer_vector_publicplace',geometry)
     }
 
     public get id_public_place() : number {

@@ -35,7 +35,8 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
       urlSearch = this.stringConection;
     }
 
-    this.restApiBackend.getData(urlSearch).subscribe((data : HttpResponse<string>) => {
+    this.restApiBackend.getData(urlSearch)
+    .subscribe((data : HttpResponse<string>) => {
       let featureObject : Feature<Geometry>[] = this.unitFederalService.conversionJson(<string>data.body);
       let cities = this.unitFederalService.convertFeature(featureObject);
       this.dataSpatialService.setDataSpatial(cities);
@@ -56,7 +57,7 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
   // }  
 
   populateServiceViewMap(cities : UnitFederal[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetch(idParam : number = 0):Observable<UnitFederal[]>{//Feature<Geometry>
@@ -74,17 +75,21 @@ export class UnitFederativeRepositoryService implements IRepository<UnitFederal,
     //.pipe(catchError(()=> { return  throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
       next: (response : HttpResponse<string>) => {
-        console.log(response)
+        console.log('responaaaaaaaaaaaaaaaaaaaaaaaaa')
         let featureObject : Feature<Geometry>[] = this.unitFederalService.conversionJson(<string>response.body);
         console.log(featureObject)
         let units = this.unitFederalService.convertFeature(featureObject);
         console.log(units)
         this._units.next(units);
+       
       },
       error: (err) => {
         console.log(err);
         this._units.error(err);
       },
+      complete : () => {
+        this._units.complete();
+      }
     });
     return this.units$;
   }

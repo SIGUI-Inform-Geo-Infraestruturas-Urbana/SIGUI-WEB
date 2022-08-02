@@ -8,63 +8,23 @@ import { SelectionModel } from '@angular/cdk/collections';
 import OlMap from 'ol/Map';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { GeoDataNode } from 'src/app/models/geo-data-node';
+import { ManipulateLayersService } from '../manipulate-layers.service';
+import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
+import { Style } from 'ol/style';
 
 
-interface GeoDataLayerNode {//GeoDataLayerNode
-  id_category: number;
-  category?: string;
-  name_element: string;
-  dataSpatial?: DataSpatial;
-  sub_brand?: GeoDataLayerNode[];
-}
+
 
 export class TodoItemFlatNode {
+  id !: number;
+  idMap !: number;
   name_element!: string;
+  typeRepresentation !: string; 
   level!: number;
   expandable!: boolean;
 }
 
-  
-const TREE_DATA: GeoDataLayerNode[] = [
-  {
-    id_category: 1,
-    name_element: "CAMADA DE ITERAÇOES",
-    sub_brand: [{id_category: 1, name_element: "layer_vectorIteration", category: "layer_vectorIteration"}]
-  },
-  {
-    id_category: 2,
-    name_element: "CAMADA DE UNIDADES FEDERATIVAS",
-    sub_brand: [{id_category: 1, name_element: "layer_vector_unit", category: "layer_vector_unit"}]
-  },
-  {
-    id_category: 3,
-    name_element: "CAMADA DE MUNICIPIOS",
-    sub_brand: [{id_category: 1, name_element: "layer_vector_county", category: "layer_vector_county"}]
-  },
-  {
-    id_category: 4,
-    name_element: "CAMADA DE DISTRITOS",
-    sub_brand: [{id_category: 1, name_element: "layer_vector_district", category: "layer_vector_district"}]
-  },
-
-  {
-    id_category: 5,
-    name_element: "CAMADA DE RUAS",
-    sub_brand: [{id_category: 1, name_element: "layer_vector_street", category: "layer_vector_street"}]
-  },
-  {
-    id_category: 6,
-    name_element: "CAMADA DE INFRAESTRUTURAS",
-    sub_brand: [{id_category: 1, name_element: "layer_vector_infrastructure", category: "layer_vector_infrastructure"}]
-  },
-  {
-    id_category: 8,
-    name_element: "CAMADA DE EQUIPAMENTOS",
-        sub_brand: [{id_category: 1, name_element: "layer_vector_equipament", category: "layer_vector_equipament"}]
-  }, 
-];
-
-    
 @Component({
   selector: 'app-layer-manager',
   templateUrl: './layer-manager.component.html',
@@ -75,10 +35,10 @@ export class LayerManagerComponent  {
   @Input() layers!:OlMap;
 
     /** Map from flat node to nested node. This helps us finding the nested node to be modified */
-    flatNodeMap = new Map<TodoItemFlatNode, GeoDataLayerNode>();
+    flatNodeMap = new Map<TodoItemFlatNode, GeoDataNode>();
 
     /** Map from nested node to flattened node. This helps us to keep the same object for selection */
-    nestedNodeMap = new Map<GeoDataLayerNode, TodoItemFlatNode>();
+    nestedNodeMap = new Map<GeoDataNode, TodoItemFlatNode>();
   
     /** A selected parent node to be inserted */
     selectedParent: TodoItemFlatNode | null = null;
@@ -88,14 +48,15 @@ export class LayerManagerComponent  {
   
     treeControl!: FlatTreeControl<TodoItemFlatNode>;
   
-    treeFlattener!: MatTreeFlattener<GeoDataLayerNode, TodoItemFlatNode>;
+    treeFlattener!: MatTreeFlattener<GeoDataNode, TodoItemFlatNode>;
   
-    dataSource!: MatTreeFlatDataSource<GeoDataLayerNode, TodoItemFlatNode>;
+    dataSource!: MatTreeFlatDataSource<GeoDataNode, TodoItemFlatNode>;
   
     /** The selection for checklist */
     checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
  
-  constructor() {
+  constructor(
+    public dataSpatialService : DataSpatialService ) {
     this.treeFlattener = new MatTreeFlattener(
       this.transformer,
       this.getLevel,
@@ -105,7 +66,11 @@ export class LayerManagerComponent  {
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    this.dataSource.data = TREE_DATA;
+    // this.dataSource.data = TREE_DATA;
+
+    dataSpatialService.dataChange.subscribe(data => {
+      this.dataSource.data = data;
+    });
 
 
     // _database.dataChange.subscribe(data => {
@@ -117,19 +82,19 @@ export class LayerManagerComponent  {
 
   isExpandable = (node: TodoItemFlatNode) => node.expandable;
 
-  getChildren = (node: GeoDataLayerNode): GeoDataLayerNode[] => <GeoDataLayerNode[]> node.sub_brand;
+  getChildren = (node: GeoDataNode): GeoDataNode[] => <GeoDataNode[]> node.dataNodes;
 
   hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
 
   hasNoContent = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.name_element === '';
 
-  transformer = (node: GeoDataLayerNode, level: number) => {
+  transformer = (node: GeoDataNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode =
       existingNode && existingNode.name_element === node.name_element ? existingNode : new TodoItemFlatNode();
-    flatNode.name_element = node.name_element;
+    flatNode.name_element = <string> node.name_element;
     flatNode.level = level;
-    flatNode.expandable = !!node.sub_brand?.length;
+    flatNode.expandable = !!node.dataNodes?.length;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);
     return flatNode;
@@ -168,23 +133,42 @@ export class LayerManagerComponent  {
 
   /** Toggle a leaf to-do item selection. Check all the parents to see if they changed */
   todoLeafItemSelectionToggle(node: TodoItemFlatNode): void {
-    console.log('clicou')
+    console.log('clicou togle')
     this.checklistSelection.toggle(node);
     let verificed : boolean = this.checkNodeElement(node);
-    if (verificed == true){
-      let element = this.flatNodeMap.get(node);
-      console.log(element);
-      
-      this.layers.getLayers().forEach((layer) => {
-        let layerSource = <VectorLayer<VectorSource>> layer
-        if (layerSource.get('name') == element?.category){
-          // layerSource.getSource()?.clear();
-          layerSource.getSource()?.clear();
-          console.log('limpou');
-        }  
-      })
 
-    }
+    let element = this.flatNodeMap.get(node);
+    console.log(element);
+
+    this.layers.getLayers().forEach((layer) => {
+      let layerSource = <VectorLayer<VectorSource>> layer
+      if (layerSource.get('name') == element?.typeRepresentation){//'layer_vectorIteration'
+        let a = layerSource.getSource()?.getFeatureById(<number>element?.idMap)
+        if (verificed == true){
+          a?.setStyle(new Style())
+        }
+        else{
+          let style = layerSource.getStyle();
+          a?.setStyle(<Style>style)
+        }      
+      }
+    })
+
+  
+    
+      
+      // this.layers.getLayers().forEach((layer) => {
+      //   let layerSource = <VectorLayer<VectorSource>> layer
+      //   // // // if (layerSource.get('name') == element?.category){
+      //   // // //   // layerSource.getSource()?.clear();
+      //   // // //   layerSource.getSource()?.clear();
+      //   // // //   console.log('limpou');
+      //   // // // }  
+      // })
+
+ 
+
+
 
    
     this.checkAllParentsSelection(node);

@@ -5,7 +5,7 @@ import { IRest } from './rest';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { toStringHDMS } from 'ol/coordinate';
 import { County } from '../models/county.model';
-import { retry, catchError } from 'rxjs/operators'
+import { retry, catchError, take } from 'rxjs/operators'
 import { Feature } from 'ol';
 import { Geometry } from 'ol/geom';
 import { IRepository } from './repository';
@@ -39,26 +39,27 @@ export class RestApiBackendService<T,U> implements IRest<T,U>{
           observe: 'response'
         }       
       )
+      .pipe(take(1));
       // .pipe(retry(1), catchError(this.handleError));
   }
   postDataSimple(url :string, dataSpatial : FormData): Observable<any>{
-        return this.httpClient.post( this.stringConection + 'api/data/uploads/',dataSpatial);
+        return this.httpClient.post( this.stringConection + 'api/data/uploads/',dataSpatial).pipe(take(1));
   }
   getDataSimple (url :string): Observable<FileData[]>{
-    return this.httpClient.get<FileData[]>(this.stringConection + url);
+    return this.httpClient.get<FileData[]>(this.stringConection + url).pipe(take(1));
   }
 
   getData (url :string): Observable<HttpResponse<U>>{
-    return this.httpClient.get<U>(this.stringConection + url,{observe: 'response'});
+    return this.httpClient.get<U>(this.stringConection + url,{observe: 'response'}).pipe(take(1));
   }
   getDatas (url :string) : Observable<HttpResponse<Array<U>>>{
-    return this.httpClient.get<Array<U>>(this.stringConection + url,{observe: 'response'});
+    return this.httpClient.get<Array<U>>(this.stringConection + url,{observe: 'response'}).pipe(take(1));
   }
   putData (url :string,dataSpatial : T) : Observable<HttpResponse<string>>{
-    return this.httpClient.get<string>(this.stringConection + url,{observe: 'response'});
+    return this.httpClient.get<string>(this.stringConection + url,{observe: 'response'}).pipe(take(1));
   }
   deleteData (url :string, idParam : string ) : Observable<HttpResponse<string>>{
-    return this.httpClient.get<string>(this.stringConection + url,{observe: 'response'});
+    return this.httpClient.get<string>(this.stringConection + url,{observe: 'response'}).pipe(take(1));
   }
 
   handleError(error: any) {

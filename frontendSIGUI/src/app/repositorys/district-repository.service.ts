@@ -46,7 +46,7 @@ export class DistrictRepositoryService implements IRepository<District,District>
   }
 
   populateServiceViewMap(cities : District[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   // findFetch():Observable<District[]>{//Observable<string>

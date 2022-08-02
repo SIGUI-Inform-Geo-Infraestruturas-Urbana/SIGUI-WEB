@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Coordinate } from 'ol/coordinate';
 import { Geometry, LineString, MultiLineString, MultiPolygon, Polygon } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { Street } from 'src/app/models/street.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -38,9 +39,14 @@ export class PopupControlStreetComponent implements OnInit {
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateLine(this.featureSelect);
-      let spatial = new Street().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
-     // this.stateMap.create(this.featureSelect);
+
+
+      let controlView : controlViewData= {
+        dataSpatial : new Street().serialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {

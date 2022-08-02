@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Geometry, Point } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { EquipmentUrban } from 'src/app/models/equipament-urban.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -35,9 +36,12 @@ export class PopupControlEquipamenturbanComponent implements OnInit {
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populatePoint(this.featureSelect);
-      let spatial = new EquipmentUrban().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
-     // this.stateMap.create(this.featureSelect);
+      let controlView : controlViewData= {
+        dataSpatial : new EquipmentUrban().serialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {

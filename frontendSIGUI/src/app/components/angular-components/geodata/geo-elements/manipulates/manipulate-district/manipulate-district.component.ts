@@ -53,8 +53,20 @@ export class ManipulateDistrictComponent implements OnInit {
     });
   }
 
-  addLayerVetorMunicipios(){
-    this.districtRepositoryService.findFetchData(); 
+  addLayerVetores(){
+    this.districtRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : District[]) => {
+        console.log(beers);
+        this.districtRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getFeatureCounty(){
@@ -62,9 +74,14 @@ export class ManipulateDistrictComponent implements OnInit {
     
     this.districtRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : District[]) => {
-        console.log(beers);
-        this.districtRepositoryService.populateServiceViewMap(beers)
+      next: (districtSearch : District[]) => {
+        if (districtSearch.length != 0)
+        {
+          this.districtRepositoryService.populateServiceViewMap(districtSearch)
+        }
+        else{
+          this.openSnackBar('O {ID} não foi encontrado!');
+        }   
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');

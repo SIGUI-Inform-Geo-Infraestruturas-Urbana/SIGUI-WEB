@@ -55,7 +55,7 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
   // }  
 
   populateServiceViewMap(cities : EquipmentUrban[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetch(idParam : number = 0):Observable<EquipmentUrban[]>{//Feature<Geometry>

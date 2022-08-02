@@ -55,7 +55,7 @@ export class InfrastructureNetworkRepositoryService implements IRepository<Infra
   // } 
   
   populateServiceViewMap(cities : InfrastructureNetwork[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetch(idParam : number = 0):Observable<InfrastructureNetwork[]>{//Feature<Geometry>

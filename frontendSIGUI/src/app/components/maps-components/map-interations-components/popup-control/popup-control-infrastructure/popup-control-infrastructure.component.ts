@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Coordinate } from 'ol/coordinate';
 import { Geometry, LineString, Point } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { InfrastructureNetwork } from 'src/app/models/Infrastructure-network.model';
 import { Infrastructure } from 'src/app/models/infrastructure.model';
 import { DataAssociationService } from 'src/app/services/count/data-association.service';
@@ -37,9 +38,13 @@ export class PopupControlInfrastructureComponent implements OnInit {
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populatePoint(this.featureSelect);
-      let spatial = new Infrastructure().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
-     // this.stateMap.create(this.featureSelect);
+     
+      let controlView : controlViewData= {
+        dataSpatial :  new Infrastructure().serialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {
@@ -82,7 +87,12 @@ export class PopupControlInfrastructureComponent implements OnInit {
      let infraAssociation = new InfrastructureNetwork()
      infraAssociation.infrastructure_in = <Infrastructure>spatial;
      
-     this.stateMap.setFeatureSelect(infraAssociation);
+     let controlView : controlViewData= {
+      dataSpatial :infraAssociation,
+      managerMenu : null
+    }
+
+    this.stateMap.setFeatureSelect(controlView);
   
     console.log('passou  fdfrd')
     console.log(infraAssociation)

@@ -25,7 +25,6 @@ export class ManipulateUrbanNetworkComponent implements OnInit {
   public managerSession : ManagerSession;
 
   constructor(public managerVisualization : ManagerVisualizationService, 
-    public districtRepositoryService : DistrictRepositoryService,
     public networkRepositoryService : NetworkRepositoryService,   
     public route: ActivatedRoute , public router: Router,
     private _snackBar: MatSnackBar,
@@ -54,8 +53,20 @@ export class ManipulateUrbanNetworkComponent implements OnInit {
     });
   }
 
-  addLayerVetorMunicipios(){
-    this.districtRepositoryService.findFetchData(); 
+  addLayerVetores(){
+    this.networkRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : Network[]) => {
+        console.log(beers);
+        //this.networkRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getFeatureCounty(){

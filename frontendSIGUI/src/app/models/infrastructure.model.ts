@@ -19,7 +19,7 @@ export class Infrastructure extends DataSpatial{
     // private infra_network : InfrastructureNetwork = new InfrastructureNetwork();   
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,'infrastructure', geometry)
+        super(id,'layer_vector_infrastructure', geometry)
     }
 
     public get id_infra() : number {

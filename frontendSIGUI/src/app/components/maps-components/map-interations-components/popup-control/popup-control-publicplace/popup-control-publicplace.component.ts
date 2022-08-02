@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Geometry, LineString } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { PublicPlace } from 'src/app/models/public-place.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -34,9 +35,13 @@ export class PopupControlPublicplaceComponent implements OnInit {
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateLine(this.featureSelect);
-      let spatial = new PublicPlace().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
-     // this.stateMap.create(this.featureSelect);
+
+      let controlView : controlViewData= {
+        dataSpatial :  new PublicPlace().serialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {

@@ -29,7 +29,7 @@ export class ManegerStateComponent implements OnInit {
     this.createForm(new UnitFederal(0));
     stateMap.getFeatureSelect().subscribe(feature => {     
       console.log(feature)    
-      this.initializeForm(feature);   
+      // this.initializeForm(feature);   
     })    
  }
 

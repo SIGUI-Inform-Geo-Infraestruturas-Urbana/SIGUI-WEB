@@ -45,6 +45,8 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
     return true;
   }
 
+
+
   // findFetch():Observable<PublicPlace[]>{//Observable<string>
   //   this.restApiBackend.getData(this.stringConection).subscribe((data : HttpResponse<string>) => {
   //     console.log(data)
@@ -58,7 +60,7 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
   // }  
 
   populateServiceViewMap(cities : PublicPlace[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetch(idParam : number = 0):Observable<PublicPlace[]>{//Feature<Geometry>

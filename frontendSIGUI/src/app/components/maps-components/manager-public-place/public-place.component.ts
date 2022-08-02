@@ -30,7 +30,7 @@ export class PublicPlaceComponent implements OnInit {
       stateMap.getFeatureSelect().subscribe(feature => {
         console.log("+++6+iniciou")    
         console.log(feature)    
-        this.populateGeometry(feature);      
+        // this.populateGeometry(feature);      
       })
   }
 

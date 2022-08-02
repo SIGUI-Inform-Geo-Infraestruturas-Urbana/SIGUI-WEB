@@ -40,7 +40,8 @@ export class ManagerEstructureComponent implements OnInit {
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log("+++6+iniciou")    
       console.log(feature)    
-      this.populateGeometry(feature);      
+      let element:DataSpatial = <DataSpatial> feature.dataSpatial;
+      this.populateGeometry(element);      
     })
   }
 

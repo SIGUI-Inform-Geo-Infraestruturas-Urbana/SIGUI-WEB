@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Geometry, MultiPolygon, Polygon } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { County } from 'src/app/models/county.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -32,9 +33,12 @@ export class PopupControlCountyComponent implements OnInit {
     {
       console.log('click infra');
       let geom :Geometry = this.populateGeometry(this.featureSelect);
-      let spatial = new County().seserialize(this.featureSelect,geom)
-      console.log(spatial);
-      this.stateMap.setFeatureSelect(spatial);
+      let controlView : controlViewData= {
+        dataSpatial : new County().seserialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {
@@ -52,9 +56,12 @@ export class PopupControlCountyComponent implements OnInit {
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateGeometry(this.featureSelect);
 
-      let spatial = new County().seserialize(this.featureSelect,geom)
-      console.log(spatial);
-      this.stateMap.setFeatureSelect(spatial);
+      let controlView : controlViewData= {
+        dataSpatial : new County().seserialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
      // this.stateMap.create(this.featureSelect);
     }
     else

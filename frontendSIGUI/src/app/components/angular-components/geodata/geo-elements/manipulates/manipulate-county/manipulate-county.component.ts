@@ -62,13 +62,26 @@ export class ManipulateCountyComponent implements OnInit {
 
   openSnackBar(mensagem : string) {
     this._snackBar.open(mensagem, 'Entendido!', {
-      horizontalPosition: 'right',
+      horizontalPosition: 'left',
       verticalPosition: 'bottom',
     });
   }
 
-  addLayerVetorMunicipios(){
-    this.countyRepositoryService.findFetchData(); 
+  addLayerVetores(){
+    this.countyRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (beers : County[]) => {
+        console.log('consulta couty');
+        console.log(beers);
+        this.countyRepositoryService.populateServiceViewMap(beers)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getFeatureCounty(){
@@ -78,9 +91,19 @@ export class ManipulateCountyComponent implements OnInit {
     
     this.countyRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : County[]) => {
-        console.log(beers);
-        this.countyRepositoryService.populateServiceViewMap(beers)
+      next: (countySearch : County[]) => {
+        console.log('consulta couty');
+        if (countySearch.length != 0)
+        {
+          this.countyRepositoryService.populateServiceViewMap(countySearch)
+        }
+        else{
+          this.openSnackBar('O {ID} não foi encontrado!');
+        }      
+        
+      },
+      complete:() =>{
+
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');

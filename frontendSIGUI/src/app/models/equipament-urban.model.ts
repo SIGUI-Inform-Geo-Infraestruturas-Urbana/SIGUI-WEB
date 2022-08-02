@@ -25,7 +25,7 @@ export class EquipmentUrban extends DataSpatial{
      // eq_co_cod_maintainer= "models.IntegerField(blank=True, null=True) "
 
     constructor(id : number = 0, geometry : any = 0){
-        super(id,'estructure',geometry)
+        super(id,'layer_vector_equipament',geometry)
     }
       
     public get id_public_place() : number {

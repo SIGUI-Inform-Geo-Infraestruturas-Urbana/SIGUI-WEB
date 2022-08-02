@@ -5,8 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { District } from 'src/app/models/district.model';
+import { EquipmentUrban } from 'src/app/models/equipament-urban.model';
 import { ManagerSession } from 'src/app/models/managerSession.model';
 import { DistrictRepositoryService } from 'src/app/repositorys/district-repository.service';
+import { EquipamentUrbanRepositoryService } from 'src/app/repositorys/equipament-urban-repository.service';
 import { UnitFederativeRepositoryService } from 'src/app/repositorys/unit-federative-repository.service';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
 import { ModalFilesCountyComponent } from '../../../modals/modal-files-county/modal-files-county.component';
@@ -23,7 +25,7 @@ export class ManipulateUrbanEquipmentComponent implements OnInit {
   public managerSession : ManagerSession;
 
   constructor(public managerVisualization : ManagerVisualizationService, 
-    public districtRepositoryService : DistrictRepositoryService,
+    public equipamentUrbanRepositoryService : EquipamentUrbanRepositoryService,
     public unitFederativeRepositoryService : UnitFederativeRepositoryService,   
     public route: ActivatedRoute , public router: Router,
     private _snackBar: MatSnackBar,
@@ -52,18 +54,34 @@ export class ManipulateUrbanEquipmentComponent implements OnInit {
     });
   }
 
-  addLayerVetorMunicipios(){
-    this.districtRepositoryService.findFetchData(); 
+  addLayerVetores(){
+    this.equipamentUrbanRepositoryService.findFetch() //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    .subscribe({
+      next: (equipSearch : EquipmentUrban[]) => {
+        this.equipamentUrbanRepositoryService.populateServiceViewMap(equipSearch)
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log('TRATAR');
+        console.log(err);
+        this.openSnackBar(err.statusText);
+        //this._counties.error(err);
+      },
+    });
   }
 
   getFeatureCounty(){
     let idSearch = this.searchForm.get('idMunicipio')?.value;
     
-    this.districtRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
+    this.equipamentUrbanRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : District[]) => {
-        console.log(beers);
-        this.districtRepositoryService.populateServiceViewMap(beers)
+      next: (equipSearch : EquipmentUrban[]) => {
+        if (equipSearch.length != 0)
+        {
+          this.equipamentUrbanRepositoryService.populateServiceViewMap(equipSearch)
+        }
+        else{
+          this.openSnackBar('O {ID} não foi encontrado!');
+        } 
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');

@@ -38,7 +38,8 @@ export class ManagerInfrastructureComponent implements OnInit {
     stateMap.getFeatureSelect().subscribe(feature => {
       console.log("+++6+iniciou")    
       console.log(feature)    
-      this.initializeForm(feature);      
+      // let element:DataSpatial = <DataSpatial> feature.dataSpatial;
+      // this.populateGeometry(element);    
     })
   }
 

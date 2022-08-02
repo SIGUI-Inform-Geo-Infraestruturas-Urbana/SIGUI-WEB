@@ -55,7 +55,7 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
   //   return this.street$;
   // } 
   populateServiceViewMap(cities : Street[]){
-    this.dataSpatialService.setDataSpatial(cities);
+    this.dataSpatialService.insertData(cities);
   }
 
   findFetch(idParam : number = 0):Observable<Street[]>{//Feature<Geometry>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Feature } from 'ol';
 import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { County } from 'src/app/models/county.model';
 import { DataSpatial } from 'src/app/models/data-spatial';
 
@@ -14,15 +15,15 @@ export interface Vertice {
 })
 export class StateMapService {
   //private featureSelect!: Feature; 
-  private featureSelect = new BehaviorSubject<DataSpatial>(new County());
+  private featureSelect = new BehaviorSubject<controlViewData>(new controlViewData());
 
   constructor() { }
 
-  setFeatureSelect(feature : DataSpatial):void{
+  setFeatureSelect(feature : controlViewData):void{
     this.featureSelect.next(feature);
   }
 
-  getFeatureSelect(): Observable<DataSpatial>{
+  getFeatureSelect(): Observable<controlViewData>{
     return this.featureSelect.asObservable();
   }
 

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Feature } from 'ol';
 import { Geometry, MultiPolygon, Polygon } from 'ol/geom';
+import { controlViewData } from 'src/app/models/control-view-data.model';
 import { District } from 'src/app/models/district.model';
 import { StateMapService } from 'src/app/services/shared/state-map.service';
 
@@ -34,8 +35,12 @@ export class PopupControlDistrictComponent implements OnInit {
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateGeometry(this.featureSelect);
-      let spatial = new District().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
+      let controlView : controlViewData= {
+        dataSpatial : new District().serialize(this.featureSelect,geom),
+        managerMenu : null
+      }
+
+      this.stateMap.setFeatureSelect(controlView);
      // this.stateMap.create(this.featureSelect);
     }
     else

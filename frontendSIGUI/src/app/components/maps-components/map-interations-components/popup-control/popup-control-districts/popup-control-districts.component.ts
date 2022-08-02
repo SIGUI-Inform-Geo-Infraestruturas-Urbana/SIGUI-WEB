@@ -28,7 +28,7 @@ export class PopupControlDistrictsComponent implements OnInit {
       //console.log(this.featureSelect);
       let geom :Geometry = this.populateGeometry(this.featureSelect);
       let spatial = new District().serialize(this.featureSelect,geom)
-      this.stateMap.setFeatureSelect(spatial);
+      //this.stateMap.setFeatureSelect(spatial);
      // this.stateMap.create(this.featureSelect);
     }
     else

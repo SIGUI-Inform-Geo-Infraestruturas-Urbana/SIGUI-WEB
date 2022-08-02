@@ -11,7 +11,7 @@ export class District extends DataSpatial{
     private dc_county : number|County = new County(0); //Feature<Geometry> = new Feature();
 
     constructor(id : any = 0,geometry: any = 0){
-        super(id,'district',<Geometry>geometry);
+        super(id,'layer_vector_district',<Geometry>geometry);
     }
 
     public get id_district() : number {

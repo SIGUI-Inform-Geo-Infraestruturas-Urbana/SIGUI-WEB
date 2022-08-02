@@ -13,6 +13,7 @@ class DistrictViewSet(viewsets.ModelViewSet):
         return queryset
     
     def retrieve(self, request, *args, **kwargs):
+
        params = kwargs 
        print( params['pk'])
        objects = models.District.objects.filter(id=params['pk']) 
