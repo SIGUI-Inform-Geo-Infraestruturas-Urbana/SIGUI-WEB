@@ -99,6 +99,9 @@ export class CountyRepositoryService implements IRepository<County,County> {
         console.log(err);
         this._counties.error(err);
       },
+      complete : () => {
+        this._counties.complete();
+      }
     });
     return this.counties$;
   }

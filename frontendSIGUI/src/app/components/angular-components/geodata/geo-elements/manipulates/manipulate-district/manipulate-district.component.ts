@@ -70,26 +70,36 @@ export class ManipulateDistrictComponent implements OnInit {
   }
 
   getFeatureCounty(){
+    let unitS: District[] = [];
+
     let idSearch = this.searchForm.get('idMunicipio')?.value;
     
     this.districtRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
-    .subscribe({
-      next: (districtSearch : District[]) => {
-        if (districtSearch.length != 0)
-        {
-          this.districtRepositoryService.populateServiceViewMap(districtSearch)
+    .subscribe({  
+        next: (unitSearch : District[]) => {
+          console.log('consulta estado')
+          console.log(unitSearch)
+          unitS = unitSearch;       
+        },
+        error: (err:HttpErrorResponse) => {
+          console.log('TRATAR');
+          console.log(err);
+          this.openSnackBar(err.statusText);
+          //this._counties.error(err);
+        },
+        complete : () => {
+          if (unitS.length != 0)
+          {
+            console.log('consulta aaa')
+            this.districtRepositoryService.populateServiceViewMap(unitS)
+            //this.openSnackBar('O {ID} foi encontrado!');
+          }
+          else{
+            console.log('err estado')
+            this.openSnackBar('O {ID} não foi encontrado!');
+          } 
         }
-        else{
-          this.openSnackBar('O {ID} não foi encontrado!');
-        }   
-      },
-      error: (err:HttpErrorResponse) => {
-        console.log('TRATAR');
-        console.log(err);
-        this.openSnackBar(err.statusText);
-        //this._counties.error(err);
-      },
-    });
+      })
    }
   
 

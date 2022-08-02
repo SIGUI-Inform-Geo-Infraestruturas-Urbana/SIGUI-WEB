@@ -70,23 +70,39 @@ export class ManipulateUrbanNetworkComponent implements OnInit {
   }
 
   getFeatureCounty(){
+    let unitS: Network[] = [];
     let idSearch = this.searchForm.get('idMunicipio')?.value;
     
     this.networkRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (beers : Network[]) => {
-        console.log(beers);
-        //this.networkRepositoryService.populateServiceViewMap(beers)
-      },
-      error: (err:HttpErrorResponse) => {
-        console.log('TRATAR');
-        console.log(err);
-        this.openSnackBar(err.statusText);
-        //this._counties.error(err);
-      },
+      next: (unitSearch : Network[]) => {
+              console.log('consulta estado')
+              console.log(unitSearch)
+              unitS = unitSearch;       
+            },
+            error: (err:HttpErrorResponse) => {
+              console.log('TRATAR');
+              console.log(err);
+              this.openSnackBar(err.statusText);
+              //this._counties.error(err);
+            },
+            complete : () => {
+              if (unitS.length != 0)
+              {
+                console.log('consulta aaa')
+                //this.networkRepositoryService.populateServiceViewMap(unitS)
+                //this.openSnackBar('O {ID} foi encontrado!');
+              }
+              else{
+                console.log('err estado')
+                this.openSnackBar('O {ID} não foi encontrado!');
+              } 
+            }
+
     });
-   }
-  
+  }
+
+ 
 
   onClickSelectCounty(){
 

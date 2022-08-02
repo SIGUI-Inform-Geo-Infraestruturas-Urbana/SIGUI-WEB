@@ -84,6 +84,9 @@ export class StreetRepositoryService implements IRepository<Street,Street>{
         console.log(err);
         this._sreets.error(err);
       },
+      complete : () => {
+        this._sreets.complete();
+      }
     });
     return  this.street$;
   }

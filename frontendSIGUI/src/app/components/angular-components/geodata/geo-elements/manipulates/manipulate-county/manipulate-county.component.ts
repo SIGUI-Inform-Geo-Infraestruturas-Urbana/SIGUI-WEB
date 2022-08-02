@@ -85,25 +85,17 @@ export class ManipulateCountyComponent implements OnInit {
   }
 
   getFeatureCounty(){
+    let countySearch: County[] = [];
     let idSearch = this.searchCountyForm.get('idMunicipio')?.value;
     // this.getCounty.emit(idSearch);
     //this.countyRepositoryService.findFetchData(idSearch);
     
     this.countyRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
-    .subscribe({
-      next: (countySearch : County[]) => {
-        console.log('consulta couty');
-        if (countySearch.length != 0)
-        {
-          this.countyRepositoryService.populateServiceViewMap(countySearch)
-        }
-        else{
-          this.openSnackBar('O {ID} não foi encontrado!');
-        }      
-        
-      },
-      complete:() =>{
-
+    .subscribe({ 
+      next: (unitSearch : County[]) => {
+        console.log('consulta estado')
+        console.log(unitSearch)
+        countySearch = unitSearch;       
       },
       error: (err:HttpErrorResponse) => {
         console.log('TRATAR');
@@ -111,6 +103,19 @@ export class ManipulateCountyComponent implements OnInit {
         this.openSnackBar(err.statusText);
         //this._counties.error(err);
       },
+      complete : () => {
+        if (countySearch.length != 0)
+        {
+          console.log('consulta aaa')
+          this.countyRepositoryService.populateServiceViewMap(countySearch)
+          //this.openSnackBar('O {ID} foi encontrado!');
+        }
+        else{
+          console.log('err estado')
+          this.openSnackBar('O {ID} não foi encontrado!');
+        } 
+      }
+
     });
    }
   

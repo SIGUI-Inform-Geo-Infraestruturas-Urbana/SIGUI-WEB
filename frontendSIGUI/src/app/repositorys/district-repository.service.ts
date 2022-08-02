@@ -86,6 +86,9 @@ export class DistrictRepositoryService implements IRepository<District,District>
         console.log(err);
         this._districts.error(err);
       },
+      complete : () => {
+        this._districts.complete();
+      }
     });
     return this.districts$;
   }

@@ -12,7 +12,7 @@ import Source from 'ol/source/Source';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
 import Group from 'ol/layer/Group';
-import { Geometry, MultiPolygon } from 'ol/geom';
+import { Geometry, LineString, MultiPolygon } from 'ol/geom';
 import Point  from 'ol/geom/Point';
 import Draw from 'ol/interaction/Draw'
 import {DrawEvent} from 'ol/interaction/Draw'
@@ -126,6 +126,12 @@ export class OpenLayerComponent implements OnInit {
             this.sourcedistrict.addFeature(featuredistrict);
             break;
           case 'layer_vector_publicplace':
+
+            console.log('/////sasadsds//////');
+            let a = <Geometry> element.geometry;
+            console.log(a);
+          
+
             let featurepublicplace= new Feature({
               id:element.id, //this.contadorIdMap,
               properties : element,

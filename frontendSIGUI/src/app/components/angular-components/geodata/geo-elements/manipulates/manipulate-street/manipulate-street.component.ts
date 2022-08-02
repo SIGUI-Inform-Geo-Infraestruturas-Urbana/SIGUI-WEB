@@ -71,27 +71,39 @@ export class ManipulateStreetComponent implements OnInit {
   }
 
   getFeatureCounty(){
+    let unitS: Street[] = [];
     let idSearch = this.searchForm.get('idMunicipio')?.value;
     
     this.streetRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (streetSearch : Street[]) => {
-        if (streetSearch.length != 0)
-        {
-          this.streetRepositoryService.populateServiceViewMap(streetSearch)
-        }
-        else{
-          this.openSnackBar('O {ID} não foi encontrado!');
-        } 
-      },
-      error: (err:HttpErrorResponse) => {
-        console.log('TRATAR');
-        console.log(err);
-        this.openSnackBar(err.statusText);
-        //this._counties.error(err);
-      },
+      next: (unitSearch : Street[]) => {
+              console.log('consulta estado')
+              console.log(unitSearch)
+              unitS = unitSearch;       
+            },
+            error: (err:HttpErrorResponse) => {
+              console.log('TRATAR');
+              console.log(err);
+              this.openSnackBar(err.statusText);
+              //this._counties.error(err);
+            },
+            complete : () => {
+              if (unitS.length != 0)
+              {
+                console.log('consulta aaa')
+                this.streetRepositoryService.populateServiceViewMap(unitS)
+                //this.openSnackBar('O {ID} foi encontrado!');
+              }
+              else{
+                console.log('err estado')
+                this.openSnackBar('O {ID} não foi encontrado!');
+              } 
+            }
+
     });
    }
+
+  
   
 
   onClickSelectCounty(){

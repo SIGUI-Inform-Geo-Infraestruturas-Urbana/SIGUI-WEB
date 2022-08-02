@@ -16,7 +16,7 @@ class PublicPlaceViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
        params = kwargs 
        print( params['pk'])
-       objects = models.Network.objects.filter(id=params['pk']) 
+       objects = models.PublicPlace.objects.filter(id=params['pk']) 
        serializer = PublicPlaceSerializer(objects, many= True)
        return Response((serializer.data))
 

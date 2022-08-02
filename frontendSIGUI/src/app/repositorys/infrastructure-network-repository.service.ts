@@ -84,6 +84,9 @@ export class InfrastructureNetworkRepositoryService implements IRepository<Infra
         console.log(err);
         this._infrastructure.error(err);
       },
+      complete : () => {
+        this._infrastructure.complete();
+      }
     });
     return this.infrastructure$;
   }

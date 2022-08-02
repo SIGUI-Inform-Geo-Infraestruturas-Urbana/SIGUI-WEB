@@ -70,28 +70,37 @@ export class ManipulateUrbanEquipmentComponent implements OnInit {
   }
 
   getFeatureCounty(){
+    let unitS: EquipmentUrban[] = [];
     let idSearch = this.searchForm.get('idMunicipio')?.value;
     
     this.equipamentUrbanRepositoryService.findFetch(idSearch) //.pipe(catchError(()=> { return throwError (() => new Error ("Teste de Tratamento")); }))    
     .subscribe({
-      next: (equipSearch : EquipmentUrban[]) => {
-        if (equipSearch.length != 0)
-        {
-          this.equipamentUrbanRepositoryService.populateServiceViewMap(equipSearch)
-        }
-        else{
-          this.openSnackBar('O {ID} não foi encontrado!');
-        } 
-      },
-      error: (err:HttpErrorResponse) => {
-        console.log('TRATAR');
-        console.log(err);
-        this.openSnackBar(err.statusText);
-        //this._counties.error(err);
-      },
+      next: (unitSearch : EquipmentUrban[]) => {
+              console.log('consulta estado')
+              console.log(unitSearch)
+              unitS = unitSearch;       
+            },
+            error: (err:HttpErrorResponse) => {
+              console.log('TRATAR');
+              console.log(err);
+              this.openSnackBar(err.statusText);
+              //this._counties.error(err);
+            },
+            complete : () => {
+              if (unitS.length != 0)
+              {
+                console.log('consulta aaa')
+                this.equipamentUrbanRepositoryService.populateServiceViewMap(unitS)
+                //this.openSnackBar('O {ID} foi encontrado!');
+              }
+              else{
+                console.log('err estado')
+                this.openSnackBar('O {ID} não foi encontrado!');
+              } 
+            }
+
     });
-   }
-  
+  }
 
   onClickSelectCounty(){
 

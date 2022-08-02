@@ -89,6 +89,9 @@ export class PublicPlaceRepositoryService implements IRepository<PublicPlace,Pub
         console.log(err);
         this._publicplace.error(err);
       },
+      complete : () => {
+        this._publicplace.complete();
+      }
     });
     return  this.publicplace$;
   }

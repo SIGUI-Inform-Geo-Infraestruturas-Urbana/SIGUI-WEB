@@ -84,6 +84,9 @@ export class EquipamentUrbanRepositoryService implements IRepository<EquipmentUr
         console.log(err);
         this._equipament.error(err);
       },
+      complete : () => {
+        this._equipament.complete();
+      }
     });
     return this.equipament$;
   }
