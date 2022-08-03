@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { District } from 'src/app/models/district.model';
 import { DistrictManipulationService } from 'src/app/services/district/district-manager/district-manipulation.service';
@@ -8,30 +8,23 @@ import { DistrictManipulationService } from 'src/app/services/district/district-
   templateUrl: './table-district.component.html',
   styleUrls: ['./table-district.component.css']
 })
-export class TableDistrictComponent implements OnInit {
-
+export class TableDistrictComponent implements  OnInit, OnChanges {
   imgLogo = '/assets/images/brasao.png';
   @Input() data!:District;
 
   public county: District;
-  private vizualizationService : Subscription;
-  constructor(private countyVizualization :DistrictManipulationService) {
+  constructor() {
     this.county = new District();
-    this.vizualizationService = countyVizualization.getDistrictVisualization().subscribe(countySelect => {
-      console.log(countySelect)    
-      this.updateTable(countySelect);       
-    }) 
    }
 
   ngOnInit(): void {
   }
 
-  ngOnDestroy(): void {
-    this.vizualizationService.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateTable(this.data)
   }
 
   updateTable(countySelect: District):void{
     this.county = countySelect;
   }
-
 }

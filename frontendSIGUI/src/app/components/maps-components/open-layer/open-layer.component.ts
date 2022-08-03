@@ -95,12 +95,18 @@ export class OpenLayerComponent implements OnInit {
       console.log(data)  
       
       let features: Feature[] = [] 
+      this.interactionMapChange('None');
       for (let index = 0; index < data.length; index++) {
         //this.contadorIdMap = this.contadorIdMap + 1;
 
         const element = data[index];
         switch (element.typeRepresentation) {
           case 'layer_vector_unit':
+            console.log('/////sasadsds//////');
+            let a = <Geometry> element.geometry;
+            //a.getType();
+            console.log(a.getType());
+
             let featureUnit= new Feature({
               id:element.id, //this.contadorIdMap,
               properties : element,
@@ -128,9 +134,10 @@ export class OpenLayerComponent implements OnInit {
           case 'layer_vector_publicplace':
 
             console.log('/////sasadsds//////');
-            let a = <Geometry> element.geometry;
-            console.log(a);
-          
+            
+            // let a = <Geometry> element.geometry;
+            // //a.getType();
+            // console.log(a.getType());
 
             let featurepublicplace= new Feature({
               id:element.id, //this.contadorIdMap,

@@ -38,15 +38,16 @@ export class PopupControlStreetComponent implements OnInit {
       console.log('click infra');
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
-      let geom :Geometry = this.populateLine(this.featureSelect);
+      let geom = this.populateLine(this.featureSelect);
+      if (geom != null)
+      {
+        let controlView : controlViewData= {
+          dataSpatial : new Street().serialize(this.featureSelect,geom),
+          managerMenu : null
+        }
 
-
-      let controlView : controlViewData= {
-        dataSpatial : new Street().serialize(this.featureSelect,geom),
-        managerMenu : null
+        this.stateMap.setFeatureSelect(controlView);
       }
-
-      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {
@@ -54,20 +55,43 @@ export class PopupControlStreetComponent implements OnInit {
     }
   }
 
-  populateLine(feature:Feature):Geometry{  
+  // populateLine(feature:Feature):Geometry{  
 
+  //   let multiLineString : LineString[]= [];
+  //   console.log('+++++++++++++++++');
+  //   console.log(feature);     
+  //   console.log('Teste register');
+  //   let geometria:LineString = <LineString>feature.getGeometry();
+  //   if(geometria != undefined){     
+  //     multiLineString.push(geometria)
+  //     let geometryMultPoly: Geometry = new MultiLineString(multiLineString);
+  //     return geometryMultPoly;     
+  //   }
+  //   else{
+  //     return geometria;
+  //   }
+
+  // }
+
+  populateLine(feature:Feature):Geometry | null{
     let multiLineString : LineString[]= [];
     console.log('+++++++++++++++++');
-    console.log(feature);     
-    console.log('Teste register');
-    let geometria:LineString = <LineString>feature.getGeometry();
-    if(geometria != undefined){     
-      multiLineString.push(geometria)
-      let geometryMultPoly: Geometry = new MultiLineString(multiLineString);
+    console.log(feature);   
+
+    if (feature.getGeometry()?.getType() == 'MultiLineString')
+    {
+      let geometryMultPoly: MultiLineString = <MultiLineString> feature.getGeometry();
       return geometryMultPoly;     
     }
     else{
-      return geometria;
+      let geometryMultPoly : Geometry | null = null;
+      let geometria:LineString = <LineString>feature.getGeometry();
+      if(geometria != undefined){
+        multiLineString.push(geometria)
+        geometryMultPoly = new MultiLineString(multiLineString);
+       
+      }
+      return geometryMultPoly;
     }
 
   }

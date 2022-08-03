@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UnitFederal } from 'src/app/models/unit-federal.model';
 import { UnitManipulation } from 'src/app/services/unit-federal/unit-federal-manager/unit-federal-manipulation.service';
@@ -8,29 +8,23 @@ import { UnitManipulation } from 'src/app/services/unit-federal/unit-federal-man
   templateUrl: './table-unit.component.html',
   styleUrls: ['./table-unit.component.css']
 })
-export class TableUnitComponent implements OnInit {
-  @Input() data!:UnitFederal;
+export class TableUnitComponent implements  OnInit, OnChanges {
   imgLogo = '/assets/images/brasao.png';
+  @Input() data!:UnitFederal;
 
   public county: UnitFederal;
-  private vizualizationService : Subscription;
-  constructor(private countyVizualization :UnitManipulation) {
+  constructor() {
     this.county = new UnitFederal();
-    this.vizualizationService = countyVizualization.getUnitVisualization().subscribe(countySelect => {
-      console.log(countySelect)    
-      this.updateTable(countySelect);       
-    }) 
    }
 
   ngOnInit(): void {
   }
 
-  ngOnDestroy(): void {
-    this.vizualizationService.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateTable(this.data)
   }
 
   updateTable(countySelect: UnitFederal):void{
     this.county = countySelect;
   }
-
 }

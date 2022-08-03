@@ -32,14 +32,17 @@ export class PopupControlUnitComponent implements OnInit {
       console.log('click infra');
       //this.associarCity.emit(this.featureSelect);
       //console.log(this.featureSelect);
-      let geom :Geometry = this.populateGeometry(this.featureSelect);
+      let geom = this.populateGeometry(this.featureSelect);
+      if (geom != null)
+      {
 
-      let controlView : controlViewData= {
-        dataSpatial : new UnitFederal().serialize(this.featureSelect,geom),
-        managerMenu : null
+        let controlView : controlViewData= {
+          dataSpatial : new UnitFederal().serialize(this.featureSelect,geom),
+          managerMenu : null
+        }
+
+        this.stateMap.setFeatureSelect(controlView);
       }
-
-      this.stateMap.setFeatureSelect(controlView);
     }
     else
     {
@@ -59,20 +62,27 @@ export class PopupControlUnitComponent implements OnInit {
     }
   }
 
-  populateGeometry(feature:Feature):Geometry{
+  populateGeometry(feature:Feature):Geometry | null{
     let MultiPolygonList = [];
     console.log('+++++++++++++++++');
-    console.log(feature);     
-    console.log('Teste register');
-    let geometria:Polygon = <Polygon>feature.getGeometry();
-    if(geometria != undefined){
-      MultiPolygonList.push(geometria)
-      let geometryMultPoly: Geometry = new MultiPolygon(MultiPolygonList);
+    console.log(feature);   
+
+    if (feature.getGeometry()?.getType() == 'MultiPolygon')
+    {
+      let geometryMultPoly: MultiPolygon = <MultiPolygon>feature.getGeometry();
       return geometryMultPoly;
     }
     else{
-      return geometria;
+      let geometryMultPoly : Geometry | null = null;
+      let geometria:Polygon = <Polygon>feature.getGeometry();
+      if(geometria != undefined){
+        MultiPolygonList.push(geometria)
+        geometryMultPoly = new MultiPolygon(MultiPolygonList);
+       
+      }
+      return geometryMultPoly;
     }
+
   }
   excludeFeature(){
     if (this.featureSelect != undefined)

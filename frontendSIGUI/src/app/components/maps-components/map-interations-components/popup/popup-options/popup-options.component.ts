@@ -6,13 +6,14 @@ import Map from 'ol/Map';
 import Point  from 'ol/geom/Point';
 //import { CountyService } from 'src/app/services/count/county.service';
 import { County } from 'src/app/models/county.model';
-import { Geometry, LineString, MultiPolygon, Polygon } from 'ol/geom';
+import { Geometry, LineString, MultiLineString, MultiPolygon, Polygon } from 'ol/geom';
 import { DataSpatialService } from 'src/app/services/count/data-spatials.service';
 import { DataSpatial } from 'src/app/models/data-spatial';
 import { ManagerVisualizationService } from 'src/app/services/shared/visualization/manager-visualization.service';
 import { ManagerSession } from 'src/app/models/managerSession.model';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
+import { toSize } from 'ol/size';
 
 @Component({
   selector: 'app-popup-options',
@@ -97,11 +98,31 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     this.dataSpatialService.getDataSpatial().subscribe((cities: DataSpatial[]) => {
       let feature = this.dataSpatialService.converterFromFeatures(cities);
       if (feature.length > 0){
-        console.log('88888888888888888888888888')
+        console.log('88888888889999998888888888888888')
         let geometry = <Geometry>feature[0].getGeometry();
+        console.log(geometry)
         if (geometry.getType() == 'MultiPolygon'){
           console.log(geometry.getType())
           this.featureSelect = <Feature>feature[0]; 
+        }
+        else if ((geometry.getType() == 'MultiLineString')){
+          console.log('linestring')
+          let geometry = <MultiLineString>feature[0].getGeometry();
+          let coordinatePoint:Coordinate = geometry.getFirstCoordinate();
+          this.overlay.setPosition(coordinatePoint); 
+          this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+          
+          this.map.getView().setZoom(16)//setzo(new Size())
+        }
+        else if (geometry.getType() == 'LineString'){
+          console.log('linestring')
+          let geometry = <LineString>feature[0].getGeometry();
+          let coordinatePoint:Coordinate = geometry.getFirstCoordinate();
+          this.overlay.setPosition(coordinatePoint); 
+          this.coordenadaPoint = toStringHDMS(toLonLat(coordinatePoint));
+          
+          this.map.getView().setZoom(16)//setzo(new Size())
+
         }
         else{
           let vertice = <Point>geometry;
@@ -142,15 +163,63 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       }
       else
       {
-        console.log('Point')
-        console.log(feature.getProperties()['properties'])
-        let properties = feature.getProperties()['properties']   
-        if (properties != undefined){    
-        this.idItem = properties['id'];
-        this.tipoItem = properties['typeRepresentation'];
+        let properts = feature.getProperties()['properties']
+
+        if (properts != undefined )
+        {
+          console.log('typeRepresentation')
+          let geomTypeProp = properts['typeRepresentation'];
+          let geomSelect = feature.getGeometry()?.getType() 
+
+          if ((geomTypeProp == 'layer_vector_unit')||(geomTypeProp == 'layer_vector_county')||
+              (geomTypeProp == 'layer_vector_district'))
+          {
+            if ((geomSelect == 'Polygon')||(geomSelect == 'MultiPolygon'))
+            {
+              this.idItem = properts['id'];
+              this.tipoItem = geomSelect;
+              sFeature = feature;
+              return;
+            }
+          }
+          else if ((geomTypeProp == 'layer_vector_infrastructure')||(geomTypeProp == 'layer_vector_equipament'))
+          {
+            //  case 'MultiPolygon'://Polygon
+            if ((geomSelect == 'LineString')||(geomSelect == 'LineString'))
+            {
+              this.idItem = properts['id'];
+              this.tipoItem = geomSelect;
+              sFeature = feature;
+              return;
+            }
+          } 
+          else if ((geomTypeProp == 'layer_vector_street')||(geomTypeProp == 'layer_vector_publicplace')||
+          (geomTypeProp == 'layer_vector_rede'))
+          {
+            //  case 'MultiPolygon'://Polygon
+            if ((geomSelect == 'Point')||(geomSelect == 'Point'))
+            {
+              this.idItem = properts['id'];
+              this.tipoItem = geomSelect;
+              sFeature = feature;
+              return;
+            }
+          }
+
         }
-        sFeature = feature;
-        return; 
+ 
+        // if (feature.getGeometry()?.getType() == 'MultiPolygon')
+        // {
+        //   console.log(feature.getGeometry()?.getType())
+        //   console.log(feature.getProperties()['properties'])
+        //   let properties = feature.getProperties()['properties']   
+        //   if (properties != undefined){    
+        //   this.idItem = properties['id'];
+        //   this.tipoItem = properties['typeRepresentation'];
+        //   }
+        //   sFeature = feature;
+        //   return; 
+        // }
       }       
     });  
     return sFeature;
@@ -194,6 +263,71 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
     this.hiddenDistrict = false;
     this.hiddenCounty =false;
     this.hiddenState = false;
+  }
+
+  validateMultipoligon(validProps : boolean , marcator : Feature , evt:MapBrowserEvent<any>){
+    let properties = marcator.getProperties()['properties'];
+     if (validProps == false)
+     {
+       if(this.managerSession.session_state == true)
+       {
+         console.log('***SESSION STATE****')
+         let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+         this.definedVizualization();
+         this.hiddenState = true; 
+         this.validEdit = false;
+         this.validSave = true;  
+       }  
+       else if(this.managerSession.session_county == true)
+       {
+         console.log('***SESSION COUNTY****')
+         let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+         this.definedVizualization();
+         this.hiddenCounty = true;
+         this.validEdit = false;
+         this.validSave = true;
+       }
+       else if(this.managerSession.session_ditrict == true)
+       {
+         console.log('***SESSION DISTRICT****')
+         let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
+         this.definedVizualization();
+         this.hiddenDistrict = true;
+         this.validEdit = false;
+         this.validSave = true;
+       }
+      }
+      else //para visualização
+      {
+       let type = properties['typeRepresentation'];
+        console.log(type)
+       switch (type) {
+         case 'layer_vector_unit':
+           this.selectPoligony(<Feature>marcator,evt)
+           this.definedVizualization();
+           this.hiddenState = true; 
+           this.validEdit = true;
+           this.validSave = false;
+           break;
+         case 'layer_vector_county':
+           this.selectPoligony(<Feature>marcator,evt)
+           this.definedVizualization();
+           this.hiddenCounty = true;
+           this.validEdit = true;
+           this.validSave = false;
+           break;
+         case 'layer_vector_district':  
+           this.selectPoligony(<Feature>marcator,evt)
+           this.definedVizualization();
+           this.hiddenDistrict = true;
+           this.validEdit = true;
+           this.validSave = false;
+           break;
+         default:
+           break;
+       }  
+     }
+
   }
 
   onClickMap(evt:MapBrowserEvent<any>): void{      
@@ -258,64 +392,15 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
       console.log(validProps)
 
       let geomSelect = marcator.getGeometry()?.getType()
-
+      console.log(geomSelect)
 
      
       switch (geomSelect) {
         case 'Polygon'://Polygon
-          //let properties = <Feature>marcator.getProperties()['properties'];
-          if (validProps == false)
-          {
-            if(this.managerSession.session_state == true)
-            {
-              console.log('***SESSION STATE****')
-              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-              this.definedVizualization();
-              this.hiddenState = true; 
-              this.validEdit = false;
-              this.validSave = true;  
-            }  
-            else if(this.managerSession.session_county == true)
-            {
-              console.log('***SESSION COUNTY****')
-              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-              this.definedVizualization();
-              this.hiddenCounty = true;
-              this.validEdit = false;
-              this.validSave = true;
-            }
-            else if(this.managerSession.session_ditrict == true)
-            {
-              console.log('***SESSION DISTRICT****')
-              let featuretSelect = this.selectPoligony(<Feature>marcator,evt)
-              this.definedVizualization();
-              this.hiddenDistrict = true;
-              this.validEdit = false;
-              this.validSave = true;
-            }
-          }
-          else //para visualização
-          {
-            let type = properties['typeRepresentation'];
-
-            switch (type) {
-              case 'unit':
-                this.validEdit = true;
-                this.validSave = false;
-                break;
-              case 'county':
-                this.validEdit = true;
-                this.validSave = false;
-                break;
-              case 'district':  
-                this.validEdit = true;
-                this.validSave = false;
-                break;
-              default:
-                break;
-            }  
-          }
-
+          this.validateMultipoligon(validProps,marcator,evt)
+          break;
+        case 'MultiPolygon'://Polygon
+        this.validateMultipoligon(validProps,marcator,evt)
           break;
         case 'LineString':
           
@@ -355,15 +440,21 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
             let type = properties['typeRepresentation'];
 
             switch (type) {
-              case 'publicplace':
+              case 'layer_vector_publicplace':
+                this.selectLineString(<Feature>marcator,evt)
+                this.definedVizualization();
                 this.validEdit = true;
                 this.validSave = false;
               break;                
-              case 'street':
+              case 'layer_vector_street':
+                this.selectLineString(<Feature>marcator,evt)
+                this.definedVizualization();
                 this.validEdit = true;
                 this.validSave = false;
                 break;
-              case 'infraNet':
+              case 'layer_vector_rede':
+                this.selectLineString(<Feature>marcator,evt)
+                this.definedVizualization();
                 this.validEdit = true;
                 this.validSave = false;
               break;                 
@@ -400,12 +491,16 @@ export class PopupOptionsComponent implements OnInit , AfterViewInit{
             let type = properties['typeRepresentation'];
 
             switch (type) {                   
-              case 'infrastructure':
+              case 'layer_vector_infrastructure':
+                this.selectPoint(<Feature>marcator)
+                this.definedVizualization();
                 this.validEdit = true;
                 this.validSave = false;
                 break;   
    
-              case 'estructure':
+              case 'layer_vector_equipament':
+                this.selectPoint(<Feature>marcator)
+                this.definedVizualization();
                 this.validEdit = true;
                 this.validSave = false;
                 break;  
